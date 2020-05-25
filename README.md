@@ -1,2 +1,1 @@
-# feed the hungry
- 
+# feed-the-hungry
