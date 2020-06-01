@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect }  from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -7,113 +7,183 @@ import {
     useRouteMatch,
     useParams
 } from "react-router-dom";
-
-// import styles for bank cards, map, etc.
-import './style.css';
-
-// improt FontAwesome icons
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faShippingFast, faCube, faMapPin, faClock, faCalendarAlt} from '@fortawesome/free-solid-svg-icons'
+import API from '../API/API'; 
+import './styles.css';
+import Icons from '../icons/Icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
+// display the bank's data on the website.
 function Bank() {
+    let { bankId } = useParams();
+    const list = API.DataLoader();
+    const banks = API.RemoveDuplicatesBy('foodbank_id', list);
 
-    return (
-        <div class="main-bd">
-
-            <section class="hero grey">
-                <div class="hero-body bank-banner">
-                    <div class="container">
-                        <figure class="image is-96x96">
-                                <img src="https://bulma.io/images/placeholders/96x96.png"></img>
-                            </figure>
-                        <h1 class="title">
-                            West Valley Food Bank (Santa Clara)
-                        </h1>
-                        {/* <h2 class="subtitle">
-                            2.1 miles
-                        </h2> */}
-                        <div class="icons">
-                        <span class="subtitle is-6">0.5 miles</span>
-                                    <span class="icon-wrapper">
-                                        <FontAwesomeIcon class="icon" icon={faShippingFast}/>  
-                                    </span>
-                                    <span class="subtitle is-6">Delivery</span>
-                                    <span class="icon-wrapper has-margin-left-2">
-                                        <FontAwesomeIcon class="icon" icon={faCube}/>
-                                    </span>
-                                    <span class="subtitle is-6">Pick Up</span>                          
-                                </div>
-                    </div>
-                </div>
-            </section>
-            <section class="bank-body">
-                <div class="columns">
-                    <div class="column is-two-thirds">
-                        <div class="highlights">
-                            <div class="content">
-                                {/* <div class="icons">
-                                    <span class="icon-wrapper">
-                                        <FontAwesomeIcon class="icon is-medium" icon={faShippingFast}/>  
-                                    </span>
-                                    <span class="subtitle is-6">Delivery</span>
-                                    <span class="icon-wrapper has-margin-left-2">
-                                        <FontAwesomeIcon class="icon is-medium" icon={faCube}/>
-                                    </span>
-                                    <span class="subtitle is-6">Pick Up</span>                          
-                                </div> */}
+    //Keep a check before using bank's id, name, etc
+    if (banks.length > 0){
+        const bank = API.getBankBy(`${bankId}`, banks);
+        return (
+            <div className="bank-page-bd">
+                <BankBanner obj={bank}/>
+                <section className="bank-body">         
+                    <div className="columns">
+                        <div className="column is-6">
+                            <div className="inventory-title">
+                                <p className="title is-4">Delivery or Pickup</p>     
+                            </div>
+                            <BankInventory inventory={bank.inventory} />
+                        </div>
+                        <div className="column is-6">
+                            <div className="inventory-title">
+                                <p className="title is-4">Delivery Only</p>
                             </div>
                         </div>
                     </div>
-                    <div class="column">
-                        <nav class="panel bank-panel">
-                            <div class="map">
-                            </div>
-                            <div class="panel-content">
-                                <p class="title is-5 location-and-hours">Location and Hours</p>
-                                <div class="panel-block">
-                                    <span class="panel-icon">
-                                        <FontAwesomeIcon icon={faMapPin} />
-                                    </span>
-                                    <span class="title is-6">123 Street Santa Clara, CA 95051</span>
-                                    
-                                </div>
-                                <div class="panel-block no-flex">
-                                    <span class="panel-icon has-margin-top-0-25">
-                                        <FontAwesomeIcon icon={faClock} />   
-                                    </span>
-                                    <span class="title is-6">Monday - Wednesday</span>
-                                    <br></br>
-                                    <p class="subtitle is-6 has-margin-left-14">11:00 AM - 2:00 PM</p>
-                                </div>
-                                <div class="panel-block no-flex">
-                                    <span class="panel-icon has-margin-top-0-25">
-                                        <FontAwesomeIcon icon={faClock} />   
-                                    </span>
-                                    <span class="title is-6">Tuesday - Friday</span>
-                                    <br></br>
-                                    <p class="subtitle is-6 has-margin-left-14">11:00 AM - 2:00 PM</p>
-                                </div>
-                            </div>
-                        </nav>
+                </section>
+            </div>
+        );
+    }
+    return null;
+}
+// Render Banner
+function BankBanner({obj}){
+    return (
+        <section className="hero banner-image">
+            <div className="columns banner-container">
+                <div className="column is-6 banner-padded">
+                    <figure className="image bank-logo is-96x96">
+                        <img src="https://bulma.io/images/placeholders/96x96.png" alt=""></img>
+                    </figure> 
+                    <div className="bank-info-wrapper">
+                    <h1 className="title">{obj.foodbank_name} </h1>
+                    </div>
+                    <div className="bank-info-wrapper">
+                        <span className="icon icon-wrapper">
+                            <FontAwesomeIcon icon={Icons.faMapMarkerAlt} style={{ fontSize: 18 }}/>
+                        </span>
+                        <span className="subtitle address is-6">{obj.address}</span>
+                    </div>
+                    <div className="bank-info-wrapper">
+                        <span className="icon icon-wrapper">
+                            <FontAwesomeIcon icon={Icons.faClock} style={{fontSize: 18 }} />
+                        </span>
+                        <BankSchedule obj={obj}/>
                     </div>
                 </div>
-                
-            </section>
-            
-        </div>
-       
+                <div className="column is-6 has-no-padding">  
+                    <SmallMap />
+                </div>
+            </div>
+        </section>
     );
 }
-function sideBar(){
-    return (<nav class="panel">
-        <p>Location and Hours</p>
-        <div class="panel-block">
-            <span class="panel-icon">
-                <FontAwesomeIcon icon={faMapPin} />
-            </span>
-            123 Street Santa Clara, CA 95051
+// Render inventory
+function BankInventory({inventory}){
+    const initialValues  = {};
+    inventory.forEach(x => {
+        initialValues[x.food_id] = 0;
+    })
+    const [amount,setAmount] = useState(initialValues);
+    function increment(id){
+        var value = amount[id];
+        if (value >=10) value = 10;
+        else {
+            value += 1;
+        }
+        setAmount((prevState) => ({
+            ...prevState,
+            [id]: value
+        }));
+    }
+    function decrement(id){
+        var value = amount[id];
+        if (value <= 0) value = 0;
+        else {
+            value -= 1;
+        }
+        setAmount((prevState) => ({
+            ...prevState,
+            [id]: value
+        }));
+    }
+    // convert 1..9 to  01..09
+    function pad(d){
+        return (d < 10) ? '0' + d.toString() : d.toString();
+    }
+    return (
+        <div className="inventory">
+            {inventory.map((item) => 
+                <div key={item.food_id} className="item">
+                    <div className="columns">
+                        <div className="column is-8 flex-center">
+                            <div class="item-image-container">
+                                <figure className="image is-square">
+                                    <img class="is-rounded" src={item.image} alt=""></img>
+                                </figure>
+                            </div>
+                            <div className="item-header">
+                                <p className="title is-5">{item.food_name}</p>
+                                <p className="subtitle is-6">
+                                    {item.unit} ({item.unit_type})
+                                </p>      
+                            </div>
+                        </div>
+                        <div className="column is-4 flex-center">
+                            <div className="item-action">
+                                <div className="field is-grouped is-grouped-multiline">
+                                    <div className="control">
+                                        <span onClick={() => decrement(item.food_id)} className="icon decrease-qty">
+                                            <FontAwesomeIcon icon={Icons.faChevronDown} />
+                                        </span>
+                                    </div>
+                                    <div className="control amount">
+                                        <span id={item.food_id} className="title is-6">
+                                        {pad(amount[item.food_id])}
+                                        </span>
+                                    </div>
+                                    <div className="control">
+                                        <span onClick={() => increment(item.food_id)} className="icon increase-qty">
+                                            <FontAwesomeIcon icon={Icons.faChevronUp} />
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
-    </nav>);
+    );
+}
+function BankSchedule({obj}){
+    return (
+        <div className="columns is-fullWidth is-mobile">
+            <div className="column is-2 schedule">
+                <p className="subtitle is-bold is-6 capitalized">mon</p>
+                <p className="subtitle is-bold is-6 capitalized">tue</p>
+                <p className="subtitle is-bold is-6 capitalized">wed</p>
+                <p className="subtitle is-bold is-6 capitalized">thu</p>
+                <p className="subtitle is-bold is-6 capitalized">fri</p>
+                <p className="subtitle is-bold is-6 capitalized">sat</p>
+                <p className="subtitle is-bold is-6 capitalized">sun</p>
+            </div>
+            <div className="column auto no-padding-left">
+                <p className="subtitle is-6 has-text-grey capitalized">{obj.monday}</p>
+                <p className="subtitle is-6 has-text-grey capitalized">{obj.tuesday}</p>
+                <p className="subtitle is-6 has-text-grey capitalized">{obj.wednesday}</p>
+                <p className="subtitle is-6 has-text-grey capitalized">{obj.thursday}</p>
+                <p className="subtitle is-6 has-text-grey capitalized">{obj.friday}</p>
+                <p className="subtitle is-6 has-text-grey capitalized">{obj.saturday}</p>
+                <p className="subtitle is-6 has-text-grey capitalized">{obj.sunday}</p>
+            </div>
+        </div>
+    );
+}
+function SmallMap(){
+    return (
+        <div className="small-map">                     
+            <img src="https://www.skmlifestyle.com/wp-content/uploads/2017/05/Beijing_Travel_Map.png" alt=""></img>                         
+        </div>
+    );
 }
 export default Bank;

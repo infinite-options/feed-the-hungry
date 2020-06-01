@@ -1,0 +1,121 @@
+
+.navbar {
+    color: black;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Source Sans Pro',sans-serif;
+    height: 14vh;
+    padding-left: 12vw;
+    padding-right: 12vw;
+    border: none;
+    background-color: #f8f8f8;
+    border-bottom: 3px solid #f6f9fc;
+}
+.navbar-item{
+    margin-right: 15px;
+}
+.navbar-end .navbar-item:last-child {
+    margin-right: 0;
+} 
+a.navbar-item:focus, a.navbar-item:hover {
+    color: black;
+}
+.navbar-item {
+    font-weight: 600;
+    color: black;
+}
+.navbar-brand .navbar-item .navbar-link {
+    padding-left: 0;
+}
+.has-no-padding-left {
+    padding-left: 0;
+}
+.has-no-padding-right {
+    padding-right: 0;
+}
+
+input[type=search] {
+	border: solid 1px #ccc;
+	width: 55px;
+	-webkit-border-radius: 10em;
+	-moz-border-radius: 10em;
+	border-radius: 10em;
+	-webkit-transition: all .5s;
+	-moz-transition: all .5s;
+	transition: all .5s;
+}
+#search input[type=search] {
+    border: none;
+    box-shadow: none;
+    width: 15px;
+    padding-left: 0;
+    border-radius: 0;
+    background-color: transparent;
+    /* background-color: #f6f9fc; */
+    color: white;
+}
+#search input[type=search]:hover {
+    background-color: #f6f9fc; 
+    cursor: pointer;
+    color: black;
+}
+#search input[type=search]:focus {
+    /* box-shadow: 0 0 0 0.125em black; */
+    padding-left: 20px;
+    /* box-shadow: inset 0 0 3px green; */
+    /* box-shadow: inset 0 0.0625em 0.125em rgba(10, 10, 10, 0.05); */
+    border-bottom: 2px solid black;
+    transition: .3s ease-in;
+	width: 250px;
+	color: #000;
+	background-color: #f6f9fc;
+	cursor: auto;
+}
+#search input:-moz-placeholder {
+	color: transparent;
+}
+#search input::-webkit-input-placeholder {
+	color: transparent;
+}
+.has-margin-left-12 {
+    margin-left: 12px;
+}
+.brand-text {
+    color: black;
+    text-transform: lowercase;
+    font-family: 'Pacifico';
+}
+.navbar-dropdown {
+    color: black;
+}
+.shopping-cart {
+    margin-right: .2rem;
+    margin-left: 1rem;
+}
+.add-cart {
+    height:48px;
+    border-radius: 0;
+    color: white;
+    background-color: black;
+}
+.add-cart:hover {
+    transition: .2s ease-in;
+    border: 1px solid black;
+    background-color: white;
+    color: black;
+}
+@media only screen and (max-width: 1020px) {
+    .navbar-burger{
+        height: 14vh;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .navbar-burger {
+        height: 10vh;
+    }
+    .navbar {
+        height: 10vh;
+        padding-left: 8vw;
+        padding-right: 8vw;
+    }
+}
