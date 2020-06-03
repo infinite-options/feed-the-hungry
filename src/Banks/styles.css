@@ -109,7 +109,7 @@
 .sticky {
     position: -webkit-sticky;
     position: sticky;
-    top: 70.55px;
+    top: 14vh;
 }
 .grey {
     background-color: rgb(238, 238, 238);

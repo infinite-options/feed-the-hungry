@@ -11,24 +11,54 @@ import API from '../API/API';
 import './styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Icons from '../icons/Icons';
+import { Map, TileLayer, Marker, Popup, L } from 'react-leaflet';
+import { geolocated } from 'react-geolocated';
 
-function Banks() {
-    return (
-        <div className="banks-page-bd">
-            <div className="columns">
-                <div className="column is-7">
-                    <div className="bank-list">
-                        <RenderListOfBanks />
+// use San Jose, CA as the default center
+const DEFAULT_LATITUDE = 37.338208;
+const DEFAULT_LONGITUDE = -121.886329;
+
+class Banks extends React.Component {
+    render(){
+        // get browser's current latitude and longitude
+        const latitude = this.props.coords ? this.props.coords.latitude:  DEFAULT_LATITUDE;
+        const longitude = this.props.coords ? this.props.coords.longitude: DEFAULT_LONGITUDE;
+        return (
+            <div className="banks-page-bd">
+                <div className="columns">
+                    <div className="column is-7">
+                        <div className="bank-list">
+                            <RenderListOfBanks />
+                        </div>
                     </div>
+                    <div className="column is-5 has-no-padding has-shadow">
+                        <div className="sticky">
+                            {/* <img class="has-shadow" src="https://www.skmlifestyle.com/wp-content/uploads/2017/05/Beijing_Travel_Map.png" alt=""></img> */}
+                            <Map center={[latitude,longitude]} zoom={13}> 
+                                <TileLayer
+                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                    attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+                                />
+                                <Marker position={[37.3164077, -121.8747172]}>
+                                    <Popup>37.3164077,-121.8747172</Popup>
+                                </Marker>
+                                {
+                                    !this.props.coords ?
+                                    <div className="loading">Loading location...</div>
+                                    :
+                                    <Marker position={[latitude, longitude]}>
+                                        <Popup>{latitude},{longitude}</Popup>
+                                    </Marker>
+                                
+                                }                           
+                            </Map>
+                        </div>
+                    </div>         
                 </div>
-                <div className="column is-5 has-no-padding has-shadow">
-                    <div className="big-map sticky">
-                        <img class="has-shadow" src="https://www.skmlifestyle.com/wp-content/uploads/2017/05/Beijing_Travel_Map.png" alt=""></img>
-                    </div>
-                </div>         
             </div>
-        </div>
-    );
+        );
+    }
+    
 }
 
 // render list of banks
@@ -98,5 +128,10 @@ function RenderListOfBanks() {
         </div>
     );
 }
-
-export default Banks;
+export default geolocated({
+    // positionOptions: {
+    //     enableHighAccuracy: false
+    // },
+    userDecisionTimeout: 10000
+})(Banks);
+// export default Banks;

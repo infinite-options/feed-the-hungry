@@ -21,7 +21,7 @@ function Header (){
             <div id="mainNavbar" className="navbar-menu">
                 <div className="navbar-start">
                     <Link to="/banks" className="navbar-item">
-                        ORDER
+                        Food Banks
                     </Link>
                 </div>
                 <div className="navbar-end">
