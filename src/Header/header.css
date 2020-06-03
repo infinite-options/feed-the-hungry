@@ -104,18 +104,23 @@ input[type=search] {
     background-color: white;
     color: black;
 }
-@media only screen and (max-width: 1020px) {
-    .navbar-burger{
+@media only screen and (max-width: 1050px) {
+    /* .navbar-burger{
         height: 14vh;
+    } */
+    .navbar {
+        padding-left: 1.75rem;
+        padding: 1.75rem;
     }
 }
 @media only screen and (max-width: 600px) {
-    .navbar-burger {
+
+    /* .navbar-burger {
         height: 10vh;
     }
     .navbar {
         height: 10vh;
         padding-left: 8vw;
         padding-right: 8vw;
-    }
+    } */
 }

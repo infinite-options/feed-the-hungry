@@ -30,10 +30,21 @@
 .bank-card {
     box-shadow: none;
     padding-top: 1rem;
+    overflow: hidden;
+    max-height: 210px;
     padding-bottom: 1rem;
     /* box-shadow: 0 0.1em 0.5em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 0.5px rgba(10, 10, 10, 0.02); */
     background-color: white;
     border: 1px solid #eeeeef;
+}
+.media-content{
+    overflow: hidden;
+    white-space: nowrap;
+}
+.media-content p{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* white-space: nowrap; */
 }
 .bank-card:hover{
     border: 1px solid #d3d3d3;
@@ -72,6 +83,7 @@
     font-weight: 600;
 }
 .hours {
+    margin-left: 1rem;
     font-weight: 600;
     text-transform: uppercase;
     text-align: left;
@@ -200,7 +212,7 @@
     display:flex;
     flex-direction: column;
     margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: .2rem;
     /* flex-wrap: wrap; */
     /* justify-content: space-between */
       
@@ -340,11 +352,11 @@ img{
 .has-no-margin {
     margin: 0;
 }
-.subtitle.address {
+/* .subtitle.bank-address {
     display: flex;
     align-items: center;
     font-weight: 600;
-}
+} */
 .bank-info-wrapper {
     display: flex;
     /* align-items: center; */
@@ -432,35 +444,79 @@ img{
       flex-direction: column;
       justify-content: flex-start;
   }
-  .column.schedule{
-      display: inline-block;
-      min-width: 65px;
+  .bank-schedule {
+    width: 100%;
+    display: flex;
+      
+  }
+  .schedule-days{
+    min-width: 63px;
   } 
+  .schedule-hours {
+    width: 100%;
+  }
  
   /* for mobile */
   @media only screen and (max-width: 600px) {
-    .bank-list {
-        padding-left: 8vw;
-        padding-right: 8vw;
-    }
-    .bank-page-bd {
-        margin-top: 10vh;
+    .bank-list{
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
     .banner-padded {
-        padding-top: 2rem;
-        padding-left: 8vw;
-        padding-right: 8vw;
-        padding-bottom: 2rem;
+        padding-left: 1.75rem;
+        padding-right: 1rem;
     }
     .bank-body {
-        padding-top: 2rem;
-  
-        padding-bottom:2rem;
-        padding-left: 8vw;
-        padding-right: 8vw;
+        padding-left: 1.75rem;
+        padding-right: 1.75rem;
     }
     .inventory-col-1 {
         margin-bottom: .5rem;
-        /* margin-bottom: .5rem; */
     }
+}
+@media only screen and (max-width: 1050px) {
+    .bank-list {
+        padding-left: 1.75rem;
+        padding-right: 1rem;
+    }
+    .banner-padded {
+        padding-left: 1.75rem;
+    }
+    .bank-body {
+        padding-left: 1.75rem;
+        padding-right: 1.75rem;
+    }
+    .bank-title {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    .bank-address {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+}
+@media only screen and (max-width: 770px) {
+    .bank-list {
+        padding-left: 1.75rem;
+        padding-right: 1rem;
+    }
+}
+.no-overflow.subtitle{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-content .content {
+    max-height: 80px;
+    overflow: hidden;
+
+}
+.is-bold {
+    font-weight: 600;
+}
+.bank-address {
+    font-weight: 600;
 }

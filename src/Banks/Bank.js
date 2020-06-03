@@ -55,13 +55,13 @@ function BankBanner({obj}){
                         <img src="https://bulma.io/images/placeholders/96x96.png" alt=""></img>
                     </figure> 
                     <div className="bank-info-wrapper">
-                    <h1 className="title">{obj.foodbank_name} </h1>
+                    <h1 className="title bank-title">{obj.foodbank_name} </h1>
                     </div>
-                    <div className="bank-info-wrapper">
+                    <div className="bank-info-wrapper no-overflow">
                         <span className="icon icon-wrapper">
                             <FontAwesomeIcon icon={Icons.faMapMarkerAlt} style={{ fontSize: 18 }}/>
                         </span>
-                        <span className="subtitle address is-6">{obj.address}</span>
+                        <h6 className="subtitle bank-address is-6">{obj.address}</h6>
                     </div>
                     <div className="bank-info-wrapper">
                         <span className="icon icon-wrapper">
@@ -157,8 +157,8 @@ function BankInventory({inventory}){
 }
 function BankSchedule({obj}){
     return (
-        <div className="columns is-fullWidth is-mobile">
-            <div className="column is-2 schedule">
+        <div className="bank-schedule">
+            <div className="schedule-days">
                 <p className="subtitle is-bold is-6 capitalized">mon</p>
                 <p className="subtitle is-bold is-6 capitalized">tue</p>
                 <p className="subtitle is-bold is-6 capitalized">wed</p>
@@ -167,7 +167,7 @@ function BankSchedule({obj}){
                 <p className="subtitle is-bold is-6 capitalized">sat</p>
                 <p className="subtitle is-bold is-6 capitalized">sun</p>
             </div>
-            <div className="column auto no-padding-left">
+            <div className="schedule-hours">
                 <p className="subtitle is-6 has-text-grey capitalized">{obj.monday}</p>
                 <p className="subtitle is-6 has-text-grey capitalized">{obj.tuesday}</p>
                 <p className="subtitle is-6 has-text-grey capitalized">{obj.wednesday}</p>

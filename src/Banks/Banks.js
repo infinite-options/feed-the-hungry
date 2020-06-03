@@ -92,29 +92,34 @@ function RenderListOfBanks() {
                         <div className="content">
                             <div class="columns is-mobile">
                                 <div class="column is-6">
-                                    <p className="subtitle is-7">Tomorrow's Availability</p>
-                                    <div className="field is-grouped is-grouped-multiline">
-                                        <div className="control">
-                                            <span className="subtitle is-6 days">
+                                    <p className="subtitle is-7 no-overflow">Tomorrow's Availability</p>
+                                    <p className="subtitle is-6 is-bold no-overflow">
+                                        <span className="days">{day}</span>
+                                        <span className="hours">{bank[day.toLowerCase()]}</span>
+                                    </p>
+                                    {/* <div className="field no-overflow is-grouped is-grouped-multiline"> */}
+                                    {/* <span className="subtitle is-6 hours no-overflow">{bank[day.toLowerCase()]}</span> */}
+                                        {/* <div className="control">
+                                            <span className="subtitle is-6 days  no-overflow">
                                                 {day}
                                             </span>
                                         </div>
                                         <div className="control">         
-                                            <span className="subtitle is-6 hours">
+                                            <span className="subtitle is-6 hours  no-overflow">
                                                 {bank[day.toLowerCase()]}
                                             </span>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div class="column is-3">                                  
-                                    <p className="subtitle is-7">Delivery</p>
+                                    <p className="subtitle is-7  no-overflow">Delivery</p>
                                     <span className="icon tooltip">
                                         <img src={Icons.Delivery} alt=""></img>
                                         <span class="tooltiptext">Delivery is available</span>
                                     </span>
                                 </div>
                                 <div className="column is-3">
-                                    <p className="subtitle is-7">Pickup</p>
+                                    <p className="subtitle is-7  no-overflow">Pickup</p>
                                     <span className="icon tooltip">
                                         <img class="not-available" src={Icons.Pickup} alt=""></img>
                                         <span class="tooltiptext">Pickup is not available</span>
