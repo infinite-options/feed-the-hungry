@@ -12,10 +12,11 @@ import {
 // import css
 import 'bulma/css/bulma.css'; 
 import './App.css';
-
+import './styles.css';
 import Banks from './Banks/Banks';
 import Bank from './Banks/Bank';
 import Header from './Header/Header';
+import Cart from './Cart/Cart';
 import API from './API/API';
 
 function App() {
@@ -36,6 +37,10 @@ function App() {
         </Route>
         <Route path={"/banks/:bankId"}>
           <Bank list={banks} />
+        </Route>
+        <Route path="/cart">
+          <Cart />
+          {/* <Report /> */}
         </Route>
         <Route path="/about">
           {/* <About /> */}

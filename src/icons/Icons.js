@@ -1,6 +1,7 @@
 import {faShippingFast, faCube, faMapPin, faClock, faMapMarkerAlt,
     faCalendarAlt, faCheckCircle, faCheck, faStar, faSearch,
-    faShoppingCart, faPlus, faMinus, faChevronUp, faChevronDown} from '@fortawesome/free-solid-svg-icons';
+    faShoppingCart, faPlus, faMinus, faChevronUp, faChevronDown, faTimes,
+    faLongArrowAltLeft, faTrashAlt} from '@fortawesome/free-solid-svg-icons';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import RoomIcon from '@material-ui/icons/Room';
@@ -24,5 +25,6 @@ export default {
     faShippingFast, faCube, faMapPin, faClock, faMapMarkerAlt,
     faCalendarAlt, faCheckCircle, faCheck, faStar, faSearch,
     faShoppingCart, faPlus, faMinus, faChevronUp, faChevronDown,
-    Delivery, Pickup, greenIcon
+    Delivery, Pickup, greenIcon, faTimes, faLongArrowAltLeft,
+    faTrashAlt
 }
