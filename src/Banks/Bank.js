@@ -8,20 +8,18 @@ import {
     useParams
 } from "react-router-dom";
 import API from '../API/API'; 
-import './styles.css';
+import '../styles.css';
 import Icons from '../icons/Icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import Notifications from '../Notifications/Notifications';
 
 // display the bank's data on the website.
-function Bank() {
+function Bank({list}) {
     let { bankId } = useParams();
-    const list = API.DataLoader();
-    const banks = API.RemoveDuplicatesBy('foodbank_id', list);
 
     //Keep a check before using bank's id, name, etc
-    if (banks.length > 0){
-        const bank = API.getBankBy(`${bankId}`, banks);
+    if (list.length > 0){
+        const bank = API.getBankBy(`${bankId}`, list);
         return (
             <div className="bank-page-bd">
                 <BankBanner obj={bank}/>
@@ -43,7 +41,11 @@ function Bank() {
             </div>
         );
     }
-    return null;
+    return (
+        <div className="bank-page-bd">
+            {Notifications.Danger("ERROR: Cannot fetch data")}
+        </div>
+    );
 }
 // Render Banner
 function BankBanner({obj}){
@@ -116,9 +118,9 @@ function BankInventory({inventory}){
                 <div key={item.food_id} className="item">
                     <div className="columns">
                         <div className="column is-8 flex-center">
-                            <div class="item-image-container">
+                            <div className="item-image-container">
                                 <figure className="image is-square">
-                                    <img class="is-rounded" src={item.image} alt=""></img>
+                                    <img className="is-rounded" src={item.image} alt=""></img>
                                 </figure>
                             </div>
                             <div className="item-header">

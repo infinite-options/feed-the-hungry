@@ -8,7 +8,13 @@ const API = {
             fetch('https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/foodbankinfo')
             .then (x=> x.json())
             .then(({  result: { result }  }) => result)
-            .then(data => setData(data));
+            .then(data => setData(data))
+            .catch((error) => {
+                return (<div class="notification is-danger">
+                <button class="delete"></button>
+                ERROR: Cannot fetch data.
+            </div>);
+            })
         },[])
         return data;
     },

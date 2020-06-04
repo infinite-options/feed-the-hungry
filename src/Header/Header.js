@@ -54,13 +54,15 @@ function SearchBar() {
 }
 function AddToCart() {
     return (
-        <div className="button add-cart">
+        <a href="/cart" alt="cart button">
+            <div className="button add-cart">
             <span>Cart</span>   
             <span className="icon shopping-cart is-small">
                 <FontAwesomeIcon icon={Icons.faShoppingCart} />
             </span>
             <span>0</span>  
-    </div>
+            </div>
+        </a>
     );
 }
 function Hamburger(){

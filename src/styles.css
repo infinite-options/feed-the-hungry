@@ -455,9 +455,13 @@ img{
   .schedule-hours {
     width: 100%;
   }
- 
+
   /* for mobile */
   @media only screen and (max-width: 600px) {
+    .notification {
+        padding-left: 1.75rem;
+        padding-right: 1.75rem;
+    }
     .bank-list{
         padding-left: 1rem;
         padding-right: 1rem;
@@ -475,6 +479,10 @@ img{
     }
 }
 @media only screen and (max-width: 1050px) {
+    .notification {
+        padding-left: 1.75rem;
+        padding-right: 1.75rem;
+    }
     .bank-list {
         padding-left: 1.75rem;
         padding-right: 1rem;
@@ -497,12 +505,19 @@ img{
         text-overflow: ellipsis;
     }
 }
+@media only screen and (min-width: 1050px) {
+    .notification {
+        padding-left: 12vw;
+        padding-right: 12vw;
+    }
+}
 @media only screen and (max-width: 770px) {
     .bank-list {
         padding-left: 1.75rem;
         padding-right: 1rem;
     }
 }
+
 .no-overflow.subtitle{
     white-space: nowrap;
     overflow: hidden;
@@ -519,4 +534,9 @@ img{
 }
 .bank-address {
     font-weight: 600;
+}
+.test {
+    height: 50px;
+    width: 50px;
+    background-color: grey;
 }
