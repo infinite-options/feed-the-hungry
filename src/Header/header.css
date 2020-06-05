@@ -1,5 +1,7 @@
 
 .navbar {
+    position: absolute;
+    z-index: 9999;
     color: black;
     text-transform: uppercase;
     letter-spacing: 1px;

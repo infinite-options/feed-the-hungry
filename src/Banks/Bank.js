@@ -12,38 +12,43 @@ import '../styles.css';
 import Icons from '../icons/Icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Notifications from '../Notifications/Notifications';
+import LeafletMap from '../Map/LeafletMap';
 
 // display the bank's data on the website.
 function Bank({list}) {
     let { bankId } = useParams();
-
     //Keep a check before using bank's id, name, etc
     if (list.length > 0){
-        const bank = API.getBankBy(`${bankId}`, list);
         return (
-            <div className="bank-page-bd">
-                <BankBanner obj={bank}/>
-                <section className="bank-body">         
-                    <div className="columns">
-                        <div className="column is-6">
-                            <div className="inventory-title">
-                                <p className="title is-4">Delivery or Pickup</p>     
-                            </div>
-                            <BankInventory inventory={bank.inventory} />
-                        </div>
-                        <div className="column is-6">
-                            <div className="inventory-title">
-                                <p className="title is-4">Delivery Only</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
+            <GetBank list={list} bankId={bankId}/>
         );
     }
     return (
         <div className="bank-page-bd">
-            {Notifications.Danger("ERROR: Cannot fetch data")}
+            {Notifications.Warning("Loading Data...")}
+        </div>
+    );
+}
+function GetBank({list, bankId}){
+    const bank = API.getBankBy(`${bankId}`, list);
+    return (
+        <div className="bank-page-bd">
+            <BankBanner obj={bank} />
+            <section className="bank-body">         
+                <div className="columns">
+                    <div className="column is-6">
+                        <div className="inventory-title">
+                            <p className="title is-4">Delivery or Pickup</p>     
+                        </div>
+                        <BankInventory inventory={bank.inventory} />
+                    </div>
+                    <div className="column is-6">
+                        <div className="inventory-title">
+                            <p className="title is-4">Delivery Only</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     );
 }
@@ -54,10 +59,10 @@ function BankBanner({obj}){
             <div className="columns banner-container">
                 <div className="column is-6 banner-padded">
                     <figure className="image bank-logo is-96x96">
-                        <img src="https://bulma.io/images/placeholders/96x96.png" alt=""></img>
+                        <img src={obj.logo} alt=""></img>
                     </figure> 
                     <div className="bank-info-wrapper">
-                    <h1 className="title bank-title">{obj.foodbank_name} </h1>
+                    <h1 className="title bank-title">{obj.name} </h1>
                     </div>
                     <div className="bank-info-wrapper no-overflow">
                         <span className="icon icon-wrapper">
@@ -72,8 +77,11 @@ function BankBanner({obj}){
                         <BankSchedule obj={obj}/>
                     </div>
                 </div>
-                <div className="column is-6 has-no-padding">  
-                    <SmallMap />
+                <div className="column is-6 has-no-padding"> 
+                    <div className="small-map">
+                        <LeafletMap/>
+                    </div>
+                    
                 </div>
             </div>
         </section>
@@ -124,19 +132,20 @@ function BankInventory({inventory}){
                                 </figure>
                             </div>
                             <div className="item-header">
-                                <p className="title is-5">{item.food_name}</p>
-                                <p className="subtitle is-6">
-                                    {item.unit} ({item.unit_type})
-                                </p>      
+                                <span className="title is-5">{item.food_name}</span><br></br>
+                                <span className="subtitle is-6">1 {item.package_type} ({item.package_weight} {item.unit_type})</span>      
                             </div>
                         </div>
                         <div className="column is-4 flex-center">
                             <div className="item-action">
                                 <div className="field is-grouped is-grouped-multiline">
                                     <div className="control">
-                                        <span onClick={() => decrement(item.food_id)} className="icon decrease-qty">
-                                            <FontAwesomeIcon icon={Icons.faChevronDown} />
-                                        </span>
+                                        <button className="button">
+                                            <span onClick={() => decrement(item.food_id)} className="icon decrease-qty">
+                                                <FontAwesomeIcon icon={Icons.faChevronDown} />
+                                            </span>
+                                        </button>
+                                        
                                     </div>
                                     <div className="control amount">
                                         <span id={item.food_id} className="title is-6">
@@ -144,9 +153,11 @@ function BankInventory({inventory}){
                                         </span>
                                     </div>
                                     <div className="control">
-                                        <span onClick={() => increment(item.food_id)} className="icon increase-qty">
-                                            <FontAwesomeIcon icon={Icons.faChevronUp} />
-                                        </span>
+                                        <div className="button">
+                                            <span onClick={() => increment(item.food_id)} className="icon increase-qty">
+                                                <FontAwesomeIcon icon={Icons.faChevronUp} />
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -178,13 +189,6 @@ function BankSchedule({obj}){
                 <p className="subtitle is-6 has-text-grey capitalized">{obj.saturday}</p>
                 <p className="subtitle is-6 has-text-grey capitalized">{obj.sunday}</p>
             </div>
-        </div>
-    );
-}
-function SmallMap(){
-    return (
-        <div className="small-map">                     
-            <img src="https://www.skmlifestyle.com/wp-content/uploads/2017/05/Beijing_Travel_Map.png" alt=""></img>                         
         </div>
     );
 }
