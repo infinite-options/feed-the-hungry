@@ -10,7 +10,8 @@
     padding-left: 12vw;
     padding-right: 12vw;
     border: none;
-    background-color: #f8f8f8;
+    background-color: white;
+    /* background-color: #f8f8f8; */
     border-bottom: 3px solid #f6f9fc;
 }
 .navbar-item{

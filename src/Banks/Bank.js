@@ -116,6 +116,7 @@ function BankInventory({inventory}){
             [id]: value
         }));
     }
+
     // convert 1..9 to  01..09
     function pad(d){
         return (d < 10) ? '0' + d.toString() : d.toString();
@@ -123,50 +124,94 @@ function BankInventory({inventory}){
     return (
         <div className="inventory">
             {inventory.map((item) => 
-                <div key={item.food_id} className="item">
-                    <div className="columns">
-                        <div className="column is-8 flex-center">
-                            <div className="item-image-container">
-                                <figure className="image is-square">
-                                    <img className="is-rounded" src={item.image} alt=""></img>
-                                </figure>
-                            </div>
-                            <div className="item-header">
-                                <span className="title is-5">{item.food_name}</span><br></br>
-                                <span className="subtitle is-6">1 {item.package_type} ({item.package_weight} {item.unit_type})</span>      
-                            </div>
+                <div key={item.food_id} className="card item">
+                    <div className="card-content has-no-padding item-content">
+                        <div className="item-image">
+                            <img src={item.image} alt="Placeholder image"></img>
                         </div>
-                        <div className="column is-4 flex-center">
-                            <div className="item-action">
-                                <div className="field is-grouped is-grouped-multiline">
-                                    <div className="control">
-                                        <button className="button">
-                                            <span onClick={() => decrement(item.food_id)} className="icon decrease-qty">
-                                                <FontAwesomeIcon icon={Icons.faChevronDown} />
+                        <div className="card-content">
+                            <span className="title is-6">{item.food_name}</span><br></br>
+                            <span className="subtitle is-6">1 {item.unit} ({item.weight})</span>  
+                        </div>
+                          
+                    </div>
+                
+                    <div className="card-footer">
+                        <div className="item-price">
+                            <span className="subtitle is-6">${item.price}</span>  
+                        </div>
+                        <div className="item-tags">
+                            {/* <a href="#">@{item.type}</a> */}
+                            <SplitTags str={item.type} /> 
+                        </div>
+                    </div>
+                    {/* <div className="card-content">
+                        <div className="columns is-mobile">
+                            <div className="column is-8 flex-center">
+                                <div className="item-image-container">
+                                    <figure className="image is-square">
+                                        <img src={item.image} alt=""></img>
+                                    </figure>
+                                </div>
+                                <div className="item-header">
+                                    <span className="title is-5">{item.food_name}</span><br></br>
+                                    <span className="subtitle is-6">1 {item.unit} ({item.weight})</span>      
+                                </div>
+                            </div>
+                            <div className="column is-4 flex-center">
+                                <div className="item-action">
+                                    <div className="field is-grouped is-grouped-multiline">
+                                        <div className="control">
+                                            <button className="button">
+                                                <span onClick={() => decrement(item.food_id)} className="icon decrease-qty">
+                                                    <FontAwesomeIcon icon={Icons.faChevronDown} />
+                                                </span>
+                                            </button>
+                                            
+                                        </div>
+                                        <div className="control amount">
+                                            <span id={item.food_id} className="title is-6">
+                                            {pad(amount[item.food_id])}
                                             </span>
-                                        </button>
-                                        
-                                    </div>
-                                    <div className="control amount">
-                                        <span id={item.food_id} className="title is-6">
-                                        {pad(amount[item.food_id])}
-                                        </span>
-                                    </div>
-                                    <div className="control">
-                                        <div className="button">
-                                            <span onClick={() => increment(item.food_id)} className="icon increase-qty">
-                                                <FontAwesomeIcon icon={Icons.faChevronUp} />
-                                            </span>
+                                        </div>
+                                        <div className="control">
+                                            <div className="button">
+                                                <span onClick={() => increment(item.food_id)} className="icon increase-qty">
+                                                    <FontAwesomeIcon icon={Icons.faChevronUp} />
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <div className="columns is-mobile">
+                            <div className="column is-4">
+                            <span class="card-footer-item">{item.price}</span>
+                            </div>
+                            <div className="column is-8">
+                            <span href="#" class="card-footer-item">{item.type}</span>
+                            </div>
+                        </div>
+                    </div> */}
+                   
                 </div>
             )}
         </div>
     );
+}
+function SplitTags({str}){
+    if (str){ 
+        var tags = str.split(';');
+        return (
+            <div className="tags-container">
+                { tags.map(tag => 
+                    <a href="#" className="subtitle has-margin-left-12" alt="">#{tag}</a>
+                )}
+            </div>
+        );
+    }
+    return "";
 }
 function BankSchedule({obj}){
     return (

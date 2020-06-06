@@ -19,7 +19,8 @@
     height: auto;
     /* overflow: hidden; */
     /* background-color: white; */
-    background-color: #f8f8f8;
+    background-color: rgb(245, 246, 247);
+    /* background-color: #f8f8f8; */
     /* background-color:#f6f9fc; */
 }
 .bank-list {
@@ -144,7 +145,8 @@
 }
 
 .banner-padded{
-    max-height: 600px;
+    overflow-y: hidden;
+    max-height: 86vh;
     padding-top: 3rem;
     padding-bottom: 3rem;
     padding-left: 12vw;
@@ -231,17 +233,20 @@
     position: relative;
 } */
 .item {
+    display: flex;
+    flex-direction: column;
     position: relative;
     width: 100%;
+    border-bottom: 1px solid #d3d3d3;
     /* border-radius: 20px; */
     background-color: white;
-    padding: 1.5rem;
-    box-shadow: 0 0.1em 0.5em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 0.5px rgba(10, 10, 10, 0.02);
-    /* box-shadow: 0 0.2em 0.3em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 0.5px rgba(10, 10, 10, 0.02); */
+    /* padding: 1.5rem; */
+    box-shadow: none;
+    /* box-shadow: 0 0.1em 0.5em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 0.5px rgba(10, 10, 10, 0.02); */
     /* padding-top: 1.5rem; */
 }
 .item:not(:first-child) {
-    margin-top: 1rem;
+    margin-top: .5rem;
 }
 
 .item-content {
@@ -256,6 +261,15 @@
     text-overflow: ellipsis;
     overflow: hidden; 
     position: relative;
+}
+.item-tags {
+    text-align: left;
+    width: 68%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    display: flex;
+    margin-bottom: 6px;
+    align-items: center;
 }
 
 .select-delivery{
@@ -336,12 +350,30 @@ img{
     display: flex;
     align-items: center;
 }
-.item-image-container {
-    width: 84px;
-    height: 84px;
-}
 .item-image {
-    /* border-radius: 30px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    max-height: 100%;
+    width: 32%;
+    /* border-right: 1px solid #f1f1f1; */
+    height: 120px;
+}
+.card-footer {
+    height: 42px;
+}
+.item-price {
+    display: flex;
+    align-items: center;
+    text-align: left;
+    padding-left: 1rem;
+    width: 32%;
+}
+.card-content.item-content {
+    display:flex;
+    margin: 0;
+    padding: 0;
 }
 .has-size-20 {
     margin-top: 2px;
@@ -353,6 +385,17 @@ img{
 }
 .has-no-margin {
     margin: 0;
+}
+.columns.item-info {
+    
+    box-sizing: inherit;
+    display: flex;
+    margin-bottom: 0;
+}
+.item-info .column {
+    margin-top: .75rem;
+    margin-left: .75rem;
+    padding:0;
 }
 /* .subtitle.bank-address {
     display: flex;
@@ -629,4 +672,11 @@ img{
 @keyframes spin {
 0% { transform: rotate(0deg); }
 100% { transform: rotate(360deg); }
+}
+.item-price {
+    background-color: rgb(234, 237, 241);
+    margin-bottom: 6px;
+}
+.tags-container a{
+    font-size: 13px;
 }
