@@ -20,17 +20,17 @@ function Header (){
             </div>
             <div id="mainNavbar" className="navbar-menu">
                 <div className="navbar-start">
-                    <Link to="/banks" className="navbar-item">
+                    <a href="/banks" className="navbar-item">
                         Food Banks
-                    </Link>
+                    </a>
                 </div>
                 <div className="navbar-end">
                     <div className="navbar-item">
                         <SearchBar />
                     </div>
-                    <Link to="#" className="navbar-item">
+                    <a href="#" className="navbar-item">
                         Login
-                    </Link>
+                    </a>
                     <div className="navbar-item has-no-padding-right">
                         <AddToCart />
                     </div>

@@ -12,7 +12,6 @@ import {
 // import css
 import 'bulma/css/bulma.css'; 
 import './App.css';
-import './styles.css';
 import Banks from './Banks/Banks';
 import Bank from './Banks/Bank';
 import Header from './Header/Header';
@@ -25,11 +24,11 @@ function App(){
     const list = API.DataLoader();
     var banks = [];
     if (list && list.length > 0) {
-      banks = API.RemoveDuplicatesBy('inventory_foodbank_id', list);
+      banks = API.RemoveDuplicatesBy('foodbank_id', list);
       banks = API.RemoveNull(banks);
     }
     return (
-      <Router onUpdate={() => window.scrollTo(0, 0)}>
+      <Router>
         <Header />
         {/* A <Switch> looks through its children <Route>s and
         renders the first one that matches the current URL. */}

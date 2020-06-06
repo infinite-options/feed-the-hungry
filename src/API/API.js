@@ -20,7 +20,7 @@ const API = {
                 obj[x[key]] = {
                     name: x.fb_name,
                     logo: x.fb_logo,
-                    id: x.inventory_foodbank_id,
+                    id: x.foodbank_id,
                     address: x.foodbank_address,
                     monday: x.fb_monday_time,
                     tuesday: x.fb_tuesday_time,
@@ -31,7 +31,7 @@ const API = {
                     sunday: x.fb_sunday_time,
                     inventory: [
                         {
-                            food_id: x.inventory_food_id,
+                            food_id: x.food_id,
                             food_name: x.food_name,
                             quantity: x.quantity,
                             image: x.fl_image,
@@ -46,7 +46,7 @@ const API = {
             }
             else {
                 obj[x[key]].inventory.push({ 
-                    food_id: x.inventory_food_id,
+                    food_id: x.food_id,
                     food_name: x.food_name,
                     quantity: x.quantity,
                     image: x.fl_image,
@@ -77,6 +77,15 @@ const API = {
             })
         })
         return arr;
+    },
+    GetItemsByTag: function(inventory, tag){
+        const obj= [];
+        inventory.forEach(item =>{
+            if (item.type.includes(tag)){
+                obj.push(item);
+            }
+        })
+        return obj;
     }
 }
 export default API;
