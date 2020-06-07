@@ -126,9 +126,4 @@ input[type=search] {
         padding-left: 1.75rem;
         padding-right: 1.75rem;
     } 
-    .navbar-burger {
-        /* display: flex; */
-        /* align-items: center;  */
-        /* justify-content: center; */
-    }
 }

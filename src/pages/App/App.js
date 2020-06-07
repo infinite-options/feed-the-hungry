@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,20 +11,20 @@ import {
 // import css
 import 'bulma/css/bulma.css'; 
 import './App.css';
-import Banks from './Banks/Banks';
-import Bank from './Banks/Bank';
-import Header from './Header/Header';
-import Cart from './Cart/Cart';
-import API from './API/API';
-import ScrollToTop from './SrollToTop';
+import Banks from 'pages/Banks/Banks';
+import Bank from 'pages/Bank/Bank';
+import Header from 'components/Header/Header';
+import Cart from 'pages/Cart/Cart';
+import BankAPI from 'API/BankAPI';
+import ScrollToTop from 'utils/Scroll/SrollToTop';
 
 function App(){
   // render(){
-    const list = API.DataLoader();
+    const list = BankAPI.DataLoader();
     var banks = [];
     if (list && list.length > 0) {
-      banks = API.RemoveDuplicatesBy('foodbank_id', list);
-      banks = API.RemoveNull(banks);
+      banks = BankAPI.RemoveDuplicatesBy('foodbank_id', list);
+      banks = BankAPI.RemoveNull(banks);
     }
     return (
       <Router>

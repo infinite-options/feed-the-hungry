@@ -2,14 +2,8 @@ import {faShippingFast, faCube, faMapPin, faClock, faMapMarkerAlt,
     faCalendarAlt, faCheckCircle, faCheck, faStar, faSearch,
     faShoppingCart, faPlus, faMinus, faChevronUp, faChevronDown, faTimes,
     faLongArrowAltLeft, faTrashAlt, faCircleNotch} from '@fortawesome/free-solid-svg-icons';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
-import RoomIcon from '@material-ui/icons/Room';
-import WatchLaterIcon from '@material-ui/icons/WatchLater';
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import Delivery from '../icons/Delivery.png';
-import Pickup from '../icons/Pickup.png';
+import Delivery from './Delivery.png';
+import Pickup from './Pickup.png';
 import { Icon } from 'leaflet';
 
 var greenIcon = new Icon({

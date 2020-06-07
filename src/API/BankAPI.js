@@ -1,5 +1,5 @@
 import React, { useState, useEffect }  from 'react';
-const API = {
+const BankAPI = {
     // fetch data from json file
     // return an array of objects
     DataLoader: function(){
@@ -88,4 +88,4 @@ const API = {
         return obj;
     }
 }
-export default API;
+export default BankAPI;

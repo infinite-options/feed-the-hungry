@@ -7,12 +7,12 @@ import {
     useRouteMatch,
     useParams
 } from "react-router-dom";
-import API from '../API/API'; 
-import '../styles.css';
-import Icons from '../icons/Icons';
+import BankAPI from 'API/BankAPI'; 
+import 'pages/styles.css';
+import Icons from 'components/Icons/Icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Notifications from '../Notifications/Notifications';
-import LeafletMap from '../Map/LeafletMap';
+import Notifications from 'components/Notifications/Notifications';
+import LeafletMap from 'components/Map/LeafletMap';
 
 // display the bank's data on the website.
 function Bank({list}) {
@@ -30,7 +30,7 @@ function Bank({list}) {
 }
 function GetBank({list, bankId}){
     let { path, url } = useRouteMatch();
-    const bank = API.getBankBy(`${bankId}`, list);
+    const bank = BankAPI.getBankBy(`${bankId}`, list);
     return (
         <Router>
             <div className="bank-page-bd">
@@ -91,7 +91,7 @@ function BankBanner({obj}){
                     </div>
                 </div>
                 <div className="bank-banner-right"> 
-                        <LeafletMap/>              
+                    <LeafletMap/>              
                 </div>
             </div>
         </section>
@@ -99,7 +99,7 @@ function BankBanner({obj}){
 }
 function FilterInventory({inventory, bankId}){
     let { tagName } = useParams();
-    const filteredInventory = API.GetItemsByTag(inventory, tagName);
+    const filteredInventory = BankAPI.GetItemsByTag(inventory, tagName);
 
     return (
         <BankInventory inventory={filteredInventory} bankId={bankId} />
@@ -107,50 +107,6 @@ function FilterInventory({inventory, bankId}){
 }
 // Render inventory
 function BankInventory({inventory, bankId}){
-    // console.log(inventory);
-    // const initialValues  = {};
-    // inventory.forEach(x => {
-    //     initialValues[x.food_id] = 0;
-    // })
-    // console.log(initialValues);
-    // const [amount,setAmount] = useState(initialValues);
-    // console.log(amount);
-    // function increment(id){
-    //     var value = amount[id];
-    //     if (value >=10) value = 10;
-    //     else value += 1;
-    //     setAmount((prevState) => ({
-    //         ...prevState,
-    //         [id]: value
-    //     }));
-    // }
-    // function decrement(id){
-    //     var value = amount[id];
-    //     if (value <= 0) value = 0;
-    //     else value -= 1;
-    //     setAmount((prevState) => ({
-    //         ...prevState,
-    //         [id]: value
-    //     }));
-    // }
-    // convert 1..9 to  01..09
-    function pad(d){
-        return (d < 10) ? '0' + d.toString() : d.toString();
-    }
-    function increaseValue(id){
-        var value = parseInt(document.getElementById(id).value, 10);
-        // value = isNaN(value) ? 0 : value;
-        value++;
-        document.getElementById(id).value = value;
-    }
-      
-    function decreaseValue(id) {
-        var value = parseInt(document.getElementById(id).value, 10);
-        // value = isNaN(value) ? 0 : value;
-        // value < 1 ? value = 1 : '';
-        value--;
-        document.getElementById(id).value = value;
-    }
     return (
         <div className="inventory">
             {inventory.map((item) => 
@@ -163,34 +119,7 @@ function BankInventory({inventory, bankId}){
                             <p className="item-brand has-text-grey no-overflow">{item.brand}</p>
                             <p className="title is-6 has-text-grey-dark no-overflow">{item.food_name}</p>
                             <p className="subtitle has-font-13 has-text-grey no-overflow">1 {item.unit} ({item.weight})</p>
-
-                            {/* <div className="field is-grouped is-grouped-multiline item-actions"> */}
-                            <form>
-                                <div class="value-button" id="decrease" onClick={() => decreaseValue(item.food_id)} value="Decrease Value">-</div>
-                                <input type="number" id={item.food_id} value="0" />
-                                <div class="value-button" id="increase" onClick={() => increaseValue(item.food_id)} value="Increase Value">+</div>
-                            </form>
-                                {/* <div className="control">
-                                    <button className="button is-small" onClick={() => decrement(item.food_id)}>
-                                        <span className="icon decrease-qty">
-                                            <FontAwesomeIcon icon={Icons.faChevronDown} />
-                                        </span>
-                                    </button>
-                                    
-                                </div>
-                                <div className="control">
-                                    <span id={item.food_id} className="subtitle has-font-13">
-                                    { item.food_id }
-                                    </span>
-                                </div>
-                                <div className="control">
-                                    <button className="button is-small" onClick={() => increment(item.food_id)}>
-                                        <span className="icon increase-qty">
-                                            <FontAwesomeIcon icon={Icons.faChevronUp} />
-                                        </span>
-                                    </button>
-                                </div> */}
-                            {/* </div> */}
+                            <QuantityInput />
                         </div>               
                     </div>
                     <div className="card-footer">
@@ -198,7 +127,6 @@ function BankInventory({inventory, bankId}){
                             <span className="subtitle has-font-13 has-text-grey">${item.price}</span>  
                         </div>
                         <div className="item-tags">
-                            {/* <a href="#">@{item.type}</a> */}
                             <SplitTags str={item.type} bankId={bankId} /> 
                         </div>
                     </div>
@@ -219,6 +147,59 @@ function SplitTags({str, bankId}){
         );
     }
     return "";
+}
+const useCounter = () => {
+    const [value, setValue] = useState(0);
+
+    const increase = (event) => {
+        event.preventDefault();
+        setValue(value + 1);
+    }
+    const decrease = (event) => {
+        event.preventDefault();
+        setValue(value - 1);
+    }
+    const zero = () => {
+        setValue(0);
+    }
+    return {
+        value,
+        increase,
+        decrease,
+        zero
+    }
+}
+const useField = (type) => {
+    const [value, setValue] = useState('');
+    const onChange = (event) => {
+        setValue(event.target.value);
+    }
+    return {
+        type,
+        value,
+        onChange
+    }
+}
+function QuantityInput() {
+    const counter = useCounter();
+    return (
+        <div className="field is-grouped is-multiline">
+            {/* <form> */}
+            <div className="control item-actions">
+            <button class="button is-small" onClick={counter.decrease}  disabled={counter.value==0 ? true:false}>-</button>
+            {/* </div> */}
+            {/* <div className="control"> */}
+            <input type="number" className="input is-small" value={counter.value} />
+            {/* </div> */}
+            {/* <div className="control"> */}
+            <button class="button is-small" onClick={counter.increase}  disabled={counter.value==10 ? true:false }>+</button>
+            </div>
+                {/* <button class="button is-small" onClick={counter.decrease}  disabled={counter.value==0 ? true:false}>-</button>
+                <input type="number" className="input is-small" value={counter.value} />
+                <button class="button is-small" onClick={counter.increase}  disabled={counter.value==10 ? true:false }>+</button> */}
+            {/* </form> */}
+        </div>
+    );
 }
 function BankSchedule({obj}){
     return (

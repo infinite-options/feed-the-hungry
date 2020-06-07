@@ -1,7 +1,8 @@
 import React from 'react';
 import { Map, TileLayer, Marker, Popup, L, MapLayer } from 'react-leaflet';
 import { geolocated } from 'react-geolocated';
-import Icons from '../icons/Icons';
+import Icons from 'components/Icons/Icons';
+import './style.css';
 
 // use San Jose, CA as the default center
 const DEFAULT_LATITUDE = 37.338208;

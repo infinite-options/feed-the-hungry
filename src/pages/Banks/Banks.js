@@ -7,11 +7,10 @@ import {
     useRouteMatch,
     useParams
 } from "react-router-dom";
-import '../styles.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Icons from '../icons/Icons';
-import Notifications from '../Notifications/Notifications';
-import LeafletMap from '../Map/LeafletMap';
+import 'pages/styles.css';
+import Icons from 'components/Icons/Icons';
+import Notifications from 'components/Notifications/Notifications';
+import LeafletMap from 'components/Map/LeafletMap';
 
 function Banks({list}){
     if (list.length > 0){ 

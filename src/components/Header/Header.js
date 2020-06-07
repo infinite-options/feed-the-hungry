@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import './header.css';
 //import icons
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import Icons from '../icons/Icons';
+import Icons from 'components/Icons/Icons';
 
 
 function Header (){

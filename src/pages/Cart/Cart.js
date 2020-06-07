@@ -1,7 +1,7 @@
 import React from 'react';
-import Rice from '../image/rice.jpg';
+// import Rice from 'src/assets/image/rice.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Icons from '../icons/Icons';
+import Icons  from 'components/Icons/Icons';
 
 function Cart(){
     return (
@@ -20,7 +20,7 @@ function Cart(){
                                         <div className="column is-7 flex-center">
                                             <div className="item-image-container">
                                                 <figure className="image is-square">
-                                                    <img className="is-rounded" src={Rice} alt=""></img>
+                                                    {/* <img className="is-rounded" src={Rice} alt=""></img> */}
                                                 </figure>
                                             </div>
                                             <div className="item-header">
@@ -61,7 +61,7 @@ function Cart(){
                                         <div className="column is-7 flex-center">
                                             <div className="item-image-container">
                                                 <figure className="image is-square">
-                                                    <img className="is-rounded" src={Rice} alt=""></img>
+                                                    {/* <img className="is-rounded" src={Rice} alt=""></img> */}
                                                 </figure>
                                             </div>
                                             <div className="item-header">
@@ -102,7 +102,7 @@ function Cart(){
                                         <div className="column is-7 flex-center">
                                             <div className="item-image-container">
                                                 <figure className="image is-square">
-                                                    <img className="is-rounded" src={Rice} alt=""></img>
+                                                    {/* <img className="is-rounded" src={Rice} alt=""></img> */}
                                                 </figure>
                                             </div>
                                             <div className="item-header">
@@ -148,7 +148,7 @@ function Cart(){
                                         <div className="column is-7 flex-center">
                                             <div className="item-image-container">
                                                 <figure className="image is-square">
-                                                    <img className="is-rounded" src={Rice} alt=""></img>
+                                                    {/* <img className="is-rounded" src={Rice} alt=""></img> */}
                                                 </figure>
                                             </div>
                                             <div className="item-header">
