@@ -119,7 +119,7 @@ function BankInventory({inventory, bankId}){
                             <p className="item-brand has-text-grey no-overflow">{item.brand}</p>
                             <p className="title is-6 has-text-grey-dark no-overflow">{item.food_name}</p>
                             <p className="subtitle has-font-13 has-text-grey no-overflow">1 {item.unit} ({item.weight})</p>
-                            <QuantityInput />
+                            <QuantityInput maxQuantity={item.quantity}/>
                         </div>               
                     </div>
                     <div className="card-footer">
@@ -180,24 +180,15 @@ const useField = (type) => {
         onChange
     }
 }
-function QuantityInput() {
+function QuantityInput({maxQuantity}) {
     const counter = useCounter();
     return (
         <div className="field is-grouped is-multiline">
-            {/* <form> */}
             <div className="control item-actions">
-            <button class="button is-small" onClick={counter.decrease}  disabled={counter.value==0 ? true:false}>-</button>
-            {/* </div> */}
-            {/* <div className="control"> */}
-            <input type="number" className="input is-small" value={counter.value} />
-            {/* </div> */}
-            {/* <div className="control"> */}
-            <button class="button is-small" onClick={counter.increase}  disabled={counter.value==10 ? true:false }>+</button>
+            <button class="button is-small" onClick={counter.decrease}  disabled={counter.value == 0 ? true:false}>-</button>
+            <input type="number" className="input is-small" value={counter.value} readOnly/>
+            <button class="button is-small" onClick={counter.increase}  disabled={counter.value == maxQuantity ? true:false }>+</button>
             </div>
-                {/* <button class="button is-small" onClick={counter.decrease}  disabled={counter.value==0 ? true:false}>-</button>
-                <input type="number" className="input is-small" value={counter.value} />
-                <button class="button is-small" onClick={counter.increase}  disabled={counter.value==10 ? true:false }>+</button> */}
-            {/* </form> */}
         </div>
     );
 }

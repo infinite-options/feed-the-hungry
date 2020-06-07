@@ -1,10 +1,8 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import './header.css';
-//import icons
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import Icons from 'components/Icons/Icons';
-
 
 function Header (){
     return (
@@ -15,26 +13,24 @@ function Header (){
                         Feed The Hungry
                     </span>
                 </a>
-                {/* navbar-burger: toggles the navbar menu on touch devices */}
                 <Hamburger />
             </div>
             <div id="mainNavbar" className="navbar-menu">
                 <div className="navbar-start">
-                    <a href="/banks" className="navbar-item">
+                    <Link to="/banks" className="navbar-item">
                         Food Banks
-                    </a>
+                    </Link>
                 </div>
                 <div className="navbar-end">
                     <div className="navbar-item">
                         <SearchBar />
                     </div>
-                    <a href="#" className="navbar-item">
+                    <Link to="#" className="navbar-item">
                         Login
-                    </a>
+                    </Link>
                     <div className="navbar-item has-no-padding-right">
                         <AddToCart />
                     </div>
-
                 </div>
             </div>
         </nav>

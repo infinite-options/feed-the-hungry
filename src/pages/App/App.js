@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -29,14 +30,11 @@ function App(){
     return (
       <Router>
         <Header />
-        {/* A <Switch> looks through its children <Route>s and
-        renders the first one that matches the current URL. */}
         <Switch>
           <Route exact path="/banks">
             <ScrollToTop>
               <Banks list={banks} />
             </ScrollToTop>
-            
           </Route>
           <Route path={"/banks/:bankId"}>
             <ScrollToTop>
@@ -45,13 +43,10 @@ function App(){
           </Route>
           <Route path="/cart">
             <Cart />
-            {/* <Report /> */}
           </Route>
           <Route path="/about">
-            {/* <About /> */}
           </Route>
           <Route path="/report">
-            {/* <Report /> */}
           </Route>
         </Switch>
       </Router>
