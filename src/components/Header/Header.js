@@ -50,7 +50,7 @@ function SearchBar() {
 }
 function AddToCart() {
     return (
-        <a href="/cart" alt="cart button">
+        <Link to="/cart" alt="cart button">
             <div className="button add-cart">
             <span>Cart</span>   
             <span className="icon shopping-cart is-small">
@@ -58,7 +58,7 @@ function AddToCart() {
             </span>
             <span>0</span>  
             </div>
-        </a>
+        </Link>
     );
 }
 function Hamburger(){
