@@ -19,8 +19,8 @@ function BankLayout({obj}){
             <div className="bank-page-bd">
                 <div className="bank-container">
                     <BankBanner obj={obj} />
-                    <section className="bank-body">
-                        <BankFilters bankUrl={url}/>            
+                    <BankFilters bankUrl={url}/>
+                    <section className="bank-body">            
                         <div className="columns">
                             <div className="column is-6">
                                 <div className="inventory-title">

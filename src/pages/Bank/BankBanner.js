@@ -19,7 +19,7 @@ function BankBanner({obj}){
                             <span className="icon icon-wrapper">
                                 <FontAwesomeIcon icon={Icons.faMapMarkerAlt} style={{ fontSize: 18 }}/>
                             </span>
-                            <h6 className="subtitle is-bold bank-address has-font-14">{obj.address}</h6>
+                            <h6 className="subtitle is-bold bank-address has-font-13">{obj.address}</h6>
                         </div>
                         <div className="bank-info-wrapper">
                             <span className="icon icon-wrapper">

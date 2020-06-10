@@ -57,7 +57,7 @@ function QuantityInput({maxQuantity}) {
         <div className="field is-grouped is-multiline">
             <div className="control item-actions">
             <button class="button is-small" onClick={counter.decrease}  disabled={counter.value == 0 ? true:false}>-</button>
-            <input type="number" className="input is-small" value={counter.value} readOnly/>
+            <input type="text" className="input is-small" value={counter.value} readOnly/>
             <button class="button is-small" onClick={counter.increase}  disabled={counter.value == maxQuantity ? true:false }>+</button>
             </div>
         </div>
