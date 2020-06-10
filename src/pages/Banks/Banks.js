@@ -7,40 +7,9 @@ import {
     useRouteMatch,
     useParams
 } from "react-router-dom";
-import 'pages/styles.css';
 import Icons from 'components/Icons/Icons';
-import Notifications from 'components/Notifications/Notifications';
-import LeafletMap from 'components/Map/LeafletMap';
 
-function Banks({list}){
-    if (list.length > 0){ 
-        return (
-            <div className="banks-page-bd">
-                <div className="columns">
-                    <div className="column is-7">
-                        <div className="bank-list">
-                            <RenderListOfBanks banks={list} />
-                        </div>
-                    </div>
-                    <div className="column is-5 has-no-padding has-shadow">
-                        <div className="sticky">
-                            <LeafletMap banks={list}/>
-                        </div>
-                        
-                    </div>         
-                </div>
-            </div>
-        );
-    } 
-    return (
-        <div className="banks-page-bd">
-            {Notifications.Warning("Loading Data...")}
-        </div>
-    );
-}
-
-// render list of banks
-function RenderListOfBanks({banks}) {
+function Banks({banks}) {
     function getNextDay(){ // get next day
         var d = new Date();
         var weekday = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];

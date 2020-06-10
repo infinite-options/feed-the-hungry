@@ -778,3 +778,25 @@ a.item-tag:hover{
   input .order-quantity {
       border: none;
   }
+
+  /* Bank Filters */
+.bank-filters {
+    padding-bottom: 1rem;
+}
+.filter-icon-wrapper {
+    width: 42px;
+    height: 42px;
+    padding: .5rem;
+    /* padding: .5rem; */
+    border-radius: 50%;
+    background-color: white;
+    /* box-shadow: #215b83 0px 5px 0px 0px; */
+    /* box-shadow: 2px 4px #181818; */
+}
+
+.filter-icon-wrapper:hover {
+    background-color: #e6e6e6;
+}
+.active {
+    background-color:hsl(141, 71%, 48%);
+}

@@ -12,8 +12,8 @@ import {
 // import css
 import 'bulma/css/bulma.css'; 
 import './App.css';
-import Banks from 'pages/Banks/Banks';
-import Bank from 'pages/Bank/Bank';
+import BanksPage from 'pages/Banks/BanksPage';
+import BankPage from 'pages/Bank/BankPage';
 import Header from 'components/Header/Header';
 import Cart from 'pages/Cart/Cart';
 import BankAPI from 'API/BankAPI';
@@ -33,12 +33,12 @@ function App(){
         <Switch>
           <Route exact path="/banks">
             <ScrollToTop>
-              <Banks list={banks} />
+              <BanksPage list={banks} />
             </ScrollToTop>
           </Route>
           <Route path={"/banks/:bankId"}>
             <ScrollToTop>
-              <Bank list={banks}/>
+              <BankPage list={banks}/>
             </ScrollToTop>
           </Route>
           <Route path="/cart">

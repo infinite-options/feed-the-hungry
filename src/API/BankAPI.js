@@ -39,7 +39,8 @@ const BankAPI = {
                             unit : x.fl_package_type,
                             type: x.fl_food_type,
                             brand: x.fl_brand,
-                            price: x.fl_value_in_dollars
+                            price: x.fl_value_in_dollars,
+                            weight_unit: x.fl_unit
                         }
                     ]
                 };
@@ -54,7 +55,8 @@ const BankAPI = {
                     unit : x.fl_package_type,
                     type: x.fl_food_type,
                     brand: x.fl_brand,
-                    price: x.fl_value_in_dollars
+                    price: x.fl_value_in_dollars,
+                    weight_unit: x.fl_unit
                 });
             }
         });
