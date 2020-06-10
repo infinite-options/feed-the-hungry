@@ -24,22 +24,18 @@ function App(){
     const list = BankAPI.DataLoader();
     var banks = [];
     if (list && list.length > 0) {
-      banks = BankAPI.RemoveDuplicatesBy('foodbank_id', list);
-      banks = BankAPI.RemoveNull(banks);
+      banks = BankAPI.RemoveNull(list);
+      banks = BankAPI.RemoveDuplicatesBy('foodbank_id', banks);
     }
     return (
       <Router>
         <Header />
         <Switch>
           <Route exact path="/banks">
-            <ScrollToTop>
               <BanksPage list={banks} />
-            </ScrollToTop>
           </Route>
-          <Route path={"/banks/:bankId"}>
-            <ScrollToTop>
+          <Route exact path={"/banks/:bankId/products"}>
               <BankPage list={banks}/>
-            </ScrollToTop>
           </Route>
           <Route path="/cart">
             <Cart />

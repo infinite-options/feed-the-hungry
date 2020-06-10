@@ -104,16 +104,16 @@ input[type=search] {
     margin-left: 1rem;
 }
 .add-cart {
+    border: none;
     height:48px;
     border-radius: 0;
-    color: white;
-    background-color: black;
+    color:hsl(141, 71%, 42%);
+    /* background-color: hsl(141, 71%, 48%); */
 }
 .add-cart:hover {
     transition: .2s ease-in;
-    border: 1px solid black;
-    background-color: white;
-    color: black;
+
+    color: hsl(141, 70%, 30%);
 }
 @media only screen and (max-width: 1050px) {
     /* .navbar-burger{

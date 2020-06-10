@@ -52,9 +52,9 @@ function AddToCart() {
     return (
         <Link to="/cart" alt="cart button">
             <div className="button add-cart">
-            <span>Cart</span>   
-            <span className="icon shopping-cart is-small">
-                <FontAwesomeIcon icon={Icons.faShoppingCart} />
+            {/* <span>Cart</span>    */}
+            <span className="icon shopping-cart">
+                <FontAwesomeIcon icon={Icons.faShoppingBasket} />
             </span>
             <span>0</span>  
             </div>

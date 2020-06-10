@@ -1,7 +1,7 @@
 import {faShippingFast, faCube, faMapPin, faClock, faMapMarkerAlt,
     faCalendarAlt, faCheckCircle, faCheck, faStar, faSearch,
     faShoppingCart, faPlus, faMinus, faChevronUp, faChevronDown, faTimes,
-    faLongArrowAltLeft, faTrashAlt, faCircleNotch} from '@fortawesome/free-solid-svg-icons';
+    faLongArrowAltLeft, faTrashAlt, faCircleNotch, faShoppingBasket} from '@fortawesome/free-solid-svg-icons';
 import Delivery from './Delivery.png';
 import Pickup from './Pickup.png';
 import { Icon } from 'leaflet';
@@ -23,5 +23,6 @@ export default {
     faCalendarAlt, faCheckCircle, faCheck, faStar, faSearch,
     faShoppingCart, faPlus, faMinus, faChevronUp, faChevronDown,
     Delivery, Pickup, greenIcon, faTimes, faLongArrowAltLeft,
-    faTrashAlt, faCircleNotch, Kosher, GlutenFree, Vegan, Vegetarian
+    faTrashAlt, faCircleNotch, Kosher, GlutenFree, Vegan, Vegetarian,
+    faShoppingBasket
 }

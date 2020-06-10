@@ -29,7 +29,7 @@ function Banks({banks}) {
                                 </figure>
                             </div> 
                             <div className="media-content">
-                                <p className="title is-5"><Link to={`/banks/${bank.id}`} className="has-text-grey-dark link-to-bank">{bank.name} (0.5 miles)</Link></p>
+                                <p className="title is-5"><Link to={`/banks/${bank.id}/products`} className="has-text-grey-dark link-to-bank">{bank.name} (0.5 miles)</Link></p>
                                 <p className="subtitle has-font-13 has-text-grey"> {bank.address}</p>
                             </div>
                         </div>

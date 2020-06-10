@@ -13,9 +13,9 @@
     font-family: 'Muli',sans-serif;
 }
 .bank-container {
-    max-width: 1080px;
-    margin-left: auto;
-    margin-right: auto;
+    /* max-width: 1080px; */
+    padding-left: 14vw;
+    padding-right: 14vw;
 }
 
 .bank-page-bd {
@@ -34,7 +34,7 @@
     /* background-color:#f6f9fc; */
 }
 .bank-title {
-    color: green;
+    color: hsl(141, 71%, 42%);
     /* color: #00bd81; */
 }
 .bank-list {
@@ -170,7 +170,10 @@
     overflow: hidden;
 }
 .bank-banner-info {
-    padding: 3rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
 }
 .banner-image {
     /* top: 60px; */
@@ -258,8 +261,8 @@
 .inventory {
     display:flex;
     flex-direction: column;
-    margin-top: 2rem;
-    margin-bottom: .2rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     /* flex-wrap: wrap; */
     /* justify-content: space-between */
       
@@ -274,11 +277,12 @@
     position: relative;
 } */
 .item {
-    display: flex;
-    flex-direction: column;
+    /* display: flex; */
+    /* flex-direction: column; */
     position: relative;
     width: 100%;
-    height: auto;
+    /* min-height: 201.4px; */
+    /* max-height: 220px; */
     border-bottom: 1px solid #d3d3d3;
     /* border-radius: 20px; */
     background-color: white;
@@ -292,6 +296,7 @@
 }
 
 .item-content {
+    min-height: 158.4px;
     margin-bottom: 1rem;
 }
 .item-content p {
@@ -466,7 +471,25 @@ img{
     padding:0;
 }
 .bank-info-wrapper {
+    display: flex;
+    /* align-items: center; */
     margin-top: 0;
+}
+.bank-info-icon {
+    margin-right: 6px;
+}
+.bank-info-content {
+    width: 100%;
+    display: inline-block;
+    /* height: 100%; */
+    display: flex;
+    align-items: center;
+}
+.flex-top {
+    display: inline-block;
+    min-height: 144px;
+    display: flex;
+    justify-content: flex-start;
 }
 .bank-info-wrapper:not(:first-child) {
     display: flex;
@@ -479,11 +502,21 @@ img{
     text-align: left;
 }
 
-.inventory-title{
-    display: block;
-    width: 100%;
-    border-bottom: 1px solid #e6e6e6;
-    padding-bottom: 1.75rem;
+.inventory-title-container{
+    /* text-transform: uppercase; */
+    display: inline-block;
+    /* width: 100%; */
+    /* border-bottom: 1px solid #e6e6e6; */
+    /* padding-bottom:  */
+}
+.inventory-title {
+    font-size: 13px;
+    letter-spacing: 1;
+    color: hsl(0, 0%, 48%);
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .columns.banner-container {
     margin: 0;
@@ -549,13 +582,13 @@ opacity: 1;
     justify-content: flex-start;
 }
 .bank-schedule {
-width: 100%;
-display: flex;
-    
+    width: 100%;
+    display: inline-block;
 }
 .schedule-days{
     
     float: left;
+    padding-right: 1rem; 
     width: 10%;
 } 
 .schedule-hours {
@@ -567,11 +600,6 @@ display: flex;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.bank-address {
-    overflow: hidden; 
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
   /* for mobile */
   @media only screen and (max-width: 600px) {
     .notification {
@@ -581,10 +609,6 @@ display: flex;
     .bank-list{
         padding-left: 1rem;
         padding-right: 1rem;
-    }
-    .bank-body {
-        padding-left: 1.75rem;
-        padding-right: 1.75rem;
     }
     .inventory-col-1 {
         margin-bottom: .5rem;
@@ -602,14 +626,14 @@ display: flex;
         padding-left: 1.75rem;
         padding-right: 1rem;
     }
-    .bank-body {
-        padding-left: 1.75rem;
-        padding-right: 1.75rem;
-    }
     .bank-title {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+    .bank-container {
+        padding-left: 1.75rem;
+        padding-right: 1.75rem;
     }
 }
 @media only screen and (min-width: 1050px) {
@@ -642,7 +666,12 @@ display: flex;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.no-overflow.subtitle{
+.subtitle.no-overflow {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.no-overflow {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -782,7 +811,7 @@ a.item-tag:hover{
   /* Bank Filters */
 .bank-filters {
     padding-top: 2rem;
-    padding-bottom: 2rem;
+    /* padding-bottom: 2rem; */
 }
 .filter-icon-wrapper {
     width: 42px;
@@ -798,6 +827,20 @@ a.item-tag:hover{
 .filter-icon-wrapper:hover {
     background-color: #e6e6e6;
 }
-.active {
-    background-color:hsl(141, 71%, 48%);
+
+.tabs li.is-active a {
+    border-bottom: 2px solid #D1410C;
+    color: #D1410C;
+}
+.tabs a {
+    color: hsl(0, 0%, 48%);
+    border-bottom-color: #EEEDF2;
+}
+.tabs a:hover {
+    color: #D1410C;
+    border-bottom-color: #EEEDF2;
+}
+
+.tabs ul{
+    border-bottom-color: #EEEDF2;
 }

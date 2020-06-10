@@ -18,7 +18,9 @@ function BankPage({list}) {
     return ( 
     <div className="bank-page-bd">
         {bank ? 
-            (<BankLayout obj={bank} /> ) : 
+            (   
+                <BankLayout obj={bank} />
+            ) : 
             (Notifications.Warning("Loading Data..."))
             }
     </div>);

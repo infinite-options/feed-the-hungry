@@ -1,7 +1,7 @@
 import React from 'react';
 function BankSchedule({obj}){
     return (
-        <div className="bank-schedule">
+        <div className="bank-info-content no-overflow">
             <div className="schedule-days">
                 <p className="subtitle is-bold has-font-13 capitalized">mon</p>
                 <p className="subtitle is-bold has-font-13 capitalized">tue</p>

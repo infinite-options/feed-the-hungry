@@ -13,19 +13,28 @@ function BankBanner({obj}){
                             <img src={obj.logo} alt=""></img>
                         </figure> 
                         <div className="bank-info-wrapper has-no-margin">
-                        <h1 className="title bank-title is-5">{obj.name} </h1>
-                        </div>
-                        <div className="bank-info-wrapper no-overflow">
-                            <span className="icon icon-wrapper">
-                                <FontAwesomeIcon icon={Icons.faMapMarkerAlt} style={{ fontSize: 18 }}/>
-                            </span>
-                            <h6 className="subtitle is-bold bank-address has-font-13">{obj.address}</h6>
+                        <p className="title bank-title is-5">{obj.name} </p>
                         </div>
                         <div className="bank-info-wrapper">
-                            <span className="icon icon-wrapper">
-                                <FontAwesomeIcon icon={Icons.faClock} style={{fontSize: 18 }} />
+                            <div className="bank-info-icon">
+                            <span className="icon">
+                                <FontAwesomeIcon icon={Icons.faMapMarkerAlt} style={{ fontSize: 16 }}/>
                             </span>
+                            </div>
+                            <div className="bank-info-content no-overflow">
+                            <p className="subtitle is-bold bank-address has-font-13">{obj.address}</p>
+                            </div>
+                            
+                        </div>
+                        <div className="bank-info-wrapper">
+                            <div className="bank-info-icon">
+                            <span className="icon">
+                                <FontAwesomeIcon icon={Icons.faClock} style={{fontSize: 16}} />
+                            </span>
+                            </div>
+                            {/* <div className="bank-info-content no-overflow"> */}
                             <BankSchedule obj={obj}/>
+                            {/* </div> */}
                         </div>
                     </div>
                 </div>

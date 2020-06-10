@@ -5,46 +5,50 @@ import {
     Route,
     Link,
     useRouteMatch,
+    useLocation,
     useParams
 } from "react-router-dom";
 import BankAPI from 'API/BankAPI'; 
 import BankInventory from 'pages/Bank/BankInventory';
 import BankBanner from 'pages/Bank/BankBanner';
 import BankFilters from 'pages/Bank/BankFilters';
-
+import ScrollToTopOnMount from 'utils/Scroll/ScrollToTopOnMount';
 function BankLayout({obj}){
     let { path, url } = useRouteMatch();
+    let query = useQuery();
     return (
-        <Router>
+        // <Router>
             <div className="bank-page-bd">
+                <ScrollToTopOnMount />
                 <div className="bank-container">
                     <BankBanner obj={obj} />
                     <BankFilters bankUrl={url}/>
                     <section className="bank-body">            
                         <div className="columns">
                             <div className="column is-6">
-                                <div className="inventory-title">
-                                    <p className="title is-6 has-text-grey-dark">Delivery or Pickup ({obj.inventory.length})</p>  
+                                <div className="inventory-title-container">
+                                    <p className="subtitle inventory-title">Delivery or Pickup</p>  
                                 </div>
-                                <Switch>
-                                    <Route path={`${path}/:tagName`}>
+                                {/* <Switch>
+                                    <Route path={`${path}?type=:tagName`}>
                                         <FilterInventory inventory={obj.inventory} bankUrl={url}/>
                                     </Route>
                                     <Route exact path={path}>
                                         <BankInventory inventory={obj.inventory} bankUrl={url}/>
                                     </Route>
-                                </Switch>    
+                                </Switch>     */}
+                                <BankInventory type={query.get("type")} inventory={obj.inventory} bankUrl={url}/>
                             </div>
                             <div className="column is-6">
-                                <div className="inventory-title">
-                                    <p className="title is-6 has-text-grey-dark">Delivery Only</p>
+                                <div className="inventory-title-container">
+                                    <p className="subtitle inventory-title">Delivery Only</p>
                                 </div>
                             </div>
                         </div>
                     </section>
                 </div>
             </div>
-        </Router>
+        // </Router>
     );
 }
 function FilterInventory({inventory, bankUrl}){
@@ -54,4 +58,7 @@ function FilterInventory({inventory, bankUrl}){
         <BankInventory inventory={filteredInventory} bankUrl={bankUrl}/>
     );
 }
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+  }
 export default BankLayout;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect }  from 'react';
+import BankAPI from 'API/BankAPI';
 import {
     BrowserRouter as Router,
     Switch,
@@ -8,9 +9,11 @@ import {
     useParams
 } from "react-router-dom";
 
-function BankInventory({inventory, bankUrl}){
+function BankInventory({type, inventory, bankUrl}){
+    if (type) inventory = BankAPI.GetItemsByTag(inventory, type);
+    
     return (
-        <div className="inventory">
+        <div key={+new Date()} className="inventory">
             {inventory.map((item) => 
                 <div key={item.food_id} className="card item fade-in">
                     <div className="card-content has-no-padding item-content">
@@ -42,9 +45,9 @@ function SplitTags({bankUrl, str}){
     if (str){ 
         var tags = str.split(';');
         return (
-            <div className="tags-container">
+            <div className="tags-container no-overflow">
                 { tags.map(tag => 
-                    <Link key={tag} to={`${bankUrl}/${tag}`}  className="item-tag subtitle has-margin-left-12" alt="">#{tag}</Link>
+                    <Link key={tag} to={`${bankUrl}?type=${tag}`}  className="item-tag subtitle has-margin-left-12" alt="">#{tag}</Link>
                 )}
             </div>
         );
@@ -56,9 +59,9 @@ function QuantityInput({maxQuantity}) {
     return (
         <div className="field is-grouped is-multiline">
             <div className="control item-actions">
-            <button class="button is-small" onClick={counter.decrease}  disabled={counter.value == 0 ? true:false}>-</button>
+            <button class="button is-small" onClick={counter.decrease}  disabled={counter.value === 0 ? true:false}>-</button>
             <input type="text" className="input is-small" value={counter.value} readOnly/>
-            <button class="button is-small" onClick={counter.increase}  disabled={counter.value == maxQuantity ? true:false }>+</button>
+            <button class="button is-small" onClick={counter.increase}  disabled={counter.value === maxQuantity ? true:false }>+</button>
             </div>
         </div>
     );
