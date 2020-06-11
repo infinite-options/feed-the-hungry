@@ -30,34 +30,37 @@ const BankAPI = {
                     saturday: x.fb_saturday_time,
                     sunday: x.fb_sunday_time,
                     inventory: [
-                        {
-                            food_id: x.food_id,
-                            food_name: x.food_name,
-                            quantity: x.quantity,
-                            image: x.fl_image,
-                            weight: x.fl_amount,
-                            unit : x.fl_package_type,
-                            type: x.fl_food_type,
-                            brand: x.fl_brand,
-                            price: x.fl_value_in_dollars,
-                            weight_unit: x.fl_unit
-                        }
-                    ]
+                        
+                            {
+                                food_id: x.food_id,
+                                food_name: x.food_name,
+                                quantity: x.quantity,
+                                image: x.fl_image,
+                                weight: x.fl_amount,
+                                unit : x.fl_package_type,
+                                type: x.fl_food_type,
+                                brand: x.fl_brand,
+                                price: x.fl_value_in_dollars,
+                                weight_unit: x.fl_unit
+                            }
+
+                                    ]
                 };
             }
             else {
-                obj[x[key]].inventory.push({ 
-                    food_id: x.food_id,
-                    food_name: x.food_name,
-                    quantity: x.quantity,
-                    image: x.fl_image,
-                    weight: x.fl_amount,
-                    unit : x.fl_package_type,
-                    type: x.fl_food_type,
-                    brand: x.fl_brand,
-                    price: x.fl_value_in_dollars,
-                    weight_unit: x.fl_unit
-                });
+                obj[x[key]].inventory.push({
+                                    food_id: x.food_id,
+                                    food_name: x.food_name,
+                                    quantity: x.quantity,
+                                    image: x.fl_image,
+                                    weight: x.fl_amount,
+                                    unit : x.fl_package_type,
+                                    type: x.fl_food_type,
+                                    brand: x.fl_brand,
+                                    price: x.fl_value_in_dollars,
+                                    weight_unit: x.fl_unit
+                                });
+            
             }
         });
     
@@ -82,13 +85,7 @@ const BankAPI = {
         return arr;
     },
     GetItemsByTag: function(inventory, tag){
-        const obj= [];
-        inventory.forEach(item =>{
-            if (item.type.includes(tag)){
-                obj.push(item);
-            }
-        })
-        return obj;
+        return inventory.filter(foodItem => foodItem.type.includes(tag));
     }
 }
 export default BankAPI;

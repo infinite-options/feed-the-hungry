@@ -14,11 +14,13 @@
 }
 .bank-container {
     /* max-width: 1080px; */
+    padding-bottom: 5rem;
     padding-left: 14vw;
     padding-right: 14vw;
 }
 
 .bank-page-bd {
+    position: relative;
     /* position: absolute; */
     /* margin-left: 12vw; */
     /* margin-right: 12vw; */
@@ -197,7 +199,7 @@
 }
 .bank-body {
     padding-top: 2rem;
-    padding-bottom: 2rem;
+    /* padding-bottom: 2rem; */
     /* margin-left: 12vw; */
     /* margin-right: 12vw; */
 }
@@ -843,4 +845,15 @@ a.item-tag:hover{
 
 .tabs ul{
     border-bottom-color: #EEEDF2;
+}
+
+/* CHECK OUT BUTTON */
+.bank-actions {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.checkout-btn-wrapper {
+    display: inline-block;
+    
 }

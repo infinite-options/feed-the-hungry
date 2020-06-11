@@ -17,7 +17,7 @@ import BankPage from 'pages/Bank/BankPage';
 import Header from 'components/Header/Header';
 import Cart from 'pages/Cart/Cart';
 import BankAPI from 'API/BankAPI';
-import ScrollToTop from 'utils/Scroll/SrollToTop';
+import CheckoutPage from 'pages/Checkout/CheckoutPage';
 
 function App(){
   // render(){
@@ -35,10 +35,10 @@ function App(){
               <BanksPage list={banks} />
           </Route>
           <Route exact path={"/banks/:bankId/products"}>
-              <BankPage list={banks}/>
+            <BankPage list={banks}/>
           </Route>
-          <Route path="/cart">
-            <Cart />
+          <Route exact path={"/banks/:bankId/products/checkout"}>
+            <CheckoutPage list={banks}/>
           </Route>
           <Route path="/about">
           </Route>

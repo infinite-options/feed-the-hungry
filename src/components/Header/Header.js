@@ -41,7 +41,7 @@ function SearchBar() {
         <div className="field is-grouped">
             <p id="search" className="control is-expanded no-bottom-margin has-icons-right">
             <input className="input" type="search" placeholder="Find a food bank"></input>
-            <span class="icon is-small has-text-black is-right">
+            <span className="icon is-small has-text-black is-right">
                 <FontAwesomeIcon icon={Icons.faSearch}/>
             </span>
             </p>
