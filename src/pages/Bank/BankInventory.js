@@ -28,7 +28,7 @@ function BankInventory({ obj, bankUrl }) {
               </p>
               <p className="subtitle has-font-13 has-text-grey no-overflow">
                 1 {foodItem.unit} ({foodItem.weight}{" "}
-                {foodItem.weight})
+                {foodItem.weight_uni})
               </p>
               <QuantityInput
                 foodItem={foodItem}
