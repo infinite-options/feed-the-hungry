@@ -20,13 +20,13 @@ function BankInventory({ obj, bankUrl }) {
               ></img>
             </div>
             <div className="item-info">
-              <p className="item-brand has-text-grey no-overflow">
+              <p className="title has-text-grey-light is-7 item-brand">
                 {foodItem.brand}
               </p>
-              <p className="title is-6 has-text-grey-dark no-overflow">
+              <p className="subtitle is-6 is-bold no-overflow">
                 {foodItem.food_name}
               </p>
-              <p className="subtitle has-font-13 has-text-grey no-overflow">
+              <p className="subtitle is-7 has-text-grey no-overflow">
                 1 {foodItem.unit} ({foodItem.weight}{" "}
                 {foodItem.weight_uni})
               </p>

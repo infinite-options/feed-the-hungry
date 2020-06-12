@@ -2,14 +2,16 @@
     position: absolute;
     margin-top: 10vh;
     width: 100%;
-    height: 100%;
+    min-height: 90vh;
+    height: auto;
     background-color: #f8f7fa;
 }
 .checkout-page-layer{
+    
     padding-left: 14vw;
     padding-right: 14vw;
 }
-.order-container {
+.checkout-page-content {
     position: relative;
     width: 100%;
     height: 100%;
@@ -18,14 +20,88 @@
 }
 .order-header {
     /* position: absolute; */
-    height: 100px;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.order-body {
+.order-items {
     width: 100%;
     /* display: flex; */
     /* align-items: center; */
-}   
+} 
+.item-brand {
+    font-weight: 550;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: illipsis;
+}
+.is-bold {
+    font-weight: 600;
+}
+.order-confirm{
+    /* padding-top: 3rem; */
+    /* padding-bottom: 3rem; */
+    margin: 5rem auto;
+    /* padding-left: 6rem; */
+    /* padding-right: 6rem; */
+    width: 60%;
+}
+.confirm-title {
+    font-weight: 600;
+    /* text-transform: uppercase; */
+    /* letter-spacing: 1px; */
+}
+.w-50 {
+    width: 50%;
+}
+.w-100 {
+    width: 100%;
+}
+.delivery-confirm {
+    /* padding: 1.5rem; */
+    width: 100%;
+    /* background-color: white; */
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+}
+.round-btn {
+    border-radius: 50%;
+}
+label.has-margin-bottom-half{
+    margin-bottom: .5rem;
+}
+.control .street, .city, .state, .zip{
+    /* border-radius: 0; */
+    /* box-shadow: none; */
+    /* border: 1px solid #f1f1f1; */
+    margin-top: .2rem;
+}
+.pickup-confirm{
+    /* padding-top: 1.5rem; */
+
+    width: 100%;
+    /* background-color: white; */
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid #EEEDF2;
+}
+.has-padding-bottom-1-5 {
+    padding-bottom: 1.5rem;
+}
+.has-no-margin {
+    margin: 0;
+}
+.cart-summary-container {
+    /* padding: 1.5rem; */
+    width: 100%;
+    background-color: white;
+
+}
+.cart-item {
+    /* box-shadow: none; */
+    border-bottom: 1px solid #eeeeef;
+}
