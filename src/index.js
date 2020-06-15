@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import "react-datepicker/dist/react-datepicker.css";
 import App from './pages/App/App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from "react-router-dom";

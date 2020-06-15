@@ -5,7 +5,6 @@ import Icons from 'components/Icons/Icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 function Carousel({obj}){
   const items = JSON.parse(window.localStorage.getItem(obj.id)) || [];
-  console.log(items);
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const chevronWidth = 40;
   return (
@@ -20,14 +19,10 @@ function Carousel({obj}){
         outsideChevron
         chevronWidth={chevronWidth}
       > 
-      {items.map(x => x.amount > 0 ? 
-        (<CartItem key={x.item.food_id} foodItem={x} />
-          ): null)
+      {items.map(x => 
+        <CartItem key={x.item.food_id} foodItem={x} />)
       }
-        {/* <div style={{ height: 200, background: '#EEE' }}>First card</div>
-        <div style={{ height: 200, background: '#EEE' }}>Second card</div>
-        <div style={{ height: 200, background: '#EEE' }}>Third card</div>
-        <div style={{ height: 200, background: '#EEE' }}>Fourth card</div> */}
+        {/* <div style={{ height: 200, background: '#EEE' }}>First card</div> */}
       </ItemsCarousel>
     </div>
   );

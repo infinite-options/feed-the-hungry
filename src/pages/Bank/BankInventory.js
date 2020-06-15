@@ -6,7 +6,7 @@ function BankInventory({ obj, bankUrl }) {
   let query = useQuery();
   let inventory = obj.inventory;
   if (query.get("type")) inventory = BankAPI.GetItemsByTag(inventory, query.get("type"));
-  console.log(inventory);
+
   return (
     <div key={+new Date()} className="inventory fade-in">
       {inventory.map(foodItem => (
@@ -27,8 +27,8 @@ function BankInventory({ obj, bankUrl }) {
                 {foodItem.food_name}
               </p>
               <p className="subtitle is-7 has-text-grey no-overflow">
-                1 {foodItem.unit} ({foodItem.weight}{" "}
-                {foodItem.weight_uni})
+                {foodItem.unit} ({foodItem.weight}{" "}
+                {foodItem.weight_unit})
               </p>
               <QuantityInput
                 foodItem={foodItem}
@@ -150,12 +150,20 @@ function QuantityInput({ foodItem, bankId, limit }) {
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
+function isStorageChanged(){
+  window.addEventListener("storage", (e) => {
+    return true;
+  })
+  return false;
+}
 
 const useCounter = (foodItem, bankId) => {
-  const initialValues = JSON.parse(window.localStorage.getItem(bankId)) || [];
-  const initValue = initialValues.find((x) => {
+  let initialValues = JSON.parse(window.localStorage.getItem(bankId)) || [];
+
+  let initValue = initialValues.find((x) => {
     return x.item.food_id === foodItem.food_id;
   });
+
   const [value, setValue] = useState(initValue ? initValue.amount : 0);
 
   const increase = () => {
@@ -167,13 +175,16 @@ const useCounter = (foodItem, bankId) => {
   const zero = () => {
     setValue(0);
   };
+
   useEffect(() => {
     let items = JSON.parse(window.localStorage.getItem(bankId)) || [];
     let item = items.find((x) => {
       return x.item.food_id === foodItem.food_id;
     });
-    if (item) item.amount = value;
-    else items.push({ item: foodItem, amount: 0 });
+    if (item && (value > 0)) item.amount = value;
+    else if (item && (value === 0)) items.splice(items.indexOf(item), 1);
+    else if (!item && (value > 0)) items.push({item: foodItem, amount: value});
+
     window.localStorage.setItem(bankId, JSON.stringify(items));
   }, [value]);
 

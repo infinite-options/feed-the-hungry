@@ -1,5 +1,5 @@
 import {faShippingFast, faCube, faMapPin, faClock, faMapMarkerAlt,
-    faCalendarAlt, faCheckCircle, faCheck, faStar, faSearch,
+    faCalendarAlt, faCheckCircle, faCheck, faStar, faSearch, faBoxOpen,
     faShoppingCart, faPlus, faMinus, faChevronUp, faChevronDown, faTimes,
     faLongArrowAltLeft, faTrashAlt, faCircleNotch, faShoppingBasket,
     faLongArrowAltRight, faChevronLeft, faChevronRight, faWalking, faTruck} from '@fortawesome/free-solid-svg-icons';
@@ -26,5 +26,5 @@ export default {
     Delivery, Pickup, greenIcon, faTimes, faLongArrowAltLeft,
     faTrashAlt, faCircleNotch, Kosher, GlutenFree, Vegan, Vegetarian,
     faShoppingBasket, faLongArrowAltRight, faChevronLeft, faChevronRight,
-    faWalking, faTruck
+    faWalking, faTruck, faBoxOpen
 }

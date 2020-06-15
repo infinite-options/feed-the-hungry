@@ -1,0 +1,11 @@
+.is-empty-message{
+    width: 200px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.has-margin-top-1-5{
+    margin-top: 1.5rem;
+}

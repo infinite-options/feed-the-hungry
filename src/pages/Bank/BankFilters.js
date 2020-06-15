@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useRouteMatch, useLocation } from 'react-router-dom';
 import Icons from 'components/Icons/Icons';
 
 function BankFilters({bankUrl}){
-    const [activeTab, setActiveTab] = useState('all');
+    let query = useQuery();
+    let type = query.get('type');
+    const [activeTab, setActiveTab] = useState( type? type : 'all' );
     const HandleClickTab = (event, tabName) => {
         event.preventDefault();
         setActiveTab(tabName);
@@ -47,5 +49,7 @@ function BankFilters({bankUrl}){
         </div>
     );
 }
-
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+  }
 export default BankFilters;

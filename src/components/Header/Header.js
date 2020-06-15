@@ -8,7 +8,7 @@ function Header (){
     return (
         <nav className="navbar is-fixed-top" role="navigation" aria-label="main navigation">
             <div className="navbar-brand ">
-                <a className="navbar-item has-no-padding-left" href="#">
+                <a className="navbar-item has-no-padding-left" href="/">
                     <span className="subtitle is-5 brand-text">
                         Feed The Hungry
                     </span>

@@ -3,32 +3,36 @@
     margin-top: 10vh;
     width: 100%;
     min-height: 90vh;
-    height: auto;
     background-color: #f8f7fa;
 }
 .checkout-page-layer{
-    
+    width: 100%;
     padding-left: 14vw;
     padding-right: 14vw;
 }
 .checkout-page-content {
-    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.checkout-page-title {
+    width: 100%;
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+    display: flex;
+    justify-content: center;
+}
+.checkout-page-body {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
 }
-.order-header {
-    /* position: absolute; */
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 .order-items {
+
     width: 100%;
+    height: auto;
+    /* max-height: 275.2px; */
     /* display: flex; */
     /* align-items: center; */
 } 
@@ -44,9 +48,10 @@
     font-weight: 600;
 }
 .order-confirm{
+    display: block;
     /* padding-top: 3rem; */
     /* padding-bottom: 3rem; */
-    margin: 5rem auto;
+    margin: 2.5rem auto;
     /* padding-left: 6rem; */
     /* padding-right: 6rem; */
     width: 60%;
@@ -72,9 +77,9 @@
 .round-btn {
     border-radius: 50%;
 }
-label.has-margin-bottom-half{
+/* label.has-margin-bottom-half{
     margin-bottom: .5rem;
-}
+} */
 .control .street, .city, .state, .zip{
     /* border-radius: 0; */
     /* box-shadow: none; */
@@ -103,5 +108,42 @@ label.has-margin-bottom-half{
 }
 .cart-item {
     /* box-shadow: none; */
+    width: 185.333px;
     border-bottom: 1px solid #eeeeef;
+}
+.card-image {
+    max-width: inherit;
+    display: flex;
+    justify-content: center;
+    height: 133px;
+}
+.fade-in-quick {
+    animation: fadeIn ease .1s;
+    -webkit-animation: fadeIn ease .1s;
+    -moz-animation: fadeIn ease .1s;
+    -o-animation: fadeIn ease .1s;
+    -ms-animation: fadeIn ease .1s;
+  }
+.delivery-option-2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.has-margin-left-0-5 {
+    margin-left: .5rem;
+}
+.confirm-checkout-btn {
+    margin-top: 1.5rem;
+}
+.item-list {
+    width: 180px;
+    margin-bottom: 1.5rem;
+}
+.level.item-level:not(:last-child) {
+    margin-bottom: 0;
+}
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

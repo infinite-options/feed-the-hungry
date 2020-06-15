@@ -15,8 +15,14 @@ import BankFilters from "pages/Bank/BankFilters";
 import ScrollToTopOnMount from "utils/Scroll/ScrollToTopOnMount";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Icons from 'components/Icons/Icons';
+import { faWindowRestore } from "@fortawesome/free-solid-svg-icons";
 function BankLayout({ obj }) {
   let { path, url } = useRouteMatch();
+  const [key, setKey] = useState(1);
+  window.addEventListener("storage", () => {
+    setKey(key + 1);
+  })
+
 //   const cart = useCart(obj);
   return (
     <div className="bank-page-bd">
@@ -31,9 +37,11 @@ function BankLayout({ obj }) {
                 <p className="subtitle inventory-title">Delivery or Pickup</p>
               </div>
               <BankInventory
-                obj={obj}
-                bankUrl={url}
+              key={key}
+              obj={obj}
+              bankUrl={url}
               />
+         
             </div>
             <div className="column is-6">
               <div className="inventory-title-container">
@@ -50,11 +58,11 @@ function BankLayout({ obj }) {
                 <span>Return to Search Results</span>
             </button>
             <Link to={`${url}/checkout`} >
-                <button className="button is-success">
-                <span className="icon">
-                    <FontAwesomeIcon icon={Icons.faLongArrowAltRight} />
-                </span>
-                <span>Checkout Now</span>
+                <button className="button is-success" >
+                  <span className="icon">
+                      <FontAwesomeIcon icon={Icons.faLongArrowAltRight} />
+                  </span>
+                  <span>Checkout Now</span>
                 </button>
             </Link>
           </div>
@@ -102,4 +110,5 @@ const useCart = (obj) => {
         getItemValue
     };
 }
+
 export default BankLayout;

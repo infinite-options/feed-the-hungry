@@ -5,9 +5,8 @@ import BankLayout from 'pages/Bank/BankLayout';
 import Notifications from 'components/Notifications/Notifications';
 import CheckoutPageLayer from 'pages/Checkout/CheckoutPageLayer';
 import './style.css';
-function CheckoutPage({list}){
+function CheckoutPage({ list }){
     let { bankId } = useParams();
-    let {path, url} = useRouteMatch();
     const bank = BankAPI.getBankBy(bankId, list);
     return(
         <div className="checkout-page">
