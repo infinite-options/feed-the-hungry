@@ -4,7 +4,7 @@ function CartItem({foodItem}){
     return (
         <div className="card cart-item">
             <div className="card-image">
-                {/* <figure class="image is-128x128"> */}
+                {/* <figure className="image is-128x128"> */}
                     <img src={foodItem.item.image} alt="Placeholder image" />
                 {/* </figure> */}
             </div>

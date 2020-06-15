@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import BankAPI from "API/BankAPI";
 import { BrowserRouter as Router, Link, useLocation } from "react-router-dom";
+import useQuery from 'components/Hooks/useQuery';
 
 function BankInventory({ obj, bankUrl }) {
   let query = useQuery();
@@ -147,9 +148,9 @@ function QuantityInput({ foodItem, bankId, limit }) {
 //   };
 // };
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
+// function useQuery() {
+//   return new URLSearchParams(useLocation().search);
+// }
 function isStorageChanged(){
   window.addEventListener("storage", (e) => {
     return true;

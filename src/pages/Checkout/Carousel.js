@@ -6,13 +6,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 function Carousel({obj}){
   const items = JSON.parse(window.localStorage.getItem(obj.id)) || [];
   const [activeItemIndex, setActiveItemIndex] = useState(0);
-  const chevronWidth = 40;
+  const chevronWidth = 60;
+  var numOfCards;
+  window.addEventListener("resize", () => {
+    if (window.innerWidth <= 600) numOfCards = 1;
+    else numOfCards = 5;
+  });
   return (
     <div style={{ padding: `0 ${chevronWidth}px` }}>
       <ItemsCarousel
         requestToChangeActive={setActiveItemIndex}
         activeItemIndex={activeItemIndex}
-        numberOfCards={5}
+        numberOfCards={4}
         gutter={20}
         leftChevron={<button className="button round-btn"><span className="icon"><FontAwesomeIcon icon={Icons.faChevronLeft} /></span></button>}
         rightChevron={<button className="button round-btn"><span className="icon"><FontAwesomeIcon icon={Icons.faChevronRight} /></span></button>}
