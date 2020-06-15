@@ -18,6 +18,8 @@ import Header from 'components/Header/Header';
 import Cart from 'pages/Cart/Cart';
 import BankAPI from 'API/BankAPI';
 import CheckoutPage from 'pages/Checkout/CheckoutPage';
+import LoginPage from 'pages/Login/LoginPage';
+import SignupPage from 'pages/Signup/SignupPage';
 
 function App(){
   // render(){
@@ -31,6 +33,12 @@ function App(){
       <Router>
         <Header />
         <Switch>
+          <Route exact path="/login">
+              <LoginPage />
+          </Route>
+          <Route exact path="/signup">
+              <SignupPage />
+          </Route>
           <Route exact path="/banks">
               <BanksPage list={banks} />
           </Route>
