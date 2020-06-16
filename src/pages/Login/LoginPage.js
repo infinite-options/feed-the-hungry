@@ -36,13 +36,13 @@ function LoginPage() {
     return (
         <div className="banks-page-bd">
             {/* Login image */}
-            <figure className="image is-3by1">
+            <figure className="image is-3by1 has-margin-bottom-0-5">
                 <img src={FarmersMarket}></img>
             </figure>
             {/* Login Form */}
-            <form onSubmit={handleSubmit} >
-                <div className="columns has-margin-top-1 is-centered">
-                    <div className="column" style={{maxWidth: "360px"}}>
+            <div className="columns has-no-margin is-centered">
+                <form onSubmit={handleSubmit} >
+                    <div className="column">
                         {/* Email input */}
                         <div className="field">
                             <div className="control">
@@ -57,7 +57,7 @@ function LoginPage() {
                         </div>
                         {/* Buttons */}
                         <div className="field">
-                            <div className="control has-text-centered">
+                            <div className="control has-text-centered has-margin-bottom-0-5">
                                 <button className="button is-success" onClick={handleClick}>Login</button>
                                 <Link to="/signup" >
                                     <button className="button is-success has-margin-left-12">Sign Up</button>
@@ -65,8 +65,8 @@ function LoginPage() {
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
             {/* <InputField label="Email" props={email} />
             <InputField label="Password" props={password} /> */}
         </div>

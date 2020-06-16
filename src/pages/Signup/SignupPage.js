@@ -75,8 +75,9 @@ function SignupPage() {
             <figure className="image is-3by1" style={{opacity: "0.25"}}>
                 <img src={FarmersMarket}></img>
             </figure>
-            <div className="columns is-centered overlay-signup-text">
+            <div className="columns is-centered overlay-signup">
                 <form onSubmit={handleSubmit}>
+                    <div className="column">
                     {/* Asking for user data */}
                     <div>
                         <p className="subtitle is-1 has-margin-top-1 has-text-centered">Sign Up</p>
@@ -152,6 +153,7 @@ function SignupPage() {
                     </div>
                     <div className="has-text-centered">
                         <button className="button is-success has-margin-top-1 has-margin-bottom-0-5" onClick={handleClick}>Sign Up</button>
+                    </div>
                     </div>
                 </form>
             </div>
