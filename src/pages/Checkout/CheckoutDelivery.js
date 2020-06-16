@@ -6,20 +6,22 @@ import "react-datepicker/dist/react-datepicker.css";
 import addDays from "date-fns/addDays";
 import useField from "components/Hooks/useField";
 import InputField from "components/Input/InputField";
+import Messages from 'components/Notifications/Messages';
 
 function CheckoutDelivery() {
   const dateTime = useDateTime();
-  const street = useField("text");
-  const city = useField("text");
-  const state = useField("text");
-  const zip = useField("text");
-  const checkbox = useField("checkbox");
+  const street = useField("Street","text");
+  const city = useField("City","text");
+  const state = useField("State","text");
+  const zip = useField("Zip","text");
+  const checkbox = useField("I want my delivery as soon as possible","checkbox");
   const [hidden, setHidden] = useState("hidden"); // to hide a component
 
   const handleSubmit = (e) => {
     e.preventDefault();
   };
   const handleClick = () => {
+    if (dateTime.startDate) console.log(formatDate(dateTime.startDate));
     if (!checkbox.value && !dateTime.startDate) setHidden("");
     street.onButtonClick();
     city.onButtonClick();
@@ -34,10 +36,10 @@ function CheckoutDelivery() {
         <InputField label="City" props={city} />
         <div className="columns">
           <div className="column">
-            <InputField label="State" props={state} />
+            <InputField props={state} />
           </div>
           <div className="column">
-            <InputField label="Zip" props={zip} />
+            <InputField  props={zip} />
           </div>
         </div>
         <p className="title is-6">Choose delivery time:</p>
@@ -60,7 +62,6 @@ function CheckoutDelivery() {
           <div className="level-right">
             <div className="level-item left-most">
               <InputField
-                label="I want my delivery as soon as possible"
                 props={checkbox}
               />
             </div>
@@ -69,11 +70,9 @@ function CheckoutDelivery() {
         {/* if user submits the form and no delivery time is selected, this error message is displayed.
         if the error message is showing and user selects a delivery time, hid the error message */}
         <div className={hidden === "" && (checkbox.value || dateTime.startDate) ? "hidden" : hidden}>
-        <article class="message is-danger error-msg">
-            <div class="message-body">
-                Please make sure that you schedule a delivery date or soonest delivery.
+            <div className='error-msg'>
+            {Messages.Danger("Please make sure that you schedule a delivery date or soonest delivery.")}
             </div>
-        </article>
         </div>
         <div className="field">
           <div className="control">
@@ -125,4 +124,19 @@ const useDateTime = () => {
     minDate,
   };
 };
+
+function formatDate(date) {
+    const dayNames = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"];
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return dayNames[date.getDay()-1] + " " + monthNames[date.getMonth()] + " " + date.getDate() + " " + date.getFullYear() + " " + strTime;
+  }
+  
 export default CheckoutDelivery;

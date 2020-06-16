@@ -19,8 +19,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FarmersMarket from 'assets/image/farmers-market.jpg';
 
 function LoginPage() {
-    const email = useField("email");
-    const password = useField("password");
+    const email = useField("email","email");
+    const password = useField("password","password");
     let onLoginPage = true;
 
     const handleSubmit = (e) => {
@@ -46,13 +46,13 @@ function LoginPage() {
                         {/* Email input */}
                         <div className="field">
                             <div className="control">
-                                <InputField label="Email" props={email} />
+                                <InputField props={email} />
                             </div>
                         </div>
                         {/* Password input */}
                         <div className="field">
                             <div className="control">
-                                <InputField label="Password" props={password} />
+                                <InputField  props={password} />
                             </div>
                         </div>
                         {/* Buttons */}

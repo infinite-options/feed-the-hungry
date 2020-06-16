@@ -853,3 +853,6 @@ a.item-tag:hover{
     width: 100%;
     top: 10vh;
 }
+.hidden {
+    display: none;
+}

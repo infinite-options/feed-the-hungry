@@ -21,27 +21,27 @@ import FarmersMarket from 'assets/image/farmers-market.jpg';
 
 function SignupPage() {
     // User data
-    const firstName = useField("text");
-    const lastName = useField("text");
-    const dob = useField("text");
-    const phoneNumber = useField("text");
-    const email = useField("email");
-    const emailConfirm = useField("email");
-    const password = useField("password")
-    const passwordConfirm = useField("password")
+    const firstName = useField("First Name", "text");
+    const lastName = useField("Last Name","text");
+    const dob = useField("Date of Birth", "text");
+    const phoneNumber = useField("Phone Number", "text");
+    const email = useField("Email Address", "email");
+    const emailConfirm = useField("Confirm Email", "email");
+    const password = useField("Password","password")
+    const passwordConfirm = useField("Confirm Password", "password")
     // User address
-    const address_1 = useField("text");
-    const address_2 = useField("text");
-    const city = useField("text");
-    const state = useField("text");
-    const zip = useField("text");
+    const address_1 = useField("Address 1", "text");
+    const address_2 = useField("Address 2", "text");
+    const city = useField("City", "text");
+    const state = useField("State", "text");
+    const zip = useField("Zip", "text");
     // Dietary restrictions
-    const vegan = useField("checkbox");
-    const vegetarian = useField("checkbox");
-    const glutenFree = useField("checkbox");
-    const kosher = useField("checkbox");
-    const halal = useField("checkbox");
-    const none = useField("checkbox");
+    const vegan = useField("Vegan", "checkbox");
+    const vegetarian = useField("Vegetarian", "checkbox");
+    const glutenFree = useField("Gluten Free", "checkbox");
+    const kosher = useField("Kosher", "checkbox");
+    const halal = useField("Halal", "checkbox");
+    const none = useField("None", "checkbox");
     const [hidden, setHidden] = useState("hidden");
     let hasRestrictions = false;
 
@@ -51,18 +51,21 @@ function SignupPage() {
 
     const handleClick = () => {
         console.log("User has tried to sign up..")
-        if (firstName.value.length === 0) firstName.setError(true);
-        if (lastName.value.length === 0) lastName.setError(true);
-        if (dob.value.length === 0) dob.setError(true);
-        if (phoneNumber.value.length === 0) phoneNumber.setError(true);
-        if (email.value.length === 0) email.setError(true);
-        if (emailConfirm.value.length === 0) emailConfirm.setError(true);
-        if (password.value.length === 0) password.setError(true);
-        if (passwordConfirm.value.length === 0) passwordConfirm.setError(true);
-        if (address_1.value.length === 0) address_1.setError(true);
-        if (city.value.length === 0) city.setError(true);
-        if (state.value.length === 0) state.setError(true);
-        if (zip.value.length === 0) zip.setError(true);
+        // Tuong: hey i just fixed some code in useField.js so I updated this part 
+        firstName.onButtonClick();
+        lastName.onButtonClick();
+        dob.onButtonClick();
+        phoneNumber.onButtonClick();
+        email.onButtonClick();
+        emailConfirm.onButtonClick();
+        password.onButtonClick();
+        passwordConfirm.onButtonClick();
+        address_1.onButtonClick();
+        address_2.onButtonClick();
+        city.onButtonClick();
+        state.onButtonClick();
+        zip.onButtonClick();
+
         hasRestrictions = vegan.value || vegetarian.value || glutenFree.value || kosher.value || halal.value
         if (!none.value && !hasRestrictions) setHidden("");
     }
@@ -80,30 +83,30 @@ function SignupPage() {
                         <p className="subtitle is-1 has-margin-top-1 has-text-centered">Sign Up</p>
                         <div className="columns has-margin-top-1">
                             <div className="column">
-                                <InputField label="First Name" props={firstName} />
+                                <InputField props={firstName} />
                             </div>
                             <div className="column">
-                                <InputField label="Last Name" props={lastName} />
+                                <InputField  props={lastName} />
                             </div>
                             <div className="column">
-                                <InputField label="Date of Birth" props={dob} />
-                            </div>
-                        </div>
-                        <InputField label="Phone Number" props={phoneNumber} />
-                        <div className="columns">
-                            <div className="column">
-                                <InputField label="Email Address" props={email} />
-                            </div>
-                            <div className="column">
-                                <InputField label="Confirm Email" props={emailConfirm} />
+                                <InputField  props={dob} />
                             </div>
                         </div>
+                        <InputField props={phoneNumber} />
                         <div className="columns">
                             <div className="column">
-                                <InputField label="Password" props={password} />
+                                <InputField props={email} />
                             </div>
                             <div className="column">
-                                <InputField label="Confirm Password" props={passwordConfirm} />
+                                <InputField  props={emailConfirm} />
+                            </div>
+                        </div>
+                        <div className="columns">
+                            <div className="column">
+                                <InputField  props={password} />
+                            </div>
+                            <div className="column">
+                                <InputField props={passwordConfirm} />
                             </div>
                         </div>
                     </div>
@@ -115,21 +118,21 @@ function SignupPage() {
                         <p className="subtitle is-4 has-margin-top-1 has-text-centered">Add An Address</p>
                         <div className="columns has-margin-top-1">
                             <div className="column">
-                                <InputField label="Address 1" props={address_1} />
+                                <InputField props={address_1} />
                             </div>
                             <div className="column">
-                                <InputField label="Address 2" props={address_2} />
+                                <InputField  props={address_2} />
                             </div>
                         </div>
                         <div className="columns">
                             <div className="column">
-                                <InputField label="City" props={city} />
+                                <InputField  props={city} />
                             </div>
                             <div className="column">
-                                <InputField label="State" props={state} />
+                                <InputField  props={state} />
                             </div>
                             <div className="column">
-                                <InputField label="ZIP" props={zip} />
+                                <InputField props={zip} />
                             </div>
                         </div>
                     </div>
@@ -137,14 +140,14 @@ function SignupPage() {
                     {/* Asking for dietary restrictions */}
                     <p className="right-most" title="Substitutions allow users to choose different items that align with their dietary restrictions to add to their total cart.">* Opt for substitutions.</p>
                     <p className="subtitle is-3 has-text-centered">Dietary Restrictions*</p>
-                    <InputField label="Vegan" props={vegan} />
-                    <InputField label="Vegetarian" props={vegetarian} />
-                    <InputField label="Gluten Free" props={glutenFree} />
-                    <InputField label="Kosher" props={kosher} />
-                    <InputField label="Halal" props={halal} />
-                    <InputField label="N/A" props={none} />
+                    <InputField props={vegan} />
+                    <InputField props={vegetarian} />
+                    <InputField props={glutenFree} />
+                    <InputField props={kosher} />
+                    <InputField props={halal} />
+                    <InputField props={none} />
                     {/* FIXME: Message shows when selecting any dietary restriction checkbox AFTER leaving all checkboxes empty & clicking Sign Up button*/}
-                    <div className={hidden === "" && (none.value || hasRestrictions) ? "hidden" : hidden}>
+                    <div className={hidden === "" && (none.value || hasRestrictions === true) ? "hidden" : hidden}>
                         <article class="message is-danger error-msg">
                             <div class="message-body">Please select any dietary restrictions you have. If none are applicable, please select N/A.</div>
                         </article>

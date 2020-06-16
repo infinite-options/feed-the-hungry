@@ -5,7 +5,9 @@ import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import EmptyCart from 'assets/image/empty-cart.svg';
 import './style.css';
 
-// use this component when you want to display a notification
+// use this component when you want to display a notification 
+// notification should only be used at the top
+// consider using Messages for smaller components
 const Notifications = {
     // red (danger). this notification is red
     Danger: function(msg){

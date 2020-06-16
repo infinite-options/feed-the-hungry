@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
-// put this on top of a page to make sure
-// it scrolls to top
+// put this on top of a compoent to make sure
+// it scrolls to the top of that component
 function ScrollToTopOnMount() {
   useEffect(() => {
     window.scrollTo(0, 0);

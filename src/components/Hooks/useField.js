@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const useField = (type) => {
+const useField = (label, type) => {
   const [value, setValue] = useState(type === "checkbox" ? false : '');
   const [error, setError] = useState('');
   
@@ -19,7 +19,8 @@ const useField = (type) => {
   // we need this function because onChange event for input 
   // does not get triggered when submit button is clicked
   const onButtonClick = () => {
-      if (value.length === 0) setError("This field is required")
+      if (value.length === 0) setError("This field is required");
+      else if (label.toLowerCase() === "zip" && !/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(value)) setError("Invalid zip code");
       // other conditions:
       // email
       // password
@@ -29,6 +30,7 @@ const useField = (type) => {
   return {
     error,
     type,
+    label,
     value,
     onChange,
     onButtonClick

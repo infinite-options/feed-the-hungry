@@ -2,7 +2,7 @@ import React from "react";
 
 
 // use this component for all input fields (well, not really all input fields because it still needs modifications)
-const InputField = ({ label, props}) => {
+const InputField = ({props}) => {
   return (
     <div className="field">
         {/* if the input is a checkbox */}
@@ -10,13 +10,13 @@ const InputField = ({ label, props}) => {
         <div className="control">
           <label className="checkbox" >
             <input {...props} />
-            <span className="has-margin-left-0-5">{label}</span>
+            <span className="has-margin-left-0-5">{props.label}</span>
           </label>
         </div>
       ) : (
         //   else
         <div>
-          <label className="capitalized">{label}</label>
+          <label>{props.label}</label>
           {/* If input is empty, shows red border and red error msg. 
            To see what attributes 'props' has, go to useField.js */}
           <div className="control">
