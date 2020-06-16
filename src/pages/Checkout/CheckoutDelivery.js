@@ -115,9 +115,8 @@ const useDateTime = () => {
   const onChange = (date) => {
     setStartDate(date);
   };
-  const minDate = () => {
-    return addDays(new Date(), 2);
-  };
+  const minDate = addDays(new Date(), 2);
+
   return {
     startDate,
     onChange,
