@@ -43,7 +43,7 @@ function SignupPage() {
     const halal = useField("Halal", "checkbox");
     const none = useField("None", "checkbox");
     const [hidden, setHidden] = useState("hidden");
-    let hasRestrictions = false;
+    let hasRestrictions = vegan.value || vegetarian.value || glutenFree.value || kosher.value || halal.value;
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -66,7 +66,6 @@ function SignupPage() {
         state.onButtonClick();
         zip.onButtonClick();
 
-        hasRestrictions = vegan.value || vegetarian.value || glutenFree.value || kosher.value || halal.value
         if (!none.value && !hasRestrictions) setHidden("");
     }
 
@@ -146,7 +145,6 @@ function SignupPage() {
                     <InputField props={kosher} />
                     <InputField props={halal} />
                     <InputField props={none} />
-                    {/* FIXME: Message shows when selecting any dietary restriction checkbox AFTER leaving all checkboxes empty & clicking Sign Up button*/}
                     <div className={hidden === "" && (none.value || hasRestrictions === true) ? "hidden" : hidden}>
                         <article class="message is-danger error-msg">
                             <div class="message-body">Please select any dietary restrictions you have. If none are applicable, please select N/A.</div>
