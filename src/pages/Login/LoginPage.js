@@ -16,6 +16,7 @@ import Icons from "components/Icons/Icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import Notifications from "components/Notifications/Notifications";
 // import LoginLayout from "pages/Login/LoginLayout.js";
+import FarmersMarket from 'assets/image/farmers-market.jpg';
 
 function LoginPage() {
     const email = useField("email");
@@ -36,7 +37,7 @@ function LoginPage() {
         <div className="banks-page-bd">
             {/* Login image */}
             <figure className="image is-3by1">
-                <img src="https://s3-alpha-sig.figma.com/img/07a8/e68a/ad97cee81e3a869d96b086acd924a781?Expires=1593388800&Signature=e-WOlix~DPgFQiHt6YGjJFlQOKlTNwvao4vGZ3TzbxH2Zc3DVBeTHbcjLKOjq7R8igIRzFcPDzuD9gQQZg9nKE8~6tldUFIk6hebJKcMdehjshNTXBcKd9qZ80uOLOpYESRnqFqoOC9kxoZKlEHGLO6WuoyFzbCoC~1QRf6Wuopx4H~bRQpC5iDZ5BC4~KoT3cwwAx8gcwHpSUr0OYJmk6ytS476w7ttN63ZT10wFYI9pk~Bxe4HIFi2ysu~y1~iS2tIC62G5rA48rdKPt04Yp3qVCL3Ko-dlEOnQlj-I8NlCx8aDgUpPQo2Ab9nMmqBKxoROU7RZX40XPrncHxIpQ__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"></img>
+                <img src={FarmersMarket}></img>
             </figure>
             {/* Login Form */}
             <form onSubmit={handleSubmit} >
