@@ -847,10 +847,12 @@ a.item-tag:hover{
 }
 
 /* Positioning sign up text & form over background image */
-.overlay-signup-text {
+.overlay-signup {
     position: absolute;
     /* justify-content: center; */
     width: 100%;
+    margin-left: 0;
+    margin-right: 0;
     top: 10vh;
 }
 .hidden {
