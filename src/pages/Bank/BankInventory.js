@@ -3,6 +3,7 @@ import BankAPI from "API/BankAPI";
 import { BrowserRouter as Router, Link, useLocation } from "react-router-dom";
 import useQuery from 'components/Hooks/useQuery';
 
+// render food bank's inventory
 function BankInventory({ obj, bankUrl }) {
   let query = useQuery();
   let inventory = obj.inventory;
@@ -45,7 +46,7 @@ function BankInventory({ obj, bankUrl }) {
               </span>
             </div>
             <div className="item-tags">
-              <SplitTags bankUrl={bankUrl} str={foodItem.type} />
+              <ItemTags bankUrl={bankUrl} str={foodItem.type} />
             </div>
           </div>
         </div>
@@ -54,7 +55,8 @@ function BankInventory({ obj, bankUrl }) {
   );
 }
 
-function SplitTags({ bankUrl, str }) {
+// render an item's tags
+function ItemTags({ bankUrl, str }) {
   return (
     <div className="tags-container no-overflow">
       {str
@@ -148,15 +150,6 @@ function QuantityInput({ foodItem, bankId, limit }) {
 //   };
 // };
 
-// function useQuery() {
-//   return new URLSearchParams(useLocation().search);
-// }
-function isStorageChanged(){
-  window.addEventListener("storage", (e) => {
-    return true;
-  })
-  return false;
-}
 
 const useCounter = (foodItem, bankId) => {
   let initialValues = JSON.parse(window.localStorage.getItem(bankId)) || [];

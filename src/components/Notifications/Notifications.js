@@ -4,8 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import EmptyCart from 'assets/image/empty-cart.svg';
 import './style.css';
+
+// use this component when you want to display a notification
 const Notifications = {
-    // red (danger)
+    // red (danger). this notification is red
     Danger: function(msg){
         return (
             <div className="notification is-danger is-light">
@@ -16,7 +18,7 @@ const Notifications = {
             </div>
         )
     },
-    // yellow (warning)
+    // yellow (warning). this notification is yellow
     Warning: function(msg){
         return (
             <div className="notification is-warning is-light">
@@ -27,6 +29,7 @@ const Notifications = {
             </div>
         )
     },
+    // this notification is for empty cart at checkout
     IsEmpty: function(msg){
         let { path, url } = useRouteMatch();
         let parentPath = url.substring(0, url.lastIndexOf("/"));

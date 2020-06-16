@@ -7,6 +7,7 @@ import "./style.css";
 // use San Jose, CA as the default center
 const DEFAULT_LATITUDE = 37.338208;
 const DEFAULT_LONGITUDE = -121.886329;
+
 class LeafletMap extends React.Component {
   render() {
     const latitude = this.props.coords

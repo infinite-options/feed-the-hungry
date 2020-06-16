@@ -8,7 +8,7 @@ import {
   useRouteMatch,
   useParams,
 } from "react-router-dom";
-
+// import bulma and other css styles
 import "bulma/css/bulma.css";
 import "./App.css";
 // import components

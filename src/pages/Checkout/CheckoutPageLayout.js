@@ -39,20 +39,4 @@ function CheckoutPageLayout({ obj }) {
   );
 }
 
-
-const DateTimeInput = ({placeholder, value, id, onClick}) => {
-  return (
-      <div className="field">
-      <div className="control has-icons-right">
-        <input className="input" type="text"
-      placeholder={placeholder}
-      value={value}
-      id={id}
-      onClick={onClick} readOnly />
-        <span className="icon is-small is-right">
-          <FontAwesomeIcon icon={Icons.faCalendarAlt} />
-        </span>
-      </div>
-    </div> );
-}
 export default CheckoutPageLayout;

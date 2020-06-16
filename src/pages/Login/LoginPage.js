@@ -29,8 +29,8 @@ function LoginPage() {
 
     const handleClick = () => {
         console.log("User has tried to login..")
-        if (email.value.length === 0) email.setError(true);
-        if (password.value.length === 0) password.setError(true);
+        email.onButtonClick();
+        password.onButtonClick();
     }
 
     return (

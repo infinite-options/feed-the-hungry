@@ -29,3 +29,12 @@ export default {
     faShoppingBasket, faLongArrowAltRight, faChevronLeft, faChevronRight,
     faWalking, faTruck, faBoxOpen
 }
+
+// How to use this component?
+// add the icon you want to both 'import' statement and 'export default' statement in this file
+
+// Then, in your component, do:
+// import Icons from 'components/Icons/Icons"
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// ....
+// <FontAwesome icon={ Icons.yourIcon } />

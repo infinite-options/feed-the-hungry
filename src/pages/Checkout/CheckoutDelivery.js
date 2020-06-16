@@ -14,17 +14,17 @@ function CheckoutDelivery() {
   const state = useField("text");
   const zip = useField("text");
   const checkbox = useField("checkbox");
-  const [hidden, setHidden] = useState("hidden");
+  const [hidden, setHidden] = useState("hidden"); // to hide a component
 
   const handleSubmit = (e) => {
     e.preventDefault();
   };
   const handleClick = () => {
     if (!checkbox.value && !dateTime.startDate) setHidden("");
-    if (street.value.length === 0) street.setError(true);
-    if (city.value.length === 0) city.setError(true);
-    if (state.value.length === 0) state.setError(true);
-    if (zip.value.length === 0) zip.setError(true);
+    street.onButtonClick();
+    city.onButtonClick();
+    state.onButtonClick();
+    zip.onButtonClick();
   }
   return (
     <div className="delivery-confirm">
@@ -66,6 +66,8 @@ function CheckoutDelivery() {
             </div>
           </div>
         </div>
+        {/* if user submits the form and no delivery time is selected, this error message is displayed.
+        if the error message is showing and user selects a delivery time, hid the error message */}
         <div className={hidden === "" && (checkbox.value || dateTime.startDate) ? "hidden" : hidden}>
         <article class="message is-danger error-msg">
             <div class="message-body">
