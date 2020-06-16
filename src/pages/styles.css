@@ -845,3 +845,11 @@ a.item-tag:hover{
     display: inline-block;
     
 }
+
+/* Positioning sign up text & form over background image */
+.overlay-signup-text {
+    position: absolute;
+    /* justify-content: center; */
+    width: 100%;
+    top: 10vh;
+}
