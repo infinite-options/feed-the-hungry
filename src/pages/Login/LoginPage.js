@@ -19,8 +19,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FarmersMarket from 'assets/image/farmers-market.jpg';
 
 function LoginPage() {
-    const email = useField("email","email");
-    const password = useField("password","password");
+    const email = useField("Email","email");
+    const password = useField("Password","password");
     let onLoginPage = true;
 
     const handleSubmit = (e) => {
