@@ -10,13 +10,13 @@ const StateAPI = () => {
         .then (data => setData(data))
     },[]);
 
-    const isStateValid = (state) => {
+    const contain = (state) => {
         if (data.filter(x => x.name === state || x.abbreviation === state ).length > 0) return true;
         return false;
     }
     return {
         data,
-        isStateValid
+        contain
     }
 }
 export default StateAPI;

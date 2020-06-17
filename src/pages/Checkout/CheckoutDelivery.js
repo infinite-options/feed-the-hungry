@@ -1,35 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useRef, forwardRef } from "react";
+// import icons
 import Icons from "components/Icons/Icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import calendar
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import addDays from "date-fns/addDays";
+import DateTime from 'pages/Checkout/DateTime';
+// import othe components
 import useField from "components/Hooks/useField";
 import InputField from "components/Form/InputField";
-import Messages from 'components/Notifications/Messages';
-import Select from 'components/Form/Select';
-import StateAPI from 'API/StateAPI';
+import Messages from "components/Notifications/Messages";
+import StateAPI from "API/StateAPI";
 
 function CheckoutDelivery() {
-  const dateTime = useDateTime();
-  const street = useField("Street","text");
-  const city = useField("City","text");
-  const state = useField("State","text");
-  const zip = useField("Zip","text");
-  const checkbox = useField("I want my delivery as soon as possible","checkbox");
-  const [hidden, setHidden] = useState("hidden"); // to hide a component
+  const [hidden, setHidden] = useState("hidden"); // to hide error msg
 
+  const states = StateAPI();
+  const dateTime = useDateTime();
+  const street = useField("Street", "text");
+  const city = useField("City", "text");
+  const state = useField("State", "text");
+  const zip = useField("Zip", "text");
+  const checkbox = useField(
+    "I want my delivery as soon as possible",
+    "checkbox"
+  );
+  const ref = useRef();
   const handleSubmit = (e) => {
     e.preventDefault();
   };
   const handleClick = () => {
+    street.validatewith();
+    city.validatewith();
+    state.validatewith(states);
+    zip.validatewith();
+
     if (dateTime.startDate) console.log(formatDate(dateTime.startDate));
     if (!checkbox.value && !dateTime.startDate) setHidden("");
-    street.onButtonClick();
-    city.onButtonClick();
-    state.onButtonClick();
-    zip.onButtonClick();
-  }
+  };
   return (
     <div className="delivery-confirm">
       <p className="title is-5">Confirm Delivery</p>
@@ -38,11 +47,11 @@ function CheckoutDelivery() {
         <InputField label="City" props={city} />
         <div className="columns">
           <div className="column">
-              {/* <Select list={states} /> */}
+            {/* <Select list={states} /> */}
             <InputField props={state} />
           </div>
           <div className="column">
-            <InputField  props={zip} />
+            <InputField props={zip} />
           </div>
         </div>
         <p className="title is-6">Choose delivery time:</p>
@@ -57,25 +66,35 @@ function CheckoutDelivery() {
                 showTimeSelect
                 customInput={<DateTimeInput />}
                 dateFormat="MMMM d, yyyy h:mm aa"
-                placeholderText={checkbox.value === true ? "No date is selected": "Select a date and time"}
+                placeholderText={
+                  checkbox.value === true
+                    ? "No date is selected"
+                    : "Select a date and time"
+                }
                 disabled={checkbox.value === true ? true : false}
               />
             </div>
           </div>
           <div className="level-right">
             <div className="level-item left-most">
-              <InputField
-                props={checkbox}
-              />
+              <InputField props={checkbox} />
             </div>
           </div>
         </div>
         {/* if user submits the form and no delivery time is selected, this error message is displayed.
         if the error message is showing and user selects a delivery time, hid the error message */}
-        <div className={hidden === "" && (checkbox.value || dateTime.startDate) ? "hidden" : hidden}>
-            <div className='error-msg'>
-            {Messages.Danger("Please make sure that you schedule a delivery date or soonest delivery.")}
-            </div>
+        <div
+          className={
+            hidden === "" && (checkbox.value || dateTime.startDate)
+              ? "hidden"
+              : hidden
+          }
+        >
+          <div className="error-msg">
+            {Messages.Danger(
+              "Please make sure that you schedule a delivery date or soonest delivery."
+            )}
+          </div>
         </div>
         <div className="field">
           <div className="control">
@@ -92,19 +111,20 @@ function CheckoutDelivery() {
   );
 }
 
-const DateTimeInput = ({ placeholder, value, id, onClick, disabled }) => {
+const DateTimeInput = forwardRef(( props, ref ) => {
   return (
     <div className="field">
       <div className="control has-icons-right">
-        <input
+        <input ref={ref}
           className="input"
           type="text"
-          placeholder={placeholder}
-          value={value}
-          id={id}
-          onClick={onClick}
+
+          placeholder={props.placeholder}
+          value={props.value}
+          id={props.id}
+          onClick={props.onClick}
           readOnly
-          disabled={disabled}
+          disabled={props.disabled}
         />
         <span className="icon is-small is-right">
           <FontAwesomeIcon icon={Icons.faCalendarAlt} />
@@ -112,7 +132,7 @@ const DateTimeInput = ({ placeholder, value, id, onClick, disabled }) => {
       </div>
     </div>
   );
-};
+});
 
 const useDateTime = () => {
   const [startDate, setStartDate] = useState(null);
@@ -129,17 +149,45 @@ const useDateTime = () => {
 };
 
 function formatDate(date) {
-    const dayNames = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"];
-    var hours = date.getHours();
-    var minutes = date.getMinutes();
-    var ampm = hours >= 12 ? 'pm' : 'am';
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0'+minutes : minutes;
-    var strTime = hours + ':' + minutes + ' ' + ampm;
-    return dayNames[date.getDay()-1] + " " + monthNames[date.getMonth()] + " " + date.getDate() + " " + date.getFullYear() + " " + strTime;
-  }
-  
+  const dayNames = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? "pm" : "am";
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  var strTime = hours + ":" + minutes + " " + ampm;
+  return (
+    (date.getMonth()+1) +
+    "/" +
+    date.getDate() +
+    "/" +
+    date.getFullYear() +
+    " " +
+    strTime
+  ).toUpperCase();
+}
+
 export default CheckoutDelivery;

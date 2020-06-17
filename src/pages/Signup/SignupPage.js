@@ -51,19 +51,19 @@ function SignupPage() {
 
     const handleClick = () => {
         console.log("User has tried to sign up..")
-        firstName.onButtonClick();
-        lastName.onButtonClick();
-        dob.onButtonClick();
-        phoneNumber.onButtonClick();
-        email.onButtonClick();
-        emailConfirm.onButtonClick();
-        password.onButtonClick();
-        passwordConfirm.onButtonClick();
-        address_1.onButtonClick();
-        address_2.onButtonClick();
-        city.onButtonClick();
-        state.onButtonClick();
-        zip.onButtonClick();
+        firstName.validatewith();
+        lastName.validatewith();
+        dob.validatewith();
+        phoneNumber.validatewith();
+        email.validatewith();
+        emailConfirm.validatewith();
+        password.validatewith();
+        passwordConfirm.validatewith();
+        address_1.validatewith();
+        address_2.validatewith();
+        city.validatewith();
+        state.validatewith();
+        zip.validatewith();
 
         if (!none.value && !hasRestrictions) setHidden("");
     }
