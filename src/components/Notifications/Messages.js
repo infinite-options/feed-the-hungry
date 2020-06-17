@@ -2,8 +2,8 @@ import React from 'react';
 const Messages = {
     Danger: function(msg) {
         return (
-            <article class="message is-danger">
-                <div class="message-body">
+            <article className="message is-danger">
+                <div className="message-body">
                     {msg}
                 </div>
             </article>
@@ -11,8 +11,8 @@ const Messages = {
     },
     Success: function(msg){
         return (
-            <article class="message is-success">
-                <div class="message-body">
+            <article className="message is-success">
+                <div className="message-body">
                     {msg}
                 </div>
             </article>

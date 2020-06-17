@@ -29,8 +29,8 @@ function LoginPage() {
 
     const handleClick = () => {
         console.log("User has tried to login..")
-        email.onButtonClick();
-        password.onButtonClick();
+        email.validatewith();
+        password.validatewith();
     }
 
     return (

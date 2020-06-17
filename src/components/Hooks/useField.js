@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import StateAPI from 'API/StateAPI';
 
 const useField = (label, type, isRequired=true) => {
   const [value, setValue] = useState(type === "checkbox" ? false : '');
@@ -16,27 +15,16 @@ const useField = (label, type, isRequired=true) => {
     if (event.target.value.length > 0 )  setError('');
 
   };
-  // handle input if user clicks submit button.
-  // we need this function because onChange event for input 
-  // does not get triggered when submit button is clicked
-  const onButtonClick = () => {
-      // case 1: if input is empty
+  // validate inputs if user clicks submit button.
+  const validatewith = (data=null) => {
+      // case 1: if input is required but nothing is entered
       if (isRequired && value.length === 0) setError("This field is required");
       // case 2: if input is a zip code
       else if (label.toLowerCase() === "zip" && !/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(value)) setError("Invalid zip code");
-      // case 3: if input is a state name
-      else if (label.toLowerCase() === "state"){
-          
-      } 
-      // other conditions:
-      // email
-      // password
-      // address 2
-      // etc
+      // case 3: if input is entered but we need to verify it given a data
+      // make sure that the data must have method 'contain' (see StateAPI.js, for instance)
+      else if (data && !data.contain(value)) setError("Invalid " + label);
       else setError("");
-  }
-  const validateWith = (data) => {
-      if (!data.contain(value)) setError("Invalid " + label);
   }
   return {
     error,
@@ -44,8 +32,7 @@ const useField = (label, type, isRequired=true) => {
     label,
     value,
     onChange,
-    onButtonClick,
-    validateWith
+    validatewith
   };
 };
 export default useField;
