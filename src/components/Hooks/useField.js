@@ -20,8 +20,11 @@ const useField = (label, type) => {
   // we need this function because onChange event for input 
   // does not get triggered when submit button is clicked
   const onButtonClick = () => {
+      // case 1: if input is empty
       if (value.length === 0) setError("This field is required");
+      // case 2: if input is a zip code
       else if (label.toLowerCase() === "zip" && !/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(value)) setError("Invalid zip code");
+      // case 3: if input is a state name
       else if (label.toLowerCase() === "state"){
           
       } 
