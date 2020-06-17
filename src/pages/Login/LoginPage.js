@@ -11,7 +11,7 @@ import {
 
 import "pages/styles.css";
 import useField from "components/Hooks/useField";
-import InputField from "components/Input/InputField";
+import InputField from "components/Form/InputField";
 import Icons from "components/Icons/Icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import Notifications from "components/Notifications/Notifications";

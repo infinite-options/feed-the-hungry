@@ -5,8 +5,10 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import addDays from "date-fns/addDays";
 import useField from "components/Hooks/useField";
-import InputField from "components/Input/InputField";
+import InputField from "components/Form/InputField";
 import Messages from 'components/Notifications/Messages';
+import Select from 'components/Form/Select';
+import StateAPI from 'API/StateAPI';
 
 function CheckoutDelivery() {
   const dateTime = useDateTime();
@@ -36,6 +38,7 @@ function CheckoutDelivery() {
         <InputField label="City" props={city} />
         <div className="columns">
           <div className="column">
+              {/* <Select list={states} /> */}
             <InputField props={state} />
           </div>
           <div className="column">

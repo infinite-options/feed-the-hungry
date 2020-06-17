@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import StateAPI from 'API/StateAPI';
 
 const useField = (label, type) => {
   const [value, setValue] = useState(type === "checkbox" ? false : '');
@@ -21,6 +22,9 @@ const useField = (label, type) => {
   const onButtonClick = () => {
       if (value.length === 0) setError("This field is required");
       else if (label.toLowerCase() === "zip" && !/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(value)) setError("Invalid zip code");
+      else if (label.toLowerCase() === "state"){
+          
+      } 
       // other conditions:
       // email
       // password

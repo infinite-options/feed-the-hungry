@@ -11,7 +11,7 @@ import {
 
 import "pages/styles.css";
 import useField from "components/Hooks/useField";
-import InputField from "components/Input/InputField";
+import InputField from "components/Form/InputField";
 import ScrollToTopOnMount from "utils/Scroll/ScrollToTopOnMount";
 import Icons from "components/Icons/Icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -51,7 +51,6 @@ function SignupPage() {
 
     const handleClick = () => {
         console.log("User has tried to sign up..")
-        // Tuong: hey i just fixed some code in useField.js so I updated this part 
         firstName.onButtonClick();
         lastName.onButtonClick();
         dob.onButtonClick();
