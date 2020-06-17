@@ -69,7 +69,7 @@ function SignupPage() {
     }
 
     return (
-        <div className="banks-page-bd">
+        <div className="login-signup-page">
             {/* Background image */}
             {/* <figure className="image is-3by1t" style={{opacity: "0.25"}}>
                 <img src={FarmersMarket}></img>
@@ -151,7 +151,7 @@ function SignupPage() {
                             </article>
                         </div>
                         <div className="has-text-centered">
-                            <button className="button is-success has-margin-top-1 has-margin-bottom-0-5" onClick={handleClick}>Sign Up</button>
+                            <button className="button is-success has-margins-0-5" onClick={handleClick}>Sign Up</button>
                         </div>
                     </div>
                 </form>

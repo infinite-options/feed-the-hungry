@@ -847,16 +847,12 @@ a.item-tag:hover{
     
 }
 
-/* Replaced this class with the class below */
-/* .overlay-signup {
+/* Sign up & Login page classes */
+.login-signup-page {
     position: absolute;
+    margin-top: 10vh;
     width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-    top: 10vh;
-} */
-
-/* Signup page classes */
+}
 .signup-background-image {
     margin-left: 0;
     margin-right: 0;
@@ -867,6 +863,10 @@ a.item-tag:hover{
 
 hr.is-light-gray {
     background-color: #ececec;
+}
+
+.has-margins-0-5 {
+    margin: 0.5rem;
 }
 
 .hidden {
