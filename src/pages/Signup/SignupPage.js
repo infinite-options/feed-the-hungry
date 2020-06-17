@@ -72,88 +72,88 @@ function SignupPage() {
     return (
         <div className="banks-page-bd">
             {/* Background image */}
-            <figure className="image is-3by1" style={{opacity: "0.25"}}>
+            {/* <figure className="image is-3by1t" style={{opacity: "0.25"}}>
                 <img src={FarmersMarket}></img>
-            </figure>
-            <div className="columns is-centered overlay-signup">
+            </figure> */}
+            <div className="columns is-centered signup-background-image">
                 <form onSubmit={handleSubmit}>
-                    <div className="column">
-                    {/* Asking for user data */}
-                    <div>
-                        <p className="subtitle is-1 has-margin-top-1 has-text-centered">Sign Up</p>
-                        <div className="columns has-margin-top-1">
-                            <div className="column">
-                                <InputField props={firstName} />
+                    <div className="column has-text-black">
+                        {/* Asking for user data */}
+                        <div>
+                            <p className="subtitle is-1 has-margin-top-1 has-text-centered has-text-black">Sign Up</p>
+                            <div className="columns has-margin-top-1">
+                                <div className="column">
+                                    <InputField props={firstName} />
+                                </div>
+                                <div className="column">
+                                    <InputField  props={lastName} />
+                                </div>
+                                <div className="column">
+                                    <InputField  props={dob} />
+                                </div>
                             </div>
-                            <div className="column">
-                                <InputField  props={lastName} />
+                            <InputField props={phoneNumber} />
+                            <div className="columns">
+                                <div className="column">
+                                    <InputField props={email} />
+                                </div>
+                                <div className="column">
+                                    <InputField  props={emailConfirm} />
+                                </div>
                             </div>
-                            <div className="column">
-                                <InputField  props={dob} />
-                            </div>
-                        </div>
-                        <InputField props={phoneNumber} />
-                        <div className="columns">
-                            <div className="column">
-                                <InputField props={email} />
-                            </div>
-                            <div className="column">
-                                <InputField  props={emailConfirm} />
-                            </div>
-                        </div>
-                        <div className="columns">
-                            <div className="column">
-                                <InputField  props={password} />
-                            </div>
-                            <div className="column">
-                                <InputField props={passwordConfirm} />
-                            </div>
-                        </div>
-                    </div>
-                    <hr></hr>
-                    {/* Asking for user address */}
-                    <div>
-                        <p className="subtitle is-3 has-margin-top-1 has-text-centered">Would you like to add a permanent address?</p>
-                        <p className="subtitle is-4 has-text-centered">Or <u>use my current location</u> instead.</p>
-                        <p className="subtitle is-4 has-margin-top-1 has-text-centered">Add An Address</p>
-                        <div className="columns has-margin-top-1">
-                            <div className="column">
-                                <InputField props={address_1} />
-                            </div>
-                            <div className="column">
-                                <InputField  props={address_2} />
+                            <div className="columns">
+                                <div className="column">
+                                    <InputField  props={password} />
+                                </div>
+                                <div className="column">
+                                    <InputField props={passwordConfirm} />
+                                </div>
                             </div>
                         </div>
-                        <div className="columns">
-                            <div className="column">
-                                <InputField  props={city} />
+                        <hr></hr>
+                        {/* Asking for user address */}
+                        <div>
+                            <p className="subtitle is-3 has-margin-top-1 has-text-centered has-text-black">Would you like to add a permanent address?</p>
+                            <p className="subtitle is-4 has-text-centered has-text-black">Or <u>use my current location</u> instead.</p>
+                            <p className="subtitle is-4 has-margin-top-1 has-text-centered has-text-black">Add An Address</p>
+                            <div className="columns has-margin-top-1">
+                                <div className="column">
+                                    <InputField props={address_1} />
+                                </div>
+                                <div className="column">
+                                    <InputField  props={address_2} />
+                                </div>
                             </div>
-                            <div className="column">
-                                <InputField  props={state} />
-                            </div>
-                            <div className="column">
-                                <InputField props={zip} />
+                            <div className="columns">
+                                <div className="column">
+                                    <InputField  props={city} />
+                                </div>
+                                <div className="column">
+                                    <InputField  props={state} />
+                                </div>
+                                <div className="column">
+                                    <InputField props={zip} />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <hr></hr>
-                    {/* Asking for dietary restrictions */}
-                    <p className="right-most" title="Substitutions allow users to choose different items that align with their dietary restrictions to add to their total cart.">* Opt for substitutions.</p>
-                    <p className="subtitle is-3 has-text-centered">Dietary Restrictions*</p>
-                    <InputField props={vegan} />
-                    <InputField props={vegetarian} />
-                    <InputField props={glutenFree} />
-                    <InputField props={kosher} />
-                    <InputField props={halal} />
-                    <InputField props={none} />
-                    <div className={hidden === "" && (none.value || hasRestrictions === true) ? "hidden" : hidden}>
-                        <article class="message is-danger error-msg">
-                            <div class="message-body">Please select any dietary restrictions you have. If none are applicable, please select N/A.</div>
-                        </article>
-                    </div>
-                    <div className="has-text-centered">
-                        <button className="button is-success has-margin-top-1 has-margin-bottom-0-5" onClick={handleClick}>Sign Up</button>
-                    </div>
+                        <hr></hr>
+                        {/* Asking for dietary restrictions */}
+                        <p className="right-most" title="Substitutions allow users to choose different items that align with their dietary restrictions to add to their total cart.">* Opt for substitutions.</p>
+                        <p className="subtitle is-3 has-text-centered has-text-black">Dietary Restrictions*</p>
+                        <InputField props={vegan} />
+                        <InputField props={vegetarian} />
+                        <InputField props={glutenFree} />
+                        <InputField props={kosher} />
+                        <InputField props={halal} />
+                        <InputField props={none} />
+                        <div className={hidden === "" && (none.value || hasRestrictions === true) ? "hidden" : hidden}>
+                            <article className="message is-danger error-msg">
+                                <div className="message-body">Please select any dietary restrictions you have. If none are applicable, please select N/A.</div>
+                            </article>
+                        </div>
+                        <div className="has-text-centered">
+                            <button className="button is-success has-margin-top-1 has-margin-bottom-0-5" onClick={handleClick}>Sign Up</button>
+                        </div>
                     </div>
                 </form>
             </div>

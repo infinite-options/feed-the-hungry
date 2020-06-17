@@ -846,15 +846,23 @@ a.item-tag:hover{
     
 }
 
-/* Positioning sign up text & form over background image */
-.overlay-signup {
+/* Replaced this class with the class below */
+/* .overlay-signup {
     position: absolute;
-    /* justify-content: center; */
     width: 100%;
     margin-left: 0;
     margin-right: 0;
     top: 10vh;
+} */
+
+.signup-background-image {
+    margin-left: 0;
+    margin-right: 0;
+    background: rgb(255,255,255);
+    background-image: linear-gradient(180deg, rgba(255,255,255,0.25) 0%, rgb(224, 224, 224) 50%), url('../assets/image/farmers-market.jpg');
+    background-size: cover;
 }
+
 .hidden {
     display: none;
 }
