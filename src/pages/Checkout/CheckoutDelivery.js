@@ -11,6 +11,8 @@ import Select from 'components/Form/Select';
 import StateAPI from 'API/StateAPI';
 
 function CheckoutDelivery() {
+  const states = StateAPI();
+  
   const dateTime = useDateTime();
   const street = useField("Street","text");
   const city = useField("City","text");
@@ -27,7 +29,7 @@ function CheckoutDelivery() {
     if (!checkbox.value && !dateTime.startDate) setHidden("");
     street.onButtonClick();
     city.onButtonClick();
-    state.onButtonClick();
+    state.validateWith(states);
     zip.onButtonClick();
   }
   return (

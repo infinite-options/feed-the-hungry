@@ -35,13 +35,17 @@ const useField = (label, type) => {
       // etc
       else setError("");
   }
+  const validateWith = (data) => {
+      if (!data.contain(value)) setError("Invalid " + label);
+  }
   return {
     error,
     type,
     label,
     value,
     onChange,
-    onButtonClick
+    onButtonClick,
+    validateWith
   };
 };
 export default useField;
