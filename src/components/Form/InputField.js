@@ -20,7 +20,7 @@ const InputField = ({props}) => {
           {/* If input is empty, shows red border and red error msg. 
            To see what attributes 'props' has, go to useField.js */}
           <div className="control">
-              <input className={props.error.length > 0 ? "input is-danger" : "input"} {...props} required />
+              <input className={props.error.length > 0 ? "input is-danger" : "input"} {...props} />
           </div>
           <p className="help is-danger">{props.error}</p>
         </div>

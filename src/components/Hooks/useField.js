@@ -28,6 +28,7 @@ const useField = (label, type) => {
       // other conditions:
       // email
       // password
+      // address 2
       // etc
       else setError("");
   }
