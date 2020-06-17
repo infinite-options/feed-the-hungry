@@ -109,7 +109,7 @@ function SignupPage() {
                                 </div>
                             </div>
                         </div>
-                        <hr></hr>
+                        <hr className="is-light-gray"/>
                         {/* Asking for user address */}
                         <div>
                             <p className="subtitle is-3 has-margin-top-1 has-text-centered has-text-black">Would you like to add a permanent address?</p>
@@ -135,7 +135,7 @@ function SignupPage() {
                                 </div>
                             </div>
                         </div>
-                        <hr></hr>
+                        <hr className="is-light-gray"/>
                         {/* Asking for dietary restrictions */}
                         <p className="right-most" title="Substitutions allow users to choose different items that align with their dietary restrictions to add to their total cart.">* Opt for substitutions.</p>
                         <p className="subtitle is-3 has-text-centered has-text-black">Dietary Restrictions*</p>
