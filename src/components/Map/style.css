@@ -3,3 +3,12 @@
     height: 100%;
     z-index: 0;
 }
+.has-margin-bottom-0-5 {
+    margin-bottom: .5rem;
+}
+.marker-popup {
+    width: 250px;
+}
+.marker-popup p{
+    font-size: 14px;
+}

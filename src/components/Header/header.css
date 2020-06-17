@@ -12,7 +12,9 @@
     border: none;
     background-color: white;
     /* background-color: #f8f8f8; */
-    border-bottom: 3px solid #f6f9fc;
+    /* border-bottom: 3px solid #B0B0B0; */
+    border-bottom: 1px solid #d8dbdd;
+    box-shadow: 0 2px 2px -2px rgba(0,0,0,.2);
 }
 .navbar-brand {
     height: 100%;

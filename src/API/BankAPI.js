@@ -29,19 +29,22 @@ const BankAPI = {
                     friday: x.fb_friday_time,
                     saturday: x.fb_saturday_time,
                     sunday: x.fb_sunday_time,
+                    latitude: x.fb_latitude,
+                    longitude: x.fb_longitude,
                     inventory: [
                         
                             {
                                 food_id: x.food_id,
                                 food_name: x.food_name,
                                 quantity: x.quantity,
+                                limit: x.limit,
                                 image: x.fl_image,
                                 weight: x.fl_amount,
                                 unit : x.fl_package_type,
                                 type: x.fl_food_type,
                                 brand: x.fl_brand,
                                 price: x.fl_value_in_dollars,
-                                weight_unit: x.fl_unit
+                                
                             }
 
                                     ]
@@ -52,13 +55,13 @@ const BankAPI = {
                                     food_id: x.food_id,
                                     food_name: x.food_name,
                                     quantity: x.quantity,
+                                    limit: x.limit,
                                     image: x.fl_image,
                                     weight: x.fl_amount,
                                     unit : x.fl_package_type,
                                     type: x.fl_food_type,
                                     brand: x.fl_brand,
                                     price: x.fl_value_in_dollars,
-                                    weight_unit: x.fl_unit
                                 });
             
             }
@@ -86,6 +89,13 @@ const BankAPI = {
     },
     GetItemsByTag: function(inventory, tag){
         return inventory.filter(foodItem => foodItem.type.includes(tag));
+    },
+    GetCoordinates: function(arr) {
+        let coords = [];
+        arr.forEach(x => {
+            coords.push([x.latitude, x.longitude])
+        })
+        return coords;
     }
 }
 export default BankAPI;

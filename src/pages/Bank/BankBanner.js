@@ -48,7 +48,7 @@ function BankBanner({ obj }) {
           </div>
         </div>
         <div className="bank-banner-right">
-          <LeafletMap />
+          <LeafletMap banks={obj}/>
         </div>
       </div>
     </section>

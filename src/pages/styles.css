@@ -1,7 +1,7 @@
 
 .banks-page-bd {
    margin-top: 10vh;
-   background-color: white;
+   background-color: #f8f7fa;
     /* background-color: #f6f9fc; */
 }
 .bank-page-bd .title, .bank-page-bd .subtitle, .bank-page-bd p{
@@ -43,11 +43,12 @@
     width: 100%;
     height: auto;
     padding-top: 3rem;
-    padding-left: 12vw;
-    padding-right: 2vw;
+    padding-left: 3rem;
+    padding-right: 2.25rem;
     padding-bottom: 3rem;
 }
 .bank-card {
+    border-radius: 12px;
     box-shadow: none;
     padding-top: 1rem;
     overflow: hidden;
@@ -173,7 +174,7 @@
     overflow: hidden;
 }
 .bank-banner-info {
-    padding: 2rem;
+    padding: 2.5rem;
 }
 .banner-image {
     /* top: 60px; */

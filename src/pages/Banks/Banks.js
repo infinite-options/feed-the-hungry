@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import Icons from "components/Icons/Icons";
 
-function Banks({ banks }) {
+function Banks({ marker, banks }) {
   function getNextDay() {
     // get next day
     var d = new Date();
@@ -29,7 +29,7 @@ function Banks({ banks }) {
   return (
     <div className="banks">
       {banks.map((bank) => (
-        <div key={bank.id} className="card bank-card">
+        <div key={bank.id} className="card bank-card" onMouseEnter={() => marker.setActiveMarker(bank.id)} onMouseLeave={() => marker.setActiveMarker('')}>
           <div className="card-content">
             <div className="media">
               <div className="media-left">
@@ -38,12 +38,12 @@ function Banks({ banks }) {
                 </figure>
               </div>
               <div className="media-content">
-                <p className="title is-5">
+                <p className="title is-6">
                   <Link
                     to={`/banks/${bank.id}/products`}
                     className="has-text-grey-dark link-to-bank"
                   >
-                    {bank.name} (0.5 miles)
+                    {bank.name}
                   </Link>
                 </p>
                 <p className="subtitle has-font-13 has-text-grey">

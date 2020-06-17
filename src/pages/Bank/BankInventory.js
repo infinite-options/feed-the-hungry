@@ -30,12 +30,11 @@ function BankInventory({ obj, bankUrl }) {
               </p>
               <p className="subtitle is-7 has-text-grey no-overflow">
                 {foodItem.unit} ({foodItem.weight}{" "}
-                {foodItem.weight_unit})
+                {/* {foodItem.weight_unit}) */}
               </p>
               <QuantityInput
                 foodItem={foodItem}
                 bankId={obj.id}
-                limit={foodItem.quantity}
               />
             </div>
           </div>
@@ -74,7 +73,7 @@ function ItemTags({ bankUrl, str }) {
     </div>
   );
 }
-function QuantityInput({ foodItem, bankId, limit }) {
+function QuantityInput({ foodItem, bankId}) {
   const count = useCounter(foodItem, bankId);
   return (
     <div className="field is-grouped is-multiline">
@@ -95,7 +94,7 @@ function QuantityInput({ foodItem, bankId, limit }) {
         <button
           className="button is-small"
           onClick={count.increase}
-          disabled={count.value === limit ? true : false}
+          disabled={ foodItem.quantity === 0 || count.value >= foodItem.limit ? true : false}
         >
           +
         </button>

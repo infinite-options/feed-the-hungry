@@ -1,26 +1,34 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import LeafletMap from "components/Map/LeafletMap";
 import Banks from "pages/Banks/Banks";
 import ScrollToTopOnMount from "utils/Scroll/ScrollToTopOnMount";
 
 function BanksLayout({ banks }) {
+  const marker = useMarker();
   return (
     <div className="banks-page-bd">
       <ScrollToTopOnMount />
       <div className="columns">
-        <div className="column is-7">
+        <div className="column is-6">
           <div className="bank-list">
-            <Banks banks={banks} />
+            <Banks marker={marker} banks={banks} />
           </div>
         </div>
-        <div className="column is-5 has-no-padding has-shadow">
+        <div className="column is-6 has-no-padding has-shadow">
           <div className="sticky">
-            <LeafletMap banks={banks} />
+            <LeafletMap marker={marker} banks={banks} />
           </div>
         </div>
       </div>
     </div>
   );
+}
+const useMarker = () => {
+  const [activeMarker, setActiveMarker] = useState('');
+  return {
+    activeMarker,
+    setActiveMarker
+  }
 }
 
 export default BanksLayout;

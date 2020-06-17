@@ -1,4 +1,4 @@
-import React, { useState, useRef, forwardRef } from "react";
+import React, { useState, useRef, forwardRef, useEffect } from "react";
 // import icons
 import Icons from "components/Icons/Icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,7 +26,10 @@ function CheckoutDelivery() {
     "I want my delivery as soon as possible",
     "checkbox"
   );
-  const ref = useRef();
+  useEffect(() => {
+    if (checkbox.value || dateTime.startDate) setHidden("hidden");
+  },[checkbox.value || dateTime.startDate]);
+  
   const handleSubmit = (e) => {
     e.preventDefault();
   };
@@ -85,9 +88,7 @@ function CheckoutDelivery() {
         if the error message is showing and user selects a delivery time, hid the error message */}
         <div
           className={
-            hidden === "" && (checkbox.value || dateTime.startDate)
-              ? "hidden"
-              : hidden
+            hidden
           }
         >
           <div className="error-msg">
