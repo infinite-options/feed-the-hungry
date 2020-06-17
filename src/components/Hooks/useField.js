@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import StateAPI from 'API/StateAPI';
 
-const useField = (label, type) => {
+const useField = (label, type, isRequired=true) => {
   const [value, setValue] = useState(type === "checkbox" ? false : '');
   const [error, setError] = useState('');
   
@@ -21,7 +21,7 @@ const useField = (label, type) => {
   // does not get triggered when submit button is clicked
   const onButtonClick = () => {
       // case 1: if input is empty
-      if (value.length === 0) setError("This field is required");
+      if (isRequired && value.length === 0) setError("This field is required");
       // case 2: if input is a zip code
       else if (label.toLowerCase() === "zip" && !/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(value)) setError("Invalid zip code");
       // case 3: if input is a state name

@@ -31,7 +31,7 @@ function SignupPage() {
     const passwordConfirm = useField("Confirm Password", "password")
     // User address
     const address_1 = useField("Address 1", "text");
-    const address_2 = useField("Address 2", "text");
+    const address_2 = useField("Address 2", "text", false);
     const city = useField("City", "text");
     const state = useField("State", "text");
     const zip = useField("Zip", "text");
