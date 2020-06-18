@@ -9,11 +9,11 @@ const InputField = ({props, icon}) => {
         {/* if the input is a checkbox */}
       {props.type === "checkbox" ? (
         <div className="control">
-          <label className="checkbox" >
+          <label className="checkbox level-item" style={{justifyContent: "flex-start"}}>
             <input {...props} />
             <span className="has-margin-left-0-5">{props.label}</span>
             {icon && (
-              <span className="icon tooltip">
+              <span className="icon has-margin-left-0-5">
                 <img src={icon} alt=""></img>
               </span>
             )}
