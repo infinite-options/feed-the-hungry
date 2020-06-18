@@ -24,6 +24,7 @@ const useField = (label, type, isRequired=true) => {
       // case 3: if input is entered but we need to verify it given a data
       // make sure that the data must have method 'contain' (see StateAPI.js, for instance)
       else if (data && !data.contain(value)) setError("Invalid " + label);
+      else if (label.toLowerCase() === "state" && value ==="") setError("Invalid state");
       else setError("");
   }
   return {

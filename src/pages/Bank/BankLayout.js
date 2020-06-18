@@ -32,7 +32,7 @@ function BankLayout({ obj }) {
         <BankFilters bankUrl={url} />
         <div className="bank-body">
           <div className="columns">
-            <div className="column is-6">
+            <div className="column is-6 item-column">
               <div className="inventory-title-container">
                 <p className="subtitle inventory-title">Delivery or Pickup</p>
               </div>
@@ -44,7 +44,7 @@ function BankLayout({ obj }) {
               />
          
             </div>
-            <div className="column is-6">
+            <div className="column is-6 item-column">
               <div className="inventory-title-container">
                 <p className="subtitle inventory-title">Delivery Only</p>
               </div>
@@ -65,7 +65,7 @@ function BankLayout({ obj }) {
                 </span>
                 <span>Return to Search Results</span>
             </button>
-            <Link to={`${url}/checkout`} >
+            <Link to={`${url}/checkout/customer-info`} >
                 <button className="button is-success" >
                   <span className="icon">
                       <FontAwesomeIcon icon={Icons.faLongArrowAltRight} />

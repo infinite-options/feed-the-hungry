@@ -13,10 +13,12 @@
     font-family: 'Muli',sans-serif;
 }
 .bank-container {
-    /* max-width: 1080px; */
-    padding-bottom: 5rem;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding-bottom: 3rem;
+    /* padding-bottom: 5rem;
     padding-left: 14vw;
-    padding-right: 14vw;
+    padding-right: 14vw; */
 }
 
 .bank-page-bd {
@@ -261,6 +263,7 @@
 }
 .inventory {
     display:flex;
+    
     flex-direction: column;
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -297,7 +300,7 @@
 }
 
 .item-content {
-    min-height: 158.4px;
+    height: 140px;
     margin-bottom: 1rem;
 }
 .item-content p {
@@ -399,7 +402,7 @@ img{
     width: 30%;
     /* border-right: 1px solid #f1f1f1; */
     /* height: 140px; */
-    height: 158.4px;
+    height: inherit;
 }
 .item-info {
     width: 70%;
@@ -625,10 +628,10 @@ opacity: 1;
         overflow: hidden;
         text-overflow: ellipsis;
     }
-    .bank-container {
+    /* .bank-container {
         padding-left: 1.75rem;
         padding-right: 1.75rem;
-    }
+    } */
 }
 @media only screen and (min-width: 1050px) {
     .notification {
@@ -653,6 +656,10 @@ opacity: 1;
     .bank-list {
         padding-left: 1.75rem;
         padding-right: 1rem;
+    }
+    .item-column {
+        padding-left: 2rem;
+        padding-right: 2rem;
     }
 }
 .no-overflow p {
