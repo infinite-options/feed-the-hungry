@@ -1,9 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import Icons from "components/Icons/Icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LeafletMap from "components/Map/LeafletMap";
 import BankSchedule from "pages/Bank/BankSchedule";
+import useMarker from 'components/Hooks/useMarker';
+
 function BankBanner({ obj }) {
+  const marker  = useMarker();
   return (
     <section className="hero">
       {/* Food Bank's Banner */}
@@ -48,10 +51,11 @@ function BankBanner({ obj }) {
           </div>
         </div>
         <div className="bank-banner-right">
-          <LeafletMap banks={obj}/>
+          <LeafletMap banks={obj} marker={marker}/>
         </div>
       </div>
     </section>
   );
 }
+
 export default BankBanner;
