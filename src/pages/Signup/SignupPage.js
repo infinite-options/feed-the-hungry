@@ -134,10 +134,10 @@ function SignupPage() {
                     {/* Asking for dietary restrictions */}
                     <p className="right-most" title="Substitutions allow users to choose different items that align with their dietary restrictions to add to their total cart.">* Opt for substitutions.</p>
                     <p className="subtitle is-3 has-text-centered has-text-black">Dietary Restrictions*</p>
-                    <InputField props={vegan} />
-                    <InputField props={vegetarian} />
-                    <InputField props={glutenFree} />
-                    <InputField props={kosher} />
+                    <InputField props={vegan} icon={Icons.Vegan}/>
+                    <InputField props={vegetarian} icon={Icons.Vegetarian} />
+                    <InputField props={glutenFree} icon={Icons.GlutenFree} />
+                    <InputField props={kosher} icon={Icons.Kosher}/>
                     <InputField props={halal} />
                     <InputField props={none} />
                     <div className={hidden === "" && (none.value || hasRestrictions === true) ? "hidden" : hidden}>
