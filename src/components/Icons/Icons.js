@@ -11,6 +11,7 @@ import Kosher from 'assets/image/kosher.png';
 import GlutenFree from 'assets/image/gluten_free.png';
 import Vegan from 'assets/image/vegan.png';
 import Vegetarian from 'assets/image/vegetarian.png';
+import Halal from 'assets/image/halal.png'
 
 
 var MarkerIcon = (color, width=25, height=41) => {
@@ -27,8 +28,8 @@ export default {
     faShippingFast, faCube, faMapPin, faClock, faMapMarkerAlt,
     faCalendarAlt, faCheckCircle, faCheck, faStar, faSearch,
     faShoppingCart, faPlus, faMinus, faChevronUp, faChevronDown,
-    Delivery, Pickup, faTimes, faLongArrowAltLeft,
-    faTrashAlt, faCircleNotch, Kosher, GlutenFree, Vegan, Vegetarian,
+    Delivery, Pickup, faTimes, faLongArrowAltLeft, faTrashAlt, 
+    faCircleNotch, Kosher, GlutenFree, Vegan, Vegetarian, Halal,
     faShoppingBasket, faLongArrowAltRight, faChevronLeft, faChevronRight,
     faWalking, faTruck, faEnvelope, faLock, faBoxOpen, MarkerIcon
 }
