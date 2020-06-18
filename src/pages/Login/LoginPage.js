@@ -50,28 +50,18 @@ function LoginPage() {
             <form onSubmit={handleSubmit} style={{width: "400px", maxWidth: "100%"}}>
                 <div className="column">
                     {/* Email input */}
-                    <div className="field">
-                        <div className="control has-icons-right">
-                            <InputField props={email} />
-                            <span class="icon is-right">
-                                <FontAwesomeIcon icon={Icons.faTruck} />
-                            </span>
-                        </div>
-                    </div>
+                    <InputField props={email} />
+                    {/* <span class="icon is-right">
+                        <FontAwesomeIcon icon={Icons.faTruck} />
+                    </span> */}
                     {/* Password input */}
-                    <div className="field">
-                        <div className="control">
-                            <InputField props={password} />
-                        </div>
-                    </div>
+                    <InputField props={password} />
                     {/* Buttons */}
-                    <div className="field">
-                        <div className="control has-text-centered has-margin-bottom-0-5">
-                            <button className="button is-success has-margins-0-5" onClick={handleClick}>Login</button>
-                            <Link to="/signup" >
-                                <button className="button is-success has-margins-0-5">Sign Up</button>
-                            </Link>
-                        </div>
+                    <div className="has-text-centered has-margin-bottom-0-5">
+                        <button className="button is-success has-margins-0-5" onClick={handleClick}>Login</button>
+                        <Link to="/signup" >
+                            <button className="button is-success has-margins-0-5">Sign Up</button>
+                        </Link>
                     </div>
                 </div>
             </form>
