@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import LeafletMap from "components/Map/LeafletMap";
 import Banks from "pages/Banks/Banks";
 import ScrollToTopOnMount from "utils/Scroll/ScrollToTopOnMount";
-
+import useMarker from 'components/Hooks/useMarker';
 function BanksLayout({ banks }) {
   const marker = useMarker();
   return (
@@ -23,12 +23,6 @@ function BanksLayout({ banks }) {
     </div>
   );
 }
-const useMarker = () => {
-  const [activeMarker, setActiveMarker] = useState('');
-  return {
-    activeMarker,
-    setActiveMarker
-  }
-}
+
 
 export default BanksLayout;
