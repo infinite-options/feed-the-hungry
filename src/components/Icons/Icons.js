@@ -2,7 +2,8 @@ import {faShippingFast, faCube, faMapPin, faClock, faMapMarkerAlt,
     faCalendarAlt, faCheckCircle, faCheck, faStar, faSearch, faBoxOpen,
     faShoppingCart, faPlus, faMinus, faChevronUp, faChevronDown, faTimes,
     faLongArrowAltLeft, faTrashAlt, faCircleNotch, faShoppingBasket,
-    faLongArrowAltRight, faChevronLeft, faChevronRight, faWalking, faTruck} from '@fortawesome/free-solid-svg-icons';
+    faLongArrowAltRight, faChevronLeft, faChevronRight, faWalking, faTruck, 
+    faEnvelope, faLock} from '@fortawesome/free-solid-svg-icons';
 import Delivery from './Delivery.png';
 import Pickup from './Pickup.png';
 import { Icon } from 'leaflet';
@@ -29,7 +30,7 @@ export default {
     Delivery, Pickup, faTimes, faLongArrowAltLeft,
     faTrashAlt, faCircleNotch, Kosher, GlutenFree, Vegan, Vegetarian,
     faShoppingBasket, faLongArrowAltRight, faChevronLeft, faChevronRight,
-    faWalking, faTruck, faBoxOpen, MarkerIcon
+    faWalking, faTruck, faEnvelope, faLock, faBoxOpen, MarkerIcon
 }
 
 // How to use this component?
