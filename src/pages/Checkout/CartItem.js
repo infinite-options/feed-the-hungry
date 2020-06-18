@@ -10,7 +10,10 @@ function CartItem({foodItem}){
             </div>
             <div className="card-content no-overflow">
                 <p className="title is-7 has-text-grey-light item-brand">{foodItem.item.brand}</p>
-                <p className="subtitle is-6 is-bold">{foodItem.item.food_name}</p>
+                <p className="subtitle is-6 is-bold">{foodItem.item.food_name}
+                </p>
+                {foodItem.item.delivery_pickup === "delivery" ? 
+                <span class="tag is-danger">Delivery Only</span> : "" }
                 <p className="subtitle is-7 has-text-grey">{foodItem.item.unit} ({foodItem.item.weight} {foodItem.item.weight_unit})</p>
             </div>
             <footer className="card-footer no-overflow">

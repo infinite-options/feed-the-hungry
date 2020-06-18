@@ -39,6 +39,7 @@ function BankLayout({ obj }) {
               <BankInventory
               key={key}
               obj={obj}
+              deliveryOrPickup={"both;pickup"}
               bankUrl={url}
               />
          
@@ -47,6 +48,13 @@ function BankLayout({ obj }) {
               <div className="inventory-title-container">
                 <p className="subtitle inventory-title">Delivery Only</p>
               </div>
+              <BankInventory
+              key={key}
+              obj={obj}
+              deliveryOrPickup="delivery"
+              bankUrl={url}
+              />
+     
             </div>
           </div>
         </div>

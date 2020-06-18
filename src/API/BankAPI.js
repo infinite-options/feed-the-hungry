@@ -44,6 +44,7 @@ const BankAPI = {
                                 type: x.fl_food_type,
                                 brand: x.fl_brand,
                                 price: x.fl_value_in_dollars,
+                                delivery_pickup: x.delivery_pickup
                                 
                             }
 
@@ -62,6 +63,7 @@ const BankAPI = {
                                     type: x.fl_food_type,
                                     brand: x.fl_brand,
                                     price: x.fl_value_in_dollars,
+                                    delivery_pickup: x.delivery_pickup
                                 });
             
             }

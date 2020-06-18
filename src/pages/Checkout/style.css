@@ -104,13 +104,16 @@
 
 }
 .cart-item {
+    border-radius: 12px;
     /* box-shadow: none; */
     /* width: 185.333px; */
     width: 236.75px;
     /* flex: 0 1 25%; */
     border-bottom: 1px solid #eeeeef;
 }
-
+.cart-item .card-content {
+    min-height: 126.5px;
+}
 .card-image {
     max-width: inherit;
     display: flex;

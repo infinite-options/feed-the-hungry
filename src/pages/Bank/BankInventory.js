@@ -4,14 +4,14 @@ import { BrowserRouter as Router, Link, useLocation } from "react-router-dom";
 import useQuery from 'components/Hooks/useQuery';
 
 // render food bank's inventory
-function BankInventory({ obj, bankUrl }) {
+function BankInventory({ obj, deliveryOrPickup, bankUrl }) {
   let query = useQuery();
   let inventory = obj.inventory;
   if (query.get("type")) inventory = BankAPI.GetItemsByTag(inventory, query.get("type"));
 
   return (
     <div key={+new Date()} className="inventory fade-in">
-      {inventory.map(foodItem => (
+      {inventory.map(foodItem => deliveryOrPickup.includes(foodItem.delivery_pickup) ?  (
         <div key={foodItem.food_id} className="card item">
           <div className="card-content has-no-padding item-content">
             <div className="item-image-container">
@@ -49,7 +49,7 @@ function BankInventory({ obj, bankUrl }) {
             </div>
           </div>
         </div>
-      ))}
+      ): null)}
     </div>
   );
 }
