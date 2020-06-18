@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link, useRouteMatch, Redirect } from "react-router-dom";
 import { Map, TileLayer, Marker, Popup, MapLayer } from "react-leaflet";
 import { geolocated } from "react-geolocated";
 import Icons from "components/Icons/Icons";
@@ -25,7 +25,7 @@ class LeafletMap extends React.Component {
     const bounds = Array.isArray(banks) ? BankAPI.GetCoordinates(banks) : 
            [[latitude, longitude], [banks.latitude, banks.longitude]]
     return (
-      <Map zoom={11} center={[latitude, longitude]}>
+      <Map  center={[latitude, longitude]} zoom={11}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

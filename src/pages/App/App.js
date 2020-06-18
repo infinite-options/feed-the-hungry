@@ -7,6 +7,7 @@ import {
   Link,
   useRouteMatch,
   useParams,
+  Redirect,
 } from "react-router-dom";
 // import bulma and other css styles
 import "bulma/css/bulma.css";
@@ -42,6 +43,9 @@ function App() {
         <Route exact path="/banks">
           <BanksPage list={banks} />
         </Route>
+        {/* <Route exact path={"/banks/:bankId"}>
+          <Redirect to={"/banks/:bankId/products"} />
+        </Route> */}
         <Route exact path={"/banks/:bankId/products"}>
           <BankPage list={banks} />
         </Route>
