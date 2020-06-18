@@ -138,7 +138,7 @@ function SignupPage() {
                     <InputField props={vegetarian} icon={Icons.Vegetarian} />
                     <InputField props={glutenFree} icon={Icons.GlutenFree} />
                     <InputField props={kosher} icon={Icons.Kosher}/>
-                    <InputField props={halal} />
+                    <InputField props={halal} icon={Icons.Halal}/>
                     <InputField props={none} />
                     <div className={hidden === "" && (none.value || hasRestrictions === true) ? "hidden" : hidden}>
                         <article className="message is-danger error-msg">
