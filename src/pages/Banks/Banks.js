@@ -46,13 +46,10 @@ function Banks({ marker, banks }) {
                 </figure>
               </div>
               <div className="media-content">
-                <p className="title is-6">
-                  <Link
-                    to={`/banks/${bank.id}/products`}
-                    className="has-text-grey-dark link-to-bank"
-                  >
+                <p className="title is-6 has-text-grey-dark">
+              
                     {bank.name}
-                  </Link>
+                 
                 </p>
                 <p className="subtitle has-font-13 has-text-grey">
                   {" "}

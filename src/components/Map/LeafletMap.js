@@ -25,7 +25,7 @@ class LeafletMap extends React.Component {
     const bounds = Array.isArray(banks) ? BankAPI.GetCoordinates(banks) : 
            [[latitude, longitude], [banks.latitude, banks.longitude]]
     return (
-      <Map  center={[latitude, longitude]} bounds={bounds} boundsOptions={{ padding: [50, 50]}}>
+      <Map  center={[latitude, longitude]} zoom={11}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
