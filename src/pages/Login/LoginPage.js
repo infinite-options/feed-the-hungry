@@ -17,8 +17,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FarmersMarket from 'assets/image/farmers-market.jpg';
 // import Notifications from "components/Notifications/Notifications";
 // import LoginLayout from "pages/Login/LoginLayout.js";
-import FacebookLogin from "react-facebook-login";
-import GoogleLogin from "react-google-login"
+//import FacebookLogin from "react-facebook-login";
+//import GoogleLogin from "react-google-login"
 
 function LoginPage() {
     const email = useField("Email","email");

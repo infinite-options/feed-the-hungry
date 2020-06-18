@@ -6,10 +6,12 @@ import {
   Link,
   useRouteMatch,
   useParams,
+  useHistory 
 } from "react-router-dom";
 import Icons from "components/Icons/Icons";
 
 function Banks({ marker, banks }) {
+  const history = useHistory();
   function getNextDay() {
     // get next day
     var d = new Date();
@@ -29,7 +31,13 @@ function Banks({ marker, banks }) {
   return (
     <div className="banks">
       {banks.map((bank) => (
-        <div key={bank.id} className="card bank-card" onMouseEnter={() => marker.setActiveMarker(bank.id)} onMouseLeave={() => marker.setActiveMarker('')}>
+        <div
+          key={bank.id}
+          className="card bank-card"
+          onMouseEnter={() => marker.setActiveMarker(bank.id)}
+          onMouseLeave={() => marker.setActiveMarker("")}
+          onClick={() => history.push(`/banks/${bank.id}/products`)}
+        >
           <div className="card-content">
             <div className="media">
               <div className="media-left">
