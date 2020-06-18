@@ -82,11 +82,15 @@ function SignupPage() {
                             <div className="column">
                                 <InputField  props={lastName} />
                             </div>
+                        </div>
+                        <div className="columns">
+                            <div className="column is-8">
+                                <InputField props={phoneNumber} />
+                            </div>
                             <div className="column">
                                 <InputField  props={dob} />
                             </div>
                         </div>
-                        <InputField props={phoneNumber} />
                         <div className="columns">
                             <div className="column">
                                 <InputField props={email} />
