@@ -50,12 +50,12 @@ function LoginPage() {
             <form onSubmit={handleSubmit} style={{width: "400px", maxWidth: "100%"}}>
                 <div className="column">
                     {/* Email input */}
-                    <InputField props={email} />
+                    <InputField props={email} icon={Icons.faEnvelope} />
                     {/* <span class="icon is-right">
                         <FontAwesomeIcon icon={Icons.faTruck} />
                     </span> */}
                     {/* Password input */}
-                    <InputField props={password} />
+                    <InputField props={password} icon={Icons.faLock} />
                     {/* Buttons */}
                     <div className="has-text-centered has-margin-bottom-0-5">
                         <button className="button is-success has-margins-0-5" onClick={handleClick}>Login</button>
