@@ -25,9 +25,9 @@ function LoginPage() {
     const password = useField("Password","password");
     // let onLoginPage = true;
 
-    const responseFacebook = async response => {
-        console.log("User has tried to login through Facebook..")
-    }
+    // const responseFacebook = async response => {
+    //     console.log("User has tried to login through Facebook..")
+    // }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -37,6 +37,41 @@ function LoginPage() {
         console.log("User has tried to login..")
         email.validatewith();
         password.validatewith();
+        checkLogin();
+    }
+
+    async function grabLoginInfoForUser(userEmail, userPassword) {
+        // For testing...
+        console.log("running function grabLoginInfoForUser()..");
+        console.log(
+                    "Email:", (userEmail ? userEmail : undefined), 
+                    "Password:", (userPassword ? userPassword : undefined)
+                    );
+
+        // Code here
+    }
+
+    function checkLogin() {
+        // For testing...
+        console.log("running function checkLogin()..")
+
+        grabLoginInfoForUser(email.value, password.value).then(response => {
+            login(response);
+        }).catch(err => {
+            // For testing...
+            console.log("uh oh error ", err.response)
+
+            // Code here
+        })
+    }
+
+    function login(response) {
+        // For testing...
+        console.log("running function login()..");
+        console.log("Response:", response);
+
+        // Code here
+        if(response) {}
     }
 
     return (

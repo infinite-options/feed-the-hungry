@@ -45,6 +45,26 @@ function SignupPage() {
     const [hidden, setHidden] = useState("hidden");
     let hasRestrictions = vegan.value || vegetarian.value || glutenFree.value || kosher.value || halal.value;
 
+    // Testing something
+    // const [morePersons, setMorePersons] = useState([{ firstName: "", lastName: "", dob: "" }]);
+    // handle input change
+    // const handlePersonChange = (e, index) => {
+    //     const { name, value } = e.target;
+    //     const list = [...morePersons];
+    //     list[index][name] = value;
+    //     setMorePersons(list);
+    // };
+    // // handle click event of the Remove button
+    // const handleRemoveClick = index => {
+    //     const list = [...morePersons];
+    //     list.splice(index, 1);
+    //     setMorePersons(list);
+    // };
+    // // handle click event of the Add button
+    // const handleAddClick = () => {
+    //     setMorePersons([...morePersons, { firstName: "", lastName: "", dob: "" }]);
+    // };
+
     const handleSubmit = (e) => {
         e.preventDefault();
     };
@@ -66,10 +86,33 @@ function SignupPage() {
         zip.validatewith();
 
         if (!none.value && !hasRestrictions) setHidden("");
+
+        // Handle successful signup here
+        // let signupFailed = firstName.error || lastName.error || dob.error || phoneNumber.error ||
     }
 
     return (
         <div className="login-signup-page signup-background-image">
+            {/* test */}
+            {/* <button onClick={handleAddClick}>hi</button>
+            {morePersons.map((x, i) => {
+                return (
+                    <div>
+                        <input
+                            name="firstName"
+                            value={x.firstName}
+                        />
+                        <input
+                            name="lastName"
+                            value={x.lastName}
+                        />
+                        <input
+                            name="dob"
+                            value={x.dob}
+                        />
+                    </div>
+                );
+            })} */}
             <form onSubmit={handleSubmit} style={{width: "720px", maxWidth: "100%"}}>
                 <div className="column has-text-black">
                     {/* Asking for user data */}
