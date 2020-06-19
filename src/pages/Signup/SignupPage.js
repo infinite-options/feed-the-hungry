@@ -88,6 +88,8 @@ function SignupPage() {
         if (!none.value && !hasRestrictions) setHidden("");
 
         // Handle successful signup here
+        // This would be really long, maybe we can put all the input values into an array
+        // then loop through that array
         // let signupFailed = firstName.error || lastName.error || dob.error || phoneNumber.error ||
     }
 
