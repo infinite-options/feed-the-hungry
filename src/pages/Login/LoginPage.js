@@ -37,23 +37,29 @@ function LoginPage() {
         console.log("User has tried to login..")
         email.validatewith();
         password.validatewith();
-        checkLogin();
+        if (email.validatewith() && password.validatewith()) {
+            console.log("we did it!");
+            checkLogin();
+        }
+        else {
+            console.log("User has failed to login..");
+        }
     }
 
     async function grabLoginInfoForUser(userEmail, userPassword) {
         // For testing...
-        console.log("running function grabLoginInfoForUser()..");
-        console.log(
-                    "Email:", (userEmail ? userEmail : undefined), 
-                    "Password:", (userPassword ? userPassword : undefined)
-                    );
+        // console.log("running function grabLoginInfoForUser()..");
+        // console.log(
+        //             "Email:", (userEmail ? userEmail : undefined), 
+        //             "Password:", (userPassword ? userPassword : undefined)
+        //             );
 
         // Code here
     }
 
     function checkLogin() {
         // For testing...
-        console.log("running function checkLogin()..")
+        // console.log("running function checkLogin()..")
 
         grabLoginInfoForUser(email.value, password.value).then(response => {
             login(response);
@@ -67,8 +73,8 @@ function LoginPage() {
 
     function login(response) {
         // For testing...
-        console.log("running function login()..");
-        console.log("Response:", response);
+        // console.log("running function login()..");
+        // console.log("Response:", response);
 
         // Code here
         if(response) {}

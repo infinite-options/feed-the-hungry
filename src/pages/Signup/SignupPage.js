@@ -20,101 +20,115 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FarmersMarket from 'assets/image/farmers-market.jpg';
 
 function SignupPage() {
-    // User data
-    const firstName = useField("First Name", "text");
-    const lastName = useField("Last Name","text");
-    const dob = useField("Date of Birth", "text");
-    const phoneNumber = useField("Phone Number", "text");
-    const email = useField("Email Address", "email");
-    const emailConfirm = useField("Confirm Email", "email");
-    const password = useField("Password","password")
-    const passwordConfirm = useField("Confirm Password", "password")
-    // User address
-    const address_1 = useField("Address 1", "text");
-    const address_2 = useField("Address 2", "text", false);
-    const city = useField("City", "text");
-    const state = useField("State", "text");
-    const zip = useField("Zip", "text");
-    // Dietary restrictions
-    const vegan = useField("Vegan", "checkbox");
-    const vegetarian = useField("Vegetarian", "checkbox");
-    const glutenFree = useField("Gluten Free", "checkbox");
-    const kosher = useField("Kosher", "checkbox");
-    const halal = useField("Halal", "checkbox");
-    const none = useField("None", "checkbox");
-    const [hidden, setHidden] = useState("hidden");
-    let hasRestrictions = vegan.value || vegetarian.value || glutenFree.value || kosher.value || halal.value;
+    const inputs = {
+        firstName : useField("First Name", "text"),
+        lastName : useField("Last Name","text"),
+        dob : useField("Date of Birth", "text"),
+        phoneNumber : useField("Phone Number", "tel"),
+        email : useField("Email Address", "email"),
+        emailConfirm : useField("Confirm Email", "email"),
+        password : useField("Password","password"),
+        passwordConfirm : useField("Confirm Password", "password"),
+        address_1 : useField("Address 1", "text"),
+        address_2 : useField("Address 2", "text", false),
+        city : useField("City", "text"),
+        state : useField("State", "text"),
+        zip : useField("Zip", "text"),
+        vegan : useField("Vegan", "checkbox"),
+        vegetarian : useField("Vegetarian", "checkbox"),
+        glutenFree : useField("Gluten Free", "checkbox"),
+        kosher : useField("Kosher", "checkbox"),
+        halal : useField("Halal", "checkbox"),
+        none : useField("None", "checkbox"),
+    }
 
-    // Testing something
-    // const [morePersons, setMorePersons] = useState([{ firstName: "", lastName: "", dob: "" }]);
-    // handle input change
-    // const handlePersonChange = (e, index) => {
-    //     const { name, value } = e.target;
-    //     const list = [...morePersons];
-    //     list[index][name] = value;
-    //     setMorePersons(list);
-    // };
-    // // handle click event of the Remove button
-    // const handleRemoveClick = index => {
-    //     const list = [...morePersons];
-    //     list.splice(index, 1);
-    //     setMorePersons(list);
-    // };
-    // // handle click event of the Add button
-    // const handleAddClick = () => {
-    //     setMorePersons([...morePersons, { firstName: "", lastName: "", dob: "" }]);
-    // };
+    const [hidden, setHidden] = useState("hidden");
+    let hasRestrictions = inputs.vegan.value || inputs.vegetarian.value
+                       || inputs.glutenFree.value || inputs.kosher.value 
+                       || inputs.halal.value;
 
     const handleSubmit = (e) => {
         e.preventDefault();
     };
 
+    const validateInputs = () => {
+        let isAllValid = true;
+        for (let input in inputs) {
+            if (!inputs[input].validatewith()) {
+                isAllValid = false;
+            }
+        }
+        return isAllValid;
+    }
+
     const handleClick = () => {
         console.log("User has tried to sign up..")
-        firstName.validatewith();
-        lastName.validatewith();
-        dob.validatewith();
-        phoneNumber.validatewith();
-        email.validatewith();
-        emailConfirm.validatewith();
-        password.validatewith();
-        passwordConfirm.validatewith();
-        address_1.validatewith();
-        address_2.validatewith();
-        city.validatewith();
-        state.validatewith();
-        zip.validatewith();
+        let isAllValid = validateInputs();
+        if (!inputs.none.value && !hasRestrictions) setHidden("");
+        
+        // Checking if user filled all required inputs
+        let signupPassed = (inputs.none.value || hasRestrictions) && isAllValid;
+        if (signupPassed) {
+            // Checking if email/password matches its confirmed
+            if(inputs.email.value !== inputs.emailConfirm.value) {
+                // Email mismatch error message goes here
+                console.log("Email mismatch.");
+                signupPassed = false;
+            }
+            if(inputs.password.value !== inputs.passwordConfirm.value) {
+                // Password mismatch error message goes here
+                console.log("Password mismatch.");
+                signupPassed = false;
+            }
+        }
 
-        if (!none.value && !hasRestrictions) setHidden("");
+        if(signupPassed) {
+            // Testing to see if all values went through
+            for (let input in inputs) {
+                // console.log(input + ":", inputs[input].value);
+                console.log("we did it!");
+            }
 
-        // Handle successful signup here
-        // This would be really long, maybe we can put all the input values into an array
-        // then loop through that array
-        // let signupFailed = firstName.error || lastName.error || dob.error || phoneNumber.error ||
+            // Code
+        }
+        else {
+            console.log("Sign up failed...");
+        }
+    }
+
+    // Testing adding additional people
+    const [additions, setAdditions] = useState([]);
+    const handleAddClick = () => {
+        additions.push({firstName: "", lastName: "", dob: ""});
+        setAdditions([...additions]);
     }
 
     return (
         <div className="login-signup-page signup-background-image">
-            {/* test */}
-            {/* <button onClick={handleAddClick}>hi</button>
-            {morePersons.map((x, i) => {
+            {/* testing adding additional people inputs */}
+            <button class="button is-success has-margins-0-5" onClick={handleAddClick}>testing dynamic inputs</button>
+            {additions.map((val, idx) => {
                 return (
-                    <div>
-                        <input
-                            name="firstName"
-                            value={x.firstName}
-                        />
-                        <input
-                            name="lastName"
-                            value={x.lastName}
-                        />
-                        <input
-                            name="dob"
-                            value={x.dob}
-                        />
+                    <div className="has-margins-0-5" key={idx}>
+                        <label className="label">Person {idx}</label>
+                        <div className="field">
+                            <div className="control">
+                                <input className="input" type="text" placeholder="First Name"></input>
+                            </div>
+                        </div>
+                        <div className="field">
+                            <div className="control">
+                                <input className="input" type="text" placeholder="Last Name"></input>
+                            </div>
+                        </div>
+                        <div className="field">
+                            <div className="control">
+                                <input className="input" type="text" placeholder="Date of Birth"></input>
+                            </div>
+                        </div>
                     </div>
                 );
-            })} */}
+            })}
             <form onSubmit={handleSubmit} style={{width: "720px", maxWidth: "100%"}}>
                 <div className="column has-text-black">
                     {/* Asking for user data */}
@@ -122,34 +136,34 @@ function SignupPage() {
                         <p className="subtitle is-1 has-margin-top-1 has-text-centered has-text-black">Sign Up</p>
                         <div className="columns has-margin-top-1">
                             <div className="column">
-                                <InputField props={firstName} />
+                                <InputField props={inputs.firstName} />
                             </div>
                             <div className="column">
-                                <InputField  props={lastName} />
+                                <InputField  props={inputs.lastName} />
                             </div>
                         </div>
                         <div className="columns">
                             <div className="column is-8">
-                                <InputField props={phoneNumber} />
+                                <InputField props={inputs.phoneNumber} />
                             </div>
                             <div className="column">
-                                <InputField  props={dob} />
-                            </div>
-                        </div>
-                        <div className="columns">
-                            <div className="column">
-                                <InputField props={email} />
-                            </div>
-                            <div className="column">
-                                <InputField  props={emailConfirm} />
+                                <InputField  props={inputs.dob} />
                             </div>
                         </div>
                         <div className="columns">
                             <div className="column">
-                                <InputField  props={password} />
+                                <InputField props={inputs.email} />
                             </div>
                             <div className="column">
-                                <InputField props={passwordConfirm} />
+                                <InputField  props={inputs.emailConfirm} />
+                            </div>
+                        </div>
+                        <div className="columns">
+                            <div className="column">
+                                <InputField  props={inputs.password} />
+                            </div>
+                            <div className="column">
+                                <InputField props={inputs.passwordConfirm} />
                             </div>
                         </div>
                     </div>
@@ -161,21 +175,21 @@ function SignupPage() {
                         <p className="subtitle is-4 has-margin-top-1 has-text-centered has-text-black">Add An Address</p>
                         <div className="columns has-margin-top-1">
                             <div className="column">
-                                <InputField props={address_1} />
+                                <InputField props={inputs.address_1} />
                             </div>
                             <div className="column">
-                                <InputField  props={address_2} />
+                                <InputField  props={inputs.address_2} />
                             </div>
                         </div>
                         <div className="columns">
                             <div className="column">
-                                <InputField  props={city} />
+                                <InputField  props={inputs.city} />
                             </div>
                             <div className="column">
-                                <InputField  props={state} />
+                                <InputField  props={inputs.state} />
                             </div>
                             <div className="column">
-                                <InputField props={zip} />
+                                <InputField props={inputs.zip} />
                             </div>
                         </div>
                     </div>
@@ -183,13 +197,13 @@ function SignupPage() {
                     {/* Asking for dietary restrictions */}
                     <p className="right-most" title="Substitutions allow users to choose different items that align with their dietary restrictions to add to their total cart.">* Opt for substitutions.</p>
                     <p className="subtitle is-3 has-text-centered has-text-black">Dietary Restrictions*</p>
-                    <InputField props={vegan} icon={Icons.Vegan}/>
-                    <InputField props={vegetarian} icon={Icons.Vegetarian} />
-                    <InputField props={glutenFree} icon={Icons.GlutenFree} />
-                    <InputField props={kosher} icon={Icons.Kosher}/>
-                    <InputField props={halal} icon={Icons.Halal}/>
-                    <InputField props={none} />
-                    <div className={hidden === "" && (none.value || hasRestrictions === true) ? "hidden" : hidden}>
+                    <InputField props={inputs.vegan} icon={Icons.Vegan}/>
+                    <InputField props={inputs.vegetarian} icon={Icons.Vegetarian} />
+                    <InputField props={inputs.glutenFree} icon={Icons.GlutenFree} />
+                    <InputField props={inputs.kosher} icon={Icons.Kosher}/>
+                    <InputField props={inputs.halal} icon={Icons.Halal}/>
+                    <InputField props={inputs.none} />
+                    <div className={hidden === "" && (inputs.none.value || hasRestrictions === true) ? "hidden" : hidden}>
                         <article className="message is-danger error-msg">
                             <div className="message-body">Please select any dietary restrictions you have. If none are applicable, please select N/A.</div>
                         </article>
