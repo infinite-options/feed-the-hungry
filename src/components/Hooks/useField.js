@@ -11,11 +11,12 @@ const useField = (label, type, isRequired=true) => {
         ? event.target.checked
         : event.target.value
     );
-    // set error msg to '' if input is filled
-    if (event.target.value.length > 0 )  setError('');
 
+    // set error msg to '' if input is filled
+    if (event.target.value.length > 0 ) setError('');
   };
-  // validate inputs if user clicks submit button.
+
+  // validate inputs if user clicks submit button. Returns true if no errors, false if error detected.
   const validatewith = (data=null) => {
       // case 1: if input is required but nothing is entered
       if (isRequired && value.length === 0) setError("This field is required");
@@ -25,7 +26,11 @@ const useField = (label, type, isRequired=true) => {
       // make sure that the data must have method 'contain' (see StateAPI.js, for instance)
       else if (data && !data.contain(value)) setError("Invalid " + label);
       else if (label.toLowerCase() === "state" && value ==="") setError("Invalid state");
-      else setError("");
+      else {
+          setError("");
+          return true;
+      }
+      return false;
   }
   return {
     error,
