@@ -3,14 +3,15 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // use this component for all input fields (well, not really all input fields because it still needs modifications)
-const InputField = ({props, icon}) => {
+const InputField = ({props, icon, isDisabled}) => {
+  // NOTE: isDisabled is only implemented for checkboxes at the moment
   return (
     <div className="field">
         {/* if the input is a checkbox */}
       {props.type === "checkbox" ? (
         <div className="control">
           <label className="checkbox level-item" style={{justifyContent: "flex-start"}}>
-            <input {...props} />
+            <input {...props} disabled={isDisabled}/>
             <span className="has-margin-left-0-5">{props.label}</span>
             {icon && (
               <span className="icon has-margin-left-0-5">
