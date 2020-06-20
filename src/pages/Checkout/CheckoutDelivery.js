@@ -15,8 +15,10 @@ import CustomerInfo from "pages/Checkout/CustomerInfo";
 import Select from "components/Form/Select";
 import StateAPI from "API/StateAPI";
 import CheckoutPickup from "./CheckoutPickup";
+import { useRouteMatch, useParams, Link, useLocation } from "react-router-dom";
 
 function CheckoutDelivery({ obj }) {
+  let { hist } = useLocation();
   const [activeTab, setActiveTab] = useState("delivery");
   const [hidden, setHidden] = useState("hidden"); // to hide error msg
 
@@ -150,14 +152,12 @@ function CheckoutDelivery({ obj }) {
         )}
       </div>
       <div className="space-1"></div>
-      <div className="field">
+      <div className="field right-most">
         <div className="control">
-          <button
-            className="button is-medium is-success is-fullwidth"
-            onClick={handleClick}
-          >
+ 
+          <button className="button is-success" onClick={handleClick}>
             <span className="icon">
-              {/* <FontAwesomeIcon icon={Icons.faTruck} /> */}
+              <FontAwesomeIcon icon={Icons.faLongArrowAltRight} />
             </span>
             <span className="uppercase">Review and Pay</span>
           </button>
