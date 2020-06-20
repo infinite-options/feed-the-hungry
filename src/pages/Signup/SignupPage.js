@@ -46,7 +46,7 @@ function SignupPage() {
         a_dob : useField("Date of Birth", "text"),
 
         license: useField("Drivers License", "text", false),
-        licenseImg: useField("Image of Drivers License", "file", false),
+        licenseImg: useField("License Image", "file", false),
         monthlyIncome : useField("Monthly Income", "text", false),
     }
 
