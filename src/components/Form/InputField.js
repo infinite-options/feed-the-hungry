@@ -1,17 +1,17 @@
 import React from "react";
-
+import './style.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // use this component for all input fields (well, not really all input fields because it still needs modifications)
-const InputField = ({props, icon}) => {
-  return (
-    <div className="field">
-        {/* if the input is a checkbox */}
-      {props.type === "checkbox" ? (
-        <div className="control">
+const InputField = ({props, icon }) => {
+
+ if (props.type === "checkbox"){
+    return (
+      <div className="field">
+         <div className="control">
           <label className="checkbox level-item" style={{justifyContent: "flex-start"}}>
             <input {...props} />
-            <span className="has-margin-left-0-5">{props.label}</span>
+            <span className="has-margin-left-0-5">{props.name}</span>
             {icon && (
               <span className="icon has-margin-left-0-5">
                 <img src={icon} alt=""></img>
@@ -19,24 +19,24 @@ const InputField = ({props, icon}) => {
             )}
           </label>
         </div>
-      ) : (
-        //   else
-        <div>
-          {/* <label>{props.label}</label> */}
-          {/* If input is empty, shows red border and red error msg. 
-           To see what attributes 'props' has, go to useField.js */}
+      </div>
+    );
+  }
+  else{
+    return (
+      <div className="field">
           <div className={icon ? "control has-icons-right" : "control"}>
-            <input className={props.error.length > 0 ? "input is-danger" : "input"} {...props} placeholder={props.label} />
-            {icon && (
+            <input className={props.error.length > 0 ? "input is-danger" : "input"} {...props} placeholder={props.name} />
+            {icon ?  (
               <span className="icon is-right">
                 <FontAwesomeIcon icon={icon} />
               </span>
-            )}
+            ) : ""}
           </div>
           <p className="help is-danger">{props.error}</p>
-        </div>
-      )}
-    </div>
-  );
+      </div>
+    );
+  }
+ 
 };
 export default InputField;
