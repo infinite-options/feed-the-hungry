@@ -1,23 +1,34 @@
-import React from 'react';
+import React from "react";
 
 // to use this component, make sure that the array being passed in must be
 // an array of object
-function Select({props, data}) {
-    return (
-        <div>
-        <div className={props.error.length > 0? "select is-danger" : "select"}>
-            <select {...props}>
-                <option value="">{props.label}</option>
-                {Object.keys(data).map(x => 
-                    <option value={x}>{data[x]}</option>
-                )
-                }
-            </select>
+function Select({ props, data }) {
+  let i = 0;
+  return (
+    <div className="field">
+      <div className="control is-expanded">
+        <div
+          className={
+            props.error.length > 0
+              ? "select is-danger is-fullwidth"
+              : "select is-fullwidth"
+          }
+        >
+          <select {...props}>
+            <option key={i++} value="">
+              {props.name}
+            </option>
+            {Object.keys(data).map((x) => (
+              <option key={i++} value={x}>
+                {data[x]}
+              </option>
+            ))}
+          </select>
         </div>
-        <p className="help is-danger">{props.error}</p>
-        </div>
-        
-    );
+      </div>
+      <p className="help is-danger">{props.error}</p>
+    </div>
+  );
 }
 
 export default Select;

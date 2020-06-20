@@ -4,9 +4,7 @@ import ScrollToTopOnMount from "utils/Scroll/ScrollToTopOnMount";
 import Notifications from "components/Notifications/Notifications";
 import Icons from "components/Icons/Icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import CheckoutPickup from "pages/Checkout/CheckoutPickup";
-import CheckoutDelivery from "pages/Checkout/CheckoutDelivery";
-import CustomerInfo from "pages/Checkout/CustomerInfo";
+import CheckoutForm from "pages/Checkout/CheckoutForm";
 import { Link, useRouteMatch } from "react-router-dom";
 
 function CheckoutPageLayout({ obj }) {
@@ -32,24 +30,25 @@ function CheckoutPageLayout({ obj }) {
               <Carousel obj={obj} />
             </div>
             <div className="divider"></div>
-          
-              <div className="order-confirm fade-in-quick">
-              {/* <CheckoutPickup obj={obj} /> */}
+            <div className="order-confirm fade-in-quick">
               <div className="columns">
-             <div className="column is-3">
-               <ul className="menu-list">
-                 <li className="menu-label is-active"><Link to={`${url}/customer-info`}>Customer Information</Link></li>
-                 <li className="menu-label"><Link to={`${url}/payment`}>Payment</Link></li>
-                 <li className="menu-label"><Link to={`${url}/confirmation`}>Confirmation</Link></li>
-               </ul>
-              </div>
-              <div className="column is-9">
-              <CheckoutDelivery obj={obj} />
+                <div className="column is-3">
+                  <ul className="menu-list">
+                    <li className="menu-label is-active">
+                      <Link to={`${url}/customer-info`}>
+                        Customer Information
+                      </Link>
+                    </li>
+                    <li className="menu-label">
+                      <Link to={`${url}/confirmation`}>Confirmation</Link>
+                    </li>
+                  </ul>
                 </div>
-              
-            </div>
+                <div className="column is-9">
+                  <CheckoutForm obj={obj} items={items} />
+                </div>
               </div>
-  
+            </div>
           </div>
         )}
       </div>

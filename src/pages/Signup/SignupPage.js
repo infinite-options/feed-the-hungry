@@ -60,7 +60,13 @@ function SignupPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-    };
+    }
+
+    const handleKeyPress = (e) => {
+        if (e.which === 13) {
+            e.preventDefault();
+        }
+    }
 
     const validateInputs = () => {
         let isAllValid = true;
@@ -95,10 +101,15 @@ function SignupPage() {
 
         if(signupPassed) {
             // Testing to see if all values went through
+            let data = {};
             for (let input in inputs) {
                 // console.log(input + ":", inputs[input].value);
-                console.log("we did it!");
+                data[input] = inputs[input].value;
             }
+            // console.log("persons" + ":", persons);
+            data["persons"] = persons;
+            console.log("Data:", data);
+            console.log("we did it!");
 
             // Code
         }
@@ -161,7 +172,7 @@ function SignupPage() {
 
     return (
         <div className="login-signup-page signup-background-image">
-            <form onSubmit={handleSubmit} style={{width: "720px", maxWidth: "100%"}}>
+            <form onSubmit={handleSubmit} onKeyPress={handleKeyPress} style={{width: "720px", maxWidth: "100%"}}>
                 <div className="column has-text-black">
                     {/* Asking for user data */}
                     <div>

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const useField = (label, type, isRequired=true) => {
+const useField = (name, type, isRequired=true) => {
   const [value, setValue] = useState(type === "checkbox" ? false : '');
   const [error, setError] = useState('');
   
@@ -19,13 +19,13 @@ const useField = (label, type, isRequired=true) => {
   // validate inputs if user clicks submit button. Returns true if no errors, false if error detected.
   const validatewith = (data=null) => {
       // case 1: if input is required but nothing is entered
-      if (isRequired && value.length === 0) setError("This field is required");
+      if (isRequired && value.length === 0) setError("This field is required")
       // case 2: if input is a zip code
-      else if (label.toLowerCase() === "zip" && !/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(value)) setError("Invalid zip code");
+      else if (name.toLowerCase() === "zip" && !/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(value)) setError("Invalid zip code");
       // case 3: if input is entered but we need to verify it given a data
       // make sure that the data must have method 'contain' (see StateAPI.js, for instance)
-      else if (data && !data.contain(value)) setError("Invalid " + label);
-      else if (label.toLowerCase() === "state" && value ==="") setError("Invalid state");
+      else if (data && !data.contain(value)) setError("Invalid " + name);
+      else if (name.toLowerCase() === "state" && value ==="") setError("Invalid state");
       else {
           setError("");
           return true;
@@ -41,7 +41,7 @@ const useField = (label, type, isRequired=true) => {
   return {
     error,
     type,
-    label,
+    name,
     value,
     onChange,
     validatewith,

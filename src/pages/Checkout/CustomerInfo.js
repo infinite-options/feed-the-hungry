@@ -20,12 +20,12 @@ function CustomerInfo({ fname, lname, email, phone }) {
         <div class="field-body">
           <div class="field is-expanded">
             <div class="field has-addons">
-              <p class="control">
+              <div class="control">
                 <a class="button is-static">+1</a>
-              </p>
-              <p class="control is-expanded">
+              </div>
+              <div class="control is-expanded">
                 <InputField props={phone} />
-              </p>
+              </div>
             </div>
             <p class="help">Do not enter the first zero</p>
           </div>
