@@ -44,6 +44,10 @@ function SignupPage() {
         a_firstName : useField("First Name", "text"),
         a_lastName : useField("Last Name", "text"),
         a_dob : useField("Date of Birth", "text"),
+
+        license: useField("Drivers License", "text", false),
+        licenseImg: useField("License Image", "file", false),
+        monthlyIncome : useField("Monthly Income", "text", false),
     }
 
     const [hidden, setHidden] = useState("hidden");
@@ -129,7 +133,8 @@ function SignupPage() {
             //     <div className="box">
             //         <p>{first} {last} {birth}</p>
             //     </div>
-            // )
+            //
+            
             setShowForm(false);
             console.log(persons);
         }
@@ -230,25 +235,6 @@ function SignupPage() {
                                 <InputField props={inputs.passwordConfirm} />
                             </div>
                         </div>
-                        {/* testing adding additional people inputs */}
-                        <div className="box">
-                            {listPersons()}
-                        </div>
-                        {showForm ? (
-                            <div className="column">
-                                <button className="button is-success has-margins-0-5" onClick={() => setShowForm(false)}>Cancel</button>
-                                <button className="button is-success has-margins-0-5" onClick={savePerson}>Save</button>
-                            </div>
-                        ) : (
-                            <button className="button is-success has-margins-0-5" onClick={() => setShowForm(true)}>Add member</button>
-                        )}
-                        {showForm && (
-                            <React.Fragment>
-                                <InputField props={inputs.a_firstName} />
-                                <InputField props={inputs.a_lastName} />
-                                <InputField props={inputs.a_dob} />
-                            </React.Fragment>
-                        )}
                     </div>
                     <hr className="is-light-gray"/>
                     {/* Asking for user address */}
@@ -275,6 +261,46 @@ function SignupPage() {
                                 <InputField props={inputs.zip} />
                             </div>
                         </div>
+                    </div>
+                    {/* testing adding additional people inputs */}
+                    <hr className="is-light-gray"/>
+                    <div>
+                        <p className="subtitle is-3 has-margin-top-1 has-text-centered has-text-black">Optional Personal Information</p>
+                        <div className="columns has-margin-top-1">
+                            <div className="column has-text-centered">
+                                {showForm ? (
+                                    <React.Fragment>
+                                        <button className="button is-success has-margins-0-5" onClick={() => setShowForm(false)}>Cancel</button>
+                                        <button className="button is-success has-margins-0-5" onClick={savePerson}>Save</button>
+                                    </React.Fragment>
+                                ) : (
+                                    <button className="button is-success has-margins-0-5" onClick={() => setShowForm(true)}>Add a Family Member</button>
+                                )}
+                                {showForm && (
+                                    <React.Fragment>
+                                        <InputField props={inputs.a_firstName} />
+                                        <InputField props={inputs.a_lastName} />
+                                        <InputField props={inputs.a_dob} />
+                                    </React.Fragment>
+                                )}
+                            </div>
+                            <div className="column">
+                                <div className="box">
+                                    {listPersons()}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="columns">
+                            <div className="column">
+                                <InputField props={inputs.license} />
+                            </div>
+                            <div className="column">
+                                <div className="box">
+                                    <InputField props={inputs.licenseImg} />
+                                </div>
+                            </div>
+                        </div>
+                        <InputField props={inputs.monthlyIncome} />
                     </div>
                     <hr className="is-light-gray"/>
                     {/* Asking for dietary restrictions */}
