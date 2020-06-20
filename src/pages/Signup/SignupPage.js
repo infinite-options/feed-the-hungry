@@ -40,6 +40,10 @@ function SignupPage() {
         kosher : useField("Kosher", "checkbox"),
         halal : useField("Halal", "checkbox"),
         none : useField("None", "checkbox"),
+
+        a_firstName : useField("First Name", "text"),
+        a_lastName : useField("Last Name", "text"),
+        a_dob : useField("Date of Birth", "text"),
     }
 
     const [hidden, setHidden] = useState("hidden");
@@ -97,16 +101,75 @@ function SignupPage() {
     }
 
     // Testing adding additional people
-    const [additions, setAdditions] = useState([]);
-    const handleAddClick = () => {
-        additions.push({firstName: "", lastName: "", dob: ""});
-        setAdditions([...additions]);
+    // const [additions, setAdditions] = useState([]);
+
+
+    const [persons, setPersons] = useState([]);
+    const [showForm, setShowForm] = useState(false);
+    // const toggleForm = () => {
+    //     showForm = showForm ? false : true;
+    //     console.log(showForm);
+    // }
+    const savePerson = () => {
+        let person = [inputs.a_firstName, inputs.a_lastName, inputs.a_dob];
+        let first = person[0].value;
+        let last = person[1].value;
+        let birth = person[2].value;
+        let data = [first, last, birth]
+        let isAllValid = true;
+        for (let input of person) {
+            if (!input.validatewith()) {
+                isAllValid = false;
+            }
+        }
+        if (isAllValid) {
+            persons.push(data);
+            setPersons([...persons]);
+            // persons.push(
+            //     <div className="box">
+            //         <p>{first} {last} {birth}</p>
+            //     </div>
+            // )
+            setShowForm(false);
+            console.log(persons);
+        }
     }
+
+    const delPerson = (idx) => {
+        // for (let i = 0; i < persons.length; i++) {
+        //     if (persons[i] === p) {
+        //         persons.splice(i, 1);
+        //     }
+        // }
+        persons.splice(idx, 1);
+        console.log(idx);
+        console.log(persons);
+        setPersons([...persons]);
+    }
+
+    function listPersons() {
+        return (
+            <div className="column">
+                {persons.map((person, idx) => (
+                    <p key={idx}>
+                        {person[0] + ' ' + person[1]} <button onClick={() => delPerson(idx)}> X </button>
+                    </p>
+                ))}
+            </div>
+        );
+        
+    }
+
+
+    // const handleAddClick = () => {
+    //     additions.push({firstName: "", lastName: "", dob: ""});
+    //     setAdditions([...additions]);
+    // }
 
     return (
         <div className="login-signup-page signup-background-image">
-            {/* testing adding additional people inputs */}
-            <button class="button is-success has-margins-0-5" onClick={handleAddClick}>testing dynamic inputs</button>
+
+            {/* <button className="button is-success has-margins-0-5" onClick={handleAddClick}>testing dynamic inputs</button>
             {additions.map((val, idx) => {
                 return (
                     <div className="has-margins-0-5" key={idx}>
@@ -128,7 +191,8 @@ function SignupPage() {
                         </div>
                     </div>
                 );
-            })}
+            })} */}
+
             <form onSubmit={handleSubmit} style={{width: "720px", maxWidth: "100%"}}>
                 <div className="column has-text-black">
                     {/* Asking for user data */}
@@ -166,6 +230,25 @@ function SignupPage() {
                                 <InputField props={inputs.passwordConfirm} />
                             </div>
                         </div>
+                        {/* testing adding additional people inputs */}
+                        <div className="box">
+                            {listPersons()}
+                        </div>
+                        {showForm ? (
+                            <div className="column">
+                                <button className="button is-success has-margins-0-5" onClick={() => setShowForm(false)}>Cancel</button>
+                                <button className="button is-success has-margins-0-5" onClick={savePerson}>Save</button>
+                            </div>
+                        ) : (
+                            <button className="button is-success has-margins-0-5" onClick={() => setShowForm(true)}>Add member</button>
+                        )}
+                        {showForm && (
+                            <React.Fragment>
+                                <InputField props={inputs.a_firstName} />
+                                <InputField props={inputs.a_lastName} />
+                                <InputField props={inputs.a_dob} />
+                            </React.Fragment>
+                        )}
                     </div>
                     <hr className="is-light-gray"/>
                     {/* Asking for user address */}
