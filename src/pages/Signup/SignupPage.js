@@ -23,7 +23,7 @@ function SignupPage() {
     const inputs = {
         firstName : useField("First Name", "text"),
         lastName : useField("Last Name","text"),
-        dob : useField("Date of Birth", "text"),
+        dob : useField("Date of Birth", "date"),
         phoneNumber : useField("Phone Number", "tel"),
         email : useField("Email Address", "email"),
         emailConfirm : useField("Confirm Email", "email"),
@@ -186,7 +186,20 @@ function SignupPage() {
                         </div>
                         <div className="columns">
                             <div className="column is-8">
-                                <InputField props={inputs.phoneNumber} />
+                                {/* Adding [+1] phone number button */}
+                                <div class="field-body">
+                                    <div class="field is-expanded">
+                                        <div class="field has-addons">
+                                            <div class="control">
+                                                <a class="button is-static">+1</a>
+                                            </div>
+                                            <div class="control is-expanded">
+                                                <InputField props={inputs.phoneNumber} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                             <div className="column">
                                 <InputField  props={inputs.dob} />
