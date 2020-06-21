@@ -9,6 +9,8 @@ import {
     useParams
   } from "react-router-dom";
 
+import axios from 'axios';
+
 import StateAPI from 'API/StateAPI';
 import "pages/styles.css";
 import useField from "components/Hooks/useField";
@@ -114,8 +116,25 @@ function SignupPage() {
             data["persons"] = persons;
             console.log("Data:", data);
             console.log("we did it!");
+            let test = {
+                "first_name" : inputs.firstName.value,
+                "last_name" : inputs.lastName.value,
+                "address1" : inputs.address_1.value,
+                "address2" : inputs.address_2.value,
+                "city" : inputs.city.value,
+                "state" : inputs.state.value,
+                "zipcode" : inputs.zip.value,
+                "phone" : inputs.phoneNumber.value,
+                "email" : inputs.email.value,       
 
-            // Code
+            }
+
+            axios.post(
+                "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/add_customer", 
+                test
+            ).then(function (response) {
+                console.log(response);
+            })
         }
         else {
             console.log("Sign up failed...");
