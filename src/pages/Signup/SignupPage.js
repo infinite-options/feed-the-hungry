@@ -9,9 +9,11 @@ import {
     useParams
   } from "react-router-dom";
 
+import StateAPI from 'API/StateAPI';
 import "pages/styles.css";
 import useField from "components/Hooks/useField";
 import InputField from "components/Form/InputField";
+import Select from 'components/Form/Select';
 import ScrollToTopOnMount from "utils/Scroll/ScrollToTopOnMount";
 import Icons from "components/Icons/Icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,10 +22,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FarmersMarket from 'assets/image/farmers-market.jpg';
 
 function SignupPage() {
+    const states = StateAPI();
+
     const inputs = {
         firstName : useField("First Name", "text"),
         lastName : useField("Last Name","text"),
-        dob : useField("Date of Birth", "text"),
+        dob : useField("Date of Birth", "date"),
         phoneNumber : useField("Phone Number", "tel"),
         email : useField("Email Address", "email"),
         emailConfirm : useField("Confirm Email", "email"),
@@ -43,7 +47,7 @@ function SignupPage() {
 
         license: useField("Drivers License", "text", false),
         licenseImg: useField("License Image", "file", false),
-        monthlyIncome : useField("Monthly Income", "text", false),
+        monthlyIncome : useField("Monthly Income", "number", false),
     }
 
     const addition = {
@@ -130,7 +134,7 @@ function SignupPage() {
         ]
         let isAllValid = true;
         for (let input in addition) {
-            if (!addition[input].validatewith()) {
+            if (!addition[input].validate()) {
                 isAllValid = false;
             }
         }
@@ -167,7 +171,6 @@ function SignupPage() {
                 ))}
             </div>
         );
-        
     }
 
     return (
@@ -187,7 +190,20 @@ function SignupPage() {
                         </div>
                         <div className="columns">
                             <div className="column is-8">
-                                <InputField props={inputs.phoneNumber} />
+                                {/* Adding [+1] phone number button */}
+                                <div className="field-body">
+                                    <div className="field is-expanded">
+                                        <div className="field has-addons">
+                                            <div className="control">
+                                                <a className="button is-static">+1</a>
+                                            </div>
+                                            <div className="control is-expanded">
+                                                <InputField props={inputs.phoneNumber} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                             <div className="column">
                                 <InputField  props={inputs.dob} />
@@ -229,7 +245,7 @@ function SignupPage() {
                                 <InputField  props={inputs.city} />
                             </div>
                             <div className="column">
-                                <InputField  props={inputs.state} />
+                                <Select props={inputs.state} data={states.data} />
                             </div>
                             <div className="column">
                                 <InputField props={inputs.zip} />
@@ -274,7 +290,18 @@ function SignupPage() {
                                 </div>
                             </div>
                         </div>
-                        <InputField props={inputs.monthlyIncome} />
+                        <div className="field-body">
+                            <div className="field is-expanded">
+                                <div className="field has-addons">
+                                    <div className="control">
+                                        <a className="button is-static">$</a>
+                                    </div>
+                                    <div className="control is-expanded">
+                                        <InputField props={inputs.monthlyIncome} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <hr className="is-light-gray"/>
                     {/* Asking for dietary restrictions */}

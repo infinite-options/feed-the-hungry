@@ -10,7 +10,7 @@ const InputField = ({props, icon, isDisabled}) => {
       <div className="field">
          <div className="control">
           <label className="checkbox level-item" style={{justifyContent: "flex-start"}}>
-            <input type={props.type} onChange={props.onChange} value={props.value}/>
+            <input type={props.type} onChange={props.onChange} value={props.value} disabled={isDisabled}/>
             <span className="has-margin-left-0-5">{props.name}</span>
             {icon && (
               <span className="icon has-margin-left-0-5">
