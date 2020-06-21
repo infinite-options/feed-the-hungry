@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/feed-the-hungry/static/css/main.4b470626.chunk.css",
-    "main.js": "/feed-the-hungry/static/js/main.d67f0ea1.chunk.js",
-    "main.js.map": "/feed-the-hungry/static/js/main.d67f0ea1.chunk.js.map",
+    "main.js": "/feed-the-hungry/static/js/main.ef521831.chunk.js",
+    "main.js.map": "/feed-the-hungry/static/js/main.ef521831.chunk.js.map",
     "runtime-main.js": "/feed-the-hungry/static/js/runtime-main.3b3efc48.js",
     "runtime-main.js.map": "/feed-the-hungry/static/js/runtime-main.3b3efc48.js.map",
     "static/css/2.65e3e712.chunk.css": "/feed-the-hungry/static/css/2.65e3e712.chunk.css",
-    "static/js/2.da398f3b.chunk.js": "/feed-the-hungry/static/js/2.da398f3b.chunk.js",
-    "static/js/2.da398f3b.chunk.js.map": "/feed-the-hungry/static/js/2.da398f3b.chunk.js.map",
+    "static/js/2.fb61afcd.chunk.js": "/feed-the-hungry/static/js/2.fb61afcd.chunk.js",
+    "static/js/2.fb61afcd.chunk.js.map": "/feed-the-hungry/static/js/2.fb61afcd.chunk.js.map",
     "index.html": "/feed-the-hungry/index.html",
-    "precache-manifest.676d63f97549b91a9102aff3737fe8c0.js": "/feed-the-hungry/precache-manifest.676d63f97549b91a9102aff3737fe8c0.js",
+    "precache-manifest.fc5ef4cbf447874f20ce28d09bfd5c79.js": "/feed-the-hungry/precache-manifest.fc5ef4cbf447874f20ce28d09bfd5c79.js",
     "service-worker.js": "/feed-the-hungry/service-worker.js",
     "static/css/2.65e3e712.chunk.css.map": "/feed-the-hungry/static/css/2.65e3e712.chunk.css.map",
     "static/css/main.4b470626.chunk.css.map": "/feed-the-hungry/static/css/main.4b470626.chunk.css.map",
-    "static/js/2.da398f3b.chunk.js.LICENSE.txt": "/feed-the-hungry/static/js/2.da398f3b.chunk.js.LICENSE.txt",
+    "static/js/2.fb61afcd.chunk.js.LICENSE.txt": "/feed-the-hungry/static/js/2.fb61afcd.chunk.js.LICENSE.txt",
     "static/media/Delivery.png": "/feed-the-hungry/static/media/Delivery.af41986f.png",
     "static/media/Pickup.png": "/feed-the-hungry/static/media/Pickup.011b01ba.png",
     "static/media/confirmation.svg": "/feed-the-hungry/static/media/confirmation.3c02e813.svg",
@@ -28,8 +28,8 @@
   "entrypoints": [
     "static/js/runtime-main.3b3efc48.js",
     "static/css/2.65e3e712.chunk.css",
-    "static/js/2.da398f3b.chunk.js",
+    "static/js/2.fb61afcd.chunk.js",
     "static/css/main.4b470626.chunk.css",
-    "static/js/main.d67f0ea1.chunk.js"
+    "static/js/main.ef521831.chunk.js"
   ]
 }
