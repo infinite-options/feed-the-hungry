@@ -14,7 +14,7 @@ function Select({ props, data }) {
               : "select is-fullwidth"
           }
         >
-          <select {...props}>
+          <select value={props.value} onChange={props.onChange}>
             <option key={i++} value="">
               {props.name}
             </option>

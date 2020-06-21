@@ -6,33 +6,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import addDays from "date-fns/addDays";
-import DateTime from "pages/Checkout/DateTime";
 // import other components
 import useField from "components/Hooks/useField";
 import InputField from "components/Form/InputField";
 import Messages from "components/Notifications/Messages";
-import CustomerInfo from "pages/Checkout/CustomerInfo";
-import Select from "components/Form/Select";
+import CustomerDetails from "pages/Checkout/CustomerDetails";
+import DeliveryDetails from "pages/Checkout/DeliveryDetails";
 import StateAPI from "API/StateAPI";
-import CheckoutPickup from "./CheckoutPickup";
-import { useRouteMatch, useParams, Link, useLocation } from "react-router-dom";
-import axios from 'axios';
-
-const totalAmount = (items) => {
-  var total = 0;
-  items.forEach(x => {
-    total += x.item.price * x.amount;
-  })
-  return total;
-};
+import PickupDetails from "./PickupDetails";
+import { useRouteMatch, useHistory, useParams, Link, useLocation } from "react-router-dom";
+// import axios
+import axios from "axios";
 
 function CheckoutForm({ obj, items }) {
-  let { hist } = useLocation();
-  const states = StateAPI();
+  let { hist } = useHistory();
   const [activeTab, setActiveTab] = useState("delivery");
   const [hidden, setHidden] = useState("hidden"); // to hide error msg
 
-  // const form = useForm();
   const fname = useField("First Name", "text");
   const lname = useField("Last Name", "text");
   const phone = useField("Phone Number", "tel");
@@ -47,7 +37,6 @@ function CheckoutForm({ obj, items }) {
     "checkbox"
   );
 
-
   useEffect(() => {
     if (checkbox.value || dateTime.startDate) setHidden("hidden");
   }, [checkbox.value || dateTime.startDate]);
@@ -55,69 +44,72 @@ function CheckoutForm({ obj, items }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-  };
-  const handleClick = () => {
     let formIsValid = true;
-    // form.setValid(true);
-    // fname.validatewith();
-    // console.log(form.isValid);
-    // lname.validatewith();
-    // email.validatewith();
-    // phone.validatewith();
-    // street.validatewith();
-    // city.validatewith();
-    // state.validatewith();
-    // zip.validatewith();
-    if (!fname.validatewith()) formIsValid = false;
-    if (!lname.validatewith()) formIsValid = false;
-    if (!email.validatewith()) formIsValid = false;
-    if (!phone.validatewith()) formIsValid = false;
-    if (!street.validatewith()) formIsValid = false;
-    if (!city.validatewith()) formIsValid = false;
-    if (!state.validatewith()) formIsValid = false;
-    if (!zip.validatewith()) formIsValid = false;
-    if (dateTime.startDate) console.log(formatDate(dateTime.startDate));
+    if (!fname.validate()) formIsValid = false;
+    if (!lname.validate()) formIsValid = false;
+    if (!email.validate()) formIsValid = false;
+    if (!phone.validate()) formIsValid = false;
+    if (!street.validate()) formIsValid = false;
+    if (!city.validate()) formIsValid = false;
+    if (!state.validate()) formIsValid = false;
+    if (!zip.validate()) formIsValid = false;
+    if (!checkbox.value && !dateTime.startDate) {
+      formIsValid = false;
+      setHidden("");
+    }
 
-    if (!checkbox.value && !dateTime.startDate) { formIsValid = false; setHidden("");}
     if (formIsValid) {
       console.log("All inputs are valid");
       const date = dateTime.startDate ? formatDate(dateTime.startDate) : "ASAP";
       const total = totalAmount(items);
-      let order = 
-      {
-        customer_id:"",
+      let order = {
+        customer_id: "",
         phone: phone.value,
         street: street.value,
         city: city.value,
         state: state.value,
         zipcode: zip.value,
         totalAmount: total,
-        delivery_note:"",
+        delivery_note: "",
         kitchen_id: obj.id,
-        longitude: obj.longitude,
-        latitude: obj.latitude,
+        longitude: "",
+        latitude: "",
         delivery_date: date,
-        ordered_items: []
+        ordered_items: [],
       };
-      items.forEach(x=> {
-        order.ordered_items.push({ meal_id: x.item.food_id, qty: x.amount})
-      })   
-      console.log(order);   
-      axios.post('https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/add_order', order )
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
-      }) .catch(error => {
-        console.log(error);
+      items.forEach((x) => {
+        order.ordered_items.push({ meal_id: x.item.food_id, qty: x.amount });
       });
-    }
-    else console.log("Some inputs are invalid");
+
+      axios
+        .post(
+          "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/add_order",
+          order
+        )
+        .then((res) => {
+          console.log(res);
+          console.log(res.data);
+          hist.push('/confirmation');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else console.log("Some inputs are invalid");
   };
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="delivery-confirm">
-        <CustomerInfo fname={fname} lname={lname} email={email} phone={phone} />
+        <p className="title is-5">Customer Information</p>
+        {/*  get user name, email ,phone */}
+        <CustomerDetails
+          fname={fname}
+          lname={lname}
+          email={email}
+          phone={phone}
+        />
         <div className="divider"></div>
+        {/* choose pickup or delivery */}
         <p className="title is-5">Delivery Method</p>
         <div class="tabs is-toggle is-fullwidth">
           <ul>
@@ -148,18 +140,14 @@ function CheckoutForm({ obj, items }) {
         {activeTab === "delivery" ? (
           <div>
             <p className="title is-5">Delivery Address</p>
-            <InputField props={street} />
-            <InputField props={city} />
-            <div className="field is-horizontal">
-              <div className="field-body">
-                <Select props={state} data={states.data} />
-                <InputField props={zip} />
-              </div>
-            </div>
-
+            <DeliveryDetails
+              street={street}
+              city={city}
+              state={state}
+              zip={zip}
+            />
             <div className="divider"></div>
             <p className="title is-5">Delivery Options</p>
-
             <div className="field is-horizontal">
               <div className="field-body">
                 <div className="field">
@@ -201,17 +189,18 @@ function CheckoutForm({ obj, items }) {
             </div>
           </div>
         ) : (
-          <CheckoutPickup obj={obj} />
+          <PickupDetails obj={obj} />
         )}
       </div>
       <div className="space-1"></div>
+      {/* checkout button */}
       <div className="field right-most">
         <div className="control">
-          <button className="button is-success" onClick={handleClick}>
+          <button className="button is-success">
+            <span className="uppercase">Place Order</span>
             <span className="icon">
               <FontAwesomeIcon icon={Icons.faLongArrowAltRight} />
             </span>
-            <span className="uppercase">Review and Pay</span>
           </button>
         </div>
       </div>
@@ -219,6 +208,14 @@ function CheckoutForm({ obj, items }) {
     </form>
   );
 }
+// calculate total $ of order
+const totalAmount = (items) => {
+  var total = 0;
+  items.forEach((x) => {
+    total += x.item.price * x.amount;
+  });
+  return total;
+};
 
 const DateTimeInput = forwardRef((props, ref) => {
   return (
@@ -242,19 +239,6 @@ const DateTimeInput = forwardRef((props, ref) => {
     </div>
   );
 });
-
-const useForm = () => {
-  const [isValid, setValid] = useState(false);
-
-  const setFormValue = (value) => {
-    setValid(value);
-  }
-  return{
-    isValid,
-    setValid,
-    setFormValue
-  };
-};
 
 const useDateTime = () => {
   const [startDate, setStartDate] = useState(null);

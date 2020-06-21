@@ -65,7 +65,7 @@ function BankLayout({ obj }) {
                 </span>
                 <span>Return to Search Results</span>
             </button>
-            <Link to={`${url}/checkout/customer-info`} >
+            <Link to={`${url}/checkout`} >
                 <button className="button is-success" >
                   <span className="icon">
                       <FontAwesomeIcon icon={Icons.faLongArrowAltRight} />

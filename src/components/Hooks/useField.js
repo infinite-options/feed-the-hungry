@@ -17,14 +17,13 @@ const useField = (name, type, isRequired=true) => {
   };
 
   // validate inputs if user clicks submit button. Returns true if no errors, false if error detected.
-  const validatewith = (data=null) => {
+  const validate = () => {
       // case 1: if input is required but nothing is entered
       if (isRequired && value.length === 0) setError("This field is required")
       // case 2: if input is a zip code
       else if (name.toLowerCase() === "zip" && !/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(value)) setError("Invalid zip code");
       // case 3: if input is entered but we need to verify it given a data
-      // make sure that the data must have method 'contain' (see StateAPI.js, for instance)
-      else if (data && !data.contain(value)) setError("Invalid " + name);
+      // make sure that the data must have method 'contain' (see StateAPI.js, for instance
       else if (name.toLowerCase() === "state" && value ==="") setError("Invalid state");
       else {
           setError("");
@@ -35,11 +34,13 @@ const useField = (name, type, isRequired=true) => {
 
   return {
     error,
+    setError,
     type,
     name,
     value,
     onChange,
-    validatewith,
+    isRequired,
+    validate,
   };
 };
 export default useField;

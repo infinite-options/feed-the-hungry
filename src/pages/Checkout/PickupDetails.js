@@ -2,7 +2,7 @@ import React from 'react';
 import Icons from "components/Icons/Icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function CheckoutPickup({obj}) {
+function PickupDetails({obj}) {
     return (
         <div className="pickup-confirm">
             <p className="title is-5">Pickup Address</p>
@@ -10,4 +10,4 @@ function CheckoutPickup({obj}) {
         </div>
     );
 }
-export default CheckoutPickup;
+export default PickupDetails;

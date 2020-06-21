@@ -35,9 +35,9 @@ function LoginPage() {
 
     const handleClick = () => {
         console.log("User has tried to login..")
-        email.validatewith();
-        password.validatewith();
-        if (email.validatewith() && password.validatewith()) {
+        email.validate();
+        password.validate();
+        if (email.validate() && password.validate()) {
             console.log("we did it!");
             checkLogin();
         }

@@ -62,7 +62,7 @@ function SignupPage() {
     const validateInputs = () => {
         let isAllValid = true;
         for (let input in inputs) {
-            if (!inputs[input].validatewith()) {
+            if (!inputs[input].validate()) {
                 isAllValid = false;
             }
         }
@@ -122,7 +122,7 @@ function SignupPage() {
         let data = [first, last, birth]
         let isAllValid = true;
         for (let input of person) {
-            if (!input.validatewith()) {
+            if (!input.validate()) {
                 isAllValid = false;
             }
         }

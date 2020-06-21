@@ -1,14 +1,10 @@
 import React from "react";
 import InputField from "components/Form/InputField";
 import useField from "components/Hooks/useField";
-function CustomerInfo({ fname, lname, email, phone }) {
-  // const fname = useField("First Name", "text");
-  // const lname = useField("Last Name", "text");
-  // const phone = useField("Phone Number", "text");
-  // const email = useField("Email", "email");
+function CustomerDetails({ fname, lname, email, phone }) {
+
   return (
     <div>
-      <p className="title is-5">Customer Information</p>
       <div className="field horizontal">
         <div className="field-body">
           <InputField props={fname} />
@@ -35,4 +31,4 @@ function CustomerInfo({ fname, lname, email, phone }) {
   );
 }
 
-export default CustomerInfo;
+export default CustomerDetails;

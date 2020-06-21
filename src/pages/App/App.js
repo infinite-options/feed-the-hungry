@@ -52,7 +52,10 @@ function App() {
         {/* <Route exact path={"/banks/:bankId/products/checkout"}>
         <Redirect to={"/banks/:bankId/products/checkout/customer-info"} />
         </Route> */}
-        <Route exact path={"/banks/:bankId/products/checkout/customer-info"}>
+        <Route exact path={"/banks/:bankId/products/checkout"}>
+          <CheckoutPage list={banks} />
+        </Route>
+        <Route exact path={"/banks/:bankId/products/checkout/confirmation"}>
           <CheckoutPage list={banks} />
         </Route>
         <Route path="/about"></Route>

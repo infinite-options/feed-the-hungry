@@ -10,7 +10,7 @@ const InputField = ({props, icon }) => {
       <div className="field">
          <div className="control">
           <label className="checkbox level-item" style={{justifyContent: "flex-start"}}>
-            <input {...props} />
+            <input type={props.type} onChange={props.onChange} value={props.value}/>
             <span className="has-margin-left-0-5">{props.name}</span>
             {icon && (
               <span className="icon has-margin-left-0-5">
@@ -26,7 +26,7 @@ const InputField = ({props, icon }) => {
     return (
       <div className="field">
           <div className={icon ? "control has-icons-right" : "control"}>
-            <input className={props.error.length > 0 ? "input is-danger" : "input"} {...props} placeholder={props.name} />
+            <input className={props.error.length > 0 ? "input is-danger" : "input"} type={props.type} onChange={props.onChange} value={props.value} placeholder={props.name} />
             {icon ?  (
               <span className="icon is-right">
                 <FontAwesomeIcon icon={icon} />

@@ -35,7 +35,7 @@ function CheckoutPageLayout({ obj }) {
                 <div className="column is-3">
                   <ul className="menu-list">
                     <li className="menu-label is-active">
-                      <Link to={`${url}/customer-info`}>
+                      <Link to={`${url}`}>
                         Customer Information
                       </Link>
                     </li>
