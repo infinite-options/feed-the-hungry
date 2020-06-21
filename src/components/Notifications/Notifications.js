@@ -3,7 +3,9 @@ import {Link, useParams, useRouteMatch, useLocation} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import EmptyCart from 'assets/image/empty-cart.svg';
+import Confirmation from 'assets/image/confirmation.svg';
 import './style.css';
+import history from 'pages/App/History';
 
 // use this component when you want to display a notification 
 // notification should only be used at the top
@@ -33,8 +35,11 @@ const Notifications = {
     },
     // this notification is for empty cart at checkout
     IsEmpty: function(msg){
+        // let url = window.location.href;
         let { path, url } = useRouteMatch();
+        console.log(url);
         let parentPath = url.substring(0, url.lastIndexOf("/"));
+        console.log(parentPath);
         return (
             <div className="is-empty-message">
                 <figure class="image is-128x128">
@@ -42,6 +47,17 @@ const Notifications = {
                 </figure>
                 <p className="title is-5 has-margin-top-1-5">{msg}</p>
         <Link to={parentPath}><button className="button is-danger">Shop Now</button></Link>
+            </div>
+        );
+    },
+    noConfirmation: function(msg){
+        
+        return (
+            <div className="is-empty-message">
+                <figure class="image is-128x128">
+                    <img src={Confirmation} />
+                </figure>
+                <p className="title is-5 has-margin-top-1-5">{msg}</p>
             </div>
         );
     }

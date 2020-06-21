@@ -4,8 +4,7 @@ import './index.css';
 import "react-datepicker/dist/react-datepicker.css";
 import App from './pages/App/App';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter } from "react-router-dom";
-import ScrollToTop from 'utils/Scroll/SrollToTop';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>

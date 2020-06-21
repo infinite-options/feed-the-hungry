@@ -15,13 +15,17 @@ import DeliveryDetails from "pages/Checkout/DeliveryDetails";
 import StateAPI from "API/StateAPI";
 import PickupDetails from "./PickupDetails";
 import { useRouteMatch, useHistory, useParams, Link, useLocation } from "react-router-dom";
+import history from 'pages/App/History';
+import { withRouter } from 'react-router-dom';
 // import axios
 import axios from "axios";
 
-function CheckoutForm({ obj, items }) {
-  let { hist } = useHistory();
+function CheckoutForm({ obj, items, order }) {
+  const {path, url} = useRouteMatch();
   const [activeTab, setActiveTab] = useState("delivery");
   const [hidden, setHidden] = useState("hidden"); // to hide error msg
+  const delivery_items = items.filter(x => x.item.delivery_pickup.includes('delivery'));
+  const pickup_items = items.filter(x => x.item.delivery_pickup.includes('pickup'));
 
   const fname = useField("First Name", "text");
   const lname = useField("Last Name", "text");
@@ -36,6 +40,7 @@ function CheckoutForm({ obj, items }) {
     "I want my delivery as soon as possible",
     "checkbox"
   );
+  let isOrderPlaced = false;
 
   useEffect(() => {
     if (checkbox.value || dateTime.startDate) setHidden("hidden");
@@ -62,7 +67,21 @@ function CheckoutForm({ obj, items }) {
       console.log("All inputs are valid");
       const date = dateTime.startDate ? formatDate(dateTime.startDate) : "ASAP";
       const total = totalAmount(items);
-      let order = {
+      // order.setOrderInfo(prevState => ({
+      //   ...prevState,
+      //   phone: phone.value,
+      //   street: street.value,
+      //   city: city.value,
+      //   state: state.value,
+      //   zipcode: zip.value,
+      //   totalAmount: total,
+      //   delivery_note: "",
+      //   kitchen_id: obj.id,
+      //   longitude: "",
+      //   latitude: "",
+      //   delivery_date: date
+      // }));
+      let user_order = {
         customer_id: "",
         phone: phone.value,
         street: street.value,
@@ -78,23 +97,39 @@ function CheckoutForm({ obj, items }) {
         ordered_items: [],
       };
       items.forEach((x) => {
-        order.ordered_items.push({ meal_id: x.item.food_id, qty: x.amount });
+        user_order.ordered_items.push({ meal_id: x.item.food_id, qty: x.amount });
       });
+      order.setOrderInfo(user_order);
+      isOrderPlaced = true;
+      // axios
+      //   .post(
+      //     "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/add_order",
+      //     user_order
+      //   )
+      //   .then((res) => {
+      //     console.log(res);
+      //     console.log(res.data);
+      //    
+      //     isOrderPlaced = true;
+      //     console.log(isOrderPlaced);
+         
+      //   })
+      //   .catch((error) => {
+      //     isOrderPlaced = false;
+      //     console.log(isOrderPlaced);
+      //   });
+    } else { console.log("Some inputs are invalid"); isOrderPlaced = false;}
 
-      axios
-        .post(
-          "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/add_order",
-          order
-        )
-        .then((res) => {
-          console.log(res);
-          console.log(res.data);
-          hist.push('/confirmation');
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else console.log("Some inputs are invalid");
+    console.log(isOrderPlaced);
+    if (isOrderPlaced){
+      console.log("go to confirmation");
+      
+      window.localStorage.setItem(obj.id, JSON.stringify([]));
+      history.push(`${url}/confirmation`);
+    }
+    else {
+      console.log('stay');
+    }
   };
 
   return (
@@ -189,14 +224,14 @@ function CheckoutForm({ obj, items }) {
             </div>
           </div>
         ) : (
-          <PickupDetails obj={obj} />
+          <PickupDetails obj={obj} items={items} />
         )}
       </div>
       <div className="space-1"></div>
       {/* checkout button */}
       <div className="field right-most">
         <div className="control">
-          <button className="button is-success">
+          <button className="button is-success" disabled={(activeTab === "delivery" && pickup_items && pickup_items.length > 0) || (activeTab==="pickup" && delivery_items && delivery_items.length > 0) ? true : false}>
             <span className="uppercase">Place Order</span>
             <span className="icon">
               <FontAwesomeIcon icon={Icons.faLongArrowAltRight} />
@@ -297,4 +332,4 @@ function formatDate(date) {
   ).toUpperCase();
 }
 
-export default CheckoutForm;
+export default withRouter(CheckoutForm);

@@ -1,7 +1,7 @@
-import React from "react";
-
+import React, {useState} from "react";
 import {
-  BrowserRouter as Router,
+  // BrowserRouter as Router,
+  Router,
   Switch,
   Route,
   Link,
@@ -20,6 +20,8 @@ import BankAPI from "API/BankAPI";
 import CheckoutPage from "pages/Checkout/CheckoutPage";
 import LoginPage from 'pages/Login/LoginPage';
 import SignupPage from 'pages/Signup/SignupPage';
+import ConfirmationPage from 'pages/Checkout/ConfirmationPage';
+import history from 'pages/App/History';
 
 function App() {
   // fetch data
@@ -30,8 +32,9 @@ function App() {
     banks = BankAPI.RemoveNull(list); // replace all null fields with "N/A"
     banks = BankAPI.RemoveDuplicatesBy("foodbank_id", banks); // merge objects with the same foodbank_id into 1
   }
+  const order = useOrder();
   return (
-    <Router>
+ <Router history={history}>
       <Header />
       <Switch>
         <Route exact path="/login">
@@ -43,26 +46,44 @@ function App() {
         <Route exact path="/banks">
           <BanksPage list={banks} />
         </Route>
-        {/* <Route exact path={"/banks/:bankId"}>
-          <Redirect to={"/banks/:bankId/products"} />
-        </Route> */}
         <Route exact path={"/banks/:bankId/products"}>
           <BankPage list={banks} />
         </Route>
-        {/* <Route exact path={"/banks/:bankId/products/checkout"}>
-        <Redirect to={"/banks/:bankId/products/checkout/customer-info"} />
-        </Route> */}
         <Route exact path={"/banks/:bankId/products/checkout"}>
-          <CheckoutPage list={banks} />
+          <CheckoutPage list={banks} order={order} />
         </Route>
-        <Route exact path={"/banks/:bankId/products/checkout/confirmation"}>
-          <CheckoutPage list={banks} />
+        <Route exact ={"/banks/:bankId/products/checkout/confirmation"}>
+          <ConfirmationPage list={banks} order={order} />
         </Route>
         <Route path="/about"></Route>
         <Route path="/report"></Route>
       </Switch>
     </Router>
   );
+}
+const useOrder = () => {
+  const default_order = 
+  {
+    customer_id: "",
+    phone: "",
+    street: "",
+    city: "",
+    state: "",
+    zipcode: "",
+    totalAmount: "",
+    delivery_note: "",
+    kitchen_id: "",
+    longitude: "",
+    latitude: "",
+    delivery_date: "",
+    ordered_items: []
+  };
+
+  const [ orderInfo, setOrderInfo ] = useState(default_order);
+  return {
+    orderInfo,
+    setOrderInfo
+  }
 }
 
 export default App;

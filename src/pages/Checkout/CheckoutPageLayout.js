@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Carousel from "pages/Checkout/Carousel";
 import ScrollToTopOnMount from "utils/Scroll/ScrollToTopOnMount";
 import Notifications from "components/Notifications/Notifications";
@@ -7,13 +7,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CheckoutForm from "pages/Checkout/CheckoutForm";
 import { Link, useRouteMatch } from "react-router-dom";
 
-function CheckoutPageLayout({ obj }) {
+function CheckoutPageLayout({ obj, order }) {
   let { path, url } = useRouteMatch();
   const [key, setKey] = useState(1);
   window.addEventListener("storage", () => {
     setKey(key + 1);
   });
   const items = JSON.parse(window.localStorage.getItem(obj.id)) || [];
+  console.log(order.orderInfo);
+
   return (
     <div className="checkout-page-layer">
       <ScrollToTopOnMount />
@@ -45,7 +47,7 @@ function CheckoutPageLayout({ obj }) {
                   </ul>
                 </div>
                 <div className="column is-9">
-                  <CheckoutForm obj={obj} items={items} />
+                  <CheckoutForm obj={obj} items={items} order={order}/>
                 </div>
               </div>
             </div>

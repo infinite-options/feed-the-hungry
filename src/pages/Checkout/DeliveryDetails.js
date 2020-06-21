@@ -3,8 +3,10 @@ import StateAPI from 'API/StateAPI';
 import InputField from 'components/Form/InputField';
 import Select from 'components/Form/Select';
 
+
 function DeliveryDetails({street, city, state, zip}) {
     const states = StateAPI();
+    console.log(states);
     return (
         <div>
             <InputField props={street} />

@@ -15,7 +15,6 @@ import BankFilters from "pages/Bank/BankFilters";
 import ScrollToTopOnMount from "utils/Scroll/ScrollToTopOnMount";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Icons from 'components/Icons/Icons';
-import { faWindowRestore } from "@fortawesome/free-solid-svg-icons";
 function BankLayout({ obj }) {
   let { path, url } = useRouteMatch();
   const [key, setKey] = useState(1);
