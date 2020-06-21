@@ -5,11 +5,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import App from './pages/App/App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
+import history from 'pages/App/History';
 
 ReactDOM.render(
   <React.StrictMode>
     {/* <Router basena> */}
-    <BrowserRouter>
+    <BrowserRouter history={history}>
       <App />
     </BrowserRouter>
   </React.StrictMode>,

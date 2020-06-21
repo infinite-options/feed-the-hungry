@@ -34,12 +34,9 @@ function App() {
   }
   const order = useOrder();
   return (
- <Router history={history}>
+ <Router history={history} >
       <Header />
       <Switch>
-      <Route exact path="/">
-      <BanksPage list={banks} />
-        </Route>
         <Route exact path="/login">
           <LoginPage />
         </Route>
