@@ -41,23 +41,32 @@ function SignupPage() {
         halal : useField("Halal", "checkbox"),
         none : useField("None", "checkbox"),
 
-        a_firstName : useField("First Name", "text"),
-        a_lastName : useField("Last Name", "text"),
-        a_dob : useField("Date of Birth", "text"),
-
         license: useField("Drivers License", "text", false),
         licenseImg: useField("License Image", "file", false),
         monthlyIncome : useField("Monthly Income", "text", false),
+    }
+
+    const addition = {
+        a_firstName : useField("First Name", "text"),
+        a_lastName : useField("Last Name", "text"),
+        a_dob : useField("Date of Birth", "text"),
     }
 
     const [hidden, setHidden] = useState("hidden");
     let hasRestrictions = inputs.vegan.value || inputs.vegetarian.value
                        || inputs.glutenFree.value || inputs.kosher.value 
                        || inputs.halal.value;
+    let noneSelected = !!inputs.none.value;
 
     const handleSubmit = (e) => {
         e.preventDefault();
-    };
+    }
+
+    const handleKeyPress = (e) => {
+        if (e.which === 13) {
+            e.preventDefault();
+        }
+    }
 
     const validateInputs = () => {
         let isAllValid = true;
@@ -92,10 +101,15 @@ function SignupPage() {
 
         if(signupPassed) {
             // Testing to see if all values went through
+            let data = {};
             for (let input in inputs) {
                 // console.log(input + ":", inputs[input].value);
-                console.log("we did it!");
+                data[input] = inputs[input].value;
             }
+            // console.log("persons" + ":", persons);
+            data["persons"] = persons;
+            console.log("Data:", data);
+            console.log("we did it!");
 
             // Code
         }
@@ -105,51 +119,42 @@ function SignupPage() {
     }
 
     // Testing adding additional people
-    // const [additions, setAdditions] = useState([]);
-
-
     const [persons, setPersons] = useState([]);
     const [showForm, setShowForm] = useState(false);
-    // const toggleForm = () => {
-    //     showForm = showForm ? false : true;
-    //     console.log(showForm);
-    // }
+
     const savePerson = () => {
-        let person = [inputs.a_firstName, inputs.a_lastName, inputs.a_dob];
-        let first = person[0].value;
-        let last = person[1].value;
-        let birth = person[2].value;
-        let data = [first, last, birth]
+        let data = [
+            addition.a_firstName.value, 
+            addition.a_lastName.value, 
+            addition.a_dob.value, 
+        ]
         let isAllValid = true;
-        for (let input of person) {
-            if (!input.validate()) {
+        for (let input in addition) {
+            if (!addition[input].validatewith()) {
                 isAllValid = false;
             }
         }
         if (isAllValid) {
             persons.push(data);
             setPersons([...persons]);
-            // persons.push(
-            //     <div className="box">
-            //         <p>{first} {last} {birth}</p>
-            //     </div>
-            //
             
-            setShowForm(false);
+            clearPersonForm();
             console.log(persons);
         }
     }
 
     const delPerson = (idx) => {
-        // for (let i = 0; i < persons.length; i++) {
-        //     if (persons[i] === p) {
-        //         persons.splice(i, 1);
-        //     }
-        // }
         persons.splice(idx, 1);
         console.log(idx);
         console.log(persons);
         setPersons([...persons]);
+    }
+
+    const clearPersonForm = () => {
+        for (let input in addition) {
+            addition[input].resetinput();
+        }
+        setShowForm(false);
     }
 
     function listPersons() {
@@ -165,40 +170,9 @@ function SignupPage() {
         
     }
 
-
-    // const handleAddClick = () => {
-    //     additions.push({firstName: "", lastName: "", dob: ""});
-    //     setAdditions([...additions]);
-    // }
-
     return (
         <div className="login-signup-page signup-background-image">
-
-            {/* <button className="button is-success has-margins-0-5" onClick={handleAddClick}>testing dynamic inputs</button>
-            {additions.map((val, idx) => {
-                return (
-                    <div className="has-margins-0-5" key={idx}>
-                        <label className="label">Person {idx}</label>
-                        <div className="field">
-                            <div className="control">
-                                <input className="input" type="text" placeholder="First Name"></input>
-                            </div>
-                        </div>
-                        <div className="field">
-                            <div className="control">
-                                <input className="input" type="text" placeholder="Last Name"></input>
-                            </div>
-                        </div>
-                        <div className="field">
-                            <div className="control">
-                                <input className="input" type="text" placeholder="Date of Birth"></input>
-                            </div>
-                        </div>
-                    </div>
-                );
-            })} */}
-
-            <form onSubmit={handleSubmit} style={{width: "720px", maxWidth: "100%"}}>
+            <form onSubmit={handleSubmit} onKeyPress={handleKeyPress} style={{width: "720px", maxWidth: "100%"}}>
                 <div className="column has-text-black">
                     {/* Asking for user data */}
                     <div>
@@ -270,7 +244,7 @@ function SignupPage() {
                             <div className="column has-text-centered">
                                 {showForm ? (
                                     <React.Fragment>
-                                        <button className="button is-success has-margins-0-5" onClick={() => setShowForm(false)}>Cancel</button>
+                                        <button className="button is-success has-margins-0-5" onClick={clearPersonForm}>Cancel</button>
                                         <button className="button is-success has-margins-0-5" onClick={savePerson}>Save</button>
                                     </React.Fragment>
                                 ) : (
@@ -278,9 +252,9 @@ function SignupPage() {
                                 )}
                                 {showForm && (
                                     <React.Fragment>
-                                        <InputField props={inputs.a_firstName} />
-                                        <InputField props={inputs.a_lastName} />
-                                        <InputField props={inputs.a_dob} />
+                                        <InputField props={addition.a_firstName} />
+                                        <InputField props={addition.a_lastName} />
+                                        <InputField props={addition.a_dob} />
                                     </React.Fragment>
                                 )}
                             </div>
@@ -306,12 +280,12 @@ function SignupPage() {
                     {/* Asking for dietary restrictions */}
                     <p className="right-most" title="Substitutions allow users to choose different items that align with their dietary restrictions to add to their total cart.">* Opt for substitutions.</p>
                     <p className="subtitle is-3 has-text-centered has-text-black">Dietary Restrictions*</p>
-                    <InputField props={inputs.vegan} icon={Icons.Vegan}/>
-                    <InputField props={inputs.vegetarian} icon={Icons.Vegetarian} />
-                    <InputField props={inputs.glutenFree} icon={Icons.GlutenFree} />
-                    <InputField props={inputs.kosher} icon={Icons.Kosher}/>
-                    <InputField props={inputs.halal} icon={Icons.Halal}/>
-                    <InputField props={inputs.none} />
+                    <InputField props={inputs.vegan} icon={Icons.Vegan} isDisabled={noneSelected}/>
+                    <InputField props={inputs.vegetarian} icon={Icons.Vegetarian} isDisabled={noneSelected} />
+                    <InputField props={inputs.glutenFree} icon={Icons.GlutenFree} isDisabled={noneSelected} />
+                    <InputField props={inputs.kosher} icon={Icons.Kosher} isDisabled={noneSelected} />
+                    <InputField props={inputs.halal} icon={Icons.Halal} isDisabled={noneSelected} />
+                    <InputField props={inputs.none} isDisabled={hasRestrictions} />
                     <div className={hidden === "" && (inputs.none.value || hasRestrictions === true) ? "hidden" : hidden}>
                         <article className="message is-danger error-msg">
                             <div className="message-body">Please select any dietary restrictions you have. If none are applicable, please select N/A.</div>

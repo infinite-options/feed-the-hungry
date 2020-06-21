@@ -3,7 +3,7 @@ import './style.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // use this component for all input fields (well, not really all input fields because it still needs modifications)
-const InputField = ({props, icon }) => {
+const InputField = ({props, icon, isDisabled}) => {
 
  if (props.type === "checkbox"){
     return (

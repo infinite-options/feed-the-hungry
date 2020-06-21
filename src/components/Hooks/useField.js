@@ -30,7 +30,12 @@ const useField = (name, type, isRequired=true) => {
           return true;
       }
       return false;
-  };
+  }
+
+  const resetinput = () => {
+    setValue("");
+    setError("");
+  }
 
   return {
     error,
@@ -41,6 +46,7 @@ const useField = (name, type, isRequired=true) => {
     onChange,
     isRequired,
     validate,
+    resetinput
   };
 };
 export default useField;
