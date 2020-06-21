@@ -8,6 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
+    {/* <Router basena> */}
     <BrowserRouter>
       <App />
     </BrowserRouter>
