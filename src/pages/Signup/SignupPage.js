@@ -130,7 +130,7 @@ function SignupPage() {
         ]
         let isAllValid = true;
         for (let input in addition) {
-            if (!addition[input].validatewith()) {
+            if (!addition[input].validate()) {
                 isAllValid = false;
             }
         }
@@ -167,7 +167,6 @@ function SignupPage() {
                 ))}
             </div>
         );
-        
     }
 
     return (
