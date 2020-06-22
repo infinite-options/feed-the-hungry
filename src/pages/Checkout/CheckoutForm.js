@@ -97,30 +97,25 @@ function CheckoutForm({ obj, items, order }) {
         ordered_items: [],
       };
       items.forEach((x) => {
-        user_order.ordered_items.push({ meal_id: x.item.food_id, qty: x.amount });
+        user_order.ordered_items.push({ meal_id: x.item.food_id, qty: x.amount, 'delivery/pickup': x.item.delivery_pickup });
       });
       order.setOrderInfo(user_order);
       isOrderPlaced = true;
-      // axios
-      //   .post(
-      //     "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/add_order",
-      //     user_order
-      //   )
-      //   .then((res) => {
-      //     console.log(res);
-      //     console.log(res.data);
-      //    
-      //     isOrderPlaced = true;
-      //     console.log(isOrderPlaced);
-         
-      //   })
-      //   .catch((error) => {
-      //     isOrderPlaced = false;
-      //     console.log(isOrderPlaced);
-      //   });
+      axios
+        .post(
+          "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/add_order_new",
+          user_order
+        )
+        .then((res) => {
+          console.log(res);
+          console.log(res.data);
+          isOrderPlaced = true;
+        })
+        .catch((error) => {
+          isOrderPlaced = false;
+        });
     } else { console.log("Some inputs are invalid"); isOrderPlaced = false;}
 
-    console.log(isOrderPlaced);
     if (isOrderPlaced){
       console.log("go to confirmation");
       
