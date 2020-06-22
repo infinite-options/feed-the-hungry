@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    useRouteMatch,
-    useParams
+    // BrowserRouter as Router,
+    // Switch,
+    // Route,
+    // Link,
+    // useRouteMatch,
+    // useParams,
+    useHistory
   } from "react-router-dom";
 
 import axios from 'axios';
+// import history from 'pages/App/History';
 
 import StateAPI from 'API/StateAPI';
 import "pages/styles.css";
@@ -21,10 +23,11 @@ import Icons from "components/Icons/Icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import Notifications from "components/Notifications/Notifications";
 // import SignupLayout from "pages/Signup/SignupLayout.js";
-import FarmersMarket from 'assets/image/farmers-market.jpg';
+// import FarmersMarket from 'assets/image/farmers-market.jpg';
 
 function SignupPage() {
     const states = StateAPI();
+    const history = useHistory();
 
     const inputs = {
         firstName : useField("First Name", "text"),
@@ -136,6 +139,7 @@ function SignupPage() {
                 console.log(response);
                 if (response.status === 200) {
                     // Send to verify email page
+                    history.push('/signup/verify');
                 }
             })
         }
@@ -341,7 +345,7 @@ function SignupPage() {
                         </article>
                     </div>
                     <div className="has-text-centered">
-                        <button className="button is-success has-margins-0-5" onClick={handleClick}>Sign Up</button>
+                        <button className="button is-success has-margins-0-5" type="button" onClick={handleClick}>Sign Up</button>
                     </div>
                 </div>
             </form>
