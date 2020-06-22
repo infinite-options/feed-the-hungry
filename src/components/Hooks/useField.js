@@ -25,6 +25,12 @@ const useField = (name, type, isRequired=true) => {
       // case 3: if input is entered but we need to verify it given a data
       // make sure that the data must have method 'contain' (see StateAPI.js, for instance
       else if (name.toLowerCase() === "state" && value ==="") setError("Invalid state");
+      // case 4: if input is a phone number
+      else if (type === "tel" && !/[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(value)) setError("Invalid phone number");
+      // case 5: if input is an email
+      else if (type === "email" && !/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value)) setError("Invalid email address");
+      // case 6: if input is currency. NOTE: if we use the 'number' input type for non-currency values in the future, this will need to be changed
+      else if (type === "number" && !/^([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/.test(value)) setError("Invalid currency amount")
       else {
           setError("");
           return true;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import './header.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import Icons from 'components/Icons/Icons';
@@ -70,4 +70,4 @@ function Hamburger(){
         </a>
     );
 }
-export default Header;
+export default withRouter(Header);
