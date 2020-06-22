@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {
-  // BrowserRouter as Router,
-  Router,
+  BrowserRouter as Router,
+  // Router,
   Switch,
   Route,
   Link,
@@ -34,7 +34,7 @@ function App() {
   }
   const order = useOrder();
   return (
- <Router history={history}>
+ <Router >
       <Header />
       <Switch>
         <Route exact path="/login">
