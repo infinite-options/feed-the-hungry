@@ -4,8 +4,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // use this component for all input fields (well, not really all input fields because it still needs modifications)
 const InputField = ({props, icon, isDisabled}) => {
-
- if (props.type === "checkbox"){
+  // Handling date inputs with placeholder text (is there a better way?)
+  const handleDateName = (e) => {
+    if (props.type === "date") {
+      if (e.currentTarget.type === "text") e.currentTarget.type = "date";
+      else {
+        e.currentTarget.type = "text";
+      }
+    }
+  }
+  
+  if (props.type === "checkbox"){
     return (
       <div className="field">
          <div className="control">
@@ -26,7 +35,9 @@ const InputField = ({props, icon, isDisabled}) => {
     return (
       <div className="field">
           <div className={icon ? "control has-icons-right" : "control"}>
-            <input className={props.error.length > 0 ? "input is-danger" : "input"} type={props.type} onChange={props.onChange} value={props.value} placeholder={props.name} />
+            <input className={props.error.length > 0 ? "input is-danger" : "input"} type={props.type !== "date" ? props.type : "text"} onChange={props.onChange} value={props.value} placeholder={props.name} 
+              onFocus={handleDateName} onBlur={handleDateName}
+            />
             {icon ?  (
               <span className="icon is-right">
                 <FontAwesomeIcon icon={icon} />
