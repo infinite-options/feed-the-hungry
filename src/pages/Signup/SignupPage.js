@@ -132,8 +132,11 @@ function SignupPage() {
             axios.post(
                 "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/add_customer", 
                 test
-            ).then(function (response) {
+            ).then(response => {
                 console.log(response);
+                if (response.status === 200) {
+                    // Send to verify email page
+                }
             })
         }
         else {
@@ -222,7 +225,6 @@ function SignupPage() {
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                             <div className="column">
                                 <InputField  props={inputs.dob} />
@@ -309,6 +311,7 @@ function SignupPage() {
                                 </div>
                             </div>
                         </div>
+                        {/* Adding $ to income input */}
                         <div className="field-body">
                             <div className="field is-expanded">
                                 <div className="field has-addons">

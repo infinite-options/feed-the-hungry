@@ -92,9 +92,6 @@ function LoginPage() {
                 <div className="column">
                     {/* Email input */}
                     <InputField props={email} icon={Icons.faEnvelope} />
-                    {/* <span class="icon is-right">
-                        <FontAwesomeIcon icon={Icons.faTruck} />
-                    </span> */}
                     {/* Password input */}
                     <InputField props={password} icon={Icons.faLock} />
                     {/* Buttons */}
