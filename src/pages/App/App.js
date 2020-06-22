@@ -52,7 +52,7 @@ function App() {
         <Route exact path={"/banks/:bankId/products/checkout"}>
           <CheckoutPage list={banks} order={order} />
         </Route>
-        <Route exact ={"/banks/:bankId/products/checkout/confirmation"}>
+        <Route exact path={"/banks/:bankId/products/checkout/confirmation"}>
           <ConfirmationPage list={banks} order={order} />
         </Route>
         <Route path="/about"></Route>
