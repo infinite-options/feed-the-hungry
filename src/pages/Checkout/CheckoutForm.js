@@ -120,7 +120,7 @@ function CheckoutForm({ obj, items, order }) {
       console.log("go to confirmation");
       
       window.localStorage.setItem(obj.id, JSON.stringify([]));
-      history.push(`${url}/confirmation`);
+      // history.push(`${url}/confirmation`);
     }
     else {
       console.log('stay');
@@ -327,4 +327,4 @@ function formatDate(date) {
   ).toUpperCase();
 }
 
-export default withRouter(CheckoutForm);
+export default CheckoutForm;
