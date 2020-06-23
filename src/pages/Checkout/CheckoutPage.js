@@ -27,12 +27,12 @@ function CheckoutPage({ ...bankAPI }){
                 <div className="checkout-page-title">
                 <p className="title is-4">{bank.name}</p>
                 </div>
-                <div className="divider"></div>           
+                {/* <div className="divider"></div>            */}
                 <div key={key} className="checkout-page-body">
                     <div className="order-items">
                     <Carousel itemList={items} />
                     </div>
-                    <div className="divider"></div>
+                    {/* <div className="divider"></div> */}
                     <div className="order-confirm fade-in-quick">
                      <div className="columns">
                         <div className="column is-8"> 
