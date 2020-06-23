@@ -149,9 +149,9 @@ function CheckoutForm({ bank, items}) {
               onClick={() => setActiveTab("delivery")}
             >
               <a>
-                <span class="icon is-small">
+                {/* <span class="icon is-small">
                   <FontAwesomeIcon icon={Icons.faShippingFast} />
-                </span>
+                </span> */}
                 <span className="uppercase">Delivery</span>
               </a>
             </li>
@@ -160,9 +160,9 @@ function CheckoutForm({ bank, items}) {
               onClick={() => setActiveTab("pickup")}
             >
               <a>
-                <span class="icon is-small">
+                {/* <span class="icon is-small">
                   <FontAwesomeIcon icon={Icons.faBoxOpen} />
-                </span>
+                </span> */}
                 <span className="uppercase">Pick Up</span>
               </a>
             </li>
