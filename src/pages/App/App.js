@@ -20,6 +20,7 @@ import BankAPI from "API/BankAPI";
 import CheckoutPage from "pages/Checkout/CheckoutPage";
 import LoginPage from 'pages/Login/LoginPage';
 import SignupPage from 'pages/Signup/SignupPage';
+import SignupVerify from 'pages/Signup/SignupVerify';
 import ConfirmationPage from 'pages/Checkout/ConfirmationPage';
 import ErrorPage from 'pages/Error/ErrorPage';
 import history from 'pages/App/History';
@@ -44,6 +45,10 @@ function App() {
         </Route>
         <Route exact path="/">
           <BanksPage {...bankAPI} />
+          </Route>
+        <Route exact path="/signup/verify">
+          {/* Temporary, will be <SignupVerify> */}
+          <SignupVerify /> 
         </Route>
         <Route exact path={"/banks/:bankId/products"}>
           <BankPage {...bankAPI} />

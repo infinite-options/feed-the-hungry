@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    useRouteMatch,
-    useParams
+    // BrowserRouter as Router,
+    // Switch,
+    // Route,
+    // Link,
+    // useRouteMatch,
+    // useParams,
+    useHistory
   } from "react-router-dom";
 
 import axios from 'axios';
+// import history from 'pages/App/History';
 
 import StateAPI from 'API/StateAPI';
 import "pages/styles.css";
@@ -21,10 +23,11 @@ import Icons from "components/Icons/Icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import Notifications from "components/Notifications/Notifications";
 // import SignupLayout from "pages/Signup/SignupLayout.js";
-import FarmersMarket from 'assets/image/farmers-market.jpg';
+// import FarmersMarket from 'assets/image/farmers-market.jpg';
 
 function SignupPage() {
     const states = StateAPI();
+    const history = useHistory();
 
     const inputs = {
         firstName : useField("First Name", "text"),
@@ -132,8 +135,12 @@ function SignupPage() {
             axios.post(
                 "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/add_customer", 
                 test
-            ).then(function (response) {
+            ).then(response => {
                 console.log(response);
+                if (response.status === 200) {
+                    // Send to verify email page
+                    history.push('/signup/verify');
+                }
             })
         }
         else {
@@ -222,7 +229,6 @@ function SignupPage() {
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                             <div className="column">
                                 <InputField  props={inputs.dob} />
@@ -309,6 +315,7 @@ function SignupPage() {
                                 </div>
                             </div>
                         </div>
+                        {/* Adding $ to income input */}
                         <div className="field-body">
                             <div className="field is-expanded">
                                 <div className="field has-addons">
@@ -338,7 +345,7 @@ function SignupPage() {
                         </article>
                     </div>
                     <div className="has-text-centered">
-                        <button className="button is-success has-margins-0-5" onClick={handleClick}>Sign Up</button>
+                        <button className="button is-success has-margins-0-5" type="button" onClick={handleClick}>Sign Up</button>
                     </div>
                 </div>
             </form>
