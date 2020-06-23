@@ -47,7 +47,6 @@ function App() {
           <BanksPage {...bankAPI} />
           </Route>
         <Route exact path="/signup/verify">
-          {/* Temporary, will be <SignupVerify> */}
           <SignupVerify /> 
         </Route>
         <Route exact path={"/banks/:bankId/products"}>
