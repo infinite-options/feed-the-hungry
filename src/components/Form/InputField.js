@@ -6,12 +6,27 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const InputField = ({props, icon, isDisabled}) => {
   // Handling date inputs with placeholder text (is there a better way?)
   const handleDateName = (e) => {
-    if (props.type === "date") {
-      if (e.currentTarget.type === "text") e.currentTarget.type = "date";
-      else {
-        e.currentTarget.type = "text";
-      }
+    if (e.currentTarget.type === "text") e.currentTarget.type = "date";
+    else {
+      e.currentTarget.type = "text";
     }
+  }
+
+  const handleImg = e => {
+    // Since we call onChange handleImg for file inputs, it overwrites the initial onChange function
+    // so we add that initial function here so both functions run
+    props.onChange(e);
+    let selectedFile = e.target.files[0];
+    let reader = new FileReader();
+
+    let imgTag = document.getElementById("inputImg");
+    imgTag.title = selectedFile.name;
+
+    reader.onload = e => {
+      imgTag.src = e.target.result;
+      // console.log(imgTag.src);
+    };
+    reader.readAsDataURL(selectedFile);
   }
   
   if (props.type === "checkbox"){
@@ -35,8 +50,10 @@ const InputField = ({props, icon, isDisabled}) => {
     return (
       <div className="field">
           <div className={icon ? "control has-icons-right" : "control"}>
+            {props.type === "file" && <img id="inputImg" />}
             <input className={props.error.length > 0 ? "input is-danger" : "input"} type={props.type !== "date" ? props.type : "text"} onChange={props.onChange} value={props.value} placeholder={props.name} 
-              onFocus={handleDateName} onBlur={handleDateName}
+              {...(props.type === "date" ? {onFocus: handleDateName, onBlur: handleDateName} : {})} 
+              {...(props.type === "file" ? {accept: "image/*", onChange: handleImg} : {})}
             />
             {icon ?  (
               <span className="icon is-right">

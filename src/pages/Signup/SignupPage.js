@@ -298,14 +298,24 @@ function SignupPage() {
                                         <InputField props={addition.a_dob} />
                                     </React.Fragment>
                                 )}
-                            </div>
-                            <div className="column">
                                 <div className="box">
                                     {listPersons()}
                                 </div>
                             </div>
+                            <div className="column">
+                                <InputField props={inputs.license} />
+                                <div className="box">
+                                    <InputField props={inputs.licenseImg} />
+                                </div>
+                            </div>
+
+                            {/* <div className="column">
+                                <div className="box">
+                                    {listPersons()}
+                                </div>
+                            </div> */}
                         </div>
-                        <div className="columns">
+                        {/* <div className="columns">
                             <div className="column">
                                 <InputField props={inputs.license} />
                             </div>
@@ -314,7 +324,7 @@ function SignupPage() {
                                     <InputField props={inputs.licenseImg} />
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         {/* Adding $ to income input */}
                         <div className="field-body">
                             <div className="field is-expanded">
