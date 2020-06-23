@@ -2,7 +2,7 @@ import React from 'react';
 import {Link, useParams, useRouteMatch, useLocation} from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-import EmptyCart from 'assets/image/empty-cart.svg';
+import EmptyCart from 'assets/image/empty-cart.png';
 import Confirmation from 'assets/image/confirmation.svg';
 import './style.css';
 import history from 'pages/App/History';
@@ -45,7 +45,8 @@ const Notifications = {
                 <figure class="image is-128x128">
                     <img src={EmptyCart} />
                 </figure>
-                <p className="title is-5 has-margin-top-1-5">{msg}</p>
+                <p className="title is-5 has-margin-top-1-5">Your cart is empty</p>
+                <p className="subtitle is-6 has-text-grey">Looks like you haven't added anything to your cart yet</p>
         <Link to={parentPath}><button className="button is-danger">Shop Now</button></Link>
             </div>
         );

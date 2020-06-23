@@ -3,8 +3,9 @@ import LeafletMap from "components/Map/LeafletMap";
 import Banks from "pages/Banks/Banks";
 import ScrollToTopOnMount from "utils/Scroll/ScrollToTopOnMount";
 import useMarker from 'components/Hooks/useMarker';
-function BanksLayout({ banks }) {
+function BanksLayout({ ...bankAPI }) {
   const marker = useMarker();
+  const banks = bankAPI.data;
   return (
     <div className="banks-page-bd">
       <ScrollToTopOnMount />

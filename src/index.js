@@ -10,7 +10,7 @@ import history from 'pages/App/History';
 ReactDOM.render(
   <React.StrictMode>
     {/* <Router basena> */}
-    <BrowserRouter history={history}>
+    <BrowserRouter>
       <App />
     </BrowserRouter>
   </React.StrictMode>,

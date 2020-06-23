@@ -1,55 +1,56 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import BankAPI from "API/BankAPI";
 import { BrowserRouter as Router, Link, useLocation } from "react-router-dom";
-import useQuery from 'components/Hooks/useQuery';
+import useQuery from "components/Hooks/useQuery";
+import { OrderContext } from "components/Context/OrderContext";
 
 // render food bank's inventory
 function BankInventory({ obj, deliveryOrPickup, bankUrl }) {
   let query = useQuery();
   let inventory = obj.inventory;
-  if (query.get("type")) inventory = BankAPI.GetItemsByTag(inventory, query.get("type"));
-
+  if (query.get("type"))
+    inventory = getItemsByKey(query.get("type"), inventory);
+  // key={+new Date()}
   return (
-    <div key={+new Date()} className="inventory fade-in">
-      {inventory.map(foodItem => deliveryOrPickup.includes(foodItem.delivery_pickup) ?  (
-        <div key={foodItem.food_id} className="card item">
-          <div className="card-content has-no-padding item-content">
-            <div className="item-image-container">
-              <img
-                src={foodItem.image}
-                className="item-image"
-                alt="Placeholder image"
-              ></img>
+    <div className="inventory fade-in">
+      {inventory.map((foodItem) =>
+        deliveryOrPickup.includes(foodItem.delivery_pickup) ? (
+          <div key={foodItem.food_id} className="card item">
+            <div className="card-content has-no-padding item-content">
+              <div className="item-image-container">
+                <img
+                  src={foodItem.image}
+                  className="item-image"
+                  alt="Placeholder image"
+                ></img>
+              </div>
+              <div className="item-info">
+                <p className="title has-text-grey-light is-7 item-brand">
+                  {foodItem.brand}
+                </p>
+                <p className="subtitle is-6 is-bold no-overflow">
+                  {foodItem.food_name}
+                </p>
+                <p className="subtitle is-7 has-text-grey no-overflow">
+                  {foodItem.unit} ({foodItem.weight}{" "}
+                  {/* {foodItem.weight_unit}) */}
+                </p>
+                <QuantityInput foodItem={foodItem} bankId={obj.id} />
+              </div>
             </div>
-            <div className="item-info">
-              <p className="title has-text-grey-light is-7 item-brand">
-                {foodItem.brand}
-              </p>
-              <p className="subtitle is-6 is-bold no-overflow">
-                {foodItem.food_name}
-              </p>
-              <p className="subtitle is-7 has-text-grey no-overflow">
-                {foodItem.unit} ({foodItem.weight}{" "}
-                {/* {foodItem.weight_unit}) */}
-              </p>
-              <QuantityInput
-                foodItem={foodItem}
-                bankId={obj.id}
-              />
+            <div className="card-footer">
+              <div className="item-price">
+                <span className="subtitle has-font-13 has-text-grey">
+                  ${foodItem.price}
+                </span>
+              </div>
+              <div className="item-tags">
+                <ItemTags bankUrl={bankUrl} str={foodItem.type} />
+              </div>
             </div>
           </div>
-          <div className="card-footer">
-            <div className="item-price">
-              <span className="subtitle has-font-13 has-text-grey">
-                ${foodItem.price}
-              </span>
-            </div>
-            <div className="item-tags">
-              <ItemTags bankUrl={bankUrl} str={foodItem.type} />
-            </div>
-          </div>
-        </div>
-      ): null)}
+        ) : null
+      )}
     </div>
   );
 }
@@ -73,7 +74,7 @@ function ItemTags({ bankUrl, str }) {
     </div>
   );
 }
-function QuantityInput({ foodItem, bankId}) {
+function QuantityInput({ foodItem, bankId }) {
   const count = useCounter(foodItem, bankId);
   return (
     <div className="field is-grouped is-multiline">
@@ -94,7 +95,11 @@ function QuantityInput({ foodItem, bankId}) {
         <button
           className="button is-small"
           onClick={count.increase}
-          disabled={ foodItem.quantity === 0 || count.value >= foodItem.limit ? true : false}
+          disabled={
+            foodItem.quantity === 0 || count.value >= foodItem.limit
+              ? true
+              : false
+          }
         >
           +
         </button>
@@ -149,8 +154,8 @@ function QuantityInput({ foodItem, bankId}) {
 //   };
 // };
 
-
 const useCounter = (foodItem, bankId) => {
+  const [orderInfo, setOrderInfo] = useContext(OrderContext);
   let initialValues = JSON.parse(window.localStorage.getItem(bankId)) || [];
 
   let initValue = initialValues.find((x) => {
@@ -161,9 +166,11 @@ const useCounter = (foodItem, bankId) => {
 
   const increase = () => {
     setValue(value + 1);
+    setOrderInfo(orderInfo + 1);
   };
   const decrease = () => {
     setValue(value - 1);
+    setOrderInfo(orderInfo - 1);
   };
   const zero = () => {
     setValue(0);
@@ -171,14 +178,21 @@ const useCounter = (foodItem, bankId) => {
 
   useEffect(() => {
     let items = JSON.parse(window.localStorage.getItem(bankId)) || [];
+    if (items.length === 0 && value > 0) {
+      setOrderInfo(value);
+      window.localStorage.clear();
+    }
+
     let item = items.find((x) => {
       return x.item.food_id === foodItem.food_id;
     });
-    if (item && (value > 0)) item.amount = value;
-    else if (item && (value === 0)) items.splice(items.indexOf(item), 1);
-    else if (!item && (value > 0)) items.push({item: foodItem, amount: value});
+    if (item && value > 0) item.amount = value;
+    else if (item && value === 0) items.splice(items.indexOf(item), 1);
+    else if (!item && value > 0) items.push({ item: foodItem, amount: value });
 
+    // if (items.length > 0) setOrderInfo(totalAmount(items));
     window.localStorage.setItem(bankId, JSON.stringify(items));
+    // }
   }, [value]);
 
   return {
@@ -189,4 +203,7 @@ const useCounter = (foodItem, bankId) => {
   };
 };
 
+const getItemsByKey = (key, arr) => {
+  return arr.filter((x) => x.type.includes(key));
+};
 export default BankInventory;

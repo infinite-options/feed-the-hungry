@@ -3,15 +3,11 @@ import ItemsCarousel from 'react-items-carousel';
 import CartItem from 'pages/Checkout/CartItem';
 import Icons from 'components/Icons/Icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-function Carousel({obj}){
-  const items = JSON.parse(window.localStorage.getItem(obj.id)) || [];
+function Carousel({itemList}){
+  // const items = JSON.parse(window.localStorage.getItem(bankInfo.id)) || [];
+  // console.log(items);
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const chevronWidth = 60;
-  var numOfCards;
-  window.addEventListener("resize", () => {
-    if (window.innerWidth <= 600) numOfCards = 1;
-    else numOfCards = 5;
-  });
   return (
     <div style={{ padding: `0 ${chevronWidth}px` }}>
       <ItemsCarousel
@@ -24,7 +20,7 @@ function Carousel({obj}){
         outsideChevron
         chevronWidth={chevronWidth}
       > 
-      {items.map(x => 
+      {itemList.map(x => 
         <CartItem key={x.item.food_id} foodItem={x} />)
       }
         {/* <div style={{ height: 200, background: '#EEE' }}>First card</div> */}

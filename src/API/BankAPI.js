@@ -1,19 +1,22 @@
 import React, { useState, useEffect }  from 'react';
-const BankAPI = {
+const BankAPI = () => {
+    const [data, setData] = useState([]);
     // fetch data from json file
     // return an array of objects
-    DataLoader: function(){
-        const [data, setData] = useState([]);
-        useEffect(() => {
-            fetch('https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/foodbankinfo')
-            .then (x=> x.json())
-            .then(({  result: { result }  }) => result)
-            .then(data => setData(data))
-        },[])
-        return data;
-    },
+    // DataLoader: function(){
+    //     const [data, setData] = useState([]);
+    useEffect(() => {
+        fetch('https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/foodbankinfo')
+        .then (x=> x.json())
+        .then(({  result: { result }  }) => result)
+        .then(result => {return removeNull(result)})
+        .then(result => {return removeDuplicatesBy('foodbank_id', result)})
+        .then(data => setData(data))
+    },[])
+    //     return data;
+    // },
     // remove duplicates of objects sharing the same property value
-    RemoveDuplicatesBy: function(key,arr){
+    const removeDuplicatesBy = (key, arr) => {
         const obj = {};
         arr.forEach(x => {
             if (!obj[x[key]]){
@@ -70,14 +73,14 @@ const BankAPI = {
         });
     
         return Object.values(obj);
-    },
+    }
     // get a bank object by key 
-    getBankBy: function(key, arr){
-        return (arr.find(obj => {
+    const getBankBy = (key) => {
+        return (data.find(obj => {
             return obj.id === key;
         }));
-    },
-    RemoveNull: function(arr){
+    }
+    const removeNull = (arr) => {
         arr.forEach(x => {
             Object.keys(x).map(function(keyName, keyIndex){
                 if (x[keyName] === null){
@@ -88,16 +91,24 @@ const BankAPI = {
             })
         })
         return arr;
-    },
-    GetItemsByTag: function(inventory, tag){
+    }
+    const getItemsByTag = (inventory, tag) =>{
         return inventory.filter(foodItem => foodItem.type.includes(tag));
-    },
-    GetCoordinates: function(arr) {
+    }
+    const getCoordinates = () => {
         let coords = [];
-        arr.forEach(x => {
+        data.forEach(x => {
             coords.push([x.latitude, x.longitude])
         })
         return coords;
+    }
+    return {
+        data,
+        removeDuplicatesBy,
+        removeNull,
+        getBankBy,
+        getItemsByTag,
+        getCoordinates,
     }
 }
 export default BankAPI;

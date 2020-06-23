@@ -20,8 +20,7 @@ import { withRouter } from 'react-router-dom';
 // import axios
 import axios from "axios";
 
-function CheckoutForm({ obj, items, order }) {
-  const {path, url} = useRouteMatch();
+function CheckoutForm({ bank, items}) {
   const [activeTab, setActiveTab] = useState("delivery");
   const [hidden, setHidden] = useState("hidden"); // to hide error msg
   const delivery_items = items.filter(x => x.item.delivery_pickup.includes('delivery'));
@@ -76,7 +75,7 @@ function CheckoutForm({ obj, items, order }) {
       //   zipcode: zip.value,
       //   totalAmount: total,
       //   delivery_note: "",
-      //   kitchen_id: obj.id,
+      //   kitchen_id: bank.id,
       //   longitude: "",
       //   latitude: "",
       //   delivery_date: date
@@ -90,7 +89,7 @@ function CheckoutForm({ obj, items, order }) {
         zipcode: zip.value,
         totalAmount: total,
         delivery_note: "",
-        kitchen_id: obj.id,
+        kitchen_id: bank.id,
         longitude: "",
         latitude: "",
         delivery_date: date,
@@ -99,27 +98,29 @@ function CheckoutForm({ obj, items, order }) {
       items.forEach((x) => {
         user_order.ordered_items.push({ meal_id: x.item.food_id, qty: x.amount, 'delivery/pickup': x.item.delivery_pickup });
       });
-      order.setOrderInfo(user_order);
+      // order.setOrderInfo(user_order);
       isOrderPlaced = true;
-      axios
-        .post(
-          "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/add_order_new",
-          user_order
-        )
-        .then((res) => {
-          console.log(res);
-          console.log(res.data);
-          isOrderPlaced = true;
-        })
-        .catch((error) => {
-          isOrderPlaced = false;
-        });
+      console.log(user_order);
+      // axios
+      //   .post(
+      //     "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/add_order_new",
+      //     user_order
+      //   )
+      //   .then((res) => {
+      //     console.log(res);
+      //     console.log(res.data);
+      //     isOrderPlaced = true;
+      //   })
+      //   .catch((error) => {
+      //     isOrderPlaced = false;
+      //   });
     } else { console.log("Some inputs are invalid"); isOrderPlaced = false;}
 
     if (isOrderPlaced){
       console.log("go to confirmation");
+     
       
-      window.localStorage.setItem(obj.id, JSON.stringify([]));
+      window.localStorage.setItem(bank.id, JSON.stringify([]));
       // history.push(`${url}/confirmation`);
     }
     else {
@@ -141,7 +142,7 @@ function CheckoutForm({ obj, items, order }) {
         <div className="divider"></div>
         {/* choose pickup or delivery */}
         <p className="title is-5">Delivery Method</p>
-        <div class="tabs is-toggle is-fullwidth">
+        <div class="tabs is-toggle is-fullwidth is-medium">
           <ul>
             <li
               className={activeTab === "delivery" ? "is-active" : ""}
@@ -219,7 +220,7 @@ function CheckoutForm({ obj, items, order }) {
             </div>
           </div>
         ) : (
-          <PickupDetails obj={obj} items={items} />
+          <PickupDetails bank={bank} items={items} />
         )}
       </div>
       <div className="space-1"></div>

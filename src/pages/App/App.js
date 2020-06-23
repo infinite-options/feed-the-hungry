@@ -21,20 +21,19 @@ import CheckoutPage from "pages/Checkout/CheckoutPage";
 import LoginPage from 'pages/Login/LoginPage';
 import SignupPage from 'pages/Signup/SignupPage';
 import ConfirmationPage from 'pages/Checkout/ConfirmationPage';
+import ErrorPage from 'pages/Error/ErrorPage';
 import history from 'pages/App/History';
+// import hooks
+import { BankContext } from 'components/Context/BankContext';
+import { OrderContext } from 'components/Context/OrderContext';
 
 function App() {
-  // fetch data
-  const list = BankAPI.DataLoader();
-  var banks = [];
-  // check if data exists
-  if (list && list.length > 0) {
-    banks = BankAPI.RemoveNull(list); // replace all null fields with "N/A"
-    banks = BankAPI.RemoveDuplicatesBy("foodbank_id", banks); // merge objects with the same foodbank_id into 1
-  }
-  const order = useOrder();
+  const bankAPI = BankAPI();
+  const [orderInfo, setOrderInfo] = useState(0);
+
   return (
- <Router >
+ <Router history={history} >
+    <OrderContext.Provider value={[orderInfo, setOrderInfo]}>
       <Header />
       <Switch>
         <Route exact path="/login">
@@ -43,21 +42,22 @@ function App() {
         <Route exact path="/signup">
           <SignupPage />
         </Route>
-        <Route exact path="/banks">
-          <BanksPage list={banks} />
+        <Route exact path="/">
+          <BanksPage {...bankAPI} />
         </Route>
         <Route exact path={"/banks/:bankId/products"}>
-          <BankPage list={banks} />
+          <BankPage {...bankAPI} />
         </Route>
-        <Route exact path={"/banks/:bankId/products/checkout"}>
-          <CheckoutPage list={banks} order={order} />
+        <Route exact path="/order/cart">
+           <CheckoutPage {...bankAPI} />
         </Route>
-        <Route exact ={"/banks/:bankId/products/checkout/confirmation"}>
-          <ConfirmationPage list={banks} order={order} />
+        <Route exact path={"/banks/:bankId/products/checkout/confirmation"}>
+          <ConfirmationPage />
         </Route>
-        <Route path="/about"></Route>
-        <Route path="/report"></Route>
+        <Route path="/404" component={ErrorPage} />
+        <Redirect to="/404" />
       </Switch>
+      </OrderContext.Provider>
     </Router>
   );
 }

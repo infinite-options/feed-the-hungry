@@ -1,26 +1,26 @@
-import React from 'react';
+import React, {useState, useContext} from 'react';
 import { Link, withRouter } from "react-router-dom";
 import './header.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import Icons from 'components/Icons/Icons';
-
+import { OrderContext }  from 'components/Context/OrderContext';
 function Header (){
+    const [orderInfo, setOrderInfo] = useContext(OrderContext);
+    const bankId = Object.keys(window.localStorage)[0];
+    let items = bankId ? JSON.parse(window.localStorage.getItem(bankId)) : [];
+    setOrderInfo(totalAmount(items));
+
     return (
         <nav className="navbar is-fixed-top" role="navigation" aria-label="main navigation">
             <div className="navbar-brand ">
-                <a className="navbar-item has-no-padding-left" href="/">
+                <Link className="navbar-item has-no-padding-left" to="/">
                     <span className="subtitle is-5 brand-text">
                         Feed The Hungry
                     </span>
-                </a>
+                </Link>
                 <Hamburger />
             </div>
             <div id="mainNavbar" className="navbar-menu">
-                <div className="navbar-start">
-                    <Link to="/banks" className="navbar-item">
-                        Food Banks
-                    </Link>
-                </div>
                 <div className="navbar-end">
                     <div className="navbar-item">
                         <SearchBar />
@@ -29,7 +29,7 @@ function Header (){
                         Login
                     </Link>
                     <div className="navbar-item has-no-padding-right">
-                        <AddToCart />
+                        <AddToCart num={orderInfo} />
                     </div>
                 </div>
             </div>
@@ -48,15 +48,16 @@ function SearchBar() {
         </div>
     );
 }
-function AddToCart() {
+function AddToCart({num}) {
+    const [orderInfo, setOrderInfo] = useContext(OrderContext);
     return (
-        <Link to="/cart" alt="cart button">
+        <Link to="/order/cart" alt="cart button">
             <div className="button add-cart">
             {/* <span>Cart</span>    */}
             <span className="icon shopping-cart">
                 <FontAwesomeIcon icon={Icons.faShoppingBasket} />
             </span>
-            <span>0</span>  
+            <span>{orderInfo}</span>  
             </div>
         </Link>
     );
@@ -70,4 +71,12 @@ function Hamburger(){
         </a>
     );
 }
+const totalAmount = (items) => {
+    let total = 0;
+    items.forEach(x => {
+      total += x.amount;
+    });
+    return total;
+}
+
 export default withRouter(Header);

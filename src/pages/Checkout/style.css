@@ -265,3 +265,16 @@
     height: auto;
     background-color: white;
 }
+.cart-summary .content {
+    max-height: 300px;
+}
+.price-summary {
+    text-align: right;
+}
+.price-total {
+    width: 100%;
+    background-color: #EEEDF2;
+}
+.has-padding-1-5 {
+    padding: 1.5rem;
+}
