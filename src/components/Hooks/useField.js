@@ -16,6 +16,16 @@ const useField = (name, type, isRequired=true) => {
     if (event.target.value.length > 0 ) setError('');
   };
 
+  const maxDate = () => {
+    const today = new Date();
+    let day = today.getDate();
+    let month = today.getMonth() + 1;
+    let year = today.getFullYear();
+    if (day < 10) day = "0" + day;
+    if (month < 10) month = "0" + month;
+    return year + "-" + month + "-" + day;
+  }
+
   const checkInputs = () => {
     // case 1: if input is a zip code
     if (name.toLowerCase() === "zip" && !/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(value)) setError("Invalid zip code");
@@ -27,8 +37,10 @@ const useField = (name, type, isRequired=true) => {
     // case 4: if input is an email
     else if (type === "email" && !/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value)) setError("Invalid email address");
     // case 5: if input is currency. NOTE: if we use the 'number' input type for non-currency values in the future, this will need to be changed
-    else if (type === "number" && !/^([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/.test(value)) setError("Invalid currency amount")
-    // case 6: everything looks good!
+    else if (type === "number" && !/^([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/.test(value)) setError("Invalid currency amount");
+    // case 6: if input is birthdate and date chosen is in the future
+    else if (name.toLowerCase() === "date of birth" && maxDate() < value) setError("Invalid birthdate");
+    // case 7: everything looks good!
     else {
       return true;
     }

@@ -58,7 +58,7 @@ function SignupPage() {
     const addition = {
         a_firstName : useField("First Name", "text"),
         a_lastName : useField("Last Name", "text"),
-        a_dob : useField("Date of Birth", "text"),
+        a_dob : useField("Date of Birth", "date"),
     }
 
     const [hidden, setHidden] = useState("hidden");
@@ -298,14 +298,24 @@ function SignupPage() {
                                         <InputField props={addition.a_dob} />
                                     </React.Fragment>
                                 )}
-                            </div>
-                            <div className="column">
                                 <div className="box">
                                     {listPersons()}
                                 </div>
                             </div>
+                            <div className="column">
+                                <InputField props={inputs.license} />
+                                <div className="box">
+                                    <InputField props={inputs.licenseImg} />
+                                </div>
+                            </div>
+
+                            {/* <div className="column">
+                                <div className="box">
+                                    {listPersons()}
+                                </div>
+                            </div> */}
                         </div>
-                        <div className="columns">
+                        {/* <div className="columns">
                             <div className="column">
                                 <InputField props={inputs.license} />
                             </div>
@@ -314,7 +324,7 @@ function SignupPage() {
                                     <InputField props={inputs.licenseImg} />
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         {/* Adding $ to income input */}
                         <div className="field-body">
                             <div className="field is-expanded">
