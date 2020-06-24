@@ -3,7 +3,9 @@ import React, { useState, useEffect } from "react";
 const useField = (name, type, isRequired=true) => {
   const [value, setValue] = useState(type === "checkbox" ? false : '');
   const [error, setError] = useState('');
-  
+  // for file inputs
+  const [file, setFile] = useState({});
+
   // handle input if user changes the content of the input 
   const onChange = (event) => {
     setValue(
@@ -11,6 +13,10 @@ const useField = (name, type, isRequired=true) => {
         ? event.target.checked
         : event.target.value
     );
+
+    if (event.target.type === "file") {
+      setFile(event.target.files[0]);
+    }
 
     // set error msg to '' if input is filled
     if (event.target.value.length > 0 ) setError('');
@@ -80,7 +86,8 @@ const useField = (name, type, isRequired=true) => {
     onChange,
     isRequired,
     validate,
-    resetinput
+    resetinput,
+    file,
   };
 };
 export default useField;

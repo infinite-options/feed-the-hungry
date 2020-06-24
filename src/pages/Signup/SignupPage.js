@@ -113,7 +113,8 @@ function SignupPage() {
             let data = {};
             for (let input in inputs) {
                 // console.log(input + ":", inputs[input].value);
-                data[input] = inputs[input].value;
+                if (inputs[input].type !== "file") data[input] = inputs[input].value;
+                else data[input] = inputs[input].file;
             }
             // console.log("persons" + ":", persons);
             data["persons"] = persons;
