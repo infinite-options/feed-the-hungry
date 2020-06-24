@@ -42,7 +42,7 @@ const Notifications = {
         console.log(parentPath);
         return (
             <div className="is-empty-message">
-                <figure class="image is-128x128">
+                <figure className="image is-128x128">
                     <img src={EmptyCart} />
                 </figure>
                 <p className="title is-5 has-margin-top-1-5">Your cart is empty</p>
@@ -55,7 +55,7 @@ const Notifications = {
         
         return (
             <div className="is-empty-message">
-                <figure class="image is-128x128">
+                <figure className="image is-128x128">
                     <img src={Confirmation} />
                 </figure>
                 <p className="title is-5 has-margin-top-1-5">{msg}</p>

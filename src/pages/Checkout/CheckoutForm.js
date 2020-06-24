@@ -142,14 +142,14 @@ function CheckoutForm({ bank, items}) {
         <div className="divider"></div>
         {/* choose pickup or delivery */}
         <p className="title is-5">Delivery Method</p>
-        <div class="tabs is-toggle is-fullwidth is-medium">
+        <div className="tabs is-toggle is-fullwidth is-medium">
           <ul>
             <li
               className={activeTab === "delivery" ? "is-active" : ""}
               onClick={() => setActiveTab("delivery")}
             >
               <a>
-                {/* <span class="icon is-small">
+                {/* <span className="icon is-small">
                   <FontAwesomeIcon icon={Icons.faShippingFast} />
                 </span> */}
                 <span className="uppercase">Delivery</span>
@@ -160,7 +160,7 @@ function CheckoutForm({ bank, items}) {
               onClick={() => setActiveTab("pickup")}
             >
               <a>
-                {/* <span class="icon is-small">
+                {/* <span className="icon is-small">
                   <FontAwesomeIcon icon={Icons.faBoxOpen} />
                 </span> */}
                 <span className="uppercase">Pick Up</span>

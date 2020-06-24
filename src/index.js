@@ -6,6 +6,7 @@ import App from './pages/App/App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 import history from 'pages/App/History';
+import { OrderContext } from 'components/Context/OrderContext';
 
 ReactDOM.render(
   <React.StrictMode>

@@ -13,17 +13,17 @@ function CustomerDetails({ fname, lname, email, phone }) {
       </div>
       <InputField props={email} />
       <div className="field horizontal">
-        <div class="field-body">
-          <div class="field is-expanded">
-            <div class="field has-addons">
-              <div class="control">
-                <a class="button is-static">+1</a>
+        <div className="field-body">
+          <div className="field is-expanded">
+            <div className="field has-addons">
+              <div className="control">
+                <a className="button is-static">+1</a>
               </div>
-              <div class="control is-expanded">
+              <div className="control is-expanded">
                 <InputField props={phone} />
               </div>
             </div>
-            <p class="help">Do not enter the first zero</p>
+            <p className="help">Do not enter the first zero</p>
           </div>
         </div>
       </div>

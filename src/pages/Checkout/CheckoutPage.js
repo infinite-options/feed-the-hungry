@@ -40,8 +40,8 @@ function CheckoutPage({ ...bankAPI }){
                          </div>
                          <div className="column is-4">
                         <div className="card cart-summary">
-                        <header class="card-header">
-                            <p class="card-header-title">
+                        <header className="card-header">
+                            <p className="card-header-title">
                             Cart Summary
                             </p>
                             

@@ -86,7 +86,7 @@ const BankAPI = () => {
                 if (x[keyName] === null){
                     if (keyName === "fb_logo") x[keyName] = "https://bulma.io/images/placeholders/96x96.png";
                     else if(keyName === "fl_food_type") x[keyName] = "";
-                    else x[keyName] = "N/A";
+                    else x[keyName] = "Not Available";
                 }
             })
         })

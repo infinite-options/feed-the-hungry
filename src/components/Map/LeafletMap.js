@@ -97,14 +97,14 @@ const MapMarker = ({ userLocation, location, marker }) => {
       onMouseOut={() => marker.setActiveMarker(null)}
     >
       <Popup closeOnClick={true} closeButton={false} autoPanPadding={[50,50]}>
-        <article class="media marker-popup">
-          <figure class="media-left">
-            <p class="image is-48x48">
+        <article className="media marker-popup">
+          <figure className="media-left">
+            <p className="image is-48x48">
               <img src={location.logo} />
             </p>
           </figure>
-          <div class="media-content">
-            <div class="content">
+          <div className="media-content">
+            <div className="content">
               <p>
                 <Link to={`${path}/${location.id}/products`}>
                   <strong>{location.name}</strong>
