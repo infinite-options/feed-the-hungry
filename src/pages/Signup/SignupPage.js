@@ -58,7 +58,7 @@ function SignupPage() {
     const addition = {
         a_firstName : useField("First Name", "text"),
         a_lastName : useField("Last Name", "text"),
-        a_dob : useField("Date of Birth", "text"),
+        a_dob : useField("Date of Birth", "date"),
     }
 
     const [hidden, setHidden] = useState("hidden");

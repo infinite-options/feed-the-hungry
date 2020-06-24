@@ -4,6 +4,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // use this component for all input fields (well, not really all input fields because it still needs modifications)
 const InputField = ({props, icon, isDisabled}) => {
+  
+  const setMaxDate = () => {
+    const today = new Date();
+    // console.log(today);
+    let day = today.getDate();
+    let month = today.getMonth() + 1;
+    let year = today.getFullYear();
+    if (day < 10) day = "0" + day;
+    if (month < 10) month = "0" + month;
+    return year + "-" + month + "-" + day;
+  }
+
   // Handling date inputs with placeholder text (is there a better way?)
   const handleDateName = (e) => {
     if (e.currentTarget.type === "text") e.currentTarget.type = "date";
@@ -52,7 +64,7 @@ const InputField = ({props, icon, isDisabled}) => {
           <div className={icon ? "control has-icons-right" : "control"}>
             {props.type === "file" && <img id="inputImg" />}
             <input className={props.error.length > 0 ? "input is-danger" : "input"} type={props.type !== "date" ? props.type : "text"} onChange={props.onChange} value={props.value} placeholder={props.name} 
-              {...(props.type === "date" ? {onFocus: handleDateName, onBlur: handleDateName} : {})} 
+              {...(props.type === "date" ? {onFocus: handleDateName, onBlur: handleDateName, max: setMaxDate()} : {})} 
               {...(props.type === "file" ? {accept: "image/*", onChange: handleImg} : {})}
             />
             {icon ?  (
