@@ -17,17 +17,59 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FarmersMarket from 'assets/image/farmers-market.jpg';
 // import Notifications from "components/Notifications/Notifications";
 // import LoginLayout from "pages/Login/LoginLayout.js";
-//import FacebookLogin from "react-facebook-login";
-//import GoogleLogin from "react-google-login"
+import FacebookLogin from "react-facebook-login";
+import GoogleLogin from "react-google-login"
 
 function LoginPage() {
     const email = useField("Email","email");
     const password = useField("Password","password");
     // let onLoginPage = true;
 
-    // const responseFacebook = async response => {
-    //     console.log("User has tried to login through Facebook..")
-    // }
+    const responseFacebook = async response => {
+        console.log("User has tried to login through Facebook..");
+        if (response.email) {
+            // const email = response.email;
+            // const access = response.accessToken;
+            // const refresh = response.id;
+            // const name = response.name.split(" ");
+            // const last_name = name[name.length - 1];
+            // let first_name = "";
+            // for (let i = 0; i < name.length - 1; i++) {
+            //     first_name += name[i] + " ";
+            // }
+            // let data = await grabSocialUserInfo(e);
+            let data = response;
+
+            if (!data) {
+                // email not found
+                console.log("Data not found..");
+            }
+            else {
+                console.log("Data:", data);
+            }
+        }
+    }
+
+    const responseGoogle = async response => {
+        console.log("User has tried to login through Google..");
+        if (response.profileObj) {
+            // const email = response.profileObj.email;
+            // const access = response.accessToken;
+            // const response = response.googleId;
+            // const first_name = response.profileObj.givenName;
+            // const last_name = response.profileObj.familyName;
+            // let data = await grabSocialUserInfo(e);
+            let data = response;
+            
+            if (!data) {
+                //email not found
+                console.log("Data not found..");
+            }
+            else {
+                console.log("Data:", data);
+            }
+        }
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -87,9 +129,33 @@ function LoginPage() {
                 <img src={FarmersMarket}></img>
             </figure>
             {/* Login Form */}
-            {/* Facebook and Google login go here */}
             <form onSubmit={handleSubmit} style={{width: "400px", maxWidth: "100%"}}>
                 <div className="column">
+                    {/* Facebook and Google login go here */}
+                    <div className="has-text-centered has-margin-bottom-0-5">
+                        <span className="has-margins-0-5">
+                            <FacebookLogin
+                                appId='235300190881746'
+                                autoLoad={false}
+                                fields='name,email,picture'
+                                onClick='return false'
+                                callback={responseFacebook}
+                                size='small'
+                                textButton='FB Login'
+                            />
+                        </span>
+                        <span className="has-margins-0-5">
+                            <GoogleLogin
+                                clientId={null} // Not set up yet
+                                buttonText='Login'
+                                onSuccess={responseGoogle}
+                                onFailure={responseGoogle}
+                                isSignedIn={false}
+                                disable={false}
+                                cookiePolicy={"single_host_origin"}
+                            />
+                        </span>
+                    </div>
                     {/* Email input */}
                     <InputField props={email} icon={Icons.faEnvelope} />
                     {/* Password input */}
