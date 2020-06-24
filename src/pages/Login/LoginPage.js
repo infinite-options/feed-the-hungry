@@ -37,15 +37,16 @@ function LoginPage() {
             // for (let i = 0; i < name.length - 1; i++) {
             //     first_name += name[i] + " ";
             // }
-            // let data = await grabSocialUserInfo(e);
+            // let data = await grabSocialUserInfo(e); // gets social user data, returns null if data doesn't exist
             let data = response;
 
             if (!data) {
-                // email not found
+                // new user, send them to social signup page
                 console.log("Data not found..");
             }
             else {
                 console.log("Data:", data);
+                // user logged in, update user data & status
             }
         }
     }
@@ -58,15 +59,16 @@ function LoginPage() {
             // const response = response.googleId;
             // const first_name = response.profileObj.givenName;
             // const last_name = response.profileObj.familyName;
-            // let data = await grabSocialUserInfo(e);
+            // let data = await grabSocialUserInfo(e); // get social data, returns null if user doesn't exist yet
             let data = response;
             
             if (!data) {
-                //email not found
+                // new user, send them to '/signup/social' page
                 console.log("Data not found..");
             }
             else {
                 console.log("Data:", data);
+                // user has logged in, update login status and user data
             }
         }
     }
@@ -103,6 +105,7 @@ function LoginPage() {
         // For testing...
         // console.log("running function checkLogin()..")
 
+        // get user data based on email and password inputs
         grabLoginInfoForUser(email.value, password.value).then(response => {
             login(response);
         }).catch(err => {
@@ -119,7 +122,9 @@ function LoginPage() {
         // console.log("Response:", response);
 
         // Code here
-        if(response) {}
+        if(response) {
+            // user has logged in, update user data and login status
+        }
     }
 
     return (
