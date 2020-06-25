@@ -8,14 +8,14 @@ import './style.css';
 
 function CheckoutPage({ ...bankAPI }){
     const bankId = Object.keys(window.localStorage)[0];
-    const bank = bankAPI.data.length > 0 && bankId ? bankAPI.getBankBy(bankId) : {};
-    const items = bankId ? JSON.parse(window.localStorage.getItem(bankId)) : [];
+    const bank = bankAPI.getBankBy(bankId);
+    const items = JSON.parse(window.localStorage.getItem(bankId));
     const [key, setKey] = useState(1);
 
     window.addEventListener("storage", () => {
         setKey(key + 1);
     });
-    if (items.length === 0) return <EmptyCartPage />;
+    if (!bank) return <EmptyCartPage />;
     return (
     <div className="checkout-page">
         <div className="checkout-page-layer">

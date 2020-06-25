@@ -73,9 +73,11 @@ function Hamburger(){
 }
 const totalAmount = (items) => {
     let total = 0;
-    items.forEach(x => {
-      total += x.amount;
-    });
+    if (items.length > 0) {
+        items.forEach(x => {
+            total += x.amount;
+        });
+    }
     return total;
 }
 

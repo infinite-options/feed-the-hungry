@@ -15,12 +15,13 @@ import DeliveryDetails from "pages/Checkout/DeliveryDetails";
 import StateAPI from "API/StateAPI";
 import PickupDetails from "./PickupDetails";
 import { useRouteMatch, useHistory, useParams, Link, useLocation, withRouter } from "react-router-dom";
-import history from 'pages/App/History';
+// import history from 'pages/App/History';
 
 // import axios
 import axios from "axios";
 
 function CheckoutForm({ bank, items}) {
+  let history = useHistory();
   const [activeTab, setActiveTab] = useState("delivery");
   const [hidden, setHidden] = useState("hidden"); // to hide error msg
   const delivery_items = items.filter(x => x.item.delivery_pickup.includes('delivery'));
@@ -86,7 +87,7 @@ function CheckoutForm({ bank, items}) {
       let unconfirmed_order = {
         customer_id: "",
         phone: phone.value,
-        emai: email.value,
+        email: email.value,
         street: street.value,
         city: city.value,
         state: state.value,
@@ -105,6 +106,7 @@ function CheckoutForm({ bank, items}) {
       // order.setOrderInfo(user_order);
       // isOrderPlaced = true;
       console.log(unconfirmed_order);
+      window.localStorage.clear();
       window.localStorage.setItem('unconfirmed_order', JSON.stringify(unconfirmed_order));
       history.push('/order/cart/confirm');
       // axios

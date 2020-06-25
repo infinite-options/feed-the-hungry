@@ -1,13 +1,15 @@
 import React, {useState} from "react";
-import { Router, browserHistory } from 'react-router';
+// import { Router } from 'react-router';
 import {
-  // BrowserRouter as Router,
+  BrowserRouter as Router,
+  // Router,
   Switch,
   Route,
   Link,
   useRouteMatch,
   useParams,
   Redirect,
+  withRouter
 } from "react-router-dom";
 // import bulma and other css styles
 import "bulma/css/bulma.css";
@@ -34,7 +36,7 @@ function App() {
   const [orderInfo, setOrderInfo] = useState(0);
 
   return (
- <Router history={history}>
+ <Router>
     <OrderContext.Provider value={[orderInfo, setOrderInfo]}>
       <Header />
       <Switch>

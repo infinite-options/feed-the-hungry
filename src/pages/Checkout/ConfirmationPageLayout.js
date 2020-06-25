@@ -25,9 +25,9 @@ function ConfirmationPageLayout({bank, order}) {
                                 <span className="subtitle is-6">Delivery address:</span>
                                 </div>
                                 <div className="column is-8">
-                                <span className="subtitle is-6">{order.orderInfo.delivery_date}</span><br></br>
-                                <span className="subtitle is-6">{order.orderInfo.street}</span><br></br>
-                            <span className="subtitle is-6">{order.orderInfo.city}, {order.orderInfo.state} {order.orderInfo.zipcode}</span>
+                                <span className="subtitle is-6">{order.delivery_date}</span><br></br>
+                                <span className="subtitle is-6">{order.street}</span><br></br>
+                            <span className="subtitle is-6">{order.city}, {order.state} {order.zipcode}</span>
 
                                 </div>
                             </div>

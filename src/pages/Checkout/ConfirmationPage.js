@@ -9,7 +9,7 @@ function ConfirmationPage({ ...bankAPI }) {
   
   const unconfirmed_order = JSON.parse(window.localStorage.getItem('unconfirmed_order'));
   const bank = unconfirmed_order ? bankAPI.getBankBy(unconfirmed_order.kitchen_id) :null;
-  if (!Object.keys(unconfirmed_order.length)) return <ErrorPage />
+  if (!bank) return <ErrorPage />
   return (
     <div className="confirmation-page">
       <ConfirmationPageLayout bank={bank} order={unconfirmed_order} />
@@ -23,4 +23,4 @@ function ConfirmationPage({ ...bankAPI }) {
     </div>
   );
 }
-export default ConfirmationPage;
+export default withRouter(ConfirmationPage);

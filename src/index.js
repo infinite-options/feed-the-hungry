@@ -11,7 +11,7 @@ import { OrderContext } from 'components/Context/OrderContext';
 ReactDOM.render(
   <React.StrictMode>
     {/* <Router basena> */}
-    <BrowserRouter>
+    <BrowserRouter >
       <App />
     </BrowserRouter>
   </React.StrictMode>,
