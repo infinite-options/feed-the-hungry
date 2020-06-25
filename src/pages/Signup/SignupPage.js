@@ -2,7 +2,7 @@
  *   Create seperate FamilyMembers & DietaryRestrictions Components
  *     Both signup pages are cluttered, this would make them more readable
  *     MAKE SURE WHEN USER SUBMITS, COMPONENT VALIDATE THEIR INPUTS
- *       How do I do this? <FamilyMembers onSubmit={handleClick} />
+ *       How do I do this?
  */
 
 import React, { useState } from "react";
@@ -316,23 +316,7 @@ function SignupPage() {
                                     <InputField props={inputs.licenseImg} />
                                 </div>
                             </div>
-
-                            {/* <div className="column">
-                                <div className="box">
-                                    {listPersons()}
-                                </div>
-                            </div> */}
                         </div>
-                        {/* <div className="columns">
-                            <div className="column">
-                                <InputField props={inputs.license} />
-                            </div>
-                            <div className="column">
-                                <div className="box">
-                                    <InputField props={inputs.licenseImg} />
-                                </div>
-                            </div>
-                        </div> */}
                         {/* Adding $ to income input */}
                         <div className="field-body">
                             <div className="field is-expanded">

@@ -69,11 +69,6 @@ function SignupSocial() {
     let noneSelected = !!none.value;
 
     useEffect(() => {
-        //     console.log(props.location.state)
-        //     typeof props.location.state === "undefined" ? console.log("undefined") :  ( typeof props.location.state.email === "undefined" ? console.log("undefined") : setEmail(props.location.state.email) )
-        //     typeof props.location.state === "undefined" ? console.log("undefined") :  ( typeof props.location.state.social === "undefined" ? console.log("undefined") : setSocialMedia(props.location.state.social) )
-        //     typeof props.location.state === "undefined" ? console.log("undefined") :  ( typeof props.location.state.accessToken === "undefined" ? console.log("undefined") : setAccessToken(props.location.state.accessToken) )
-        //     typeof props.location.state === "undefined" ? console.log("undefined") :  ( typeof props.location.state.refreshToken === "undefined" ? console.log("undefined") : setRefreshToken(props.location.state.refreshToken) )
         (async function setSignupParams(state) {
             if (state) {
                 await setParams(state);
@@ -330,23 +325,7 @@ function SignupSocial() {
                                     <InputField props={licenseImg} />
                                 </div>
                             </div>
-
-                            {/* <div className="column">
-                                <div className="box">
-                                    {listPersons()}
-                                </div>
-                            </div> */}
                         </div>
-                        {/* <div className="columns">
-                            <div className="column">
-                                <InputField props={inputs.license} />
-                            </div>
-                            <div className="column">
-                                <div className="box">
-                                    <InputField props={inputs.licenseImg} />
-                                </div>
-                            </div>
-                        </div> */}
                         {/* Adding $ to income input */}
                         <div className="field-body">
                             <div className="field is-expanded">
