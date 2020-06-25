@@ -20,8 +20,6 @@ import {
 import axios from 'axios';
 // import history from 'pages/App/History';
 
-import Test from './test';
-
 import StateAPI from 'API/StateAPI';
 import "pages/styles.css";
 import useField from "components/Hooks/useField";
