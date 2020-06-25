@@ -6,7 +6,8 @@ import {
     Route,
     Link,
     useRouteMatch,
-    useParams
+    useParams,
+    useHistory
   } from "react-router-dom";
 
 import "pages/styles.css";
@@ -21,6 +22,8 @@ import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login"
 
 function LoginPage() {
+    const history = useHistory();
+
     const email = useField("Email","email");
     const password = useField("Password","password");
     // let onLoginPage = true;
@@ -28,21 +31,34 @@ function LoginPage() {
     const responseFacebook = async response => {
         console.log("User has tried to login through Facebook..");
         if (response.email) {
-            // const email = response.email;
-            // const access = response.accessToken;
-            // const refresh = response.id;
-            // const name = response.name.split(" ");
-            // const last_name = name[name.length - 1];
-            // let first_name = "";
-            // for (let i = 0; i < name.length - 1; i++) {
-            //     first_name += name[i] + " ";
-            // }
+            const email = response.email;
+            const access = response.accessToken;
+            const refresh = response.id;
+            const name = response.name.split(" ");
+            const last_name = name[name.length - 1];
+            let first_name = "";
+            for (let i = 0; i < name.length - 1; i++) {
+                first_name += name[i] + " ";
+            }
+            first_name = first_name.slice(0, -1);
             // let data = await grabSocialUserInfo(e); // gets social user data, returns null if data doesn't exist
-            let data = response;
+            let data = null;
 
             if (!data) {
                 // new user, send them to social signup page
                 console.log("Data not found..");
+                history.push({
+                    pathname: "/signup/social",
+                    state: {
+                        lastname: last_name,
+                        firstname: first_name,
+                        email: email,
+                        social: "Facebook",
+                        accessToken: access,
+                        refreshToken: refresh,
+                        // SOCIAL_API_URL: `${props.SOCIAL_API_URL}acc`
+                    }
+                });
             }
             else {
                 console.log("Data:", data);
@@ -56,7 +72,7 @@ function LoginPage() {
         if (response.profileObj) {
             // const email = response.profileObj.email;
             // const access = response.accessToken;
-            // const response = response.googleId;
+            // const refresh = response.googleId;
             // const first_name = response.profileObj.givenName;
             // const last_name = response.profileObj.familyName;
             // let data = await grabSocialUserInfo(e); // get social data, returns null if user doesn't exist yet
@@ -150,7 +166,7 @@ function LoginPage() {
                             />
                         </span>
                         <span className="has-margins-0-5">
-                            <GoogleLogin
+                            {/* <GoogleLogin
                                 clientId={null} // Not set up yet
                                 buttonText='Login'
                                 onSuccess={responseGoogle}
@@ -158,7 +174,7 @@ function LoginPage() {
                                 isSignedIn={false}
                                 disable={false}
                                 cookiePolicy={"single_host_origin"}
-                            />
+                            /> */}
                         </span>
                     </div>
                     {/* Email input */}
