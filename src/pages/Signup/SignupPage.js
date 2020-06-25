@@ -1,3 +1,10 @@
+/* Signup + Social Signup page TODO for me (Hao):
+ *   Create seperate FamilyMembers & DietaryRestrictions Components
+ *     Both signup pages are cluttered, this would make them more readable
+ *     MAKE SURE WHEN USER SUBMITS, COMPONENT VALIDATE THEIR INPUTS
+ *       How do I do this? <FamilyMembers onSubmit={handleClick} />
+ */
+
 import React, { useState } from "react";
 
 import {
@@ -12,6 +19,8 @@ import {
 
 import axios from 'axios';
 // import history from 'pages/App/History';
+
+import Test from './test';
 
 import StateAPI from 'API/StateAPI';
 import "pages/styles.css";

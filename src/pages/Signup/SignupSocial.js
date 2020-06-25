@@ -26,7 +26,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import SignupLayout from "pages/Signup/SignupLayout.js";
 // import FarmersMarket from 'assets/image/farmers-market.jpg';
 
-function SignupSocial(props) {
+function SignupSocial() {
     const states = StateAPI();
     const location = useLocation();
 
