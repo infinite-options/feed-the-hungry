@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from 'react-router-dom';
 function BankSchedule({ obj }) {
   return (
     <div className="bank-info-content no-overflow">
@@ -37,4 +38,4 @@ function BankSchedule({ obj }) {
     </div>
   );
 }
-export default BankSchedule;
+export default withRouter(BankSchedule);

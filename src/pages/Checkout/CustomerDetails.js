@@ -1,11 +1,14 @@
 import React from "react";
 import InputField from "components/Form/InputField";
 import useField from "components/Hooks/useField";
-function CustomerDetails({ fname, lname, email, phone }) {
+
+function CustomerDetails({ fname, lname, email, phone, switchUserInfo}) {
 
   return (
     <div>
+      <InputField props={switchUserInfo} />
       <div className="field horizontal">
+
         <div className="field-body">
           <InputField props={fname} />
           <InputField props={lname} />

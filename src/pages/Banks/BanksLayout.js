@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import { withRouter } from 'react-router-dom';
 import LeafletMap from "components/Map/LeafletMap";
 import Banks from "pages/Banks/Banks";
 import ScrollToTopOnMount from "utils/Scroll/ScrollToTopOnMount";
@@ -26,4 +27,4 @@ function BanksLayout({ ...bankAPI }) {
 }
 
 
-export default BanksLayout;
+export default withRouter(BanksLayout);

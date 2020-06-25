@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useRouteMatch, useLocation } from 'react-router-dom';
+import { Link, useRouteMatch, useLocation, withRouter } from 'react-router-dom';
 import useQuery from 'components/Hooks/useQuery';
 import Icons from 'components/Icons/Icons';
 
@@ -52,4 +52,4 @@ function BankFilters({bankUrl}){
     );
 }
 
-export default BankFilters;
+export default withRouter(BankFilters);

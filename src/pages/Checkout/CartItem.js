@@ -3,7 +3,7 @@ import React from 'react';
 function CartItem({foodItem}){
     return (
         <div className="card cart-item">
-            <div className="card-image">
+            <div className="card-image cart-item-image">
                 {/* <figure className="image is-128x128"> */}
                     <img src={foodItem.item.image} alt="Placeholder image" />
                 {/* </figure> */}
@@ -12,11 +12,15 @@ function CartItem({foodItem}){
                 <p className="title is-7 has-text-grey-light item-brand">{foodItem.item.brand}</p>
                 <p className="subtitle is-6 is-bold">{foodItem.item.food_name}
                 </p>
+                <span className="tag">
+                    <span className="subtitle is-7">{foodItem.item.unit} x{foodItem.amount}</span>
+                    {/* <span className="subtitle" */}
+                </span>
+                {/* <p><span className="subtitle is-7 has-text-grey">{foodItem.item.unit}</span><span className="subtitle is-bold is-7 has-margin-left-0-5">x{foodItem.amount}</span> </p> */}
                 {foodItem.item.delivery_pickup === "delivery" ? 
-                <span className="tag is-danger">Delivery Only</span> : "" }
-                <p className="subtitle is-7 has-text-grey">{foodItem.item.unit} ({foodItem.item.weight} {foodItem.item.weight_unit})</p>
+                <p className="subtitle is-7 is-bold has-text-danger">Delivery Only</p> : "" }
             </div>
-            <footer className="card-footer no-overflow">
+            {/* <footer className="card-footer no-overflow">
             <p className="card-footer-item">
                 <span className="no-overflow">
                     ${foodItem.item.price}
@@ -27,7 +31,7 @@ function CartItem({foodItem}){
                     x{foodItem.amount}
                 </span>
             </p>
-            </footer>
+            </footer> */}
         </div>
 
     );

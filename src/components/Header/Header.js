@@ -79,4 +79,4 @@ const totalAmount = (items) => {
     return total;
 }
 
-export default Header;
+export default withRouter(Header);

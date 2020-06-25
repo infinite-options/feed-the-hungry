@@ -1,7 +1,7 @@
 import React, {useState} from "react";
+import { Router, browserHistory } from 'react-router';
 import {
-  BrowserRouter as Router,
-  // Router,
+  // BrowserRouter as Router,
   Switch,
   Route,
   Link,
@@ -33,7 +33,7 @@ function App() {
   const [orderInfo, setOrderInfo] = useState(0);
 
   return (
- <Router history={history} >
+ <Router history={history}>
     <OrderContext.Provider value={[orderInfo, setOrderInfo]}>
       <Header />
       <Switch>
@@ -55,10 +55,10 @@ function App() {
         <Route exact path="/order/cart">
            <CheckoutPage {...bankAPI} />
         </Route>
-        <Route exact path={"/banks/:bankId/products/checkout/confirmation"}>
-          <ConfirmationPage />
+        <Route exact path="/order/cart/confirm">
+          <ConfirmationPage {... bankAPI}/>
         </Route>
-        <Route path="/404" component={ErrorPage} />
+        <Route component={ErrorPage} /> 
         <Redirect to="/404" />
       </Switch>
       </OrderContext.Provider>

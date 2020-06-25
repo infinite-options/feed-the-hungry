@@ -4,11 +4,12 @@ import InputField from 'components/Form/InputField';
 import Select from 'components/Form/Select';
 
 
-function DeliveryDetails({street, city, state, zip}) {
+function DeliveryDetails({street, city, state, zip, switchUserAddress}) {
     const states = StateAPI();
     console.log(states);
     return (
         <div>
+            <InputField props={switchUserAddress} />
             <InputField props={street} />
             <InputField props={city} />
             <div className="field is-horizontal">

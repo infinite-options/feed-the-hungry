@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import BankAPI from "API/BankAPI";
-import { BrowserRouter as Router, Link, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Link, useLocation, withRouter } from "react-router-dom";
 import useQuery from "components/Hooks/useQuery";
 import { OrderContext } from "components/Context/OrderContext";
 
@@ -166,20 +166,26 @@ const useCounter = (foodItem, bankId) => {
 
   const increase = () => {
     setValue(value + 1);
-    setOrderInfo(orderInfo + 1);
+    // setOrderInfo(orderInfo + 1);
   };
   const decrease = () => {
     setValue(value - 1);
-    setOrderInfo(orderInfo - 1);
+    // setOrderInfo(orderInfo - 1);
   };
   const zero = () => {
     setValue(0);
   };
-
+  const totalAmount = (items) => {
+    var total = 0;
+    items.forEach((x) => {
+      total += x.amount;
+    });
+    return total;
+  };
   useEffect(() => {
     let items = JSON.parse(window.localStorage.getItem(bankId)) || [];
     if (items.length === 0 && value > 0) {
-      setOrderInfo(value);
+      // setOrderInfo(value);
       window.localStorage.clear();
     }
 
@@ -191,6 +197,7 @@ const useCounter = (foodItem, bankId) => {
     else if (!item && value > 0) items.push({ item: foodItem, amount: value });
 
     // if (items.length > 0) setOrderInfo(totalAmount(items));
+    setOrderInfo(totalAmount(items));
     window.localStorage.setItem(bankId, JSON.stringify(items));
     // }
   }, [value]);
@@ -206,4 +213,4 @@ const useCounter = (foodItem, bankId) => {
 const getItemsByKey = (key, arr) => {
   return arr.filter((x) => x.type.includes(key));
 };
-export default BankInventory;
+export default withRouter(BankInventory);

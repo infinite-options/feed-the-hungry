@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LeafletMap from "components/Map/LeafletMap";
 import BankSchedule from "pages/Bank/BankSchedule";
 import useMarker from 'components/Hooks/useMarker';
+import {withRouter } from "react-router-dom";
 
 function BankBanner({ obj }) {
   const marker  = useMarker();
@@ -58,4 +59,4 @@ function BankBanner({ obj }) {
   );
 }
 
-export default BankBanner;
+export default withRouter(BankBanner);

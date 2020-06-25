@@ -14,9 +14,9 @@ import CustomerDetails from "pages/Checkout/CustomerDetails";
 import DeliveryDetails from "pages/Checkout/DeliveryDetails";
 import StateAPI from "API/StateAPI";
 import PickupDetails from "./PickupDetails";
-import { useRouteMatch, useHistory, useParams, Link, useLocation } from "react-router-dom";
+import { useRouteMatch, useHistory, useParams, Link, useLocation, withRouter } from "react-router-dom";
 import history from 'pages/App/History';
-import { withRouter } from 'react-router-dom';
+
 // import axios
 import axios from "axios";
 
@@ -35,11 +35,13 @@ function CheckoutForm({ bank, items}) {
   const city = useField("City", "text");
   const state = useField("Select a state", "text");
   const zip = useField("Zip", "text");
+  const switchUserInfo = useField("Use my current information", "switch");
+  const switchUserAddress = useField("Use my current address", "switch");
   const checkbox = useField(
     "I want my delivery as soon as possible",
     "checkbox"
   );
-  let isOrderPlaced = false;
+
 
   useEffect(() => {
     if (checkbox.value || dateTime.startDate) setHidden("hidden");
@@ -47,22 +49,23 @@ function CheckoutForm({ bank, items}) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     let formIsValid = true;
     if (!fname.validate()) formIsValid = false;
     if (!lname.validate()) formIsValid = false;
     if (!email.validate()) formIsValid = false;
     if (!phone.validate()) formIsValid = false;
-    if (!street.validate()) formIsValid = false;
-    if (!city.validate()) formIsValid = false;
-    if (!state.validate()) formIsValid = false;
-    if (!zip.validate()) formIsValid = false;
-    if (!checkbox.value && !dateTime.startDate) {
-      formIsValid = false;
-      setHidden("");
-    }
 
-    if (formIsValid) {
+    if (activeTab === "delivery" ) {
+      if (!street.validate()) formIsValid = false;
+      if (!city.validate()) formIsValid = false;
+      if (!state.validate()) formIsValid = false;
+      if (!zip.validate()) formIsValid = false;
+      if (!checkbox.value && !dateTime.startDate) {
+        formIsValid = false;
+        setHidden("");
+      }
+    }
+    if (formIsValid){  
       console.log("All inputs are valid");
       const date = dateTime.startDate ? formatDate(dateTime.startDate) : "ASAP";
       const total = totalAmount(items);
@@ -80,9 +83,10 @@ function CheckoutForm({ bank, items}) {
       //   latitude: "",
       //   delivery_date: date
       // }));
-      let user_order = {
+      let unconfirmed_order = {
         customer_id: "",
         phone: phone.value,
+        emai: email.value,
         street: street.value,
         city: city.value,
         state: state.value,
@@ -93,14 +97,16 @@ function CheckoutForm({ bank, items}) {
         longitude: "",
         latitude: "",
         delivery_date: date,
-        ordered_items: [],
+        ordered_items: items
       };
-      items.forEach((x) => {
-        user_order.ordered_items.push({ meal_id: x.item.food_id, qty: x.amount, 'delivery/pickup': x.item.delivery_pickup });
-      });
+      // items.forEach((x) => {
+      //   user_order.ordered_items.push({ meal_id: x.item.food_id, qty: x.amount, 'delivery/pickup': x.item.delivery_pickup });
+      // });
       // order.setOrderInfo(user_order);
-      isOrderPlaced = true;
-      console.log(user_order);
+      // isOrderPlaced = true;
+      console.log(unconfirmed_order);
+      window.localStorage.setItem('unconfirmed_order', JSON.stringify(unconfirmed_order));
+      history.push('/order/cart/confirm');
       // axios
       //   .post(
       //     "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/add_order_new",
@@ -114,18 +120,17 @@ function CheckoutForm({ bank, items}) {
       //   .catch((error) => {
       //     isOrderPlaced = false;
       //   });
-    } else { console.log("Some inputs are invalid"); isOrderPlaced = false;}
+    } else { console.log("Some inputs are invalid")}
 
-    if (isOrderPlaced){
-      console.log("go to confirmation");
+    // if (isOrderPlaced){
+    //   console.log("go to confirmation");
      
       
-      window.localStorage.setItem(bank.id, JSON.stringify([]));
-      // history.push(`${url}/confirmation`);
-    }
-    else {
-      console.log('stay');
-    }
+    //   window.localStorage.setItem(bank.id, JSON.stringify([]));
+    // }
+    // else {
+    //   console.log('stay');
+    // }
   };
 
   return (
@@ -138,6 +143,7 @@ function CheckoutForm({ bank, items}) {
           lname={lname}
           email={email}
           phone={phone}
+          switchUserInfo={switchUserInfo}
         />
         <div className="divider"></div>
         {/* choose pickup or delivery */}
@@ -149,9 +155,6 @@ function CheckoutForm({ bank, items}) {
               onClick={() => setActiveTab("delivery")}
             >
               <a>
-                {/* <span className="icon is-small">
-                  <FontAwesomeIcon icon={Icons.faShippingFast} />
-                </span> */}
                 <span className="uppercase">Delivery</span>
               </a>
             </li>
@@ -160,9 +163,6 @@ function CheckoutForm({ bank, items}) {
               onClick={() => setActiveTab("pickup")}
             >
               <a>
-                {/* <span className="icon is-small">
-                  <FontAwesomeIcon icon={Icons.faBoxOpen} />
-                </span> */}
                 <span className="uppercase">Pick Up</span>
               </a>
             </li>
@@ -176,6 +176,7 @@ function CheckoutForm({ bank, items}) {
               city={city}
               state={state}
               zip={zip}
+              switchUserAddress={switchUserAddress}
             />
             <div className="divider"></div>
             <p className="title is-5">Delivery Options</p>
@@ -328,4 +329,4 @@ function formatDate(date) {
   ).toUpperCase();
 }
 
-export default CheckoutForm;
+export default withRouter(CheckoutForm);

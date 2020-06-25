@@ -6,7 +6,8 @@ import {
   Link,
   useRouteMatch,
   useParams,
-  useHistory 
+  useHistory ,
+  withRouter
 } from "react-router-dom";
 import Icons from "components/Icons/Icons";
 
@@ -92,4 +93,4 @@ function Banks({ marker, banks }) {
     </div>
   );
 }
-export default Banks;
+export default withRouter(Banks);
