@@ -136,12 +136,12 @@ function SignupPage() {
                 "state" : inputs.state.value,
                 "zipcode" : inputs.zip.value,
                 "phone" : inputs.phoneNumber.value,
-                "email" : inputs.email.value,       
-
+                "email" : inputs.email.value,
+                "password": inputs.password.value
             }
-
+            console.log("Test:", test);
             axios.post(
-                "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/add_customer", 
+                "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/signup", 
                 test
             ).then(response => {
                 console.log(response);

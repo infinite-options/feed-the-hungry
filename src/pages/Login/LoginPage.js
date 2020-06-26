@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
     BrowserRouter as Router,
@@ -10,6 +10,7 @@ import {
     useHistory
   } from "react-router-dom";
 
+import axios from 'axios';
 import "pages/styles.css";
 import useField from "components/Hooks/useField";
 import InputField from "components/Form/InputField";
@@ -117,18 +118,58 @@ function LoginPage() {
         // Code here
     }
 
+    const [hidden, setHidden] = useState("hidden");
     function checkLogin() {
         // For testing...
         // console.log("running function checkLogin()..")
 
         // get user data based on email and password inputs
-        grabLoginInfoForUser(email.value, password.value).then(response => {
-            login(response);
-        }).catch(err => {
-            // For testing...
-            console.log("uh oh error ", err.response)
+        // grabLoginInfoForUser(email.value, password.value).then(response => {
+        //     login(response);
+        // }).catch(err => {
+        //     // For testing...
+        //     console.log("uh oh error ", err.response)
 
-            // Code here
+        //     // Code here
+        // })
+
+
+        const data = {
+            "email": email.value,
+            "password": password.value,
+        }
+
+        axios.post(
+            "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/login", 
+            data
+        ).then(response => {
+            console.log(response);
+            if (response.status === 200) {
+                if (response.auth_success) {
+                    let first_name = response.data.result.result[0].ctm_first_name;
+                    let last_name = response.data.result.result[0].ctm_last_name;
+                    let phone = response.data.result.result[0].ctm_phone;
+                    
+                    let address1 = response.data.result.result[0].ctm_address1;
+                    let address2 = response.data.result.result[0].ctm_address2;
+                    let city = response.data.result.result[0].ctm_city;
+                    let state = response.data.result.result[0].ctm_state;
+                    let zipcode = response.data.result.result[0].ctm_zipcode;
+                    let email = response.data.result.result[0].ctm_email;
+                    
+                    let join_date = response.data.result.result[0].ctm_join_date;
+                    let uid = response.data.result.result[0].ctm_id;
+                    let login_id = response.data.login_attempt_log.login_id;
+                    let session_id = response.data.login_attempt_log.session_id;
+                    
+                    // Context API stuff here!
+
+                    history.push('/');
+                }
+            }
+        }).catch(err => {
+            // console.log(err);
+            setHidden("");
         })
     }
 
@@ -181,6 +222,10 @@ function LoginPage() {
                     <InputField props={email} icon={Icons.faEnvelope} />
                     {/* Password input */}
                     <InputField props={password} icon={Icons.faLock} />
+                    {/* Error message */}
+                    <div className={hidden}>
+                        <p className="has-text-centered has-text-danger">Invalid email or password</p>
+                    </div>
                     {/* Buttons */}
                     <div className="has-text-centered has-margin-bottom-0-5">
                         <button className="button is-success has-margins-0-5" onClick={handleClick}>Login</button>
