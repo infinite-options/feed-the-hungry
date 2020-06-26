@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 // import { Router } from 'react-router';
 import {
   BrowserRouter as Router,
@@ -34,14 +34,26 @@ import { OrderContext } from 'components/Context/OrderContext';
 function App() {
   const bankAPI = BankAPI();
   const [orderInfo, setOrderInfo] = useState(0);
+  const [isAuth, setIsAuth] = useState(false);
+
+  useEffect(() => {
+    onLoad();
+  }, [])
+
+  function onLoad() {
+    if (!isAuth && JSON.parse(window.localStorage.getItem("userInfo"))) {
+      console.log("Authenticated");
+      setIsAuth(true);
+    }
+  }
 
   return (
  <Router>
     <OrderContext.Provider value={[orderInfo, setOrderInfo]}>
-      <Header />
+      <Header props={{isAuth, setIsAuth}} />
       <Switch>
         <Route exact path="/login">
-          <LoginPage />
+          <LoginPage props={{setIsAuth}} />
         </Route>
         <Route exact path="/signup">
           <SignupPage />

@@ -4,16 +4,21 @@ import './header.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import Icons from 'components/Icons/Icons';
 import { OrderContext }  from 'components/Context/OrderContext';
-function Header (){
+function Header ({props}){
     const [orderInfo, setOrderInfo] = useContext(OrderContext);
     const bankId = Object.keys(window.localStorage)[0];
     let items = bankId ? JSON.parse(window.localStorage.getItem(bankId)) : [];
     setOrderInfo(totalAmount(items));
 
+    const handleLogout = () => {
+        window.localStorage.removeItem("userInfo");
+        props.setIsAuth(false);
+    }
+
     return (
         <nav className="navbar is-fixed-top" role="navigation" aria-label="main navigation">
             <div className="navbar-brand ">
-                <Link className="navbar-item has-no-padding-left" to="/">
+                <Link className="navbar-item has-no-padding-left" to={props.isAuth ? "/" : "/login"}>
                     <span className="subtitle is-5 brand-text">
                         Feed The Hungry
                     </span>
@@ -25,12 +30,20 @@ function Header (){
                     <div className="navbar-item">
                         <SearchBar />
                     </div>
-                    <Link to="#" className="navbar-item">
-                        Login
-                    </Link>
-                    <div className="navbar-item has-no-padding-right">
-                        <AddToCart num={orderInfo} />
-                    </div>
+                    {props.isAuth ? (
+                        <Link to="/login" className="navbar-item" onClick={handleLogout}>
+                            Logout
+                        </Link>
+                    ) : (
+                        <Link to="/login" className="navbar-item">
+                            Login
+                        </Link>
+                    )}
+                    {props.isAuth && (
+                        <div className="navbar-item has-no-padding-right">
+                            <AddToCart num={orderInfo} />
+                        </div>
+                    )}
                 </div>
             </div>
         </nav>
