@@ -44,28 +44,38 @@ function ConfirmationPage() {
     );
   }
 }
+
+//  WRITE DATA TO API
+// the reason why we have to make a separate Confirmation component for the state variables
+// is to prevent them from re-rendering the entire ConfirmationPage
+// (state changes will trigger re-render, so if you move all these hooks to ConfirmationPage, 
+// they will cause the page to render infinitely!!!!)
+
+// params: 'order' is the data that will be written to the db, while 'sentOrder' will be written into localStorage
 const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
   const [url, setUrl] = useState(initialUrl);
   const [sentOrder, setSentOrder] = useState(unconfirmed_order);
   const [hasError, setHasErrror] = useState(false);
-  // may need to handle error in the future
-  useEffect(() => {
 
+
+  useEffect(() => {
     const writeData = async () => {
       try {
         const response = await axios.post(url, order);
-        console.log(response);
         const responseData = await response.data;
+        // once axios's POST method is called, we update sentOrder
+        // so that we know it has already been written to the db
         setSentOrder(prevState => ({...prevState, isSent: true, order_id: responseData.result.order_id}));
       } catch (err) {
         console.log(err);
         setHasErrror(true);
       } finally {
+        // ???
       }
     };
     if (!sentOrder.isSent) writeData();
   }, [url]);
-
+  
   window.localStorage.setItem("unconfirmed_order", JSON.stringify(sentOrder));
   if (hasError) return <FailedOrderPage />
   return (

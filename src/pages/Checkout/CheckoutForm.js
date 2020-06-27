@@ -85,6 +85,7 @@ function CheckoutForm({ bank, items }) {
         setHidden("");
       }
     }
+    // here we write data to local storage and redirect user after checking that form is valid
     if (formIsValid) {
       console.log("All inputs are valid");
       const date = dateTime.startDate ? formatDate(dateTime.startDate) : "ASAP";
@@ -113,12 +114,12 @@ function CheckoutForm({ bank, items }) {
       };
 
       console.log(unconfirmed_order);
-      window.localStorage.removeItem("cart");
-      window.localStorage.setItem(
+      window.localStorage.removeItem("cart"); // remove cart data from local storage
+      window.localStorage.setItem( // write new data to local storage
         "unconfirmed_order",
         JSON.stringify(unconfirmed_order)
       );
-      history.push("/order/cart/confirm");
+      history.push("/order/cart/confirm"); // redirect
     } else {
       console.log("Some inputs are invalid");
     }
