@@ -48,8 +48,9 @@ function ConfirmationPage() {
 //  WRITE DATA TO API
 // the reason why we have to make a separate Confirmation component for the state variables
 // is to prevent them from re-rendering the entire ConfirmationPage
-// (state changes will trigger re-render, so if you move all these hooks to ConfirmationPage, 
-// they will cause the page to render infinitely!!!!)
+// ('url', 'sentOrder', etc will trigger re-render, so if you move all these hooks to ConfirmationPage, 
+// they will cause the page to render infinitely!!!! that is very bad since that will cause the axios to fire infinitely,
+// resulting in a ton of similar rows of data in the db !!!)
 
 // params: 'order' is the data that will be written to the db, while 'sentOrder' will be written into localStorage
 const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
@@ -64,7 +65,7 @@ const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
         const response = await axios.post(url, order);
         const responseData = await response.data;
         // once axios's POST method is called, we update sentOrder
-        // so that we know it has already been written to the db
+        // so that we know it has already been written to the db.
         setSentOrder(prevState => ({...prevState, isSent: true, order_id: responseData.result.order_id}));
       } catch (err) {
         console.log(err);
@@ -73,7 +74,8 @@ const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
         // ???
       }
     };
-    if (!sentOrder.isSent) writeData();
+    
+    if (!sentOrder.isSent) writeData(); // if data is already written to the db, we don't call axios.
   }, [url]);
   
   window.localStorage.setItem("unconfirmed_order", JSON.stringify(sentOrder));
