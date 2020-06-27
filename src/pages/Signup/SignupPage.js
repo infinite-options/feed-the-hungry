@@ -149,7 +149,9 @@ function SignupPage() {
                     // Send to verify email page
                     history.push('/signup/verify');
                 }
-            })
+            }).catch(err => {
+                console.log(err);
+            });
         }
         else {
             console.log("Sign up failed...");
