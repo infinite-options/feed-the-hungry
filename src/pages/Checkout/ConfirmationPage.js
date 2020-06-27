@@ -41,7 +41,7 @@ function ConfirmationPage() {
     cartItems.forEach((x) =>
       order.ordered_items.push({ meal_id: x.info.food_id, qty: x.amount })
     );
-    console.log(order);
+
     return (
       <Confirmation
         initialUrl="https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/add_order"
@@ -53,10 +53,8 @@ function ConfirmationPage() {
 }
 const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
   const [url, setUrl] = useState(initialUrl);
-  // const [orderId, setOrderId] = useState("");
   const [sentOrder, setSentOrder] = useState(unconfirmed_order);
   const [hasError, setHasErrror] = useState(false);
-  // const [ isSent, setIsSent] = useState(unconfirmed_order.isSent);
   // may need to handle error in the future
   useEffect(() => {
 
@@ -66,13 +64,10 @@ const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
         console.log(response);
         const responseData = await response.data;
         setSentOrder(prevState => ({...prevState, isSent: true, order_id: responseData.result.order_id}));
-        // setIsSent(true);
-        // setOrderId(responseData.result.order_id);
       } catch (err) {
         console.log(err);
         setHasErrror(true);
       } finally {
-        
       }
     };
     if (!sentOrder.isSent) writeData();

@@ -5,7 +5,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import Icons from 'components/Icons/Icons';
 import { OrderContext }  from 'components/Context/OrderContext';
 function Header (){
-    
     const context = useContext(OrderContext);
     const cart = JSON.parse(window.localStorage.getItem('cart')) || {};
     const cartItems = cart.items ? cart.items : [];
@@ -64,14 +63,13 @@ function SearchBar() {
     );
 }
 function AddToCart({num}) {
-    const context = useContext(OrderContext);
     return (
         <Link to="/order/cart" alt="cart button">
             <div className="button add-cart">
             <span className="icon shopping-cart">
                 <FontAwesomeIcon icon={Icons.faShoppingBasket} />
             </span>
-            <span>{context.orderInfo}</span>  
+            <span>{num}</span>  
             </div>
         </Link>
     );
