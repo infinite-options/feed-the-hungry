@@ -22,27 +22,30 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Icons from "components/Icons/Icons";
 
 function BankPage() {
-  console.log("bank page");
+  
   let { bankId } = useParams();
-  let { path, url } = useRouteMatch();
-  const bank_url = `https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/foodbankinfonew/${bankId}`;
-  const { data, isLoading, hasError } = useOurApi(bank_url);
-  const bank = Object.keys(data).length ? data.result : {};
+  const url = `https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/foodbankinfonew/${bankId}`;
+  return <Bank bankUrl={url} />
+}
 
+const Bank = ({bankUrl}) => {
+  const { data, isLoading, hasError } = useOurApi(bankUrl, {});
+  // const bank = data.result ? data.result : {};
   const [key, setKey] = useState(1);
   window.addEventListener("storage", () => {
     setKey(key + 1);
   });
 
   if (isLoading) return <LoadingPage />
-  if (hasError || !Object.keys(bank).length ) return <ErrorPage />
- 
+  if (hasError || !data.result) return <ErrorPage />
+  const bank = data.result;
+  console.log(bank);
   return (
     <div className="bank-page-bd"> 
       <ScrollToTopOnMount />
       <div className="bank-container">
         <BankBanner obj={bank} />
-        <BankFilters bankUrl={url} />
+        <BankFilters />
         <div className="bank-body">
           <div className="columns">
             <div className="column is-6 item-column">
@@ -53,7 +56,6 @@ function BankPage() {
                 key={key}
                 inventory={bank.inventory}
                 deliveryOrPickup={"both;pickup"}
-      
               />
             </div>
             <div className="column is-6 item-column">
@@ -89,17 +91,6 @@ function BankPage() {
       </div>
     </div>
   )
-
-  // return (
-
-  //   <div className="bank-page-bd">
-  //   {bank ? (
-  //       <BankLayout obj={bank} />
-  //   ) : (
-  //       Notifications.Warning("Loading Data...")
-  //   )}
-  //   </div>
-  // );
 }
 
 export default BankPage;

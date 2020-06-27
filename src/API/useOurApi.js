@@ -11,16 +11,16 @@ export const useOurApi = (initialUrl) => {
   const [fetchedData, setFetchedData] = useState({});
 
   useEffect(() => {
-    // let unmounted = false;
+    let unmounted = false;
     const abortController = new AbortController();
 
     const fetchData = async () => {
         try {
         //   setIsLoading(true);
-          const response = await fetch(url,  { signal: abortController.signal });
+          const response = await fetch(url);
           const responseData = await response.json();
           console.log("fetch data");
-          if (!abortController.signal.aborted) setFetchedData(responseData); // return value is an array
+          if (!unmounted) setFetchedData(responseData); // return value is an array
         } catch (err) {
           setHasError(true);
         } finally {
@@ -32,8 +32,8 @@ export const useOurApi = (initialUrl) => {
       fetchData();
 
     return () => {
-        abortController.abort();
-    //   unmounted = true;
+        // abortController.abort();
+      unmounted = true;
     };
   }, [url]);
 
