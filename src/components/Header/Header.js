@@ -6,14 +6,20 @@ import Icons from 'components/Icons/Icons';
 import { OrderContext }  from 'components/Context/OrderContext';
 function Header (){
     
-    // const [orderInfo, setOrderInfo] = useContext(OrderContext);
+    const context = useContext(OrderContext);
     const cart = JSON.parse(window.localStorage.getItem('cart')) || {};
     const cartItems = cart.items ? cart.items : [];
-    // setOrderInfo(totalAmount(cartItems));
+    context.setOrderInfo(totalAmount(cartItems));
+
+    const handleLogout = () => {
+        window.localStorage.removeItem("userInfo");
+        context.setIsAuth(false);
+    }
 
     return (
         <nav className="navbar is-fixed-top" role="navigation" aria-label="main navigation">
             <div className="navbar-brand ">
+                {/* <Link className="navbar-item has-no-padding-left" to={context.isAuth ? "/" : "/login"}> */}
                 <Link className="navbar-item has-no-padding-left" to="/">
                     <span className="subtitle is-5 brand-text">
                         Feed The Hungry
@@ -26,12 +32,20 @@ function Header (){
                     <div className="navbar-item">
                         <SearchBar />
                     </div>
-                    <Link to="#" className="navbar-item">
-                        Login
-                    </Link>
-                    <div className="navbar-item has-no-padding-right">
-                        <AddToCart num={0} />
-                    </div>
+                    {context.isAuth ? (
+                        <Link to="/login" className="navbar-item" onClick={handleLogout}>
+                            Logout
+                        </Link>
+                    ) : (
+                        <Link to="/login" className="navbar-item">
+                            Login
+                        </Link>
+                    )}
+                    {context.isAuth && (
+                        <div className="navbar-item has-no-padding-right">
+                            <AddToCart num={context.orderInfo} />
+                        </div>
+                    )}
                 </div>
             </div>
         </nav>
@@ -50,14 +64,14 @@ function SearchBar() {
     );
 }
 function AddToCart({num}) {
-
+    const context = useContext(OrderContext);
     return (
         <Link to="/order/cart" alt="cart button">
             <div className="button add-cart">
             <span className="icon shopping-cart">
                 <FontAwesomeIcon icon={Icons.faShoppingBasket} />
             </span>
-            <span>{num}</span>  
+            <span>{context.orderInfo}</span>  
             </div>
         </Link>
     );

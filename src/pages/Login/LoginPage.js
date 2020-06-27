@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import {
     BrowserRouter as Router,
@@ -22,7 +22,11 @@ import FarmersMarket from 'assets/image/farmers-market.jpg';
 import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login"
 
+import { OrderContext }  from 'components/Context/OrderContext';
+
 function LoginPage() {
+    const context = useContext(OrderContext);
+
     const history = useHistory();
 
     const email = useField("Email","email");
@@ -145,7 +149,7 @@ function LoginPage() {
         ).then(response => {
             console.log(response);
             if (response.status === 200) {
-                if (response.auth_success) {
+                if (response.data.auth_success) {
                     let first_name = response.data.result.result[0].ctm_first_name;
                     let last_name = response.data.result.result[0].ctm_last_name;
                     let phone = response.data.result.result[0].ctm_phone;
@@ -161,9 +165,44 @@ function LoginPage() {
                     let uid = response.data.result.result[0].ctm_id;
                     let login_id = response.data.login_attempt_log.login_id;
                     let session_id = response.data.login_attempt_log.session_id;
+
+                    // setLoginInfo(prevState => ({...prevState, 
+                    //     firstName: first_name,
+                    //     lastName: last_name,
+                    //     phoneNumber: phone,
+                    //     address1: address1,
+                    //     address2: address2,
+                    //     city: city,
+                    //     state: state,
+                    //     zip: zipcode,
+                    //     email: email,
+
+                    //     joinDate: join_date,
+                    //     userID: uid,
+                    //     loginID: login_id,
+                    //     sessionID: session_id,
+                    // }));
+
+                    let userInfo = {
+                        firstName: first_name,
+                        lastName: last_name,
+                        phoneNumber: phone,
+                        address1: address1,
+                        address2: address2,
+                        city: city,
+                        state: state,
+                        zip: zipcode,
+                        email: email,
+
+                        joinDate: join_date,
+                        userID: uid,
+                        loginID: login_id,
+                        sessionID: session_id,
+                    }
+                    window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
                     
                     // Context API stuff here!
-
+                    context.setIsAuth(true);
                     history.push('/');
                 }
             }

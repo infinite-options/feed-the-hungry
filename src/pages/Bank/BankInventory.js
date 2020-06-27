@@ -107,9 +107,8 @@ function QuantityInput({ item }) {
 }
 
 const useCounter = (x) => {
-  let { bankId } = useParams();
-  const [orderInfo, setOrderInfo] = useContext(OrderContext);
-
+  let { bankId} = useParams();
+  const context = useContext(OrderContext);
   let cart = JSON.parse(window.localStorage.getItem('cart')) || {};
   let initialAmount = 0;
   if (cart.bankId && cart.bankId === bankId){
@@ -159,7 +158,7 @@ const useCounter = (x) => {
    else if (!cart.bankId){
       window.localStorage.setItem('cart', JSON.stringify({ bankId: bankId, items: cartItems}));
    }
-   setOrderInfo(totalAmount(cartItems));
+   context.setOrderInfo(totalAmount(cartItems));
   }, [value]);
 
   return {
