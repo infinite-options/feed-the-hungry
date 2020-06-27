@@ -28,13 +28,12 @@ import ConfirmationPage from 'pages/Checkout/ConfirmationPage';
 import ErrorPage from 'pages/Error/ErrorPage';
 import history from 'pages/App/History';
 // import hooks
-import { BankContext } from 'components/Context/BankContext';
+import { useCoordinates } from 'components/Hooks/useCoordinates';
 import { OrderContext } from 'components/Context/OrderContext';
 
 function App() {
-  const bankAPI = BankAPI();
   const [orderInfo, setOrderInfo] = useState(0);
-
+  console.log("app");
   return (
  <Router>
     <OrderContext.Provider value={[orderInfo, setOrderInfo]}>
@@ -47,7 +46,7 @@ function App() {
           <SignupPage />
         </Route>
         <Route exact path="/">
-          <BanksPage {...bankAPI} />
+          <BanksPage />
           </Route>
         <Route exact path="/signup/social">
           <SignupSocial />
@@ -56,13 +55,13 @@ function App() {
           <SignupVerify /> 
         </Route>
         <Route exact path={"/banks/:bankId/products"}>
-          <BankPage {...bankAPI} />
+          <BankPage />
         </Route>
         <Route exact path="/order/cart">
-           <CheckoutPage {...bankAPI} />
+           <CheckoutPage />
         </Route>
         <Route exact path="/order/cart/confirm">
-          <ConfirmationPage {... bankAPI}/>
+          <ConfirmationPage />
         </Route>
         <Route component={ErrorPage} /> 
         <Redirect to="/404" />
@@ -70,30 +69,6 @@ function App() {
       </OrderContext.Provider>
     </Router>
   );
-}
-const useOrder = () => {
-  const default_order = 
-  {
-    customer_id: "",
-    phone: "",
-    street: "",
-    city: "",
-    state: "",
-    zipcode: "",
-    totalAmount: "",
-    delivery_note: "",
-    kitchen_id: "",
-    longitude: "",
-    latitude: "",
-    delivery_date: "",
-    ordered_items: []
-  };
-
-  const [ orderInfo, setOrderInfo ] = useState(default_order);
-  return {
-    orderInfo,
-    setOrderInfo
-  }
 }
 
 export default App;

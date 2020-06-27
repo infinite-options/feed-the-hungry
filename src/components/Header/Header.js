@@ -5,10 +5,11 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import Icons from 'components/Icons/Icons';
 import { OrderContext }  from 'components/Context/OrderContext';
 function Header (){
-    const [orderInfo, setOrderInfo] = useContext(OrderContext);
-    const bankId = Object.keys(window.localStorage)[0];
-    let items = bankId ? JSON.parse(window.localStorage.getItem(bankId)) : [];
-    setOrderInfo(totalAmount(items));
+    
+    // const [orderInfo, setOrderInfo] = useContext(OrderContext);
+    const cart = JSON.parse(window.localStorage.getItem('cart')) || {};
+    const cartItems = cart.items ? cart.items : [];
+    // setOrderInfo(totalAmount(cartItems));
 
     return (
         <nav className="navbar is-fixed-top" role="navigation" aria-label="main navigation">
@@ -29,7 +30,7 @@ function Header (){
                         Login
                     </Link>
                     <div className="navbar-item has-no-padding-right">
-                        <AddToCart num={orderInfo} />
+                        <AddToCart num={0} />
                     </div>
                 </div>
             </div>
@@ -49,15 +50,14 @@ function SearchBar() {
     );
 }
 function AddToCart({num}) {
-    const [orderInfo, setOrderInfo] = useContext(OrderContext);
+
     return (
         <Link to="/order/cart" alt="cart button">
             <div className="button add-cart">
-            {/* <span>Cart</span>    */}
             <span className="icon shopping-cart">
                 <FontAwesomeIcon icon={Icons.faShoppingBasket} />
             </span>
-            <span>{orderInfo}</span>  
+            <span>{num}</span>  
             </div>
         </Link>
     );
@@ -81,4 +81,4 @@ const totalAmount = (items) => {
     return total;
 }
 
-export default withRouter(Header);
+export default Header;

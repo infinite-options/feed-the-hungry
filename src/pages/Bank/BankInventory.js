@@ -1,51 +1,48 @@
 import React, { useState, useEffect, useContext } from "react";
-import BankAPI from "API/BankAPI";
-import { BrowserRouter as Router, Link, useLocation, withRouter } from "react-router-dom";
+import { BrowserRouter as Router, Link, useLocation, withRouter, useParams } from "react-router-dom";
 import useQuery from "components/Hooks/useQuery";
 import { OrderContext } from "components/Context/OrderContext";
 
 // render food bank's inventory
-function BankInventory({ obj, deliveryOrPickup, bankUrl }) {
+function BankInventory({ inventory, deliveryOrPickup}) {
   let query = useQuery();
-  let inventory = obj.inventory;
   if (query.get("type"))
     inventory = getItemsByKey(query.get("type"), inventory);
-  // key={+new Date()}
+
   return (
     <div className="inventory fade-in">
-      {inventory.map((foodItem) =>
-        deliveryOrPickup.includes(foodItem.delivery_pickup) ? (
-          <div key={foodItem.food_id} className="card item">
+      {inventory.map((x) =>
+        deliveryOrPickup.includes(x.delivery_pickup) ? (
+          <div key={x.food_id} className="card item">
             <div className="card-content has-no-padding item-content">
               <div className="item-image-container">
                 <img
-                  src={foodItem.image}
+                  src={x.fl_image}
                   className="item-image"
                   alt="Placeholder image"
                 ></img>
               </div>
               <div className="item-info">
                 <p className="title has-text-grey-light is-7 item-brand">
-                  {foodItem.brand}
+                  {x.fl_brand}
                 </p>
                 <p className="subtitle is-6 is-bold no-overflow">
-                  {foodItem.food_name}
+                  {x.food_name}
                 </p>
                 <p className="subtitle is-7 has-text-grey no-overflow">
-                  {foodItem.unit} ({foodItem.weight}{" "}
-                  {/* {foodItem.weight_unit}) */}
+                  {x.fl_package_type} ({x.food_unit})
                 </p>
-                <QuantityInput foodItem={foodItem} bankId={obj.id} />
+                <QuantityInput item={x}/>
               </div>
             </div>
             <div className="card-footer">
               <div className="item-price">
                 <span className="subtitle has-font-13 has-text-grey">
-                  ${foodItem.price}
+                  ${x.fl_value_in_dollars}
                 </span>
               </div>
               <div className="item-tags">
-                <ItemTags bankUrl={bankUrl} str={foodItem.type} />
+                <ItemTags str={x.fl_food_type} />
               </div>
             </div>
           </div>
@@ -56,14 +53,15 @@ function BankInventory({ obj, deliveryOrPickup, bankUrl }) {
 }
 
 // render an item's tags
-function ItemTags({ bankUrl, str }) {
+function ItemTags({ str }) {
+  let { bankId } = useParams();
   return (
     <div className="tags-container no-overflow">
       {str
         ? str.split(";").map((tag) => (
             <Link
               key={tag}
-              to={`${bankUrl}?type=${tag}`}
+              to={`banks/${bankId}/products?type=${tag}`}
               className="item-tag subtitle has-margin-left-12"
               alt=""
             >
@@ -74,8 +72,8 @@ function ItemTags({ bankUrl, str }) {
     </div>
   );
 }
-function QuantityInput({ foodItem, bankId }) {
-  const count = useCounter(foodItem, bankId);
+function QuantityInput({ item }) {
+  const count = useCounter(item);
   return (
     <div className="field is-grouped is-multiline">
       <div className="control item-actions">
@@ -96,7 +94,7 @@ function QuantityInput({ foodItem, bankId }) {
           className="button is-small"
           onClick={count.increase}
           disabled={
-            foodItem.quantity === 0 || count.value >= foodItem.limit
+            item.quantity === 0 || count.value >= item.food_id_limit
               ? true
               : false
           }
@@ -107,70 +105,27 @@ function QuantityInput({ foodItem, bankId }) {
     </div>
   );
 }
-// const useCart = (bank) => {
-//   var myOrder = {
-//     items: {},
-//   };
-//   bank.inventory.forEach((x) => {
-//     myOrder.items.set(x, 0);
-//   });
-//   const [order, setOrder] = useState(myOrder);
-//   const increaseItemValue = (e, item) => {
-//     e.preventDefault();
-//     var value = order.items.get(item);
-//     if (value === item.quantity) value = 10;
-//     else value += 1;
-//     setOrder((prevState) => {
-//       // ...prevState,
-//       // items: {
-//       //     [item]:value
-//       // }
-//       prevState.items.set(item, value);
-//       return {
-//         ...prevState,
-//       };
-//     });
-//   };
-//   const decreaseItemValue = (e, item) => {
-//     e.preventDefault();
-//     var value = order.items.get(item);
-//     if (value === 0) value = 0;
-//     else value -= 1;
-//     setOrder((prevState) => {
-//       prevState.items.set(item, value);
-//       return {
-//         ...prevState,
-//       };
-//     });
-//   };
-//   const getItemValue = (item) => {
-//     return order.items.get(item);
-//   };
-//   return {
-//     order,
-//     increaseItemValue,
-//     decreaseItemValue,
-//     getItemValue,
-//   };
-// };
 
-const useCounter = (foodItem, bankId) => {
+const useCounter = (x) => {
+  let { bankId } = useParams();
   const [orderInfo, setOrderInfo] = useContext(OrderContext);
-  let initialValues = JSON.parse(window.localStorage.getItem(bankId)) || [];
 
-  let initValue = initialValues.find((x) => {
-    return x.item.food_id === foodItem.food_id;
-  });
-
-  const [value, setValue] = useState(initValue ? initValue.amount : 0);
+  let cart = JSON.parse(window.localStorage.getItem('cart')) || {};
+  let initialAmount = 0;
+  if (cart.bankId && cart.bankId === bankId){
+    let cartItems = cart.items ? cart.items : [];
+    let initValue = cartItems.find((item) => {
+      return item.info.food_id === x.food_id;
+    });
+    initialAmount = initValue ? initValue.amount : 0;
+}
+  const [value, setValue] = useState(initialAmount);
 
   const increase = () => {
     setValue(value + 1);
-    // setOrderInfo(orderInfo + 1);
   };
   const decrease = () => {
     setValue(value - 1);
-    // setOrderInfo(orderInfo - 1);
   };
   const zero = () => {
     setValue(0);
@@ -183,23 +138,28 @@ const useCounter = (foodItem, bankId) => {
     return total;
   };
   useEffect(() => {
-    let items = JSON.parse(window.localStorage.getItem(bankId)) || [];
-    if (items.length === 0 && value > 0) {
-      // setOrderInfo(value);
-      window.localStorage.clear();
-    }
+    let cart = JSON.parse(window.localStorage.getItem('cart')) || { bankId: "", items: []};
+    let cartItems = cart.items ? cart.items : [];
 
-    let item = items.find((x) => {
-      return x.item.food_id === foodItem.food_id;
-    });
-    if (item && value > 0) item.amount = value;
-    else if (item && value === 0) items.splice(items.indexOf(item), 1);
-    else if (!item && value > 0) items.push({ item: foodItem, amount: value });
+    if (cart.bankId && cart.bankId === bankId){
+      let item = cartItems.find((item) => {
+        return item.info.food_id === x.food_id;
+      });
+      if (item && value > 0) item.amount = value;
+      else if (item && value === 0) cartItems.splice(cartItems.indexOf(item), 1);
+      else if (!item && value > 0) cartItems.push({ info: x, amount: value });
 
-    // if (items.length > 0) setOrderInfo(totalAmount(items));
-    setOrderInfo(totalAmount(items));
-    window.localStorage.setItem(bankId, JSON.stringify(items));
-    // }
+      window.localStorage.setItem('cart', JSON.stringify({ bankId: bankId, items: cartItems}));
+   } 
+   else if (cart.bankId && cart.bankId != bankId && value > 0){
+        cartItems = [];
+        cartItems.push({ info: x, amount: value });
+        window.localStorage.setItem('cart', JSON.stringify({ bankId: bankId, items: cartItems}));
+   } 
+   else if (!cart.bankId){
+      window.localStorage.setItem('cart', JSON.stringify({ bankId: bankId, items: cartItems}));
+   }
+   setOrderInfo(totalAmount(cartItems));
   }, [value]);
 
   return {
@@ -211,6 +171,6 @@ const useCounter = (foodItem, bankId) => {
 };
 
 const getItemsByKey = (key, arr) => {
-  return arr.filter((x) => x.type.includes(key));
+  return arr.filter((x) => x.fl_food_type.includes(key));
 };
 export default withRouter(BankInventory);

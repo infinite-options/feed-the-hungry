@@ -60,9 +60,9 @@ const InputField = ({props, icon, isDisabled}) => {
   }
   else if (props.type === "switch"){
     return (
-      <div class="field">
-        <input id={props.name} type="checkbox" name="switchRoundedDefault" class="switch is-rounded" value={props.value} onChange={props.onChange}/>
-        <label for={props.name}>{props.name}</label>
+      <div className="field">
+        <input id={props.name} type="checkbox" name="switchRoundedDefault" className="switch is-rounded" value={props.value} onChange={props.onChange}/>
+        <label htmlFor={props.name}>{props.name}</label>
       </div>
     );
   }

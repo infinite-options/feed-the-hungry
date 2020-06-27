@@ -1,39 +1,31 @@
-import React from 'react';
+import React from "react";
 
-function CartItem({foodItem}){
-    return (
-        <div className="card cart-item">
-            <div className="card-image cart-item-image">
-                {/* <figure className="image is-128x128"> */}
-                    <img src={foodItem.item.image} alt="Placeholder image" />
-                {/* </figure> */}
-            </div>
-            <div className="card-content no-overflow">
-                <p className="title is-7 has-text-grey-light item-brand">{foodItem.item.brand}</p>
-                <p className="subtitle is-6 is-bold">{foodItem.item.food_name}
-                </p>
-                <span className="tag">
-                    <span className="subtitle is-7">{foodItem.item.unit} x{foodItem.amount}</span>
-                    {/* <span className="subtitle" */}
-                </span>
-                {/* <p><span className="subtitle is-7 has-text-grey">{foodItem.item.unit}</span><span className="subtitle is-bold is-7 has-margin-left-0-5">x{foodItem.amount}</span> </p> */}
-                {foodItem.item.delivery_pickup === "delivery" ? 
-                <p className="subtitle is-7 is-bold has-text-danger">Delivery Only</p> : "" }
-            </div>
-            {/* <footer className="card-footer no-overflow">
-            <p className="card-footer-item">
-                <span className="no-overflow">
-                    ${foodItem.item.price}
-                </span>
-            </p>
-            <p className="card-footer-item">
-                <span className="no-overflow">
-                    x{foodItem.amount}
-                </span>
-            </p>
-            </footer> */}
-        </div>
+function CartItem({ foodItem }) {
+  return (
+    <div className="card cart-item">
+      <div className="card-image cart-item-image">
+        {/* <figure className="image is-128x128"> */}
+        <img src={foodItem.info.fl_image} alt="Placeholder image" />
+        {/* </figure> */}
+      </div>
+      <div className="card-content no-overflow">
+        <p className="title is-7 has-text-grey-light item-brand">
+          {foodItem.info.fl_brand}
+        </p>
+        <p className="subtitle is-6 is-bold">{foodItem.info.food_name}</p>
+        <span className="tag">
+          <span className="subtitle is-7">
+            {foodItem.info.fl_package_type} x{foodItem.amount}
+          </span>
+        </span>
 
-    );
+        {foodItem.info.delivery_pickup === "delivery" ? (
+          <p className="subtitle is-7 is-bold has-text-danger">Delivery Only</p>
+        ) : (
+          ""
+        )}
+      </div>
+    </div>
+  );
 }
 export default CartItem;

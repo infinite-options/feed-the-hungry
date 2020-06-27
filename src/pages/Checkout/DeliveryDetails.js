@@ -6,7 +6,6 @@ import Select from 'components/Form/Select';
 
 function DeliveryDetails({street, city, state, zip, switchUserAddress}) {
     const states = StateAPI();
-    console.log(states);
     return (
         <div>
             <InputField props={switchUserAddress} />

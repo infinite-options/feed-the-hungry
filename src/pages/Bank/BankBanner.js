@@ -16,10 +16,10 @@ function BankBanner({ obj }) {
           <div className="bank-banner-info">
             {/* Logo */}
             <figure className="image bank-logo is-96x96">
-              <img src={obj.logo} alt=""></img>
+              <img src={obj.fb_logo} alt=""></img>
             </figure>
             <div className="bank-info-wrapper has-no-margin">
-              <p className="title bank-title is-5">{obj.name} </p>
+              <p className="title bank-title is-5">{obj.fb_name} </p>
             </div>
             {/* Address */}
             <div className="bank-info-wrapper">
@@ -33,7 +33,7 @@ function BankBanner({ obj }) {
               </div>
               <div className="bank-info-content no-overflow">
                 <p className="subtitle is-bold bank-address has-font-13">
-                  {obj.address}
+                  {obj.foodbank_address}
                 </p>
               </div>
             </div>

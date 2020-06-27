@@ -4,7 +4,6 @@ import { Map, TileLayer, Marker, Popup, MapLayer } from "react-leaflet";
 import { geolocated } from "react-geolocated";
 import Icons from "components/Icons/Icons";
 import "./style.css";
-import BankAPI from 'API/BankAPI';
 import L, { Point } from 'leaflet';
 import Distance from 'utils/Distance';
 // use San Jose, CA as the default center
@@ -22,9 +21,8 @@ class LeafletMap extends React.Component {
       : DEFAULT_LONGITUDE;
 
     const banks = this.props.banks;
-    let marker = this.props.marker;
-    // const bounds = Array.isArray(banks) ? getLatLngBounds(BankAPI.GetCoordinates(banks)) : 
-    //        L.latLngBounds([latitude, longitude], [banks.latitude, banks.longitude])
+    const marker = this.props.marker;
+    
     return (
       <Map center={[latitude, longitude]} zoom={11}>
         <TileLayer
@@ -49,68 +47,64 @@ class LeafletMap extends React.Component {
         {Array.isArray(banks) ? (
           banks.map((bank) => (
             <MapMarker
+              key={bank.foodbank_id}
               userLocation={[latitude, longitude]}
-              location={bank}
+              bankLocation={bank}
               marker={marker}
             />
           ))
         ) : (
-          <MapMarker userLocation={[latitude, longitude]} location={banks} marker={marker}/>
+          <MapMarker userLocation={[latitude, longitude]} bankLocation={banks} marker={marker}/>
         )}
       </Map>
     );
   }
 }
-const getLatLngBounds = (positions) => { 
-  const latLngs = positions.map(position => {
-  return L.latLng(position[0], position[1]);
-  });
-  const bounds = L.latLngBounds(latLngs);
-  return bounds;
-};
 
-const MapMarker = ({ userLocation, location, marker }) => {
-  const dist =
-    Math.round(
-      Distance(
-        userLocation[0],
-        userLocation[1],
-        location.latitude,
-        location.longitude,
-        "M"
-      ) * 10
-    ) / 10;
+const MapMarker = ({ userLocation, bankLocation, marker }) => {
   const [icon, setIcon] = useState(Icons.MarkerIcon("green"));
+  const { path, url } = useRouteMatch();
+
   useEffect(() => {
-    if (marker.activeMarker === location.id)
+    if (marker.activeMarker === bankLocation.foodbank_id)
       setIcon(Icons.MarkerIcon("black", 26, 42));
     else setIcon(Icons.MarkerIcon("green"));
   }, [marker.activeMarker]);
 
-  const { path, url } = useRouteMatch();
+  const dist =
+  Math.round(
+    Distance(
+      userLocation[0],
+      userLocation[1],
+      bankLocation.fb_latitude,
+      bankLocation.fb_longitude,
+      "M"
+    ) * 10
+  ) / 10;
+  
   return (
     <Marker
-      position={[location.latitude, location.longitude]}
+      position={[bankLocation.fb_latitude, bankLocation.fb_longitude]}
       icon={icon}
-      onClick={() => marker.setActiveMarker(location.id)}
-      onMouseOver={() => marker.setActiveMarker(location.id)}
+      onClick={() => marker.setActiveMarker(bankLocation.foodbank_id)}
+      onMouseOver={() => marker.setActiveMarker(bankLocation.foodbank_id)}
       onMouseOut={() => marker.setActiveMarker(null)}
     >
       <Popup closeOnClick={true} closeButton={false} autoPanPadding={[50,50]}>
         <article className="media marker-popup">
           <figure className="media-left">
             <p className="image is-48x48">
-              <img src={location.logo} />
+              <img src={bankLocation.fb_logo} />
             </p>
           </figure>
           <div className="media-content">
             <div className="content">
               <p>
-                <Link to={`${path}/${location.id}/products`}>
-                  <strong>{location.name}</strong>
-                </Link>{" "}
+                <Link to={`/${path}/${bankLocation.foodbank_id}/products`}>
+                  <strong>{bankLocation.fb_name}</strong>
+                </Link>
                 <br></br>
-                {location.address}
+                {bankLocation.foodbank_address}
                 <br></br>
                 {dist} miles
               </p>

@@ -16,45 +16,44 @@ function Banks({ marker, banks }) {
   function getNextDay() {
     // get next day
     var d = new Date();
-    var weekday = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
+    var week = [
+      "sunday",
+      "monday",
+      "tuesday",
+      "wednesday",
+      "thursday",
+      "friday",
+      "saturday",
     ];
-    var n = weekday[d.getDay()];
-    return n;
+    return week[d.getDay()];
   }
-  var day = getNextDay();
+  const day = getNextDay();
   return (
     <div className="banks">
       {banks.map((bank) => (
         <div
-          key={bank.id}
+          key={bank.foodbank_id}
           className="card bank-card"
-          onMouseEnter={() => marker.setActiveMarker(bank.id)}
+          onMouseEnter={() => marker.setActiveMarker(bank.foodbank_id)}
           onMouseLeave={() => marker.setActiveMarker("")}
-          onClick={() => history.push(`/banks/${bank.id}/products`)}
+          onClick={() => history.push(`/banks/${bank.foodbank_id}/products`)}
         >
           <div className="card-content">
             <div className="media">
               <div className="media-left">
                 <figure className="image is-48x48">
-                  <img src={bank.logo} alt="Placeholder image"></img>
+                  <img src={bank.fb_logo} alt="Placeholder image"></img>
                 </figure>
               </div>
               <div className="media-content">
                 <p className="title is-6 has-text-grey-dark">
               
-                    {bank.name}
+                    {bank.fb_name}
                  
                 </p>
                 <p className="subtitle has-font-13 has-text-grey">
                   {" "}
-                  {bank.address}
+                  {bank.foodbank_address}
                 </p>
               </div>
             </div>
@@ -64,7 +63,7 @@ function Banks({ marker, banks }) {
                   <p className="subtitle has-font-13 no-overflow">Hours</p>
                   <p className="subtitle has-font-13 is-bold no-overflow">
                     <span className="days">{day}</span>
-                    <span className="hours">{bank[day.toLowerCase()]}</span>
+                    <span className="hours">{`fb_${bank[day]}_time`}</span>
                   </p>
                 </div>
                 <div className="column is-3">

@@ -21,7 +21,7 @@ function Carousel({itemList}){
         chevronWidth={chevronWidth}
       > 
       {itemList.map(x => 
-        <CartItem key={x.item.food_id} foodItem={x} />)
+        <CartItem key={x.info.food_id} foodItem={x} />)
       }
         {/* <div style={{ height: 200, background: '#EEE' }}>First card</div> */}
       </ItemsCarousel>

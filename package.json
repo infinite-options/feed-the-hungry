@@ -42,7 +42,8 @@
     "react-siema": "^1.0.1",
     "react-snaplist-carousel": "^3.2.2",
     "react-widgets": "^4.5.0",
-    "react-widgets-globalize": "^5.0.21"
+    "react-widgets-globalize": "^5.0.21",
+    "use-position": "0.0.7"
   },
   "scripts": {
     "start": "react-scripts start",

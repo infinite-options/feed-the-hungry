@@ -14,19 +14,39 @@ import CustomerDetails from "pages/Checkout/CustomerDetails";
 import DeliveryDetails from "pages/Checkout/DeliveryDetails";
 import StateAPI from "API/StateAPI";
 import PickupDetails from "./PickupDetails";
-import { useRouteMatch, useHistory, useParams, Link, useLocation, withRouter } from "react-router-dom";
-// import history from 'pages/App/History';
+import {
+  useRouteMatch,
+  useHistory,
+  useParams,
+  Link,
+  useLocation,
+  withRouter,
+} from "react-router-dom";
+// import hooks
+import { usePosition } from 'use-position';
 
-// import axios
-import axios from "axios";
+// use San Jose, CA as the default center
+const DEFAULT_LATITUDE = 37.338208;
+const DEFAULT_LONGITUDE = -121.886329;
 
-function CheckoutForm({ bank, items}) {
+function CheckoutForm({ bank, items }) {
   let history = useHistory();
+  // get browser's geo position
+  const watch = true;
+  const { latitude, longitude, error } = usePosition(watch, {enableHighAccuracy: true});
+  const position = !error ? [latitude, longitude] : [DEFAULT_LATITUDE, DEFAULT_LONGITUDE];
+  
   const [activeTab, setActiveTab] = useState("delivery");
   const [hidden, setHidden] = useState("hidden"); // to hide error msg
-  const delivery_items = items.filter(x => x.item.delivery_pickup.includes('delivery'));
-  const pickup_items = items.filter(x => x.item.delivery_pickup.includes('pickup'));
-
+  // filter delivery items
+  const delivery_items = items.filter((x) =>
+    x.info.delivery_pickup.includes("delivery")
+  );
+  // filter pickup items
+  const pickup_items = items.filter((x) =>
+    x.info.delivery_pickup.includes("pickup")
+  );
+  // inputs
   const fname = useField("First Name", "text");
   const lname = useField("Last Name", "text");
   const phone = useField("Phone Number", "tel");
@@ -43,7 +63,6 @@ function CheckoutForm({ bank, items}) {
     "checkbox"
   );
 
-
   useEffect(() => {
     if (checkbox.value || dateTime.startDate) setHidden("hidden");
   }, [checkbox.value || dateTime.startDate]);
@@ -56,7 +75,7 @@ function CheckoutForm({ bank, items}) {
     if (!email.validate()) formIsValid = false;
     if (!phone.validate()) formIsValid = false;
 
-    if (activeTab === "delivery" ) {
+    if (activeTab === "delivery") {
       if (!street.validate()) formIsValid = false;
       if (!city.validate()) formIsValid = false;
       if (!state.validate()) formIsValid = false;
@@ -66,25 +85,14 @@ function CheckoutForm({ bank, items}) {
         setHidden("");
       }
     }
-    if (formIsValid){  
+    if (formIsValid) {
       console.log("All inputs are valid");
       const date = dateTime.startDate ? formatDate(dateTime.startDate) : "ASAP";
       const total = totalAmount(items);
-      // order.setOrderInfo(prevState => ({
-      //   ...prevState,
-      //   phone: phone.value,
-      //   street: street.value,
-      //   city: city.value,
-      //   state: state.value,
-      //   zipcode: zip.value,
-      //   totalAmount: total,
-      //   delivery_note: "",
-      //   kitchen_id: bank.id,
-      //   longitude: "",
-      //   latitude: "",
-      //   delivery_date: date
-      // }));
+   
       let unconfirmed_order = {
+        isSent: false,
+        order_id: "",
         customer_id: "",
         phone: phone.value,
         email: email.value,
@@ -94,21 +102,23 @@ function CheckoutForm({ bank, items}) {
         zipcode: zip.value,
         totalAmount: total,
         delivery_note: "",
-        kitchen_id: bank.id,
-        longitude: "",
-        latitude: "",
+        kitchen_id: bank.foodbank_id,
+        kitchen_name: bank.fb_name,
+        kitchen_address: bank.foodbank_address,
+        longitude: position[1],
+        latitude: position[0],
         delivery_date: date,
-        ordered_items: items
+        order_type: items[0].info.delivery_pickup,
+        ordered_items: items,
       };
-      // items.forEach((x) => {
-      //   user_order.ordered_items.push({ meal_id: x.item.food_id, qty: x.amount, 'delivery/pickup': x.item.delivery_pickup });
-      // });
-      // order.setOrderInfo(user_order);
-      // isOrderPlaced = true;
+
       console.log(unconfirmed_order);
-      window.localStorage.clear();
-      window.localStorage.setItem('unconfirmed_order', JSON.stringify(unconfirmed_order));
-      history.push('/order/cart/confirm');
+      window.localStorage.removeItem("cart");
+      window.localStorage.setItem(
+        "unconfirmed_order",
+        JSON.stringify(unconfirmed_order)
+      );
+      history.push("/order/cart/confirm");
       // axios
       //   .post(
       //     "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/add_order_new",
@@ -122,12 +132,13 @@ function CheckoutForm({ bank, items}) {
       //   .catch((error) => {
       //     isOrderPlaced = false;
       //   });
-    } else { console.log("Some inputs are invalid")}
+    } else {
+      console.log("Some inputs are invalid");
+    }
 
     // if (isOrderPlaced){
     //   console.log("go to confirmation");
-     
-      
+
     //   window.localStorage.setItem(bank.id, JSON.stringify([]));
     // }
     // else {
@@ -230,7 +241,19 @@ function CheckoutForm({ bank, items}) {
       {/* checkout button */}
       <div className="field right-most">
         <div className="control">
-          <button className="button is-success" disabled={(activeTab === "delivery" && pickup_items && pickup_items.length > 0) || (activeTab==="pickup" && delivery_items && delivery_items.length > 0) ? true : false}>
+          <button
+            className="button is-success"
+            disabled={
+              (activeTab === "delivery" &&
+                pickup_items &&
+                pickup_items.length > 0) ||
+              (activeTab === "pickup" &&
+                delivery_items &&
+                delivery_items.length > 0)
+                ? true
+                : false
+            }
+          >
             <span className="uppercase">Place Order</span>
             <span className="icon">
               <FontAwesomeIcon icon={Icons.faLongArrowAltRight} />
@@ -246,7 +269,7 @@ function CheckoutForm({ bank, items}) {
 const totalAmount = (items) => {
   var total = 0;
   items.forEach((x) => {
-    total += x.item.price * x.amount;
+    total += x.amount;
   });
   return total;
 };
