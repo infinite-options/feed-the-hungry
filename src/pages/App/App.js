@@ -62,12 +62,12 @@ function App() {
       <OrderContext.Provider value={{orderInfo, setOrderInfo, isAuth, setIsAuth}}>
         <Header />
         <Switch>
-          <NonAuthRoute exact path="/login" restricted={true} isAuth={isAuth} component={LoginPage} />
-          <NonAuthRoute exact path="/signup" restricted={true} isAuth={isAuth} component={SignupPage} />
+          <NonAuthRoute exact path="/login" isAuth={isAuth} component={LoginPage} />
+          <NonAuthRoute exact path="/signup" isAuth={isAuth} component={SignupPage} />
           {/* <AuthRoute exact path="/" isAuth={isAuth} bankAPI={bankAPI} component={BanksPage} /> */}
           <Route exact path="/"><BanksPage {...bankAPI} /></Route>
-          <NonAuthRoute exact path="/signup/social" restricted={true} isAuth={isAuth} component={SignupSocial} />
-          <NonAuthRoute exact path="/signup/verify" restricted={true} isAuth={isAuth} component={SignupVerify} />
+          <NonAuthRoute exact path="/signup/social" isAuth={isAuth} component={SignupSocial} />
+          <NonAuthRoute exact path="/signup/verify" isAuth={isAuth} component={SignupVerify} />
           <AuthRoute exact path={"/banks/:bankId/products"} isAuth={isAuth} bankAPI={bankAPI} component={BankPage} />
           <AuthRoute exact path="/order/cart" isAuth={isAuth} bankAPI={bankAPI} component={CheckoutPage} />
           <AuthRoute exact path="/order/cart/confirm" isAuth={isAuth} bankAPI={bankAPI} component={ConfirmationPage} />
