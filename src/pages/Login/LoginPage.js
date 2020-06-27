@@ -22,7 +22,11 @@ import FarmersMarket from 'assets/image/farmers-market.jpg';
 import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login"
 
-function LoginPage({props}) {
+import { OrderContext }  from 'components/Context/OrderContext';
+
+function LoginPage() {
+    const context = useContext(OrderContext);
+
     const history = useHistory();
 
     const email = useField("Email","email");
@@ -198,7 +202,7 @@ function LoginPage({props}) {
                     window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
                     
                     // Context API stuff here!
-                    props.setIsAuth(true);
+                    context.setIsAuth(true);
                     history.push('/');
                 }
             }

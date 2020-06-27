@@ -155,7 +155,7 @@ function QuantityInput({ foodItem, bankId }) {
 // };
 
 const useCounter = (foodItem, bankId) => {
-  const [orderInfo, setOrderInfo] = useContext(OrderContext);
+  const context = useContext(OrderContext);
   let initialValues = JSON.parse(window.localStorage.getItem(bankId)) || [];
 
   let initValue = initialValues.find((x) => {
@@ -197,7 +197,7 @@ const useCounter = (foodItem, bankId) => {
     else if (!item && value > 0) items.push({ item: foodItem, amount: value });
 
     // if (items.length > 0) setOrderInfo(totalAmount(items));
-    setOrderInfo(totalAmount(items));
+    context.setOrderInfo(totalAmount(items));
     window.localStorage.setItem(bankId, JSON.stringify(items));
     // }
   }, [value]);

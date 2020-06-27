@@ -1,3 +1,3 @@
 import React, { createContext } from 'react';
 
- export const OrderContext = createContext(0);
+ export const OrderContext = createContext();
