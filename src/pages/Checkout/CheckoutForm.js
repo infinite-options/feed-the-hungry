@@ -119,31 +119,10 @@ function CheckoutForm({ bank, items }) {
         JSON.stringify(unconfirmed_order)
       );
       history.push("/order/cart/confirm");
-      // axios
-      //   .post(
-      //     "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/add_order_new",
-      //     user_order
-      //   )
-      //   .then((res) => {
-      //     console.log(res);
-      //     console.log(res.data);
-      //     isOrderPlaced = true;
-      //   })
-      //   .catch((error) => {
-      //     isOrderPlaced = false;
-      //   });
     } else {
       console.log("Some inputs are invalid");
     }
 
-    // if (isOrderPlaced){
-    //   console.log("go to confirmation");
-
-    //   window.localStorage.setItem(bank.id, JSON.stringify([]));
-    // }
-    // else {
-    //   console.log('stay');
-    // }
   };
 
   return (

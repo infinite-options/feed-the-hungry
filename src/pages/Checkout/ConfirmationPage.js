@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Notifications from "components/Notifications/Notifications";
 import { Redirect, useParams, withRouter } from "react-router-dom";
-import ConfirmationPageLayout from "pages/Checkout/ConfirmationPageLayout";
 import { useOurApi } from "API/useOurApi";
 import ErrorPage from "pages/Error/ErrorPage";
 import LoadingPage from "pages/Error/LoadingPage";
@@ -14,12 +13,6 @@ function ConfirmationPage() {
   const cartItems = unconfirmed_order.ordered_items
     ? unconfirmed_order.ordered_items
     : [];
-  // const bankId = unconfirmed_order.kitchen_id ? unconfirmed_order.kitchen_id : "";
-  // const url = `https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/foodbankinfonew/${bankId}`
-  // const { data, isLoading, unmount, hasError } = useOurApi(url, {});
-  // const bank = data.result;
-
-  // if (isLoading) { console.log("loading"); return <LoadingPage /> }
   if (cartItems.length === 0) return <ErrorPage />;
   else {
     const order = {
