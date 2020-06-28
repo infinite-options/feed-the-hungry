@@ -206,7 +206,7 @@ function LoginPage() {
                     history.push('/');
                 }
                 else {
-                    setError("Your email needs to be verified before you can log in");
+                    setError("Please verify your email before logging in");
                 }
             }
         }).catch(err => {
