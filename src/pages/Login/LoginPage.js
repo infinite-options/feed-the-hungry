@@ -47,7 +47,7 @@ function LoginPage() {
             }
             first_name = first_name.slice(0, -1);
             // let data = await grabSocialUserInfo(e); // gets social user data, returns null if data doesn't exist
-            let data = null;
+            let data = null; // temp value
 
             if (!data) {
                 // new user, send them to social signup page
@@ -75,21 +75,33 @@ function LoginPage() {
     const responseGoogle = async response => {
         console.log("User has tried to login through Google..");
         if (response.profileObj) {
-            // const email = response.profileObj.email;
-            // const access = response.accessToken;
-            // const refresh = response.googleId;
-            // const first_name = response.profileObj.givenName;
-            // const last_name = response.profileObj.familyName;
+            const email = response.profileObj.email;
+            const access = response.accessToken;
+            const refresh = response.googleId;
+            const first_name = response.profileObj.givenName;
+            const last_name = response.profileObj.familyName;
             // let data = await grabSocialUserInfo(e); // get social data, returns null if user doesn't exist yet
-            let data = response;
+            let data = null; // temp value
             
             if (!data) {
-                // new user, send them to '/signup/social' page
+                // new user, send them to social signup page
                 console.log("Data not found..");
+                history.push({
+                    pathname: "/signup/social",
+                    state: {
+                        lastname: last_name,
+                        firstname: first_name,
+                        email: email,
+                        social: "Google",
+                        accessToken: access,
+                        refreshToken: refresh,
+                        // SOCIAL_API_URL: `${props.SOCIAL_API_URL}acc`
+                    }
+                });
             }
             else {
                 console.log("Data:", data);
-                // user has logged in, update login status and user data
+                // user logged in, update user data & status
             }
         }
     }
