@@ -122,7 +122,7 @@ function LoginPage() {
         // Code here
     }
 
-    const [hidden, setHidden] = useState("hidden");
+    const [error, setError] = useState(null);
     function checkLogin() {
         // For testing...
         // console.log("running function checkLogin()..")
@@ -148,8 +148,8 @@ function LoginPage() {
             data
         ).then(response => {
             console.log(response);
-            if (response.status === 200) {
-                if (response.data.auth_success) {
+            if (response.status === 200 && response.data.auth_success) {
+                if (response.data.result.result[0].ctm_email_verify) {
                     let first_name = response.data.result.result[0].ctm_first_name;
                     let last_name = response.data.result.result[0].ctm_last_name;
                     let phone = response.data.result.result[0].ctm_phone;
@@ -205,10 +205,13 @@ function LoginPage() {
                     context.setIsAuth(true);
                     history.push('/');
                 }
+                else {
+                    setError("Your email needs to be verified before you can log in");
+                }
             }
         }).catch(err => {
             // console.log(err);
-            setHidden("");
+            setError("Invalid email or password");
         })
     }
 
@@ -262,9 +265,9 @@ function LoginPage() {
                     {/* Password input */}
                     <InputField props={password} icon={Icons.faLock} />
                     {/* Error message */}
-                    <div className={hidden}>
-                        <p className="has-text-centered has-text-danger">Invalid email or password</p>
-                    </div>
+                    {error && (
+                        <p className="has-text-centered has-text-danger">{error}</p>
+                    )}
                     {/* Buttons */}
                     <div className="has-text-centered has-margin-bottom-0-5">
                         <button className="button is-success has-margins-0-5" onClick={handleClick}>Login</button>
