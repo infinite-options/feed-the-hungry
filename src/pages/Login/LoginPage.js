@@ -33,6 +33,17 @@ function LoginPage() {
     const password = useField("Password","password");
     // let onLoginPage = true;
 
+    async function grabSocialUserInfo(email) {
+        // try {
+        //     let response = await axios.get("${API_URL}/${email}");
+        //     console.log(response);
+        //     if (response.status === 200) {
+        //         Depending on how i get the data, this might look different
+        //     }
+        //     Check if user exists in direct login database table
+        //     return null if it does, then setError("User already exists as a direct login account")
+    }
+    
     const responseFacebook = async response => {
         console.log("User has tried to login through Facebook..");
         if (response.email) {
@@ -46,7 +57,7 @@ function LoginPage() {
                 first_name += name[i] + " ";
             }
             first_name = first_name.slice(0, -1);
-            // let data = await grabSocialUserInfo(e); // gets social user data, returns null if data doesn't exist
+            // let data = await grabSocialUserInfo(email); // gets social user data, returns null if data doesn't exist
             let data = null; // temp value
 
             if (!data) {
@@ -80,7 +91,7 @@ function LoginPage() {
             const refresh = response.googleId;
             const first_name = response.profileObj.givenName;
             const last_name = response.profileObj.familyName;
-            // let data = await grabSocialUserInfo(e); // get social data, returns null if user doesn't exist yet
+            // let data = await grabSocialUserInfo(email); // get social data, returns null if user doesn't exist yet
             let data = null; // temp value
             
             if (!data) {
@@ -224,6 +235,19 @@ function LoginPage() {
         }).catch(err => {
             // console.log(err);
             setError("Invalid email or password");
+            // if (error.response.status === 500) setError("Failed to connect to the server, please try again later");
+            // else if (error.response.status === 401) setError("Invalid password");
+            // else if (error.response.status === 400) {
+            //     axios.get("${API_URL}/${email.value}").then(response => {
+            //         setError("User already exists as a ${response.data.social} account");
+            //     }).catch(err => {
+            //         setError("User does not exist, please create an account");
+            //     })
+            // }
+            // // In case any other errors i don't know about appear during testing
+            // else {
+            //     setError("Error ${error.response.status} :", error.data.message);
+            // }
         })
     }
 

@@ -207,14 +207,16 @@ function SignupSocial() {
                 "socialMedia": socialMedia,
             }
             // axios.post(
-            //     "API GOES HERE", 
+            //     "${API_URL}", 
             //     test
             // ).then(response => {
             //     console.log(response);
             //     if (response.status === 200) {
             //         // Log user in
             //     }
-            // })
+            // }).catch(err => {
+            //     console.log(err);
+            // });
         }
         else {
             console.log("Sign up failed...");
