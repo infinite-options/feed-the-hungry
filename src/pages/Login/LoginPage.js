@@ -33,6 +33,17 @@ function LoginPage() {
     const password = useField("Password","password");
     // let onLoginPage = true;
 
+    async function grabSocialUserInfo(email) {
+        // try {
+        //     let response = await axios.get("${API_URL}/${email}");
+        //     console.log(response);
+        //     if (response.status === 200) {
+        //         Depending on how i get the data, this might look different
+        //     }
+        //     Check if user exists in direct login database table
+        //     return null if it does, then setError("User already exists as a direct login account")
+    }
+    
     const responseFacebook = async response => {
         console.log("User has tried to login through Facebook..");
         if (response.email) {
@@ -46,8 +57,8 @@ function LoginPage() {
                 first_name += name[i] + " ";
             }
             first_name = first_name.slice(0, -1);
-            // let data = await grabSocialUserInfo(e); // gets social user data, returns null if data doesn't exist
-            let data = null;
+            // let data = await grabSocialUserInfo(email); // gets social user data, returns null if data doesn't exist
+            let data = null; // temp value
 
             if (!data) {
                 // new user, send them to social signup page
@@ -75,21 +86,33 @@ function LoginPage() {
     const responseGoogle = async response => {
         console.log("User has tried to login through Google..");
         if (response.profileObj) {
-            // const email = response.profileObj.email;
-            // const access = response.accessToken;
-            // const refresh = response.googleId;
-            // const first_name = response.profileObj.givenName;
-            // const last_name = response.profileObj.familyName;
-            // let data = await grabSocialUserInfo(e); // get social data, returns null if user doesn't exist yet
-            let data = response;
+            const email = response.profileObj.email;
+            const access = response.accessToken;
+            const refresh = response.googleId;
+            const first_name = response.profileObj.givenName;
+            const last_name = response.profileObj.familyName;
+            // let data = await grabSocialUserInfo(email); // get social data, returns null if user doesn't exist yet
+            let data = null; // temp value
             
             if (!data) {
-                // new user, send them to '/signup/social' page
+                // new user, send them to social signup page
                 console.log("Data not found..");
+                history.push({
+                    pathname: "/signup/social",
+                    state: {
+                        lastname: last_name,
+                        firstname: first_name,
+                        email: email,
+                        social: "Google",
+                        accessToken: access,
+                        refreshToken: refresh,
+                        // SOCIAL_API_URL: `${props.SOCIAL_API_URL}acc`
+                    }
+                });
             }
             else {
                 console.log("Data:", data);
-                // user has logged in, update login status and user data
+                // user logged in, update user data & status
             }
         }
     }
@@ -122,7 +145,7 @@ function LoginPage() {
         // Code here
     }
 
-    const [hidden, setHidden] = useState("hidden");
+    const [error, setError] = useState(null);
     function checkLogin() {
         // For testing...
         // console.log("running function checkLogin()..")
@@ -148,8 +171,8 @@ function LoginPage() {
             data
         ).then(response => {
             console.log(response);
-            if (response.status === 200) {
-                if (response.data.auth_success) {
+            if (response.status === 200 && response.data.auth_success) {
+                if (response.data.result.result[0].ctm_email_verify) {
                     let first_name = response.data.result.result[0].ctm_first_name;
                     let last_name = response.data.result.result[0].ctm_last_name;
                     let phone = response.data.result.result[0].ctm_phone;
@@ -205,10 +228,26 @@ function LoginPage() {
                     context.setIsAuth(true);
                     history.push('/');
                 }
+                else {
+                    setError("Please verify your email before logging in");
+                }
             }
         }).catch(err => {
             // console.log(err);
-            setHidden("");
+            setError("Invalid email or password");
+            // if (error.response.status === 500) setError("Failed to connect to the server, please try again later");
+            // else if (error.response.status === 401) setError("Invalid password");
+            // else if (error.response.status === 400) {
+            //     axios.get("${API_URL}/${email.value}").then(response => {
+            //         setError("User already exists as a ${response.data.social} account");
+            //     }).catch(err => {
+            //         setError("User does not exist, please create an account");
+            //     })
+            // }
+            // // In case any other errors i don't know about appear during testing
+            // else {
+            //     setError("Error ${error.response.status} :", error.data.message);
+            // }
         })
     }
 
@@ -262,9 +301,9 @@ function LoginPage() {
                     {/* Password input */}
                     <InputField props={password} icon={Icons.faLock} />
                     {/* Error message */}
-                    <div className={hidden}>
-                        <p className="has-text-centered has-text-danger">Invalid email or password</p>
-                    </div>
+                    {error && (
+                        <p className="has-text-centered has-text-danger">{error}</p>
+                    )}
                     {/* Buttons */}
                     <div className="has-text-centered has-margin-bottom-0-5">
                         <button className="button is-success has-margins-0-5" onClick={handleClick}>Login</button>
