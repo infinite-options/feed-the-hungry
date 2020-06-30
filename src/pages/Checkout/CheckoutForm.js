@@ -125,12 +125,13 @@ function CheckoutForm({ bank, items }) {
     if (formIsValid) {
       console.log("All inputs are valid");
       const date = dateTime.startDate ? formatDate(dateTime.startDate) : "ASAP";
+      const userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
       const total = totalAmount(items);
    
       let unconfirmed_order = {
         isSent: false,
         order_id: "",
-        customer_id: "",
+        customer_id: userInfo.userID,
         phone: phone.value.replace(/\D/g, ""),
         email: email.value,
         street: street.value,

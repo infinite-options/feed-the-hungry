@@ -17,7 +17,7 @@ function ConfirmationPage() {
   if (cartItems.length === 0) return <ErrorPage />;
   else {
     const order = {
-      customer_id: "",
+      customer_id: unconfirmed_order.customer_id,
       phone: unconfirmed_order.phone,
       street: unconfirmed_order.street,
       city: unconfirmed_order.city,
