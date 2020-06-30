@@ -277,7 +277,7 @@ function CheckoutForm({ bank, items }) {
     </form>
   );
 }
-// calculate total $ of order
+// calculate total amount of order
 const totalAmount = (items) => {
   var total = 0;
   items.forEach((x) => {
