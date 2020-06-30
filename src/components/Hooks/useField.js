@@ -13,15 +13,13 @@ const useField = (name, type, isRequired=true) => {
         ? event.target.checked
         : event.target.value
     );
-
-    // set error msg to '' if input is filled
-    if (event.target.value.length ===0 ) setError('This field is required');
-    else if (event.target.type ==="email" && !validateEmail(event.target.value)) setError('Invalid email format') 
-    else if (event.target.type === "tel" && !validatePhoneNumber(event.target.value)) setError("Invalid phone number");
-    else if (event.target.type === "file") {
+    if (event.target.type === "file") {
       setFile(event.target.files[0]);
-    } 
-    else setError(''); 
+    }
+
+    if (isRequired && event.target.value.length === 0) setError("This field is required");
+    else if (event.target.value.length > 0) checkInputs(event.target.value);
+    else setError("");
   };
 
   const maxDate = () => {
@@ -34,22 +32,23 @@ const useField = (name, type, isRequired=true) => {
     return year + "-" + month + "-" + day;
   }
 
-  const checkInputs = () => {
+  const checkInputs = (value) => {
     // case 1: if input is a zip code
-    if (name.toLowerCase() === "zip" && !/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(value)) setError("Invalid zip code");
+    if (name.toLowerCase() === "zip" && !validateZip(value)) setError("Invalid zip code");
     // case 2: if input is entered but we need to verify it given a data
     // make sure that the data must have method 'contain' (see StateAPI.js, for instance
     else if (name.toLowerCase() === "state" && value ==="") setError("Invalid state");
     // case 3: if input is a phone number
-    else if (type === "tel" && !/[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(value)) setError("Invalid phone number");
+    else if (type === "tel" && !validatePhoneNumber(value)) setError("Invalid phone number");
     // case 4: if input is an email
-    else if (type === "email" && !/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value)) setError("Invalid email address");
+    else if (type === "email" && !validateEmail(value)) setError("Invalid email address");
     // case 5: if input is currency. NOTE: if we use the 'number' input type for non-currency values in the future, this will need to be changed
-    else if (type === "number" && !/^([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/.test(value)) setError("Invalid currency amount");
+    else if (type === "number" && !validateCurrency(value)) setError("Invalid currency amount");
     // case 6: if input is birthdate and date chosen is in the future
     else if (name.toLowerCase() === "date of birth" && maxDate() < value) setError("Invalid birthdate");
     // case 7: everything looks good!
     else {
+      setError("");
       return true;
     }
     return false; // if anything is setting an error
@@ -65,7 +64,7 @@ const useField = (name, type, isRequired=true) => {
     // if input is filled. Checks required & not required inputs since even if 
     // it's not required we want to validate input if it's filled.
     else if (value.length > 0) {
-      return checkInputs();
+      return checkInputs(value);
     }
     // if input is not required and not filled
     else {
@@ -94,6 +93,10 @@ const useField = (name, type, isRequired=true) => {
   };
 };
 
+function validateZip(zip) {
+  const re = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+  return re.test(zip);
+}
 function validateEmail(email) {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
@@ -102,6 +105,10 @@ function validatePhoneNumber(phone){
   var phoneRe = /^[2-9]\d{2}[2-9]\d{2}\d{4}$/;
   var digits = phone.replace(/\D/g, "");
   return phoneRe.test(digits);
+}
+function validateCurrency(currency) {
+  const re = /^([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/;
+  return re.test(currency);
 }
 export default useField;
 
