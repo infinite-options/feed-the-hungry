@@ -1,4 +1,4 @@
-import React, { useState, useRef, forwardRef, useEffect } from "react";
+import React, { useState, useRef, forwardRef, useEffect, useContext } from "react";
 // import icons
 import Icons from "components/Icons/Icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,6 +25,7 @@ import {
 // import hooks
 import { usePosition } from 'use-position';
 
+
 // use San Jose, CA as the default center
 const DEFAULT_LATITUDE = 37.338208;
 const DEFAULT_LONGITUDE = -121.886329;
@@ -36,16 +37,19 @@ function CheckoutForm({ bank, items }) {
   const { latitude, longitude, error } = usePosition(watch, {enableHighAccuracy: true});
   const position = !error ? [latitude, longitude] : [DEFAULT_LATITUDE, DEFAULT_LONGITUDE];
   
-  const [activeTab, setActiveTab] = useState("delivery");
+  
   const [hidden, setHidden] = useState("hidden"); // to hide error msg
   // filter delivery items
   const delivery_items = items.filter((x) =>
     x.info.delivery_pickup.includes("delivery")
   );
+  
   // filter pickup items
   const pickup_items = items.filter((x) =>
     x.info.delivery_pickup.includes("pickup")
   );
+  const [activeTab, setActiveTab] = useState(delivery_items.length ? 'delivery' : 'pickup');
+
   // inputs
   const fname = useField("First Name", "text");
   const lname = useField("Last Name", "text");
@@ -66,6 +70,38 @@ function CheckoutForm({ bank, items }) {
   useEffect(() => {
     if (checkbox.value || dateTime.startDate) setHidden("hidden");
   }, [checkbox.value || dateTime.startDate]);
+
+  const userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
+  useEffect(() => {
+    console.log(switchUserInfo.value);
+    if (switchUserInfo.value){
+      fname.setValue(userInfo.firstName);
+      lname.setValue(userInfo.lastName);
+      phone.setValue(userInfo.phoneNumber.replace(/\D/g, ""));
+      email.setValue(userInfo.email);
+    }else {
+      fname.setValue('');
+      lname.setValue('');
+      phone.setValue('');
+      email.setValue('');
+    }
+
+  },[switchUserInfo.value]);
+  useEffect(() => {
+
+    if (switchUserAddress.value){
+      street.setValue(userInfo.address1);
+      city.setValue(userInfo.city);
+      state.setValue(userInfo.state);
+      zip.setValue(userInfo.zip);
+    }else {
+      street.setValue('');
+      city.setValue('');
+      state.setValue('');
+      zip.setValue('');
+    }
+
+  },[switchUserAddress.value]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -95,12 +131,12 @@ function CheckoutForm({ bank, items }) {
         isSent: false,
         order_id: "",
         customer_id: "",
-        phone: phone.value,
+        phone: phone.value.replace(/\D/g, ""),
         email: email.value,
         street: street.value,
         city: city.value,
         state: state.value,
-        zipcode: zip.value,
+        zipcode: zip.value.toString(),
         totalAmount: total,
         delivery_note: "",
         kitchen_id: bank.foodbank_id,
@@ -113,8 +149,6 @@ function CheckoutForm({ bank, items }) {
         ordered_items: items,
       };
 
-      console.log(unconfirmed_order);
-      window.localStorage.removeItem("cart"); // remove cart data from local storage
       window.localStorage.setItem( // write new data to local storage
         "unconfirmed_order",
         JSON.stringify(unconfirmed_order)
@@ -225,11 +259,9 @@ function CheckoutForm({ bank, items }) {
             className="button is-success"
             disabled={
               (activeTab === "delivery" &&
-                pickup_items &&
-                pickup_items.length > 0) ||
+                pickup_items.length ) ||
               (activeTab === "pickup" &&
-                delivery_items &&
-                delivery_items.length > 0)
+                delivery_items.length)
                 ? true
                 : false
             }

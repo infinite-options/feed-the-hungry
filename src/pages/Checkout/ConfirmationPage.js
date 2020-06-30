@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
-import Notifications from "components/Notifications/Notifications";
+import React, { useState, useEffect, useContext } from "react";
+
 import { Redirect, useParams, withRouter } from "react-router-dom";
-import { useOurApi } from "API/useOurApi";
 import ErrorPage from "pages/Error/ErrorPage";
 import LoadingPage from "pages/Error/LoadingPage";
 import axios from "axios";
 import FailedOrderPage from "pages/Error/FailedOrderPage";
+import { OrderContext } from "components/Context/OrderContext";
+import { useOurApi } from "API/useOurApi";
 
 function ConfirmationPage() {
   console.log("confirm page");
@@ -34,6 +35,7 @@ function ConfirmationPage() {
     cartItems.forEach((x) =>
       order.ordered_items.push({ meal_id: x.info.food_id, qty: x.amount })
     );
+    console.log(order);
 
     return (
       <Confirmation
@@ -56,21 +58,26 @@ function ConfirmationPage() {
 const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
   const [url, setUrl] = useState(initialUrl);
   const [sentOrder, setSentOrder] = useState(unconfirmed_order);
+  const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasErrror] = useState(false);
-
+  const context = useContext(OrderContext);
 
   useEffect(() => {
     const writeData = async () => {
       try {
+        setIsLoading(true)
         const response = await axios.post(url, order);
         const responseData = await response.data;
         // once axios's POST method is called, we update sentOrder
         // so that we know it has already been written to the db.
+        window.localStorage.removeItem("cart"); // remove cart data from local storage
+        context.setOrderInfo(0);
         setSentOrder(prevState => ({...prevState, isSent: true, order_id: responseData.result.order_id}));
       } catch (err) {
         console.log(err);
         setHasErrror(true);
       } finally {
+        setIsLoading(false);
         // ???
       }
     };
@@ -79,7 +86,9 @@ const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
   }, [url]);
   
   window.localStorage.setItem("unconfirmed_order", JSON.stringify(sentOrder));
+  if (isLoading) return <LoadingPage />
   if (hasError) return <FailedOrderPage />
+
   return (
     <div className="confirmation-page">
       <div className="confirmation-page-layer">
@@ -104,26 +113,31 @@ const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
                   <div className="divider"></div>
                   <div className="columns">
                     <div className="column is-4">
-                      <span className="subtitle is-6">
+                      <p className="subtitle is-6">
                         Delivery confirmed for: {sentOrder.date}
-                      </span>
-                      <br></br>
-                      <span className="subtitle is-6">Delivery address:</span>
+                      </p>
+                      {/* <br></br> */}
+                     <p className="subtitle is-6"> {order.order_type === "delivery" ? "Delivery address" : "Pickup address"}:</p>
                     </div>
+                    
                     <div className="column is-8">
-                      <span className="subtitle is-6">
+                    <p className="subtitle is-6">
                         {sentOrder.delivery_date}
-                      </span>
-                      <br></br>
-                      <span className="subtitle is-6">
+                      </p>
+                    {sentOrder.order_type === "delivery" ?
+                      <div>
+                      {/* <br></br> */}
+                      <p className="subtitle is-6">
                         {sentOrder.street}
-                      </span>
-                      <br></br>
-                      <span className="subtitle is-6">
+                      </p>
+                      {/* <br></br> */}
+                      <p className="subtitle is-6">
                         {sentOrder.city}, {sentOrder.state}{" "}
                         {sentOrder.zipcode}
-                      </span>
+                      </p></div>
+                    :  <p className="subtitle is-6">{sentOrder.kitchen_address}</p>}
                     </div>
+                    
                   </div>
                 </div>
               </div>

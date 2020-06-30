@@ -24,6 +24,11 @@ function CartItem({ foodItem }) {
         ) : (
           ""
         )}
+        {foodItem.info.delivery_pickup === "pickup" ? (
+          <p className="subtitle is-7 is-bold has-text-danger">Pickup Only</p>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

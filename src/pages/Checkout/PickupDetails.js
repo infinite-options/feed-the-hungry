@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function PickupDetails({bank, items}) {
     const delivery_pickup_items = items.length > 0 ? items.filter(x => x.info.delivery_pickup.includes('both')) : [];
-    const delivery_items = items.length > 0 ? items.filter(x => x.info.delivery_pickup.includes('delivery')) : [];
-    const pickup_items = items.filter(x => x.info.delivery_pickup.includes('pickup'));
+    const delivery_items = items.length > 0 ? items.filter(x => x.info.delivery_pickup ==='delivery') : [];
+    const pickup_items = items.filter(x => x.info.delivery_pickup ==='pickup');
     return (
         <div className="pickup-confirm">
             <p className="title is-5">Pickup Address</p>
@@ -26,9 +26,9 @@ const NoPickUp = ({items}) => {
     html += " " + items[i].info.food_name;
     return (
         <div>
-        <p className="subtitle is-6">Unavailable for pick up:</p>
-        <p className="subtitle is-6 has-text-danger">{html}
-        </p>
+        <span className="subtitle is-6 has-text-danger">Pick up is not available for the following item(s): </span>
+        <span className="subtitle is-6 ">{html}
+        </span>
         </div>
     );
 }

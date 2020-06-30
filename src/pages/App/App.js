@@ -36,6 +36,7 @@ import NonAuthRoute from 'components/Route/NonAuthRoute';
 
 function App() {
   const [orderInfo, setOrderInfo] = useState(0);
+  const [deliveryMethod, setDeliveryMethod] = useState('');
   const [isAuth, setIsAuth] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -58,7 +59,7 @@ function App() {
 
   return !loading && (
     <Router>
-      <OrderContext.Provider value={{orderInfo, setOrderInfo, isAuth, setIsAuth}}>
+      <OrderContext.Provider value={{orderInfo, setOrderInfo, isAuth, setIsAuth, deliveryMethod, setDeliveryMethod}}>
         <Header />
         <Switch>
           <NonAuthRoute exact path="/login" isAuth={isAuth} component={LoginPage} />

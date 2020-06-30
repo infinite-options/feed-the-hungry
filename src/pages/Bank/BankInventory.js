@@ -6,14 +6,16 @@ import { OrderContext } from "components/Context/OrderContext";
 // render food bank's inventory
 function BankInventory({ inventory, deliveryOrPickup}) {
   let query = useQuery();
+  const context = useContext(OrderContext);
+
   if (query.get("type"))
     inventory = getItemsByKey(query.get("type"), inventory);
 
   return (
     <div className="inventory fade-in">
       {inventory.map((x) =>
-        deliveryOrPickup.includes(x.delivery_pickup) ? (
-          <div key={x.food_id} className="card item">
+          <div key={x.food_id} className={x.delivery_pickup.includes(context.deliveryMethod) ? 'card item' : ' card item has-opacity-0-6'}>
+
             <div className="card-content has-no-padding item-content">
               <div className="item-image-container">
                 <img
@@ -46,7 +48,6 @@ function BankInventory({ inventory, deliveryOrPickup}) {
               </div>
             </div>
           </div>
-        ) : null
       )}
     </div>
   );
@@ -72,10 +73,12 @@ function ItemTags({ str }) {
     </div>
   );
 }
-function QuantityInput({ item }) {
+function QuantityInput({ item}) {
   const count = useCounter(item);
+  const context = useContext(OrderContext);
   return (
-    <div className="field is-grouped is-multiline">
+    <div>
+    <div className="field">
       <div className="control item-actions">
         <button
           className="button is-small"
@@ -94,7 +97,7 @@ function QuantityInput({ item }) {
           className="button is-small"
           onClick={count.increase}
           disabled={
-            item.quantity === 0 || count.value >= item.food_id_limit
+            !item.delivery_pickup.includes(context.deliveryMethod) || item.quantity === 0 || count.value >= item.food_id_limit
               ? true
               : false
           }
@@ -103,12 +106,18 @@ function QuantityInput({ item }) {
         </button>
       </div>
     </div>
+
+      <div className="space-1-5"></div>
+      {item.quantity === 0 && <p className="p is-danger">Out of stock</p>}
+      {count.value >= item.food_id_limit  && <p className="help is-danger">Limit is {item.food_id_limit}</p>}
+    </div>
   );
 }
 
 const useCounter = (x) => {
   let { bankId} = useParams();
   const context = useContext(OrderContext);
+  // initialize user-selected quantity for each food item
   let cart = JSON.parse(window.localStorage.getItem('cart')) || {};
   let initialAmount = 0;
   if (cart.bankId && cart.bankId === bankId){
@@ -117,7 +126,7 @@ const useCounter = (x) => {
       return item.info.food_id === x.food_id;
     });
     initialAmount = initValue ? initValue.amount : 0;
-}
+  }
   const [value, setValue] = useState(initialAmount);
 
   const increase = () => {
@@ -149,16 +158,24 @@ const useCounter = (x) => {
       else if (!item && value > 0) cartItems.push({ info: x, amount: value });
 
       window.localStorage.setItem('cart', JSON.stringify({ bankId: bankId, items: cartItems}));
+      context.setDeliveryMethod(cartItems[0] ? cartItems[0].info.delivery_pickup : '' );
    } 
    else if (cart.bankId && cart.bankId != bankId && value > 0){
         cartItems = [];
         cartItems.push({ info: x, amount: value });
         window.localStorage.setItem('cart', JSON.stringify({ bankId: bankId, items: cartItems}));
+        context.setDeliveryMethod(cartItems[0].info.delivery_pickup);
    } 
+   else if (cart.bankId && cart.bankId != bankId){
+    window.localStorage.setItem('cart', JSON.stringify(cart));
+    context.setDeliveryMethod('');
+   }
    else if (!cart.bankId){
-      window.localStorage.setItem('cart', JSON.stringify({ bankId: bankId, items: cartItems}));
+      window.localStorage.setItem('cart', JSON.stringify({bankId: bankId, items: cartItems}));
+      context.setDeliveryMethod('');
    }
    context.setOrderInfo(totalAmount(cartItems));
+  //  context.setDeliveryMethod(cartItems[0].info.delivery_method);
   }, [value]);
 
   return {
@@ -172,4 +189,12 @@ const useCounter = (x) => {
 const getItemsByKey = (key, arr) => {
   return arr.filter((x) => x.fl_food_type.includes(key));
 };
+
+const useDeliveryMethod = () => {
+  const [deliveryMethod, setDeliveryMethod] = useState('both');
+  return {
+    deliveryMethod,
+    setDeliveryMethod
+  }
+}
 export default withRouter(BankInventory);

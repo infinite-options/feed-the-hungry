@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 const useField = (name, type, isRequired=true) => {
-  const [value, setValue] = useState(type === "checkbox" ? false : '');
+  const [value, setValue] = useState(type === "checkbox" || type ==="switch" ? false : '');
   const [error, setError] = useState('');
   // for file inputs
   const [file, setFile] = useState({});
@@ -9,17 +9,19 @@ const useField = (name, type, isRequired=true) => {
   // handle input if user changes the content of the input 
   const onChange = (event) => {
     setValue(
-      event.target.type === "checkbox"
+      event.target.type === "checkbox" || event.target.type === "switch"
         ? event.target.checked
         : event.target.value
     );
 
-    if (event.target.type === "file") {
-      setFile(event.target.files[0]);
-    }
-
     // set error msg to '' if input is filled
-    if (event.target.value.length > 0 ) setError('');
+    if (event.target.value.length ===0 ) setError('This field is required');
+    else if (event.target.type ==="email" && !validateEmail(event.target.value)) setError('Invalid email format') 
+    else if (event.target.type === "tel" && !validatePhoneNumber(event.target.value)) setError("Invalid phone number");
+    else if (event.target.type === "file") {
+      setFile(event.target.files[0]);
+    } 
+    else setError(''); 
   };
 
   const maxDate = () => {
@@ -83,6 +85,7 @@ const useField = (name, type, isRequired=true) => {
     type,
     name,
     value,
+    setValue,
     onChange,
     isRequired,
     validate,
@@ -90,6 +93,16 @@ const useField = (name, type, isRequired=true) => {
     file,
   };
 };
+
+function validateEmail(email) {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
+function validatePhoneNumber(phone){
+  var phoneRe = /^[2-9]\d{2}[2-9]\d{2}\d{4}$/;
+  var digits = phone.replace(/\D/g, "");
+  return phoneRe.test(digits);
+}
 export default useField;
 
 // this custom hook handles any type of input

@@ -13,7 +13,7 @@
     font-family: 'Muli',sans-serif;
 }
 .bank-container {
-    max-width: 1080px;
+    max-width: 1170px;
     margin: 0 auto;
     padding-bottom: 3rem;
     /* padding-bottom: 5rem;
@@ -155,7 +155,7 @@
 }
 .bank-banner {
     display: flex;
-    max-width: 1080px;
+    max-width: 1170px;
     width: inherit;
     /* min-height: 344px; */
     height: auto;
@@ -263,38 +263,20 @@
 }
 .inventory {
     display:flex;
-    
-    flex-direction: column;
+    flex-wrap: wrap;
+    /* flex-direction: column; */
     margin-top: 1rem;
     margin-bottom: 1rem;
-    /* flex-wrap: wrap; */
-    /* justify-content: space-between */
-      
-    /* margin: 5px; */
 }
-/* .item {
-    height: auto;
-    margin: 10px;
-    flex: 0 1 calc(50% - 20px);
-    padding: 1.5rem;
-    border: 1px solid #d3d3d3; 
-    position: relative;
-} */
 .item {
-    /* display: flex; */
-    /* flex-direction: column; */
-    position: relative;
-    width: 100%;
-    /* min-height: 201.4px; */
-    /* max-height: 220px; */
-    border-bottom: 1px solid #d3d3d3;
-    /* border-radius: 20px; */
+    /* height: auto; */
+    margin: 10px;
+    flex: 0 1 calc(33% - 20px);
+    /* border-bottom: 1px solid #d3d3d3; */
     background-color: white;
-    /* padding: 1.5rem; */
-    box-shadow: none;
-    /* box-shadow: 0 0.1em 0.5em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 0.5px rgba(10, 10, 10, 0.02); */
-    /* padding-top: 1.5rem; */
+     box-shadow: none;
 }
+
 .item:not(:first-child) {
     margin-top: .5rem;
 }
@@ -340,7 +322,7 @@
     bottom: 1.5rem; 
 }
 .item-actions input {
-    width: 50px;
+    width: 36px;
     pointer-events: none;
 }
 .right-most {
@@ -507,8 +489,10 @@ img{
     /* padding-bottom:  */
 }
 .inventory-title {
-    font-size: 13px;
+    font-size: 14px;
     letter-spacing: 1;
+    /* color: black; */
+    /* font-weight: 600; */
     color: hsl(0, 0%, 48%);
     text-transform: uppercase;
     white-space: nowrap;
@@ -884,4 +868,8 @@ hr.is-light-gray {
 
 .hidden {
     display: none;
+}
+
+.has-opacity-0-6 {
+    opacity: .6;
 }
