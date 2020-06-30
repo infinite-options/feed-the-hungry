@@ -285,15 +285,15 @@ function LoginPage() {
                             />
                         </span>
                         <span className="has-margins-0-5">
-                            {/* <GoogleLogin
-                                clientId={null} // Not set up yet
+                            <GoogleLogin
+                                clientId="1031017519051-tuc2hrq6otb40imvmmc9mucecu2u7ggj.apps.googleusercontent.com"
                                 buttonText='Login'
                                 onSuccess={responseGoogle}
                                 onFailure={responseGoogle}
                                 isSignedIn={false}
                                 disable={false}
                                 cookiePolicy={"single_host_origin"}
-                            /> */}
+                            />
                         </span>
                     </div>
                     {/* Email input */}
