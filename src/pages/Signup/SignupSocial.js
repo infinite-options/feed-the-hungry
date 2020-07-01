@@ -193,19 +193,20 @@ function SignupSocial() {
             console.log("Data:", data);
             console.log("we did it!");
             let test = {
-                "first_name" : firstname.value,
-                "last_name" : lastname.value,
+                "first_name" : firstname,
+                "last_name" : lastname,
                 "address1" : address_1.value,
                 "address2" : address_2.value,
                 "city" : city.value,
                 "state" : state.value,
                 "zipcode" : zip.value,
                 "phone" : phoneNumber.value,
-                "email" : email.value,
+                "email" : email,
                 "accessToken": accessToken,
                 "refreshToken": refreshToken,
                 "socialMedia": socialMedia,
             }
+            console.log("Test:", test);
             // axios.post(
             //     "${API_URL}", 
             //     test
