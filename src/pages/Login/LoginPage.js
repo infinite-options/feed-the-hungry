@@ -46,6 +46,7 @@ function LoginPage() {
     
     const responseFacebook = async response => {
         console.log("User has tried to login through Facebook..");
+        console.log(response);
         if (response.email) {
             const email = response.email;
             const access = response.accessToken;
@@ -233,10 +234,10 @@ function LoginPage() {
                 }
             }
         }).catch(err => {
-            // console.log(err);
+            console.log(err.response);
             setError("Invalid email or password");
             // if (error.response.status === 500) setError("Failed to connect to the server, please try again later");
-            // else if (error.response.status === 401) setError("Invalid password");
+            // else if (!error.response.data.auth_success) setError("Invalid password");
             // else if (error.response.status === 400) {
             //     axios.get("${API_URL}/${email.value}").then(response => {
             //         setError("User already exists as a ${response.data.social} account");
