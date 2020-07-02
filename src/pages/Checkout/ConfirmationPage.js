@@ -71,7 +71,7 @@ const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
         // once axios's POST method is called, we update sentOrder
         // so that we know it has already been written to the db.
         window.localStorage.removeItem("cart"); // remove cart data from local storage
-        context.setOrderInfo(0);
+        context.setCartTotal(0);
         setSentOrder(prevState => ({...prevState, isSent: true, order_id: responseData.result.order_id}));
       } catch (err) {
         console.log(err);
