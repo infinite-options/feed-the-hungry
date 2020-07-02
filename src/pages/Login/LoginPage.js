@@ -40,47 +40,53 @@ function LoginPage() {
                 // User exists in database
                 if (response.data.result.result.length) {
                     console.log("Exists");
-                    let uid = response.data.result.result[0].ctm_id;
-                    console.log(uid);
-                    axios.post(`https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/socialacc/${uid}`).then(response => {
-                        console.log(response);
-                        let first_name = response.data.result.result[0].ctm_first_name;
-                        let last_name = response.data.result.result[0].ctm_last_name;
-                        let phone = response.data.result.result[0].ctm_phone;
-                        
-                        let address1 = response.data.result.result[0].ctm_address1;
-                        let address2 = response.data.result.result[0].ctm_address2;
-                        let city = response.data.result.result[0].ctm_city;
-                        let state = response.data.result.result[0].ctm_state;
-                        let zipcode = response.data.result.result[0].ctm_zipcode;
-                        let email = response.data.result.result[0].ctm_email;
-                        
-                        let join_date = response.data.result.result[0].ctm_join_date;
+                    // checking if user exists as the correct account type
+                    if (data.social === response.data.result.result[0].ctm_social_media) {
                         let uid = response.data.result.result[0].ctm_id;
-                        let login_id = response.data.login_attempt_log.login_id;
-                        let session_id = response.data.login_attempt_log.session_id;
-                        
-                        let userInfo = {
-                            firstName: first_name,
-                            lastName: last_name,
-                            phoneNumber: phone,
-                            address1: address1,
-                            address2: address2,
-                            city: city,
-                            state: state,
-                            zip: zipcode,
-                            email: email,
-    
-                            joinDate: join_date,
-                            userID: uid,
-                            loginID: login_id,
-                            sessionID: session_id,
-                        }
-                        window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
-                        
-                        context.setIsAuth(true);
-                        history.push('/');
-                    })
+                        console.log(uid);
+                        axios.post(`https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/socialacc/${uid}`).then(response => {
+                            console.log(response);
+                            let first_name = response.data.result.result[0].ctm_first_name;
+                            let last_name = response.data.result.result[0].ctm_last_name;
+                            let phone = response.data.result.result[0].ctm_phone;
+                            
+                            let address1 = response.data.result.result[0].ctm_address1;
+                            let address2 = response.data.result.result[0].ctm_address2;
+                            let city = response.data.result.result[0].ctm_city;
+                            let state = response.data.result.result[0].ctm_state;
+                            let zipcode = response.data.result.result[0].ctm_zipcode;
+                            let email = response.data.result.result[0].ctm_email;
+                            
+                            let join_date = response.data.result.result[0].ctm_join_date;
+                            let uid = response.data.result.result[0].ctm_id;
+                            let login_id = response.data.login_attempt_log.login_id;
+                            let session_id = response.data.login_attempt_log.session_id;
+                            
+                            let userInfo = {
+                                firstName: first_name,
+                                lastName: last_name,
+                                phoneNumber: phone,
+                                address1: address1,
+                                address2: address2,
+                                city: city,
+                                state: state,
+                                zip: zipcode,
+                                email: email,
+        
+                                joinDate: join_date,
+                                userID: uid,
+                                loginID: login_id,
+                                sessionID: session_id,
+                            }
+                            window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
+                            
+                            context.setIsAuth(true);
+                            history.push('/');
+                        })
+                    }
+                    else {
+                        setError(`Your account is registered as a ${response.data.result.result[0].ctm_social_media} user`);
+                    }
                 }
                 // New user, redirect to signup page
                 else {
@@ -168,75 +174,82 @@ function LoginPage() {
     }
 
     function checkLogin() {
-        const data = {
-            "email": email.value,
-            "password": password.value,
-        }
+        axios.get(`https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/social/${email.value}`).then(response => {
+            // if user has a social account
+            if (response.data && response.data.result.result.length) {
+                setError(`Your account is registered as a ${response.data.result.result[0].ctm_social_media} user`);
+            }
+            // otherwise try direct login
+            else {
+                const data = {
+                    "email": email.value,
+                    "password": password.value,
+                }
 
-        axios.post(
-            "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/login", 
-            data
-        ).then(response => {
-            console.log(response);
-            if (response.status === 200 && response.data.auth_success) {
-                if (response.data.result.result[0].ctm_email_verify) {
-                    let first_name = response.data.result.result[0].ctm_first_name;
-                    let last_name = response.data.result.result[0].ctm_last_name;
-                    let phone = response.data.result.result[0].ctm_phone;
-                    
-                    let address1 = response.data.result.result[0].ctm_address1;
-                    let address2 = response.data.result.result[0].ctm_address2;
-                    let city = response.data.result.result[0].ctm_city;
-                    let state = response.data.result.result[0].ctm_state;
-                    let zipcode = response.data.result.result[0].ctm_zipcode;
-                    let email = response.data.result.result[0].ctm_email;
-                    
-                    let join_date = response.data.result.result[0].ctm_join_date;
-                    let uid = response.data.result.result[0].ctm_id;
-                    let login_id = response.data.login_attempt_log.login_id;
-                    let session_id = response.data.login_attempt_log.session_id;
+                axios.post(
+                    "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/login", 
+                    data
+                ).then(response => {
+                    console.log(response);
+                    if (response.status === 200 && response.data.auth_success) {
+                        if (response.data.result.result[0].ctm_email_verify) {
+                            let first_name = response.data.result.result[0].ctm_first_name;
+                            let last_name = response.data.result.result[0].ctm_last_name;
+                            let phone = response.data.result.result[0].ctm_phone;
+                            
+                            let address1 = response.data.result.result[0].ctm_address1;
+                            let address2 = response.data.result.result[0].ctm_address2;
+                            let city = response.data.result.result[0].ctm_city;
+                            let state = response.data.result.result[0].ctm_state;
+                            let zipcode = response.data.result.result[0].ctm_zipcode;
+                            let email = response.data.result.result[0].ctm_email;
+                            
+                            let join_date = response.data.result.result[0].ctm_join_date;
+                            let uid = response.data.result.result[0].ctm_id;
+                            let login_id = response.data.login_attempt_log.login_id;
+                            let session_id = response.data.login_attempt_log.session_id;
 
-                    let userInfo = {
-                        firstName: first_name,
-                        lastName: last_name,
-                        phoneNumber: phone,
-                        address1: address1,
-                        address2: address2,
-                        city: city,
-                        state: state,
-                        zip: zipcode,
-                        email: email,
+                            let userInfo = {
+                                firstName: first_name,
+                                lastName: last_name,
+                                phoneNumber: phone,
+                                address1: address1,
+                                address2: address2,
+                                city: city,
+                                state: state,
+                                zip: zipcode,
+                                email: email,
 
-                        joinDate: join_date,
-                        userID: uid,
-                        loginID: login_id,
-                        sessionID: session_id,
+                                joinDate: join_date,
+                                userID: uid,
+                                loginID: login_id,
+                                sessionID: session_id,
+                            }
+                            window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
+                            
+                            context.setIsAuth(true);
+                            history.push('/');
+                        }
+                        else {
+                            setError("Please verify your email address before logging in");
+                        }
                     }
-                    window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
-                    
-                    context.setIsAuth(true);
-                    history.push('/');
-                }
-                else {
-                    setError("Please verify your email before logging in");
-                }
+                }).catch(err => {
+                    console.log(err.response);
+                    // setError("Invalid email or password");
+                    if (err.response.status === 500) setError("Failed to connect to the server, please try again later");
+                    else if (err.response.status === 401 && !err.response.data.auth_success) setError("Invalid email or password");
+                    else if (err.response.status === 400) {
+                        setError("User does not exist, please create an account");
+                    }
+                    // In case any other errors i don't know about appear during testing
+                    else {
+                        setError(`Error ${error.response.status} :`, err.data.message);
+                    }
+                })
             }
         }).catch(err => {
             console.log(err.response);
-            setError("Invalid email or password");
-            // if (error.response.status === 500) setError("Failed to connect to the server, please try again later");
-            // else if (!error.response.data.auth_success) setError("Invalid password");
-            // else if (error.response.status === 400) {
-            //     axios.get("${API_URL}/${email.value}").then(response => {
-            //         setError("User already exists as a ${response.data.social} account");
-            //     }).catch(err => {
-            //         setError("User does not exist, please create an account");
-            //     })
-            // }
-            // // In case any other errors i don't know about appear during testing
-            // else {
-            //     setError("Error ${error.response.status} :", error.data.message);
-            // }
         })
     }
 
