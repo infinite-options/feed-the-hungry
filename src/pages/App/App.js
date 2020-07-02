@@ -42,6 +42,11 @@ function App() {
 
   useEffect(() => {
     onLoad();
+    window.addEventListener('storage', onLoad);
+
+    return () => {
+      window.removeEventListener('storage', onLoad)
+    }
   }, [])
 
   function onLoad() {
@@ -49,6 +54,10 @@ function App() {
       if (!isAuth && JSON.parse(window.localStorage.getItem("userInfo"))) {
         console.log("Authenticated");
         setIsAuth(true);
+      }
+      else if (!JSON.parse(window.localStorage.getItem("userInfo"))) {
+        console.log("User is not logged in");
+        setIsAuth(false);
       }
     }
     catch (err) {
