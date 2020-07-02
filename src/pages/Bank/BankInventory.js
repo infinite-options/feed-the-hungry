@@ -157,13 +157,13 @@ const useCounter = (x) => {
       else if (item && value === 0) cartItems.splice(cartItems.indexOf(item), 1);
       else if (!item && value > 0) cartItems.push({ info: x, amount: value });
 
-      window.localStorage.setItem('cart', JSON.stringify({ bankId: bankId, items: cartItems}));
+      window.localStorage.setItem('cart', JSON.stringify({ bankId: bankId, total: totalAmount(cartItems), items: cartItems}));
       context.setDeliveryMethod(cartItems[0] ? cartItems[0].info.delivery_pickup : '' );
    } 
    else if (cart.bankId && cart.bankId != bankId && value > 0){
         cartItems = [];
         cartItems.push({ info: x, amount: value });
-        window.localStorage.setItem('cart', JSON.stringify({ bankId: bankId, items: cartItems}));
+        window.localStorage.setItem('cart', JSON.stringify({ bankId: bankId, total: totalAmount(cartItems), items: cartItems}));
         context.setDeliveryMethod(cartItems[0].info.delivery_pickup);
    } 
    else if (cart.bankId && cart.bankId != bankId){
@@ -171,7 +171,7 @@ const useCounter = (x) => {
     context.setDeliveryMethod('');
    }
    else if (!cart.bankId){
-      window.localStorage.setItem('cart', JSON.stringify({bankId: bankId, items: cartItems}));
+      window.localStorage.setItem('cart', JSON.stringify({bankId: bankId, total: totalAmount(cartItems), items: cartItems}));
       context.setDeliveryMethod('');
    }
    context.setOrderInfo(totalAmount(cartItems));
@@ -190,11 +190,5 @@ const getItemsByKey = (key, arr) => {
   return arr.filter((x) => x.fl_food_type.includes(key));
 };
 
-const useDeliveryMethod = () => {
-  const [deliveryMethod, setDeliveryMethod] = useState('both');
-  return {
-    deliveryMethod,
-    setDeliveryMethod
-  }
-}
+
 export default withRouter(BankInventory);
