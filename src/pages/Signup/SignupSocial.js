@@ -1,34 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
-import {
-    // BrowserRouter as Router,
-    // Switch,
-    // Route,
-    // Link,
-    // useRouteMatch,
-    // useParams,
-    useHistory,
-    useLocation
-  } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import axios from 'axios';
-// import history from 'pages/App/History';
 
 import StateAPI from 'API/StateAPI';
 import "pages/styles.css";
 import useField from "components/Hooks/useField";
 import InputField from "components/Form/InputField";
 import Select from 'components/Form/Select';
-import ScrollToTopOnMount from "utils/Scroll/ScrollToTopOnMount";
-import Icons from "components/Icons/Icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import Notifications from "components/Notifications/Notifications";
-// import SignupLayout from "pages/Signup/SignupLayout.js";
-// import FarmersMarket from 'assets/image/farmers-market.jpg';
+import DietaryRestrictions from "pages/Signup/DietaryRestrictions";
+import FamilyMembers from "pages/Signup/FamilyMembers";
 
 function SignupSocial() {
     const states = StateAPI();
     const location = useLocation();
+    const dietRef = useRef();
+    const familyRef = useRef();
 
     const [email, setEmail] = useState("");
     const [firstname, setFirstName] = useState("");
@@ -55,19 +43,6 @@ function SignupSocial() {
     const licenseImg= useField("License Image", "file", false);
     const monthlyIncome = useField("Monthly Income", "number", false);
 
-    const a_firstName = useField("First Name", "text");
-    const a_lastName = useField("Last Name", "text");
-    const a_dob = useField("Date of Birth", "date");
-
-    const [hidden, setHidden] = useState("hidden");
-    const [persons, setPersons] = useState([]);
-    const [showForm, setShowForm] = useState(false);
-
-    let hasRestrictions = vegan.value || vegetarian.value
-                       || glutenFree.value || kosher.value 
-                       || halal.value;
-    let noneSelected = !!none.value;
-
     useEffect(() => {
         (async function setSignupParams(state) {
             if (state) {
@@ -84,52 +59,6 @@ function SignupSocial() {
         setRefreshToken(state.refreshToken);
         // setSOCIAL_API_URL(state.SOCIAL_API_URL);
         setSocialMedia(state.social);
-    }
-
-    const savePerson = () => {
-        let data = [
-            a_firstName.value, 
-            a_lastName.value, 
-            a_dob.value, 
-        ]
-        let isAllValid = true;
-        if (!a_firstName.validate() | !a_lastName.validate() | !a_dob.validate()) {
-            isAllValid = false;
-        }
-
-        if (isAllValid) {
-            persons.push(data);
-            setPersons([...persons]);
-            
-            clearPersonForm();
-            console.log(persons);
-        }
-    }
-
-    const delPerson = (idx) => {
-        persons.splice(idx, 1);
-        console.log(idx);
-        console.log(persons);
-        setPersons([...persons]);
-    }
-
-    const clearPersonForm = () => {
-        a_firstName.resetinput();
-        a_lastName.resetinput();
-        a_dob.resetinput();
-        setShowForm(false);
-    }
-
-    function listPersons() {
-        return (
-            <div className="column">
-                {persons.map((person, idx) => (
-                    <p key={idx}>
-                        {person[0] + ' ' + person[1]} <button onClick={() => delPerson(idx)}> X </button>
-                    </p>
-                ))}
-            </div>
-        );
     }
 
     const validateInputs = () => {
@@ -155,19 +84,14 @@ function SignupSocial() {
     const handleClick = () => {
         console.log("User has tried to sign up..")
         let isAllValid = validateInputs();
-        if (!none.value && !hasRestrictions) setHidden("");
+        dietRef.current.checkValues();
         
         // Checking if user filled all required inputs
-        let signupPassed = (none.value || hasRestrictions) && isAllValid;
+        let signupPassed = dietRef.current.valid() && isAllValid;
 
         if(signupPassed) {
             // Testing to see if all values went through
             let data = {};
-            // for (let input in inputs) {
-            //     // console.log(input + ":", inputs[input].value);
-            //     if (inputs[input].type !== "file") data[input] = inputs[input].value;
-            //     else data[input] = inputs[input].file;
-            // }
             data["email"] = email;
             data["firstname"] = firstname;
             data["lastname"] = lastname;
@@ -189,7 +113,7 @@ function SignupSocial() {
             data["halal"] = halal.value;
             data["none"] = none.value;
             // console.log("persons" + ":", persons);
-            data["persons"] = persons;
+            data["persons"] = familyRef.current.persons;
             console.log("Data:", data);
             console.log("we did it!");
             let test = {
@@ -302,26 +226,7 @@ function SignupSocial() {
                     <div>
                         <p className="subtitle is-3 has-margin-top-1 has-text-centered has-text-black">Optional Personal Information</p>
                         <div className="columns has-margin-top-1">
-                            <div className="column has-text-centered">
-                                {showForm ? (
-                                    <React.Fragment>
-                                        <button className="button is-success has-margins-0-5" onClick={clearPersonForm}>Cancel</button>
-                                        <button className="button is-success has-margins-0-5" onClick={savePerson}>Save</button>
-                                    </React.Fragment>
-                                ) : (
-                                    <button className="button is-success has-margins-0-5" onClick={() => setShowForm(true)}>Add a Family Member</button>
-                                )}
-                                {showForm && (
-                                    <React.Fragment>
-                                        <InputField props={a_firstName} />
-                                        <InputField props={a_lastName} />
-                                        <InputField props={a_dob} />
-                                    </React.Fragment>
-                                )}
-                                <div className="box">
-                                    {listPersons()}
-                                </div>
-                            </div>
+                            <FamilyMembers ref={familyRef} />
                             <div className="column">
                                 <InputField props={license} />
                                 <div className="box">
@@ -347,17 +252,7 @@ function SignupSocial() {
                     {/* Asking for dietary restrictions */}
                     <p className="right-most" title="Substitutions allow users to choose different items that align with their dietary restrictions to add to their total cart.">* Opt for substitutions.</p>
                     <p className="subtitle is-3 has-text-centered has-text-black">Dietary Restrictions*</p>
-                    <InputField props={vegan} icon={Icons.Vegan} isDisabled={noneSelected}/>
-                    <InputField props={vegetarian} icon={Icons.Vegetarian} isDisabled={noneSelected} />
-                    <InputField props={glutenFree} icon={Icons.GlutenFree} isDisabled={noneSelected} />
-                    <InputField props={kosher} icon={Icons.Kosher} isDisabled={noneSelected} />
-                    <InputField props={halal} icon={Icons.Halal} isDisabled={noneSelected} />
-                    <InputField props={none} isDisabled={hasRestrictions} />
-                    <div className={hidden === "" && (none.value || hasRestrictions === true) ? "hidden" : hidden}>
-                        <article className="message is-danger error-msg">
-                            <div className="message-body">Please select any dietary restrictions you have. If none are applicable, please select N/A.</div>
-                        </article>
-                    </div>
+                    <DietaryRestrictions ref={dietRef}/>
                     <div className="has-text-centered">
                         <button className="button is-success has-margins-0-5" type="button" onClick={handleClick}>Sign Up</button>
                     </div>
