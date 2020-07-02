@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 
 import axios from 'axios';
 
@@ -15,6 +15,7 @@ import FamilyMembers from "pages/Signup/FamilyMembers";
 function SignupSocial() {
     const states = StateAPI();
     const location = useLocation();
+    const history = useHistory();
     const dietRef = useRef();
     const familyRef = useRef();
 
@@ -57,7 +58,6 @@ function SignupSocial() {
         setFirstName(state.firstname);
         setAccessToken(state.accessToken);
         setRefreshToken(state.refreshToken);
-        // setSOCIAL_API_URL(state.SOCIAL_API_URL);
         setSocialMedia(state.social);
     }
 
@@ -93,26 +93,25 @@ function SignupSocial() {
             // Testing to see if all values went through
             let data = {};
             data["email"] = email;
-            data["firstname"] = firstname;
-            data["lastname"] = lastname;
-            data["accessToken"] = accessToken;
-            data["refreshToken"] = refreshToken;
-            data["socialMedia"] = socialMedia;
+            data["first_name"] = firstname;
+            data["last_name"] = lastname;
+            data["access_token"] = accessToken;
+            data["refresh_token"] = refreshToken;
+            data["social_media"] = socialMedia;
 
-            data["phoneNumber"] = phoneNumber.value;
+            data["phone"] = phoneNumber.value;
             data["dob"] = dob.value;
-            data["address_1"] = address_1.value;
-            data["address_2"] = address_2.value;
+            data["address1"] = address_1.value;
+            data["address2"] = address_2.value;
             data["city"] = city.value;
             data["state"] = state.value;
-            data["zip"] = zip.value;
+            data["zipcode"] = zip.value;
             data["vegan"] = vegan.value;
             data["vegetarian"] = vegetarian.value;
             data["glutenFree"] = glutenFree.value;
             data["kosher"] = kosher.value;
             data["halal"] = halal.value;
             data["none"] = none.value;
-            // console.log("persons" + ":", persons);
             data["persons"] = familyRef.current.persons;
             console.log("Data:", data);
             console.log("we did it!");
@@ -126,22 +125,22 @@ function SignupSocial() {
                 "zipcode" : zip.value,
                 "phone" : phoneNumber.value,
                 "email" : email,
-                "accessToken": accessToken,
-                "refreshToken": refreshToken,
-                "socialMedia": socialMedia,
+                "social_media" : socialMedia,
+                "access_token": accessToken,
+                "refresh_token": refreshToken,
             }
             console.log("Test:", test);
-            // axios.post(
-            //     "${API_URL}", 
-            //     test
-            // ).then(response => {
-            //     console.log(response);
-            //     if (response.status === 200) {
-            //         // Log user in
-            //     }
-            // }).catch(err => {
-            //     console.log(err);
-            // });
+            axios.post(
+                "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/socialsignup", 
+                test
+            ).then(response => {
+                console.log(response);
+                if (response.status === 200) {
+                    history.push('/login');
+                }
+            }).catch(err => {
+                console.log(err);
+            });
         }
         else {
             console.log("Sign up failed...");

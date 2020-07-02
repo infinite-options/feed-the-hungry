@@ -26,48 +26,86 @@ import { OrderContext }  from 'components/Context/OrderContext';
 
 function LoginPage() {
     const context = useContext(OrderContext);
-
     const history = useHistory();
 
+    const [error, setError] = useState(null);
     const email = useField("Email","email");
     const password = useField("Password","password");
-    // let onLoginPage = true;
 
-    async function grabSocialUserInfo(email) {
-        // try {
-        //     let response = await axios.get("${API_URL}/${email}");
-        //     console.log(response);
-        //     if (response.status === 200) {
-        //         Depending on how i get the data, this might look different
-        //     }
-        //     Check if user exists in direct login database table
-        //     return null if it does, then setError("User already exists as a direct login account")
+    const checkSocialLogin = (data) => {
+        console.log("Data:", data);
+        axios.get(`https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/social/${data.email}`).then(response => {
+            console.log(response);
+            if (response.data) {
+                // User exists in database
+                if (response.data.result.result.length) {
+                    console.log("Exists");
+                    let uid = response.data.result.result[0].ctm_id;
+                    console.log(uid);
+                    axios.post(`https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/socialacc/${uid}`).then(response => {
+                        console.log(response);
+                        let first_name = response.data.result.result[0].ctm_first_name;
+                        let last_name = response.data.result.result[0].ctm_last_name;
+                        let phone = response.data.result.result[0].ctm_phone;
+                        
+                        let address1 = response.data.result.result[0].ctm_address1;
+                        let address2 = response.data.result.result[0].ctm_address2;
+                        let city = response.data.result.result[0].ctm_city;
+                        let state = response.data.result.result[0].ctm_state;
+                        let zipcode = response.data.result.result[0].ctm_zipcode;
+                        let email = response.data.result.result[0].ctm_email;
+                        
+                        let join_date = response.data.result.result[0].ctm_join_date;
+                        let uid = response.data.result.result[0].ctm_id;
+                        let login_id = response.data.login_attempt_log.login_id;
+                        let session_id = response.data.login_attempt_log.session_id;
+                        
+                        let userInfo = {
+                            firstName: first_name,
+                            lastName: last_name,
+                            phoneNumber: phone,
+                            address1: address1,
+                            address2: address2,
+                            city: city,
+                            state: state,
+                            zip: zipcode,
+                            email: email,
+    
+                            joinDate: join_date,
+                            userID: uid,
+                            loginID: login_id,
+                            sessionID: session_id,
+                        }
+                        window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
+                        
+                        context.setIsAuth(true);
+                        history.push('/');
+                    })
+                }
+                // New user, redirect to signup page
+                else {
+                    console.log("No exist");
+                    history.push({
+                        pathname: "/signup/social",
+                        state: {
+                            lastname: data.last_name,
+                            firstname: data.first_name,
+                            email: data.email,
+                            social: data.social,
+                            accessToken: data.access,
+                            refreshToken: data.refresh,
+                        }
+                    });
+                }
+            } 
+        }).catch(err => {
+            console.log(err.response);
+        })
     }
-
-    // const checkSocialLogin = (data) => {
-    //     axios.post("${API_URL}", data).then(response => {
-    //         console.log("Data:", data);
-    //         // user logged in, update user data & status
-    //     }).catch(err => {
-    //         history.push({
-    //             pathname: "/signup/social",
-    //             state: {
-    //                 lastname: data.last_name,
-    //                 firstname: data.first_name,
-    //                 email: data.email,
-    //                 social: data.social,
-    //                 accessToken: access,
-    //                 refreshToken: refresh,
-    //                 // SOCIAL_API_URL: `${props.SOCIAL_API_URL}acc`
-    //             }
-    //         });
-    //     })
-    // }
     
     const responseFacebook = async response => {
-        console.log("User has tried to login through Facebook..");
-        console.log(response);
         if (response.email) {
+            console.log("User has tried to login through Facebook..");
             const email = response.email;
             const access = response.accessToken;
             const refresh = response.id;
@@ -79,88 +117,36 @@ function LoginPage() {
             }
             first_name = first_name.slice(0, -1);
 
-            // Other way to do it possibly
-            // data = {
-            //     email: email,
-            //     access: access,
-            //     refresh: refresh,
-            //     first_name: first_name,
-            //     last_name: last_name,
-            //     social: "Facebook",
-            // }
-            // checkSocialLogin(data);
-            // END OF FUNCTION
-
-            // let data = await grabSocialUserInfo(email); // gets social user data, returns null if data doesn't exist
-            let data = null; // temp value
-
-            if (!data) {
-                // new user, send them to social signup page
-                console.log("Data not found..");
-                history.push({
-                    pathname: "/signup/social",
-                    state: {
-                        lastname: last_name,
-                        firstname: first_name,
-                        email: email,
-                        social: "Facebook",
-                        accessToken: access,
-                        refreshToken: refresh,
-                        // SOCIAL_API_URL: `${props.SOCIAL_API_URL}acc`
-                    }
-                });
+            const data = {
+                email: email,
+                access: access,
+                refresh: refresh,
+                first_name: first_name,
+                last_name: last_name,
+                social: "Facebook",
             }
-            else {
-                console.log("Data:", data);
-                // user logged in, update user data & status
-            }
+            checkSocialLogin(data);
         }
     }
 
     const responseGoogle = async response => {
-        console.log("User has tried to login through Google..");
         if (response.profileObj) {
+            console.log("User has tried to login through Google..");
             const email = response.profileObj.email;
             const access = response.accessToken;
             const refresh = response.googleId;
             const first_name = response.profileObj.givenName;
             const last_name = response.profileObj.familyName;
 
-            // Other way to do it possibly
-            // data = {
-            //     email: email,
-            //     access: access,
-            //     refresh: refresh,
-            //     first_name: first_name,
-            //     last_name: last_name,
-            //     social: "Google",
-            // }
-            // checkSocialLogin(data);
-            // END OF FUNCTION
-
-            // let data = await grabSocialUserInfo(email); // get social data, returns null if user doesn't exist yet
-            let data = null; // temp value
-            
-            if (!data) {
-                // new user, send them to social signup page
-                console.log("Data not found..");
-                history.push({
-                    pathname: "/signup/social",
-                    state: {
-                        lastname: last_name,
-                        firstname: first_name,
-                        email: email,
-                        social: "Google",
-                        accessToken: access,
-                        refreshToken: refresh,
-                        // SOCIAL_API_URL: `${props.SOCIAL_API_URL}acc`
-                    }
-                });
+            const data = {
+                email: email,
+                access: access,
+                refresh: refresh,
+                first_name: first_name,
+                last_name: last_name,
+                social: "Google",
             }
-            else {
-                console.log("Data:", data);
-                // user logged in, update user data & status
-            }
+            checkSocialLogin(data);
         }
     }
 
@@ -181,33 +167,7 @@ function LoginPage() {
         }
     }
 
-    async function grabLoginInfoForUser(userEmail, userPassword) {
-        // For testing...
-        // console.log("running function grabLoginInfoForUser()..");
-        // console.log(
-        //             "Email:", (userEmail ? userEmail : undefined), 
-        //             "Password:", (userPassword ? userPassword : undefined)
-        //             );
-
-        // Code here
-    }
-
-    const [error, setError] = useState(null);
     function checkLogin() {
-        // For testing...
-        // console.log("running function checkLogin()..")
-
-        // get user data based on email and password inputs
-        // grabLoginInfoForUser(email.value, password.value).then(response => {
-        //     login(response);
-        // }).catch(err => {
-        //     // For testing...
-        //     console.log("uh oh error ", err.response)
-
-        //     // Code here
-        // })
-
-
         const data = {
             "email": email.value,
             "password": password.value,
@@ -236,23 +196,6 @@ function LoginPage() {
                     let login_id = response.data.login_attempt_log.login_id;
                     let session_id = response.data.login_attempt_log.session_id;
 
-                    // setLoginInfo(prevState => ({...prevState, 
-                    //     firstName: first_name,
-                    //     lastName: last_name,
-                    //     phoneNumber: phone,
-                    //     address1: address1,
-                    //     address2: address2,
-                    //     city: city,
-                    //     state: state,
-                    //     zip: zipcode,
-                    //     email: email,
-
-                    //     joinDate: join_date,
-                    //     userID: uid,
-                    //     loginID: login_id,
-                    //     sessionID: session_id,
-                    // }));
-
                     let userInfo = {
                         firstName: first_name,
                         lastName: last_name,
@@ -271,7 +214,6 @@ function LoginPage() {
                     }
                     window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
                     
-                    // Context API stuff here!
                     context.setIsAuth(true);
                     history.push('/');
                 }
@@ -296,17 +238,6 @@ function LoginPage() {
             //     setError("Error ${error.response.status} :", error.data.message);
             // }
         })
-    }
-
-    function login(response) {
-        // For testing...
-        // console.log("running function login()..");
-        // console.log("Response:", response);
-
-        // Code here
-        if(response) {
-            // user has logged in, update user data and login status
-        }
     }
 
     return (
