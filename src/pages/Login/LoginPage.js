@@ -43,6 +43,26 @@ function LoginPage() {
         //     Check if user exists in direct login database table
         //     return null if it does, then setError("User already exists as a direct login account")
     }
+
+    // const checkSocialLogin = (data) => {
+    //     axios.post("${API_URL}", data).then(response => {
+    //         console.log("Data:", data);
+    //         // user logged in, update user data & status
+    //     }).catch(err => {
+    //         history.push({
+    //             pathname: "/signup/social",
+    //             state: {
+    //                 lastname: data.last_name,
+    //                 firstname: data.first_name,
+    //                 email: data.email,
+    //                 social: data.social,
+    //                 accessToken: access,
+    //                 refreshToken: refresh,
+    //                 // SOCIAL_API_URL: `${props.SOCIAL_API_URL}acc`
+    //             }
+    //         });
+    //     })
+    // }
     
     const responseFacebook = async response => {
         console.log("User has tried to login through Facebook..");
@@ -58,6 +78,19 @@ function LoginPage() {
                 first_name += name[i] + " ";
             }
             first_name = first_name.slice(0, -1);
+
+            // Other way to do it possibly
+            // data = {
+            //     email: email,
+            //     access: access,
+            //     refresh: refresh,
+            //     first_name: first_name,
+            //     last_name: last_name,
+            //     social: "Facebook",
+            // }
+            // checkSocialLogin(data);
+            // END OF FUNCTION
+
             // let data = await grabSocialUserInfo(email); // gets social user data, returns null if data doesn't exist
             let data = null; // temp value
 
@@ -92,6 +125,19 @@ function LoginPage() {
             const refresh = response.googleId;
             const first_name = response.profileObj.givenName;
             const last_name = response.profileObj.familyName;
+
+            // Other way to do it possibly
+            // data = {
+            //     email: email,
+            //     access: access,
+            //     refresh: refresh,
+            //     first_name: first_name,
+            //     last_name: last_name,
+            //     social: "Google",
+            // }
+            // checkSocialLogin(data);
+            // END OF FUNCTION
+
             // let data = await grabSocialUserInfo(email); // get social data, returns null if user doesn't exist yet
             let data = null; // temp value
             
