@@ -2,6 +2,7 @@ import React from "react";
 import { withRouter } from 'react-router-dom';
 function BankSchedule({ obj }) {
   const week=['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
+  
   return (
     <div className="bank-info-content no-overflow">
       <div className="schedule-days">

@@ -43,6 +43,7 @@
     "react-snaplist-carousel": "^3.2.2",
     "react-widgets": "^4.5.0",
     "react-widgets-globalize": "^5.0.21",
+    "recompose": "^0.30.0",
     "use-position": "0.0.7"
   },
   "scripts": {

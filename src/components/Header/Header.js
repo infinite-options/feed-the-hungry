@@ -6,6 +6,10 @@ import Icons from 'components/Icons/Icons';
 import { OrderContext }  from 'components/Context/OrderContext';
 function Header (){
     const context = useContext(OrderContext);
+    context.setCartTotal(() => {
+        const cart = JSON.parse(window.localStorage.getItem('cart'));
+        return cart && cart.total ? cart.total  : 0;
+    });
 
     const handleLogout = () => {
         window.localStorage.removeItem("userInfo");
@@ -39,7 +43,7 @@ function Header (){
                     )}
                     {context.isAuth && (
                         <div className="navbar-item has-no-padding-right">
-                            <AddToCart num={context.orderInfo} />
+                            <CartTotal num={context.cartTotal} />
                         </div>
                     )}
                 </div>
@@ -59,32 +63,14 @@ function SearchBar() {
         </div>
     );
 }
-function AddToCart({num}) {
-    const [total, setTotal] = useState(0);
-    // const cart = JSON.parse(window.localStorage.getItem('cart')) || {};
-    // const cartItems = cart.items ? cart.items : [];
-    // context.setCartInfo(prevState=>({...prevState, total: totalAmount(cartItems), items: cart.items}));
-    useEffect(() => {
-        getTotal();
-        window.addEventListener('storage', getTotal);
-    
-        return () => {
-          window.removeEventListener('storage', getTotal)
-        }
-    }, [])
-    const getTotal = () => {
-        const cart = JSON.parse(window.localStorage.getItem('cart')) || {};
-        const cartItems = cart.items ? cart.items : [];
-        setTotal(totalAmount(cartItems));
-    }
-    
+function CartTotal({num}) {
     return (
         <Link to="/order/cart" alt="cart button">
             <div className="button add-cart">
             <span className="icon shopping-cart">
                 <FontAwesomeIcon icon={Icons.faShoppingBasket} />
             </span>
-            <span>{total}</span>  
+            <span>{num}</span>  
             </div>
         </Link>
     );

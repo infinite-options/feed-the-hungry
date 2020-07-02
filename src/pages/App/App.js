@@ -35,12 +35,11 @@ import AuthRoute from 'components/Route/AuthRoute';
 import NonAuthRoute from 'components/Route/NonAuthRoute';
 
 function App() {
-  const [cartInfo, setCartInfo] = useState({ bankId: "", total: 0, order_type: "", items: []});
-  const [orderInfo, setOrderInfo] = useState(0);
-  const [deliveryMethod, setDeliveryMethod] = useState('');
+  const [cartTotal, setCartTotal] = useState(0);
+  const [orderType, setOrderType] = useState('');
   const [isAuth, setIsAuth] = useState(false);
   const [loading, setLoading] = useState(true);
-
+  console.log("main");
   useEffect(() => {
     onLoad();
     window.addEventListener('storage', onLoad);
@@ -69,7 +68,7 @@ function App() {
 
   return !loading && (
     <Router basename={"feed-the-hungry"}>
-      <OrderContext.Provider value={{orderInfo, setOrderInfo, isAuth, setIsAuth, deliveryMethod, setDeliveryMethod, cartInfo, setCartInfo}}>
+      <OrderContext.Provider value={{cartTotal, setCartTotal, orderType, setOrderType, isAuth, setIsAuth}}>
         <Header />
         <Switch>
           <NonAuthRoute exact path="/login" isAuth={isAuth} component={LoginPage} />

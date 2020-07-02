@@ -18,31 +18,48 @@ import ScrollToTopOnMount from "utils/Scroll/ScrollToTopOnMount";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Icons from "components/Icons/Icons";
 
-
-function BankPage() {
+const BankPage = () => {
+  console.log("bank page")
   let { bankId } = useParams();
+  const bankData = JSON.parse(window.localStorage.getItem(bankId));
+  if (bankData) return <BankWithoutHook bank={bankData} />
+  return <BankWithHook bankId = {bankId}/>
+}
+const BankWithHook = ({bankId}) => {
+  console.log('get bank from api');
   const url = `https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/foodbankinfonew/${bankId}`;
-  return <Bank bankUrl={url} />;
+  const { data, isLoading, hasError } = useOurApi(url, {});
+
+  if (isLoading) return <LoadingPage />;
+  if (hasError || !data.result) return <ErrorPage />;
+  window.localStorage.setItem(bankId, JSON.stringify(data.result));
+  return <Bank bank = {data.result} />
 }
 
-const Bank = ({ bankUrl }) => {
-  const { data, isLoading, hasError } = useOurApi(bankUrl, {});
+const BankWithoutHook = (data) => {
+  console.log('get bank from local storage');
+  console.log(data)
+  return <Bank bank={data.bank} />
+}
+const Bank = ({ bank }) => {
+  // const { data, isLoading, hasError } = useOurApi(bankUrl, {});
   const [key, setKey] = useState(1);
   window.addEventListener("storage", () => {
     setKey(key + 1);
   });
 
-  if (isLoading) return <LoadingPage />;
-  if (hasError || !data.result) return <ErrorPage />;
+  // if (isLoading) return <LoadingPage />;
+  // if (hasError || !data.result) return <ErrorPage />;
 
-  const bank = data.result;
-  const delivery_pickup_items = bank.inventory.filter((x) =>
+  // const bank = data.result;
+  const inventory = bank.inventory? bank.inventory : [];
+  const delivery_pickup_items = inventory.filter((x) =>
     x.delivery_pickup.includes("both")
   );
-  const delivery_items = bank.inventory.filter((x) =>
+  const delivery_items = inventory.filter((x) =>
     x.delivery_pickup.includes("delivery")
   );
-  const pickup_items = bank.inventory.filter((x) =>
+  const pickup_items = inventory.filter((x) =>
     x.delivery_pickup.includes("pickup")
   );
   return (
@@ -98,4 +115,4 @@ const Bank = ({ bankUrl }) => {
   );
 };
 
-export default BankPage;
+export default React.memo(BankPage);
