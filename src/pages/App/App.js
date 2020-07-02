@@ -35,6 +35,7 @@ import AuthRoute from 'components/Route/AuthRoute';
 import NonAuthRoute from 'components/Route/NonAuthRoute';
 
 function App() {
+  const [cartInfo, setCartInfo] = useState({ bankId: "", total: 0, order_type: "", items: []});
   const [orderInfo, setOrderInfo] = useState(0);
   const [deliveryMethod, setDeliveryMethod] = useState('');
   const [isAuth, setIsAuth] = useState(false);
@@ -67,8 +68,8 @@ function App() {
   }
 
   return !loading && (
-    <Router>
-      <OrderContext.Provider value={{orderInfo, setOrderInfo, isAuth, setIsAuth, deliveryMethod, setDeliveryMethod}}>
+    <Router basename={"feed-the-hungry"}>
+      <OrderContext.Provider value={{orderInfo, setOrderInfo, isAuth, setIsAuth, deliveryMethod, setDeliveryMethod, cartInfo, setCartInfo}}>
         <Header />
         <Switch>
           <NonAuthRoute exact path="/login" isAuth={isAuth} component={LoginPage} />
