@@ -22,7 +22,7 @@ function BankInventory({ inventory }) {
         <div
           key={x.food_id}
           className={
-            x.delivery_pickup.includes(context.orderType)
+            context.orderType.includes(x.delivery_pickup)
               ? "card item"
               : " card item has-opacity-0-6"
           }
@@ -106,7 +106,7 @@ function QuantityInput({ item }) {
             className="button is-small"
             onClick={count.increase}
             disabled={
-              !item.delivery_pickup.includes(context.orderType) ||
+              !context.orderType.includes(item.delivery_pickup) ||
               item.quantity === 0 ||
               count.value >= item.food_id_limit
                 ? true
@@ -183,7 +183,7 @@ const useCounter = (x) => {
         })
       );
       context.setOrderType(
-        cartItems[0] ? cartItems[0].info.delivery_pickup : ""
+        cartItems[0] ? cartItems[0].info.delivery_pickup : "delivery;pickup"
       );
     } else if (cart.bankId && cart.bankId != bankId && value > 0) {
       cartItems = [];
@@ -199,7 +199,7 @@ const useCounter = (x) => {
       context.setOrderType(cartItems[0].info.delivery_pickup);
     } else if (cart.bankId && cart.bankId != bankId) {
       window.localStorage.setItem("cart", JSON.stringify(cart));
-      context.setOrderType("");
+      context.setOrderType("delivery;pickup");
     } else if (!cart.bankId) {
       window.localStorage.setItem(
         "cart",
@@ -209,7 +209,7 @@ const useCounter = (x) => {
           items: cartItems,
         })
       );
-      context.setOrderType("");
+      context.setOrderType("delivery;pickup");
     }
     context.setCartTotal(totalAmount(cartItems));
 

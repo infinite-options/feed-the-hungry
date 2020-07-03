@@ -54,13 +54,13 @@ const Bank = ({ bank }) => {
   // const bank = data.result;
   const inventory = bank.inventory? bank.inventory : [];
   const delivery_pickup_items = inventory.filter((x) =>
-    x.delivery_pickup.includes("both")
+    x.delivery_pickup === "delivery;pickup"
   );
   const delivery_items = inventory.filter((x) =>
-    x.delivery_pickup.includes("delivery")
+    x.delivery_pickup === "delivery"
   );
   const pickup_items = inventory.filter((x) =>
-    x.delivery_pickup.includes("pickup")
+    x.delivery_pickup === "pickup"
   );
   return (
     <div className="bank-page-bd">
