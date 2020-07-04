@@ -169,9 +169,7 @@ function LoginPage() {
 
     const handleClick = () => {
         console.log("User has tried to login..")
-        email.validate();
-        password.validate();
-        if (email.validate() && password.validate()) {
+        if (email.isValid && password.isValid) {
             console.log("we did it!");
             checkLogin();
         }

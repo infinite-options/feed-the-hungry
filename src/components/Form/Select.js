@@ -10,7 +10,7 @@ function Select({ props, data }) {
       <div className="control is-expanded">
         <div
           className={
-            props.error.length > 0
+            !props.isValid
               ? "select is-danger is-fullwidth"
               : "select is-fullwidth"
           }

@@ -69,7 +69,7 @@ const InputField = ({props, icon, isDisabled}) => {
   else if (props.type === "tel" || props.type === "number"){
     return (
       <div className="field horizontal">
-         <label className="help is-danger">*</label>
+        {props.isRequired && <label className="help is-danger">*</label>}
         <div className="field-body">
           <div className="field is-expanded">
             <div className="field has-addons">
@@ -78,7 +78,7 @@ const InputField = ({props, icon, isDisabled}) => {
               <a className="button is-static">{props.type === "tel" ? '+1' : '$'}</a>
               </div>
               <div className="control is-expanded">
-                <input type="tel" className={props.error.length > 0 ? "input is-danger" : "input"} onChange={props.onChange} value={props.value} placeholder={props.name} />
+                <input type="tel" className={!props.isValid ? "input is-danger" : "input"} onChange={props.onChange} value={props.value} placeholder={props.name} />
               </div>
               
             </div>
@@ -89,27 +89,24 @@ const InputField = ({props, icon, isDisabled}) => {
       </div>
     );
   }
-  else{
+  else {
     return (
-
       <div className="field">
-          <label className="help is-danger">*</label>
-          <div className={icon ? "control has-icons-right" : "control"}>
-            {props.type === "file" && <img id="inputImg" />}
-            <input className={props.error.length > 0 ? "input is-danger" : "input"} type={props.type !== "date" ? props.type : "text"} onChange={props.onChange} value={props.value} placeholder={props.name} 
-              {...(props.type === "date" ? {onFocus: handleDateName, onBlur: handleDateName, max: setMaxDate()} : {})} 
-              {...(props.type === "file" ? {accept: "image/*", onChange: handleImg} : {})}
-            />
-            {icon ?  (
-              <span className="icon is-right">
-                <FontAwesomeIcon icon={icon} />
-              </span>
-            ) : ""}
-          </div>
-          <p className="help is-danger">{props.error}</p>
-         
+        <label className="help is-danger">&nbsp;{props.isRequired ? "*" : ""}</label>
+        <div className={icon ? "control has-icons-right" : "control"}>
+          {props.type === "file" && <img id="inputImg" />}
+          <input className={!props.isValid ? "input is-danger" : "input"} type={props.type !== "date" ? props.type : "text"} onChange={props.onChange} value={props.value} placeholder={props.name} 
+            {...(props.type === "date" ? {onFocus: handleDateName, onBlur: handleDateName, max: setMaxDate()} : {})} 
+            {...(props.type === "file" ? {accept: "image/*", onChange: handleImg} : {})}
+          />
+          {icon ?  (
+            <span className="icon is-right">
+              <FontAwesomeIcon icon={icon} />
+            </span>
+          ) : ""}
+        </div>
+        <p className="help is-danger">{props.error}</p>   
       </div>
-
     );
   }
  

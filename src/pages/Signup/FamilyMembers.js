@@ -21,7 +21,7 @@ const FamilyMembers = forwardRef((props, ref) => {
         ]
         let isAllValid = true;
         for (let input in addition) {
-            if (!addition[input].validate()) {
+            if (!addition[input].isValid) {
                 isAllValid = false;
             }
         }
@@ -65,15 +65,17 @@ const FamilyMembers = forwardRef((props, ref) => {
     }));
 
     return (
-        <div className="column has-text-centered">
-            {showForm ? (
-                <React.Fragment>
-                    <button className="button is-success has-margins-0-5" onClick={clearPersonForm}>Cancel</button>
-                    <button className="button is-success has-margins-0-5" onClick={savePerson}>Save</button>
-                </React.Fragment>
-            ) : (
-                <button className="button is-success has-margins-0-5" onClick={() => setShowForm(true)}>Add a Family Member</button>
-            )}
+        <div className="column">
+            <div className="has-text-centered">
+                {showForm ? (
+                    <React.Fragment>
+                        <button className="button is-success has-margins-0-5" onClick={clearPersonForm}>Cancel</button>
+                        <button className="button is-success has-margins-0-5" onClick={savePerson}>Save</button>
+                    </React.Fragment>
+                ) : (
+                    <button className="button is-success has-margins-0-5" onClick={() => setShowForm(true)}>Add a Family Member</button>
+                )}
+            </div>
             {showForm && (
                 <React.Fragment>
                     <InputField props={addition.a_firstName} />

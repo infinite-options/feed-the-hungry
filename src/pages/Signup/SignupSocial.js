@@ -63,19 +63,19 @@ function SignupSocial() {
 
     const validateInputs = () => {
         let isAllValid = true;
-        if (!phoneNumber.validate() |
-            !dob.validate() |
-            !address_1.validate() |
-            !address_2.validate() |
-            !city.validate() |
-            !state.validate() |
-            !zip.validate() |
-            !vegan.validate() |
-            !vegetarian.validate() |
-            !glutenFree.validate() |
-            !kosher.validate() |
-            !halal.validate() |
-            !none.validate()) {
+        if (!phoneNumber.isValid ||
+            !dob.isValid ||
+            !address_1.isValid ||
+            !address_2.isValid ||
+            !city.isValid ||
+            !state.isValid ||
+            !zip.isValid ||
+            !vegan.isValid ||
+            !vegetarian.isValid ||
+            !glutenFree.isValid ||
+            !kosher.isValid ||
+            !halal.isValid ||
+            !none.isValid) {
             isAllValid = false;
         }
         return isAllValid;
@@ -174,19 +174,7 @@ function SignupSocial() {
                         </div>
                         <div className="columns">
                             <div className="column is-8">
-                                {/* Adding [+1] phone number button */}
-                                <div className="field-body">
-                                    <div className="field is-expanded">
-                                        <div className="field has-addons">
-                                            <div className="control">
-                                                <a className="button is-static">+1</a>
-                                            </div>
-                                            <div className="control is-expanded">
-                                                <InputField props={phoneNumber} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <InputField props={phoneNumber} />
                             </div>
                             <div className="column">
                                 <InputField  props={dob} />
@@ -233,19 +221,7 @@ function SignupSocial() {
                                 </div>
                             </div>
                         </div>
-                        {/* Adding $ to income input */}
-                        <div className="field-body">
-                            <div className="field is-expanded">
-                                <div className="field has-addons">
-                                    <div className="control">
-                                        <a className="button is-static">$</a>
-                                    </div>
-                                    <div className="control is-expanded">
-                                        <InputField props={monthlyIncome} />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <InputField props={monthlyIncome} />
                     </div>
                     <hr className="is-light-gray"/>
                     {/* Asking for dietary restrictions */}
