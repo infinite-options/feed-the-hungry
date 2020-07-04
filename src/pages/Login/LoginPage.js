@@ -272,7 +272,8 @@ function LoginPage() {
                                 onClick='return false'
                                 callback={responseFacebook}
                                 size='small'
-                                textButton='FB Login'
+                                textButton='Login'
+                                icon='fa-facebook-square'
                             />
                         </span>
                         <span className="has-margins-0-5">
