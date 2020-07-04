@@ -66,9 +66,34 @@ const InputField = ({props, icon, isDisabled}) => {
       </div>
     );
   }
+  else if (props.type === "tel"){
+    return (
+      <div className="field horizontal">
+         <label className="help is-danger">*</label>
+        <div className="field-body">
+          <div className="field is-expanded">
+            <div className="field has-addons">
+             
+              <div className="control">
+                <a className="button is-static">+1</a>
+              </div>
+              <div className="control is-expanded">
+                <input type="tel" className={props.error.length > 0 ? "input is-danger" : "input"} onChange={props.onChange} value={props.value} placeholder={props.name} />
+              </div>
+              
+            </div>
+            <p className="help is-danger">{props.error}</p>
+            <p className="help">Do not enter the first zero</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
   else{
     return (
+
       <div className="field">
+          <label className="help is-danger">*</label>
           <div className={icon ? "control has-icons-right" : "control"}>
             {props.type === "file" && <img id="inputImg" />}
             <input className={props.error.length > 0 ? "input is-danger" : "input"} type={props.type !== "date" ? props.type : "text"} onChange={props.onChange} value={props.value} placeholder={props.name} 
@@ -82,7 +107,9 @@ const InputField = ({props, icon, isDisabled}) => {
             ) : ""}
           </div>
           <p className="help is-danger">{props.error}</p>
+         
       </div>
+
     );
   }
  

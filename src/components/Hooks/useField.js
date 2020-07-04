@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 const useField = (name, type, isRequired=true) => {
   const [value, setValue] = useState(type === "checkbox" || type ==="switch" ? false : '');
+  const [isValid, setIsValid] = useState(false);
   const [error, setError] = useState('');
   // for file inputs
   const [file, setFile] = useState({});
@@ -17,10 +18,11 @@ const useField = (name, type, isRequired=true) => {
       setFile(event.target.files[0]);
     }
 
-    if (isRequired && event.target.value.length === 0) setError("This field is required");
-    else if (event.target.value.length > 0) checkInputs(event.target.value);
-    else setError("");
   };
+  useEffect(() => {
+    if (checkInputs(value)) setIsValid(true);
+    else setIsValid(false);
+  }, [value])
 
   const maxDate = () => {
     const today = new Date();
@@ -33,8 +35,9 @@ const useField = (name, type, isRequired=true) => {
   }
 
   const checkInputs = (value) => {
+    if (isRequired && value.length === 0) setError(" ");
     // case 1: if input is a zip code
-    if (name.toLowerCase() === "zip" && !validateZip(value)) setError("Invalid zip code");
+    else if (name.toLowerCase() === "zip" && !validateZip(value)) setError("Invalid zip code");
     // case 2: if input is entered but we need to verify it given a data
     // make sure that the data must have method 'contain' (see StateAPI.js, for instance
     else if (name.toLowerCase() === "state" && value ==="") setError("Invalid state");
@@ -46,7 +49,9 @@ const useField = (name, type, isRequired=true) => {
     else if (type === "number" && !validateCurrency(value)) setError("Invalid currency amount");
     // case 6: if input is birthdate and date chosen is in the future
     else if (name.toLowerCase() === "date of birth" && maxDate() < value) setError("Invalid birthdate");
-    // case 7: everything looks good!
+    // case 7: if input is a checkbox
+    else if (type === "checkbox" && !value) setError("");
+    // case 8: everything looks good!
     else {
       setError("");
       return true;
@@ -54,11 +59,12 @@ const useField = (name, type, isRequired=true) => {
     return false; // if anything is setting an error
   }
 
+   // WE WONT NEED VALIDATE() ANYMORE
   // validate inputs if user clicks submit button. Returns true if no errors, false if error detected.
   const validate = () => {
     // if input is required and is not filled
     if (isRequired && value.length === 0) {
-      setError("This field is required");
+      setError("");
       return false;
     }
     // if input is filled. Checks required & not required inputs since even if 
@@ -90,6 +96,7 @@ const useField = (name, type, isRequired=true) => {
     validate,
     resetinput,
     file,
+    isValid
   };
 };
 

@@ -15,10 +15,12 @@ function CustomerDetails({ fname, lname, email, phone, switchUserInfo}) {
         </div>
       </div>
       <InputField props={email} />
-      <div className="field horizontal">
+      <InputField props={phone} />
+      {/* <div className="field horizontal">
         <div className="field-body">
           <div className="field is-expanded">
             <div className="field has-addons">
+              <label className="help is-danger">*</label>
               <div className="control">
                 <a className="button is-static">+1</a>
               </div>
@@ -29,7 +31,7 @@ function CustomerDetails({ fname, lname, email, phone, switchUserInfo}) {
             <p className="help">Do not enter the first zero</p>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
