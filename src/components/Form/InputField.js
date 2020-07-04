@@ -66,7 +66,7 @@ const InputField = ({props, icon, isDisabled}) => {
       </div>
     );
   }
-  else if (props.type === "tel"){
+  else if (props.type === "tel" || props.type === "number"){
     return (
       <div className="field horizontal">
          <label className="help is-danger">*</label>
@@ -75,7 +75,7 @@ const InputField = ({props, icon, isDisabled}) => {
             <div className="field has-addons">
              
               <div className="control">
-                <a className="button is-static">+1</a>
+              <a className="button is-static">{props.type === "tel" ? '+1' : '$'}</a>
               </div>
               <div className="control is-expanded">
                 <input type="tel" className={props.error.length > 0 ? "input is-danger" : "input"} onChange={props.onChange} value={props.value} placeholder={props.name} />

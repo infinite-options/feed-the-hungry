@@ -137,19 +137,9 @@ function SignupPage() {
                         </div>
                         <div className="columns">
                             <div className="column is-8">
+
                                 {/* Adding [+1] phone number button */}
-                                <div className="field-body">
-                                    <div className="field is-expanded">
-                                        <div className="field has-addons">
-                                            <div className="control">
-                                                <a className="button is-static">+1</a>
-                                            </div>
-                                            <div className="control is-expanded">
-                                                <InputField props={inputs.phoneNumber} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <InputField props={inputs.phoneNumber} />
                             </div>
                             <div className="column">
                                 <InputField  props={inputs.dob} />
@@ -212,7 +202,8 @@ function SignupPage() {
                             </div>
                         </div>
                         {/* Adding $ to income input */}
-                        <div className="field-body">
+                        <InputField props={inputs.monthlyIncome} />
+                        {/* <div className="field-body">
                             <div className="field is-expanded">
                                 <div className="field has-addons">
                                     <div className="control">
@@ -223,7 +214,7 @@ function SignupPage() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     <hr className="is-light-gray"/>
                     {/* Asking for dietary restrictions */}
