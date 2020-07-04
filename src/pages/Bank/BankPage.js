@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef, useLayoutEffect } from "react";
+import useStayScrolled from "react-stay-scrolled";
 import {
   BrowserRouter as Router,
   Switch,
@@ -42,29 +43,35 @@ const BankWithoutHook = (data) => {
   return <Bank bank={data.bank} />
 }
 const Bank = ({ bank }) => {
-  // const { data, isLoading, hasError } = useOurApi(bankUrl, {});
+  // keep scroll position on rerender
+  const divRef = useRef(null);
+  const { stayScrolled } = useStayScrolled(divRef);
+  useLayoutEffect(
+    () => {
+      stayScrolled();
+    },
+    [bank]
+  );
+  const orderType = useOrderType(); 
+  console.log(orderType.orderType)
   const [key, setKey] = useState(1);
   window.addEventListener("storage", () => {
     setKey(key + 1);
   });
 
-  // if (isLoading) return <LoadingPage />;
-  // if (hasError || !data.result) return <ErrorPage />;
-
-  // const bank = data.result;
   const inventory = bank.inventory? bank.inventory : [];
   const delivery_pickup_items = inventory.filter((x) =>
-    x.delivery_pickup.includes("both")
+    x.delivery_pickup === "delivery;pickup"
   );
   const delivery_items = inventory.filter((x) =>
-    x.delivery_pickup.includes("delivery")
+    x.delivery_pickup === "delivery"
   );
   const pickup_items = inventory.filter((x) =>
-    x.delivery_pickup.includes("pickup")
+    x.delivery_pickup === "pickup"
   );
   return (
-    <div className="bank-page-bd">
-      <ScrollToTopOnMount />
+    <div ref={divRef} className="bank-page-bd">
+      {/* <ScrollToTopOnMount /> */}
       <div className="bank-container">
         <BankBanner obj={bank} />
         <BankFilters />
@@ -74,7 +81,7 @@ const Bank = ({ bank }) => {
               <div className="inventory-title-container">
                 <p className="subtitle inventory-title">Delivery or Pickup</p>
               </div>
-              <BankInventory key={key} inventory={delivery_pickup_items} />
+              <BankInventory key={key} inventory={delivery_pickup_items} orderType={orderType}/>
             </div>
           )}
           {delivery_items.length > 0 && (
@@ -82,7 +89,7 @@ const Bank = ({ bank }) => {
               <div className="inventory-title-container">
                 <p className="subtitle inventory-title">Delivery Only</p>
               </div>
-              <BankInventory key={key} inventory={delivery_items} />
+              <BankInventory key={key} inventory={delivery_items} orderType={orderType} />
             </div>
           )}
           {pickup_items.length > 0 && (
@@ -90,7 +97,7 @@ const Bank = ({ bank }) => {
               <div className="inventory-title-container">
                 <p className="subtitle inventory-title">Pick Up Only</p>
               </div>
-              <BankInventory key={key} inventory={pickup_items} />
+              <BankInventory key={key} inventory={pickup_items} orderType={orderType}/>
             </div>
           )}
         </div>
@@ -114,5 +121,13 @@ const Bank = ({ bank }) => {
     </div>
   );
 };
+const useOrderType = () => {
+  const [orderType, setOrderType] = useState("delivery;pickup");
+  return {
+    orderType,
+    setOrderType
+  }
+}
+
 
 export default React.memo(BankPage);

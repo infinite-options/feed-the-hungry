@@ -41,6 +41,7 @@
     "react-scripts": "3.4.1",
     "react-siema": "^1.0.1",
     "react-snaplist-carousel": "^3.2.2",
+    "react-stay-scrolled": "^7.1.0",
     "react-widgets": "^4.5.0",
     "react-widgets-globalize": "^5.0.21",
     "recompose": "^0.30.0",

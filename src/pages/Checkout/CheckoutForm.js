@@ -30,27 +30,12 @@ import { usePosition } from 'use-position';
 const DEFAULT_LATITUDE = 37.338208;
 const DEFAULT_LONGITUDE = -121.886329;
 
-function CheckoutForm({ bank, items }) {
+function CheckoutForm({ bank, items }) {;
   let history = useHistory();
-  // get browser's geo position
   const watch = true;
   const { latitude, longitude, error } = usePosition(watch, {enableHighAccuracy: true});
   const position = !error ? [latitude, longitude] : [DEFAULT_LATITUDE, DEFAULT_LONGITUDE];
-  
-  
-  const [hidden, setHidden] = useState("hidden"); // to hide error msg
-  // filter delivery items
-  const delivery_items = items.filter((x) =>
-    x.info.delivery_pickup.includes("delivery")
-  );
-  
-  // filter pickup items
-  const pickup_items = items.filter((x) =>
-    x.info.delivery_pickup.includes("pickup")
-  );
-  const [activeTab, setActiveTab] = useState(delivery_items.length ? 'delivery' : 'pickup');
 
-  // inputs
   const fname = useField("First Name", "text");
   const lname = useField("Last Name", "text");
   const phone = useField("Phone Number", "tel");
@@ -66,15 +51,29 @@ function CheckoutForm({ bank, items }) {
     "I want my delivery as soon as possible",
     "checkbox"
   );
-
-  useEffect(() => {
-    if (checkbox.value || dateTime.startDate) setHidden("hidden");
-  }, [checkbox.value || dateTime.startDate]);
-
+  const delivery_items = items.filter((x) =>
+    x.info.delivery_pickup === "delivery"
+  );
+  const pickup_items = items.filter((x) =>
+  x.info.delivery_pickup === "pickup"
+);
+  const [activeTab, setActiveTab] = useState(delivery_items.length ? 'delivery' : 'pickup');
+  
+  const isFormValid = () => {
+    let isValid  = true;
+    if (!fname.isValid || !lname.isValid || !phone.isValid || !email.isValid){ console.log("customer details are invalid"); isValid = false;}
+    if (activeTab === "delivery"){
+      if (!street.isValid  || ! city.isValid  || !state.isValid  ||  !zip.isValid) isValid = false;
+      if (!checkbox.isValid && !dateTime.startDate) isValid = false;
+      if (delivery_items.length === 0) isValid = false;
+    } else if (activeTab === "pickup" && pickup_items.length === 0) isValid = false;
+  
+    return isValid;
+  }
+  const form  = isFormValid(); 
   const userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
   useEffect(() => {
-    console.log(switchUserInfo.value);
-    if (switchUserInfo.value){
+    if (switchUserInfo.value && userInfo){
       fname.setValue(userInfo.firstName);
       lname.setValue(userInfo.lastName);
       phone.setValue(userInfo.phoneNumber.replace(/\D/g, ""));
@@ -88,8 +87,7 @@ function CheckoutForm({ bank, items }) {
 
   },[switchUserInfo.value]);
   useEffect(() => {
-
-    if (switchUserAddress.value){
+    if (switchUserAddress.value && userInfo){
       street.setValue(userInfo.address1);
       city.setValue(userInfo.city);
       state.setValue(userInfo.state);
@@ -105,24 +103,8 @@ function CheckoutForm({ bank, items }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let formIsValid = true;
-    if (!fname.validate()) formIsValid = false;
-    if (!lname.validate()) formIsValid = false;
-    if (!email.validate()) formIsValid = false;
-    if (!phone.validate()) formIsValid = false;
-
-    if (activeTab === "delivery") {
-      if (!street.validate()) formIsValid = false;
-      if (!city.validate()) formIsValid = false;
-      if (!state.validate()) formIsValid = false;
-      if (!zip.validate()) formIsValid = false;
-      if (!checkbox.value && !dateTime.startDate) {
-        formIsValid = false;
-        setHidden("");
-      }
-    }
     // here we write data to local storage and redirect user after checking that form is valid
-    if (formIsValid) {
+    if (form) {
       console.log("All inputs are valid");
       const date = dateTime.startDate ? formatDate(dateTime.startDate) : "ASAP";
       const userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
@@ -131,7 +113,7 @@ function CheckoutForm({ bank, items }) {
       let unconfirmed_order = {
         isSent: false,
         order_id: "",
-        customer_id: userInfo.userID,
+        customer_id: userInfo ? userInfo.userID : '',
         phone: phone.value.replace(/\D/g, ""),
         email: email.value,
         street: street.value,
@@ -146,7 +128,7 @@ function CheckoutForm({ bank, items }) {
         longitude: position[1],
         latitude: position[0],
         delivery_date: date,
-        order_type: items[0].info.delivery_pickup,
+        order_type: activeTab,
         ordered_items: items,
       };
 
@@ -236,17 +218,6 @@ function CheckoutForm({ bank, items }) {
                 </div>
               </div>
             </div>
-
-            {/* if user submits the form and no delivery time is selected, this error message is displayed.
-        if the error message is showing and user selects a delivery time, hid the error message */}
-            <div className={hidden}>
-              <div className="space-1"></div>
-              <div className="error-msg">
-                {Messages.Danger(
-                  "Please make sure that you schedule a delivery date or soonest delivery."
-                )}
-              </div>
-            </div>
           </div>
         ) : (
           <PickupDetails bank={bank} items={items} />
@@ -258,14 +229,7 @@ function CheckoutForm({ bank, items }) {
         <div className="control">
           <button
             className="button is-success"
-            disabled={
-              (activeTab === "delivery" &&
-                pickup_items.length ) ||
-              (activeTab === "pickup" &&
-                delivery_items.length)
-                ? true
-                : false
-            }
+            disabled={!form ? true : false}
           >
             <span className="uppercase">Place Order</span>
             <span className="icon">
@@ -367,4 +331,6 @@ function formatDate(date) {
   ).toUpperCase();
 }
 
-export default withRouter(CheckoutForm);
+
+
+export default CheckoutForm;

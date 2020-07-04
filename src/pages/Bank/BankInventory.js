@@ -10,19 +10,18 @@ import useQuery from "components/Hooks/useQuery";
 import { OrderContext } from "components/Context/OrderContext";
 
 // render food bank's inventory
-function BankInventory({ inventory }) {
+function BankInventory({ inventory, orderType }) {
   let query = useQuery();
   if (query.get("type"))
     inventory = getItemsByKey(query.get("type"), inventory);
 
-  const context = useContext(OrderContext);
   return (
     <div className="inventory">
       {inventory.map((x) => (
         <div
           key={x.food_id}
           className={
-            x.delivery_pickup.includes(context.orderType)
+            orderType.orderType.includes(x.delivery_pickup) || x.delivery_pickup.includes(orderType.orderType)
               ? "card item"
               : " card item has-opacity-0-6"
           }
@@ -43,7 +42,7 @@ function BankInventory({ inventory }) {
               <p className="subtitle is-7 has-text-grey no-overflow">
                 {x.fl_package_type} ({x.food_unit})
               </p>
-              <QuantityInput item={x} />
+              <QuantityInput item={x} orderType={orderType}  />
             </div>
           </div>
           <div className="card-footer">
@@ -82,9 +81,8 @@ function ItemTags({ str }) {
     </div>
   );
 }
-function QuantityInput({ item }) {
-  const count = useCounter(item);
-  const context = useContext(OrderContext);
+function QuantityInput({ item, orderType }) {
+  const count = useCounter(item, orderType);
   return (
     <div>
       <div className="field">
@@ -106,7 +104,8 @@ function QuantityInput({ item }) {
             className="button is-small"
             onClick={count.increase}
             disabled={
-              !item.delivery_pickup.includes(context.orderType) ||
+              (!orderType.orderType.includes(item.delivery_pickup) &&
+              !item.delivery_pickup.includes(orderType.orderType)) ||
               item.quantity === 0 ||
               count.value >= item.food_id_limit
                 ? true
@@ -127,7 +126,7 @@ function QuantityInput({ item }) {
   );
 }
 
-const useCounter = (x) => {
+const useCounter = (x, orderType) => {
   let { bankId } = useParams();
   const context = useContext(OrderContext);
 
@@ -182,9 +181,12 @@ const useCounter = (x) => {
           items: cartItems,
         })
       );
-      context.setOrderType(
-        cartItems[0] ? cartItems[0].info.delivery_pickup : ""
-      );
+      // console.log(cartItems[cartItems.length -1].info)
+      if ( cartItems.length > 0 && orderType.orderType.includes(cartItems[cartItems.length -1].info.delivery_pickup)) orderType.setOrderType(cartItems[cartItems.length -1].info.delivery_pickup);
+      else orderType.setOrderType('delivery;pickup');
+      // else orderType.setOrderType()
+      //   cartItems[0] ? cartItems[0].info.delivery_pickup : "delivery;pickup"
+      // );
     } else if (cart.bankId && cart.bankId != bankId && value > 0) {
       cartItems = [];
       cartItems.push({ info: x, amount: value });
@@ -196,10 +198,11 @@ const useCounter = (x) => {
           items: cartItems,
         })
       );
-      context.setOrderType(cartItems[0].info.delivery_pickup);
+
+      orderType.setOrderType(cartItems[0].info.delivery_pickup);
     } else if (cart.bankId && cart.bankId != bankId) {
       window.localStorage.setItem("cart", JSON.stringify(cart));
-      context.setOrderType("");
+      orderType.setOrderType("delivery;pickup");
     } else if (!cart.bankId) {
       window.localStorage.setItem(
         "cart",
@@ -209,7 +212,7 @@ const useCounter = (x) => {
           items: cartItems,
         })
       );
-      context.setOrderType("");
+      orderType.setOrderType("delivery;pickup");
     }
     context.setCartTotal(totalAmount(cartItems));
 
