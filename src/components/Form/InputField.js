@@ -93,7 +93,7 @@ const InputField = ({props, icon, isDisabled}) => {
       <div className="field">
           <div className={icon ? "control has-icons-right" : "control"}>
             {props.type === "file" && <img id="inputImg" />}
-            <input className={props.error.length > 0 ? "input is-danger" : "input"} type={props.type !== "date" ? props.type : "text"} onChange={props.onChange} value={props.value} placeholder={props.name} 
+            <input className={!props.isValid ? "input is-danger" : "input"} type={props.type !== "date" ? props.type : "text"} onChange={props.onChange} value={props.value} placeholder={props.name} 
               {...(props.type === "date" ? {onFocus: handleDateName, onBlur: handleDateName, max: setMaxDate()} : {})} 
               {...(props.type === "file" ? {accept: "image/*", onChange: handleImg} : {})}
             />
