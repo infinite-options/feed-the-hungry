@@ -1,3 +1,9 @@
+/* 
+ * NOTES ON /social/{email} API!!!
+ * Current: API responds with empty result if account not exist in social table (so if account not exist at all or if account exist as direct account)
+ * Future: API responds with err 400 if account not exist at all, err 500 if account exist as direct account
+ */
+
 import React, { useState, useContext } from "react";
 
 import {
@@ -106,6 +112,7 @@ function LoginPage() {
             } 
         }).catch(err => {
             console.log(err.response);
+            // Future: API should send err 500 if user already exists as direct login account
         })
     }
     
@@ -162,9 +169,7 @@ function LoginPage() {
 
     const handleClick = () => {
         console.log("User has tried to login..")
-        email.validate();
-        password.validate();
-        if (email.validate() && password.validate()) {
+        if (email.isValid && password.isValid) {
             console.log("we did it!");
             checkLogin();
         }

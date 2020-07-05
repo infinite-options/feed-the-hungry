@@ -77,7 +77,7 @@ const InputField = ({props, icon, isDisabled}) => {
               <a className="button is-static">{props.type === "tel" ? '+1' : '$'}</a>
               </div>
               <div className="control is-expanded">
-                <input type="tel" className={props.error.length > 0 ? "input is-danger" : "input"} onChange={props.onChange} value={props.value} placeholder={props.name} />
+                <input type="tel" className={!props.isValid ? "input is-danger" : "input"} onChange={props.onChange} value={props.value} placeholder={props.name} />
               </div>
               
             </div>
@@ -88,9 +88,8 @@ const InputField = ({props, icon, isDisabled}) => {
       </div>
     );
   }
-  else{
+  else {
     return (
-
       <div className="field">
           <div className={icon ? "control has-icons-right" : "control"}>
             {props.type === "file" && <img id="inputImg" />}
@@ -107,7 +106,6 @@ const InputField = ({props, icon, isDisabled}) => {
           <p className="help is-danger">{props.error}</p>
          
       </div>
-
     );
   }
  

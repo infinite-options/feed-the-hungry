@@ -37,18 +37,18 @@ function SignupPage() {
     }
 
     const validateInputs = () => {
-        let isAllValid = true;
+        // let isAllValid = true;
         for (let input in inputs) {
-            if (!inputs[input].validate()) {
-                isAllValid = false;
+            if (!inputs[input].isValid) {
+                return false;
             }
         }
-        return isAllValid;
+        return true;
     }
 
     const handleClick = () => {
         console.log("User has tried to sign up..")
-        let isAllValid = validateInputs();
+        const isAllValid = validateInputs();
         dietRef.current.checkValues();
         
         // Checking if user filled all required inputs
@@ -92,18 +92,18 @@ function SignupPage() {
                 "password": inputs.password.value
             }
             console.log("Test:", test);
-            axios.post(
-                "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/signup", 
-                test
-            ).then(response => {
-                console.log(response);
-                if (response.status === 200) {
-                    // Send to verify email page
-                    history.push('/signup/verify');
-                }
-            }).catch(err => {
-                console.log(err);
-            });
+            // axios.post(
+            //     "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/signup", 
+            //     test
+            // ).then(response => {
+            //     console.log(response);
+            //     if (response.status === 200) {
+            //         // Send to verify email page
+            //         history.push('/signup/verify');
+            //     }
+            // }).catch(err => {
+            //     console.log(err);
+            // });
         }
         else {
             console.log("Sign up failed...");
