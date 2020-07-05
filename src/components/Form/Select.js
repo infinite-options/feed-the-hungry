@@ -6,7 +6,6 @@ function Select({ props, data }) {
   let i = 0;
   return (
     <div className="field">
-      <label className="help is-danger">*</label>
       <div className="control is-expanded">
         <div
           className={

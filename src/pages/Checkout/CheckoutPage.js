@@ -13,7 +13,7 @@ function CheckoutPage(){
     const cart = JSON.parse(window.localStorage.getItem('cart')) || {};
     const bankId = cart.bankId ? cart.bankId : "";
     const bankData = JSON.parse(window.localStorage.getItem(bankId));
-    console.log(bankData);
+
     if (bankData) return <CheckoutWithoutApi bank={bankData} />
     return <CheckoutWithApi bankId = {bankId}/>
 }
@@ -28,7 +28,6 @@ const CheckoutWithApi = ({bankId}) => {
 
 }
 const CheckoutWithoutApi = ({bank}) => {
-    console.log(bank);
     return <Checkout bank={bank} />
 }
 const Checkout = ({bank}) => {

@@ -21,7 +21,7 @@ function BankInventory({ inventory, orderType }) {
         <div
           key={x.food_id}
           className={
-            orderType.orderType.includes(x.delivery_pickup) || x.delivery_pickup.includes(orderType.orderType)
+            x.delivery_pickup.includes(orderType.orderType)
               ? "card item"
               : " card item has-opacity-0-6"
           }
@@ -42,7 +42,7 @@ function BankInventory({ inventory, orderType }) {
               <p className="subtitle is-7 has-text-grey no-overflow">
                 {x.fl_package_type} ({x.food_unit})
               </p>
-              <QuantityInput item={x} orderType={orderType}  />
+              <QuantityInput item={x} orderType={orderType} />
             </div>
           </div>
           <div className="card-footer">
@@ -104,8 +104,7 @@ function QuantityInput({ item, orderType }) {
             className="button is-small"
             onClick={count.increase}
             disabled={
-              (!orderType.orderType.includes(item.delivery_pickup) &&
-              !item.delivery_pickup.includes(orderType.orderType)) ||
+              !item.delivery_pickup.includes(orderType.orderType) ||
               item.quantity === 0 ||
               count.value >= item.food_id_limit
                 ? true
@@ -181,12 +180,6 @@ const useCounter = (x, orderType) => {
           items: cartItems,
         })
       );
-      // console.log(cartItems[cartItems.length -1].info)
-      if ( cartItems.length > 0 && orderType.orderType.includes(cartItems[cartItems.length -1].info.delivery_pickup)) orderType.setOrderType(cartItems[cartItems.length -1].info.delivery_pickup);
-      else orderType.setOrderType('delivery;pickup');
-      // else orderType.setOrderType()
-      //   cartItems[0] ? cartItems[0].info.delivery_pickup : "delivery;pickup"
-      // );
     } else if (cart.bankId && cart.bankId != bankId && value > 0) {
       cartItems = [];
       cartItems.push({ info: x, amount: value });
@@ -198,11 +191,8 @@ const useCounter = (x, orderType) => {
           items: cartItems,
         })
       );
-
-      orderType.setOrderType(cartItems[0].info.delivery_pickup);
     } else if (cart.bankId && cart.bankId != bankId) {
       window.localStorage.setItem("cart", JSON.stringify(cart));
-      orderType.setOrderType("delivery;pickup");
     } else if (!cart.bankId) {
       window.localStorage.setItem(
         "cart",
@@ -212,10 +202,19 @@ const useCounter = (x, orderType) => {
           items: cartItems,
         })
       );
-      orderType.setOrderType("delivery;pickup");
     }
-    context.setCartTotal(totalAmount(cartItems));
+    const delivery_items = getItemsByKey(
+      cartItems,
+      "delivery_pickup",
+      "delivery"
+    );
+    const pickup_items = getItemsByKey(cartItems, "delivery_pickup", "pickup");
 
+    if (delivery_items.length > 0) orderType.setOrderType("delivery");
+    else if (pickup_items.length > 0) orderType.setOrderType("pickup");
+    else orderType.setOrderType("");
+
+    context.setCartTotal(totalAmount(cartItems));
   }, [value]);
 
   return {
@@ -226,8 +225,8 @@ const useCounter = (x, orderType) => {
   };
 };
 
-const getItemsByKey = (key, arr) => {
-  return arr.filter((x) => x.fl_food_type.includes(key));
+const getItemsByKey = (arr, key, value) => {
+  return arr.filter((x) => x.info[key] === value);
 };
 
 export default withRouter(BankInventory);

@@ -69,7 +69,6 @@ const InputField = ({props, icon, isDisabled}) => {
   else if (props.type === "tel" || props.type === "number"){
     return (
       <div className="field horizontal">
-         <label className="help is-danger">*</label>
         <div className="field-body">
           <div className="field is-expanded">
             <div className="field has-addons">
@@ -93,7 +92,6 @@ const InputField = ({props, icon, isDisabled}) => {
     return (
 
       <div className="field">
-          <label className="help is-danger">*</label>
           <div className={icon ? "control has-icons-right" : "control"}>
             {props.type === "file" && <img id="inputImg" />}
             <input className={props.error.length > 0 ? "input is-danger" : "input"} type={props.type !== "date" ? props.type : "text"} onChange={props.onChange} value={props.value} placeholder={props.name} 

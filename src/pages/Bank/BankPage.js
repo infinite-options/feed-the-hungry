@@ -22,8 +22,8 @@ import Icons from "components/Icons/Icons";
 const BankPage = () => {
   console.log("bank page")
   let { bankId } = useParams();
-  const bankData = JSON.parse(window.localStorage.getItem(bankId));
-  if (bankData) return <BankWithoutHook bank={bankData} />
+  // const bankData = JSON.parse(window.localStorage.getItem(bankId));
+  // if (bankData) return <BankWithoutHook bank={bankData} />
   return <BankWithHook bankId = {bankId}/>
 }
 const BankWithHook = ({bankId}) => {
@@ -43,7 +43,17 @@ const BankWithoutHook = (data) => {
   return <Bank bank={data.bank} />
 }
 const Bank = ({ bank }) => {
-  // keep scroll position on rerender
+  const inventory = bank.inventory? bank.inventory : [];
+  const delivery_pickup_items = filterInventoryByKey(inventory, 'delivery_pickup', 'delivery;pickup');
+  const delivery_items = filterInventoryByKey(inventory, 'delivery_pickup', 'delivery');
+  const pickup_items = filterInventoryByKey(inventory, 'delivery_pickup', 'pickup');
+  const orderType = useOrderType(bank); 
+
+  const [key, setKey] = useState(1);
+  window.addEventListener("storage", () => {
+    setKey(key + 1);
+  });
+    // keep scroll position on rerender
   const divRef = useRef(null);
   const { stayScrolled } = useStayScrolled(divRef);
   useLayoutEffect(
@@ -52,23 +62,7 @@ const Bank = ({ bank }) => {
     },
     [bank]
   );
-  const orderType = useOrderType(); 
-  console.log(orderType.orderType)
-  const [key, setKey] = useState(1);
-  window.addEventListener("storage", () => {
-    setKey(key + 1);
-  });
 
-  const inventory = bank.inventory? bank.inventory : [];
-  const delivery_pickup_items = inventory.filter((x) =>
-    x.delivery_pickup === "delivery;pickup"
-  );
-  const delivery_items = inventory.filter((x) =>
-    x.delivery_pickup === "delivery"
-  );
-  const pickup_items = inventory.filter((x) =>
-    x.delivery_pickup === "pickup"
-  );
   return (
     <div ref={divRef} className="bank-page-bd">
       {/* <ScrollToTopOnMount /> */}
@@ -121,12 +115,19 @@ const Bank = ({ bank }) => {
     </div>
   );
 };
-const useOrderType = () => {
-  const [orderType, setOrderType] = useState("delivery;pickup");
+const useOrderType = (bank) => {
+  const [foodBank, setFoodBank] = useState(bank);
+  const [orderType, setOrderType] = useState("");
+  useEffect(() => {
+    setOrderType("");
+  },[foodBank])
   return {
     orderType,
-    setOrderType
+    setOrderType,
   }
+}
+const filterInventoryByKey = (arr, key, value) => {
+  return arr.filter(x => x[key] === value);
 }
 
 

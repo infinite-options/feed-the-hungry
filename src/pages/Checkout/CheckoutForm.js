@@ -65,8 +65,8 @@ function CheckoutForm({ bank, items }) {;
     if (activeTab === "delivery"){
       if (!street.isValid  || ! city.isValid  || !state.isValid  ||  !zip.isValid) isValid = false;
       if (!checkbox.isValid && !dateTime.startDate) isValid = false;
-      if (delivery_items.length === 0) isValid = false;
-    } else if (activeTab === "pickup" && pickup_items.length === 0) isValid = false;
+      if (pickup_items.length > 0 ) isValid = false;
+    } else if (activeTab === "pickup" && delivery_items.length > 0) isValid = false;
   
     return isValid;
   }
