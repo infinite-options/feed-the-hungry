@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 const useField = (name, type, isRequired=true) => {
   const [value, setValue] = useState(type === "checkbox" || type ==="switch" ? false : '');
-  const [isValid, setIsValid] = useState(false);
+  const [isValid, setIsValid] = useState(true);
   const [error, setError] = useState('');
   // for file inputs
   const [file, setFile] = useState({});
@@ -17,12 +17,13 @@ const useField = (name, type, isRequired=true) => {
     if (event.target.type === "file") {
       setFile(event.target.files[0]);
     }
-
+    if (!checkInputs(event.target.value)) setIsValid(false);
+    else setIsValid(true);
   };
-  useEffect(() => {
-    if (checkInputs(value)) setIsValid(true);
-    else setIsValid(false);
-  }, [value])
+  // useEffect(() => {
+  //   if (checkInputs(value)) setIsValid(true);
+  //   else setIsValid(false);
+  // }, [value])
 
   const maxDate = () => {
     const today = new Date();
@@ -36,12 +37,9 @@ const useField = (name, type, isRequired=true) => {
 
   const checkInputs = (value) => {
     // if required and not filled
-    if (isRequired && value.length === 0) {
-      setError("");
-      return false; 
-    }
+    if (isRequired && value.length === 0) {setError("This field is required"); return false; }
     // if filled (checks both optional & required)
-    else if (value.length > 0) {
+    else if (value.length > 0){
     // case 1: if input is a zip code
       if (name.toLowerCase() === "zip" && !validateZip(value)) setError("Invalid zip code");
       // case 2: if input is entered but we need to verify it given a data
