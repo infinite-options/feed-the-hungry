@@ -64,7 +64,7 @@ function CheckoutForm({ bank, items }) {;
     if (!fname.isValid || !lname.isValid || !phone.isValid || !email.isValid){ console.log("customer details are invalid"); isValid = false;}
     if (activeTab === "delivery"){
       if (!street.isValid  || ! city.isValid  || !state.isValid  ||  !zip.isValid) isValid = false;
-      if (!checkbox.isValid && !dateTime.startDate) isValid = false;
+      if (!checkbox.value && !dateTime.startDate) isValid = false;
       if (pickup_items.length > 0 ) isValid = false;
     } else if (activeTab === "pickup" && delivery_items.length > 0) isValid = false;
   

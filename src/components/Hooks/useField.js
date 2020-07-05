@@ -55,8 +55,6 @@ const useField = (name, type, isRequired=true) => {
       else if (type === "number" && !validateCurrency(value)) setError("Invalid currency amount");
       // case 6: if input is birthdate and date chosen is in the future
       else if (name.toLowerCase() === "date of birth" && maxDate() < value) setError("Invalid birthdate");
-      // case 7: if input is a checkbox
-      else if (type === "checkbox" && !value) setError("");
       // case 8: everything looks good!
       else {
         setError("");
