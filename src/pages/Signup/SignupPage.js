@@ -92,18 +92,18 @@ function SignupPage() {
                 "password": inputs.password.value
             }
             console.log("Test:", test);
-            // axios.post(
-            //     "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/signup", 
-            //     test
-            // ).then(response => {
-            //     console.log(response);
-            //     if (response.status === 200) {
-            //         // Send to verify email page
-            //         history.push('/signup/verify');
-            //     }
-            // }).catch(err => {
-            //     console.log(err);
-            // });
+            axios.post(
+                "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/signup", 
+                test
+            ).then(response => {
+                console.log(response);
+                if (response.status === 200) {
+                    // Send to verify email page
+                    history.push('/signup/verify');
+                }
+            }).catch(err => {
+                console.log(err);
+            });
         }
         else {
             console.log("Sign up failed...");
