@@ -9,8 +9,8 @@ import { Link, useHistory } from "react-router-dom";
 
 import "pages/styles.css";
 import axios from 'axios';
-import useField from "components/Hooks/useField";
-import InputField from "components/Form/InputField";
+import useLogin from "components/Hooks/useLogin";
+import LoginField from "components/Form/LoginField";
 import Icons from "components/Icons/Icons";
 import FarmersMarket from 'assets/image/farmers-market.jpg';
 import FacebookLogin from "react-facebook-login";
@@ -22,8 +22,8 @@ function LoginPage() {
     const history = useHistory();
 
     const [error, setError] = useState(null);
-    const email = useField("Email","email");
-    const password = useField("Password","password");
+    const email = useLogin("Email","email");
+    const password = useLogin("Password","password");
 
     const checkSocialLogin = (data) => {
         console.log("Data:", data);
@@ -156,11 +156,12 @@ function LoginPage() {
 
     const handleClick = () => {
         console.log("User has tried to login..")
-        if (email.isValid && password.isValid) {
+        if (email.checkInputs() & password.checkInputs()) {
             console.log("we did it!");
             checkLogin();
         }
         else {
+            setError("Please fill out your login information");
             console.log("User has failed to login..");
         }
     }
@@ -281,9 +282,9 @@ function LoginPage() {
                         </span>
                     </div>
                     {/* Email input */}
-                    <InputField props={email} icon={Icons.faEnvelope} />
+                    <LoginField props={email} icon={Icons.faEnvelope} />
                     {/* Password input */}
-                    <InputField props={password} icon={Icons.faLock} />
+                    <LoginField props={password} icon={Icons.faLock} />
                     {/* Error message */}
                     {error && (
                         <p className="has-text-centered has-text-danger">{error}</p>

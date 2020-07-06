@@ -137,8 +137,6 @@ function SignupPage() {
                         </div>
                         <div className="columns">
                             <div className="column is-8">
-
-                                {/* Adding [+1] phone number button */}
                                 <InputField props={inputs.phoneNumber} />
                             </div>
                             <div className="column">
@@ -201,20 +199,7 @@ function SignupPage() {
                                 </div>
                             </div>
                         </div>
-                        {/* Adding $ to income input */}
                         <InputField props={inputs.monthlyIncome} />
-                        {/* <div className="field-body">
-                            <div className="field is-expanded">
-                                <div className="field has-addons">
-                                    <div className="control">
-                                        <a className="button is-static">$</a>
-                                    </div>
-                                    <div className="control is-expanded">
-                                        <InputField props={inputs.monthlyIncome} />
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
                     </div>
                     <hr className="is-light-gray"/>
                     {/* Asking for dietary restrictions */}

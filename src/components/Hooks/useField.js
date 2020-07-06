@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 
 const useField = (name, type, isRequired=true) => {
   const [value, setValue] = useState(type === "checkbox" || type ==="switch" ? false : '');
-  const [isValid, setIsValid] = useState(true);
+  const [isValid, setIsValid] = useState((isRequired ? false : true));
   const [isOnChange, setIsOnChange] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState((isRequired ? "This field is required" : ""));
   // for file inputs
   const [file, setFile] = useState({});
 
