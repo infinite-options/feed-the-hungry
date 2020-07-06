@@ -76,15 +76,15 @@ function App() {
       <OrderContext.Provider value={{cartTotal, setCartTotal, position, isAuth, setIsAuth}}>
         <Header />
         <Switch>
-          <NonAuthRoute exact path="/login" isAuth={isAuth} component={LoginPage} />
-          <NonAuthRoute exact path="/signup" isAuth={isAuth} component={SignupPage} />
-          {/* <AuthRoute exact path="/" isAuth={isAuth} bankAPI={bankAPI} component={BanksPage} /> */}
+          <NonAuthRoute exact path="/login" component={LoginPage} />
+          <NonAuthRoute exact path="/signup" component={SignupPage} />
+          {/* <AuthRoute exact path="/" bankAPI={bankAPI} component={BanksPage} /> */}
           <Route exact path="/"><BanksPage /></Route>
-          <NonAuthRoute exact path="/signup/social" isAuth={isAuth} component={SignupSocial} />
-          <NonAuthRoute exact path="/signup/verify" isAuth={isAuth} component={SignupVerify} />
-          <AuthRoute exact path={"/banks/:bankId/products"} isAuth={isAuth} component={BankPage} />
-          <AuthRoute exact path="/order/cart" isAuth={isAuth} component={CheckoutPage} />
-          <AuthRoute exact path="/order/cart/confirm" isAuth={isAuth} component={ConfirmationPage} />
+          <NonAuthRoute exact path="/signup/social" component={SignupSocial} />
+          <NonAuthRoute exact path="/signup/verify" component={SignupVerify} />
+          <AuthRoute exact path={"/banks/:bankId/products"} component={BankPage} />
+          <AuthRoute exact path="/order/cart" component={CheckoutPage} />
+          <AuthRoute exact path="/order/cart/confirm" component={ConfirmationPage} />
           <Route component={ErrorPage} /> 
           <Redirect to="/404" />
         </Switch>

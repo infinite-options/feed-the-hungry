@@ -5,29 +5,16 @@
  */
 
 import React, { useState, useContext } from "react";
+import { Link, useHistory } from "react-router-dom";
 
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    useRouteMatch,
-    useParams,
-    useHistory
-  } from "react-router-dom";
-
-import axios from 'axios';
 import "pages/styles.css";
+import axios from 'axios';
 import useField from "components/Hooks/useField";
 import InputField from "components/Form/InputField";
 import Icons from "components/Icons/Icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FarmersMarket from 'assets/image/farmers-market.jpg';
-// import Notifications from "components/Notifications/Notifications";
-// import LoginLayout from "pages/Login/LoginLayout.js";
 import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login"
-
 import { OrderContext }  from 'components/Context/OrderContext';
 
 function LoginPage() {

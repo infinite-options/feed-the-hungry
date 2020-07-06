@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { OrderContext }  from 'components/Context/OrderContext';
 
-const NonAuthRoute = ({component: Component, isAuth, ...rest}) => {
+const NonAuthRoute = ({component: Component, ...rest}) => {
+    const context = useContext(OrderContext);
+
     return (
-        // restricted = false meaning public route
-        // restricted = true meaning restricted route
         <Route {...rest} render={props => (
-            isAuth ?
+            context.isAuth ?
                 <Redirect to="/" />
             : <Component {...props} />
         )} />
