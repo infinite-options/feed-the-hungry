@@ -10,7 +10,7 @@ export const useDateTime = () => {
   useEffect(() => {
     if (startDate) setIsValid(true);
     else setIsValid(false)
-  }, startDate)
+  }, [startDate])
   const minDate = addDays(new Date(), 2);
   
   return {
