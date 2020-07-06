@@ -87,7 +87,7 @@ function SignupPage() {
                 "city" : inputs.city.value,
                 "state" : inputs.state.value,
                 "zipcode" : inputs.zip.value,
-                "phone" : inputs.phoneNumber.value,
+                "phone" : inputs.phoneNumber.value.replace(/\D/g, ""),
                 "email" : inputs.email.value,
                 "password": inputs.password.value
             }

@@ -5,15 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import calendar
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import addDays from "date-fns/addDays";
 // import other components
 import useField from "components/Hooks/useField";
 import InputField from "components/Form/InputField";
-import Messages from "components/Notifications/Messages";
 import CustomerDetails from "pages/Checkout/CustomerDetails";
 import DeliveryDetails from "pages/Checkout/DeliveryDetails";
-import StateAPI from "API/StateAPI";
 import PickupDetails from "./PickupDetails";
+import DateTimeField from 'components/Form/DateTimeField';
 import {
   useRouteMatch,
   useHistory,
@@ -23,18 +21,13 @@ import {
   withRouter,
 } from "react-router-dom";
 // import hooks
-import { usePosition } from 'use-position';
+import { useDateTime } from 'components/Hooks/useDateTime';
+import { OrderContext } from "components/Context/OrderContext";
 
-
-// use San Jose, CA as the default center
-const DEFAULT_LATITUDE = 37.338208;
-const DEFAULT_LONGITUDE = -121.886329;
 
 function CheckoutForm({ bank, items }) {;
   let history = useHistory();
-  const watch = true;
-  const { latitude, longitude, error } = usePosition(watch, {enableHighAccuracy: true});
-  const position = !error ? [latitude, longitude] : [DEFAULT_LATITUDE, DEFAULT_LONGITUDE];
+  const context = useContext(OrderContext);
 
   const fname = useField("First Name", "text");
   const lname = useField("Last Name", "text");
@@ -45,27 +38,28 @@ function CheckoutForm({ bank, items }) {;
   const city = useField("City", "text");
   const state = useField("Select a state", "text");
   const zip = useField("Zip", "text");
-  const switchUserInfo = useField("Use my current information", "switch");
-  const switchUserAddress = useField("Use my current address", "switch");
+  const switchUserInfo = useField("Use my current information", "switch", false);
+  const switchUserAddress = useField("Use my current address", "switch", false);
   const checkbox = useField(
     "I want my delivery as soon as possible",
-    "checkbox"
+    "checkbox", false
   );
   const delivery_items = items.filter((x) =>
     x.info.delivery_pickup === "delivery"
   );
   const pickup_items = items.filter((x) =>
   x.info.delivery_pickup === "pickup"
-);
-  const [activeTab, setActiveTab] = useState(delivery_items.length ? 'delivery' : 'pickup');
+ );
+  const [activeTab, setActiveTab] = useState(pickup_items.length === 0 ? 'delivery' : 'pickup');
   
   const isFormValid = () => {
     let isValid  = true;
     if (!fname.isValid || !lname.isValid || !phone.isValid || !email.isValid){ console.log("customer details are invalid"); isValid = false;}
     if (activeTab === "delivery"){
-      if (!street.isValid  || ! city.isValid  || !state.isValid  ||  !zip.isValid) isValid = false;
-      if (!checkbox.value && !dateTime.startDate) isValid = false;
       if (pickup_items.length > 0 ) isValid = false;
+      if (!street.isValid  || ! city.isValid  || !state.isValid  ||  !zip.isValid) isValid = false;
+      if (!checkbox.value && !dateTime.isValid) isValid = false;
+      
     } else if (activeTab === "pickup" && delivery_items.length > 0) isValid = false;
   
     return isValid;
@@ -84,7 +78,6 @@ function CheckoutForm({ bank, items }) {;
       phone.setValue('');
       email.setValue('');
     }
-
   },[switchUserInfo.value]);
   useEffect(() => {
     if (switchUserAddress.value && userInfo){
@@ -103,9 +96,7 @@ function CheckoutForm({ bank, items }) {;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // here we write data to local storage and redirect user after checking that form is valid
     if (form) {
-      console.log("All inputs are valid");
       const date = dateTime.startDate ? formatDate(dateTime.startDate) : "ASAP";
       const userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
       const total = totalAmount(items);
@@ -125,8 +116,8 @@ function CheckoutForm({ bank, items }) {;
         kitchen_id: bank.foodbank_id,
         kitchen_name: bank.fb_name,
         kitchen_address: bank.foodbank_address,
-        longitude: position[1],
-        latitude: position[0],
+        longitude: context.position[1],
+        latitude: context.position[0],
         delivery_date: date,
         order_type: activeTab,
         ordered_items: items,
@@ -202,7 +193,7 @@ function CheckoutForm({ bank, items }) {;
                       onChange={(date) => dateTime.onChange(date)}
                       minDate={dateTime.minDate}
                       showTimeSelect
-                      customInput={<DateTimeInput />}
+                      customInput={<DateTimeField />}
                       dateFormat="MMMM d, yyyy h:mm aa"
                       placeholderText={
                         checkbox.value === true
@@ -249,43 +240,6 @@ const totalAmount = (items) => {
     total += x.amount;
   });
   return total;
-};
-
-const DateTimeInput = forwardRef((props, ref) => {
-  return (
-    <div className="field">
-      <div className="control has-icons-right">
-        <input
-          ref={ref}
-          className="input"
-          type="text"
-          placeholder={props.placeholder}
-          value={props.value}
-          id={props.id}
-          onClick={props.onClick}
-          readOnly
-          disabled={props.disabled}
-        />
-        <span className="icon is-small is-right">
-          <FontAwesomeIcon icon={Icons.faCalendarAlt} />
-        </span>
-      </div>
-    </div>
-  );
-});
-
-const useDateTime = () => {
-  const [startDate, setStartDate] = useState(null);
-  const onChange = (date) => {
-    setStartDate(date);
-  };
-  const minDate = addDays(new Date(), 2);
-
-  return {
-    startDate,
-    onChange,
-    minDate,
-  };
 };
 
 function formatDate(date) {

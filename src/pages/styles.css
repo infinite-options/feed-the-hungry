@@ -570,10 +570,13 @@ opacity: 1;
     
     float: left;
     padding-right: 1rem; 
-    width: 10%;
+    width: auto;
+    height: 100%;
 } 
 .schedule-hours {
-  width: 90%;
+  width: auto;
+  height: 100%;
+  padding-right: 1rem;
   float: right;
 }
 .schedule-hours p{

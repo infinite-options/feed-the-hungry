@@ -4,9 +4,7 @@ function CartItem({ foodItem }) {
   return (
     <div className="card cart-item">
       <div className="card-image cart-item-image">
-        {/* <figure className="image is-128x128"> */}
         <img src={foodItem.info.fl_image} alt="Placeholder image" />
-        {/* </figure> */}
       </div>
       <div className="card-content no-overflow">
         <p className="title is-7 has-text-grey-light item-brand">

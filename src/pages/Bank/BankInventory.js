@@ -12,8 +12,9 @@ import { OrderContext } from "components/Context/OrderContext";
 // render food bank's inventory
 function BankInventory({ inventory, orderType }) {
   let query = useQuery();
+  console.log(inventory);
   if (query.get("type"))
-    inventory = getItemsByKey(query.get("type"), inventory);
+    inventory = filterInventoryByKey(inventory, "fl_food_type", query.get("type"));
 
   return (
     <div className="inventory">
@@ -228,5 +229,8 @@ const useCounter = (x, orderType) => {
 const getItemsByKey = (arr, key, value) => {
   return arr.filter((x) => x.info[key] === value);
 };
+const filterInventoryByKey = (arr, key, value) => {
+  return arr.filter((x) => x[key].includes(value));
+}
 
 export default withRouter(BankInventory);

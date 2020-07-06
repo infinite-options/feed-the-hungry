@@ -26,19 +26,24 @@ import SignupSocial from 'pages/Signup/SignupSocial';
 import SignupVerify from 'pages/Signup/SignupVerify';
 import ConfirmationPage from 'pages/Checkout/ConfirmationPage';
 import ErrorPage from 'pages/Error/ErrorPage';
-import history from 'pages/App/History';
 // import hooks
-import { useCoordinates } from 'components/Hooks/useCoordinates';
 import { OrderContext } from 'components/Context/OrderContext';
-
+import { usePosition } from 'use-position';
 import AuthRoute from 'components/Route/AuthRoute';
 import NonAuthRoute from 'components/Route/NonAuthRoute';
+// use San Jose, CA as the default center
+const DEFAULT_LATITUDE = 37.338208;
+const DEFAULT_LONGITUDE = -121.886329;
 
 function App() {
-  const [cartTotal, setCartTotal] = useState(0);
-  const [orderType, setOrderType] = useState('');
+ 
+  const watch = true;
+  const { latitude, longitude, error } = usePosition(watch, {enableHighAccuracy: true});
+  const position = !error ? [latitude, longitude] : [DEFAULT_LATITUDE, DEFAULT_LONGITUDE];
   const [isAuth, setIsAuth] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [cartTotal, setCartTotal] = useState(0);
+
   console.log("main");
   useEffect(() => {
     onLoad();
@@ -68,7 +73,7 @@ function App() {
 
   return !loading && (
     <Router basename={"feed-the-hungry"}>
-      <OrderContext.Provider value={{cartTotal, setCartTotal, orderType, setOrderType, isAuth, setIsAuth}}>
+      <OrderContext.Provider value={{cartTotal, setCartTotal, position, isAuth, setIsAuth}}>
         <Header />
         <Switch>
           <NonAuthRoute exact path="/login" isAuth={isAuth} component={LoginPage} />

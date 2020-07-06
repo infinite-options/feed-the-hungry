@@ -3,12 +3,14 @@ import React, { useState, useEffect } from "react";
 const useField = (name, type, isRequired=true) => {
   const [value, setValue] = useState(type === "checkbox" || type ==="switch" ? false : '');
   const [isValid, setIsValid] = useState(true);
+  const [isOnChange, setIsOnChange] = useState(false);
   const [error, setError] = useState('');
   // for file inputs
   const [file, setFile] = useState({});
 
   // handle input if user changes the content of the input 
   const onChange = (event) => {
+    setIsOnChange(true);
     setValue(
       event.target.type === "checkbox" || event.target.type === "switch"
         ? event.target.checked
@@ -20,10 +22,15 @@ const useField = (name, type, isRequired=true) => {
     if (!checkInputs(event.target.value)) setIsValid(false);
     else setIsValid(true);
   };
-  // useEffect(() => {
-  //   if (checkInputs(value)) setIsValid(true);
-  //   else setIsValid(false);
-  // }, [value])
+  // autofill (switch) doesnt trigger onChange so we need these extra code
+  useEffect(() => {
+    // check if value is changed by autofill
+    setIsOnChange(false);
+    if (!isOnChange && value.length > 0) {
+      if ( !checkInputs(value)) setIsValid(false)
+      else setIsValid(true)
+    }
+  }, [value])
 
   const maxDate = () => {
     const today = new Date();
@@ -53,6 +60,7 @@ const useField = (name, type, isRequired=true) => {
       else if (type === "number" && !validateCurrency(value)) setError("Invalid currency amount");
       // case 6: if input is birthdate and date chosen is in the future
       else if (name.toLowerCase() === "date of birth" && maxDate() < value) setError("Invalid birthdate");
+      // else if (type === "checkbox" && value === false) setError("");
       // case 8: everything looks good!
       else {
         setError("");

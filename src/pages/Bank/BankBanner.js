@@ -47,6 +47,7 @@ function BankBanner({ obj }) {
                   />
                 </span>
               </div>
+              
               <BankSchedule obj={obj} />
             </div>
           </div>

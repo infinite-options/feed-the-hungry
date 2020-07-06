@@ -15,19 +15,11 @@ import ErrorPage from "pages/Error/ErrorPage";
 import BankInventory from "pages/Bank/BankInventory";
 import BankBanner from "pages/Bank/BankBanner";
 import BankFilters from "pages/Bank/BankFilters";
-import ScrollToTopOnMount from "utils/Scroll/ScrollToTopOnMount";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Icons from "components/Icons/Icons";
 
 const BankPage = () => {
-  console.log("bank page")
   let { bankId } = useParams();
-  // const bankData = JSON.parse(window.localStorage.getItem(bankId));
-  // if (bankData) return <BankWithoutHook bank={bankData} />
-  return <BankWithHook bankId = {bankId}/>
-}
-const BankWithHook = ({bankId}) => {
-  console.log('get bank from api');
   const url = `https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/foodbankinfonew/${bankId}`;
   const { data, isLoading, hasError } = useOurApi(url, {});
 
@@ -37,11 +29,6 @@ const BankWithHook = ({bankId}) => {
   return <Bank bank = {data.result} />
 }
 
-const BankWithoutHook = (data) => {
-  console.log('get bank from local storage');
-  console.log(data)
-  return <Bank bank={data.bank} />
-}
 const Bank = ({ bank }) => {
   const inventory = bank.inventory? bank.inventory : [];
   const delivery_pickup_items = filterInventoryByKey(inventory, 'delivery_pickup', 'delivery;pickup');
