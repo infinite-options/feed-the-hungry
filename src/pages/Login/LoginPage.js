@@ -185,20 +185,20 @@ function LoginPage() {
                 ).then(response => {
                     console.log(response);
                     if (response.status === 200 && response.data.auth_success) {
-                        if (response.data.result.result[0].ctm_email_verify) {
-                            let first_name = response.data.result.result[0].ctm_first_name;
-                            let last_name = response.data.result.result[0].ctm_last_name;
-                            let phone = response.data.result.result[0].ctm_phone;
+                        if (response.data.result.result[0].user_email_verified) {
+                            let first_name = response.data.result.result[0].user_first_name;
+                            let last_name = response.data.result.result[0].user_last_name;
+                            let phone = response.data.result.result[0].user_phone;
                             
-                            let address1 = response.data.result.result[0].ctm_address1;
-                            let address2 = response.data.result.result[0].ctm_address2;
-                            let city = response.data.result.result[0].ctm_city;
-                            let state = response.data.result.result[0].ctm_state;
-                            let zipcode = response.data.result.result[0].ctm_zipcode;
-                            let email = response.data.result.result[0].ctm_email;
+                            let address1 = response.data.result.result[0].user_address1;
+                            let address2 = response.data.result.result[0].user_address2;
+                            let city = response.data.result.result[0].user_city;
+                            let state = response.data.result.result[0].user_state;
+                            let zipcode = response.data.result.result[0].user_zipcode;
+                            let email = response.data.result.result[0].user_email;
                             
-                            let join_date = response.data.result.result[0].ctm_join_date;
-                            let uid = response.data.result.result[0].ctm_id;
+                            let join_date = response.data.result.result[0].user_join_date;
+                            let uid = response.data.result.result[0].user_id;
                             let login_id = response.data.login_attempt_log.login_id;
                             let session_id = response.data.login_attempt_log.session_id;
 

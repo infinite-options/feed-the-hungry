@@ -80,6 +80,8 @@ function SignupPage() {
             console.log("Data:", data);
             console.log("we did it!");
             let test = {
+                "user_is_customer" : 1,
+                "user_is_donor" : 0,
                 "first_name" : inputs.firstName.value,
                 "last_name" : inputs.lastName.value,
                 "address1" : inputs.address_1.value,
@@ -102,7 +104,7 @@ function SignupPage() {
                     history.push('/signup/verify');
                 }
             }).catch(err => {
-                console.log(err);
+                console.log(err.response);
             });
         }
         else {
