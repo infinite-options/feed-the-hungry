@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 
 function Distance(lat1, lon1, lat2, lon2, unit) {
     var radlat1 = (Math.PI * lat1) / 180;
@@ -10,10 +10,10 @@ function Distance(lat1, lon1, lat2, lon2, unit) {
     dist = Math.acos(dist);
     dist = (dist * 180) / Math.PI;
     dist = dist * 60 * 1.1515;
-    if (unit == "K") {
+    if (unit === "K") {
       dist = dist * 1.609344;
     }
-    if (unit == "M") {
+    if (unit === "M") {
       dist = dist * 0.8684;
     }
     return dist;

@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-// import { Router } from 'react-router';
 import {
   BrowserRouter as Router,
   // Router,
@@ -18,7 +17,6 @@ import "./App.css";
 import BanksPage from "pages/Banks/BanksPage";
 import BankPage from "pages/Bank/BankPage";
 import Header from "components/Header/Header";
-import BankAPI from "API/BankAPI";
 import CheckoutPage from "pages/Checkout/CheckoutPage";
 import LoginPage from 'pages/Login/LoginPage';
 import SignupPage from 'pages/Signup/SignupPage';
@@ -36,15 +34,13 @@ const DEFAULT_LATITUDE = 37.338208;
 const DEFAULT_LONGITUDE = -121.886329;
 
 function App() {
- 
-  const watch = true;
+  const watch = false;
   const { latitude, longitude, error } = usePosition(watch, {enableHighAccuracy: true});
-  const position = !error ? [latitude, longitude] : [DEFAULT_LATITUDE, DEFAULT_LONGITUDE];
+  const position = latitude && longitude ? [latitude, longitude]: [DEFAULT_LATITUDE, DEFAULT_LONGITUDE];
   const [isAuth, setIsAuth] = useState(false);
   const [loading, setLoading] = useState(true);
   const [cartTotal, setCartTotal] = useState(0);
 
-  console.log("main");
   useEffect(() => {
     onLoad();
     window.addEventListener('storage', onLoad);

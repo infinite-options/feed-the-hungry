@@ -10,14 +10,15 @@ import ErrorPage from 'pages/Error/ErrorPage';
 
 function CheckoutPage(){
     // retrieve cart items from local storage
-    const cart = JSON.parse(window.localStorage.getItem('cart')) || {};
-    const bankId = cart.bankId ? cart.bankId : "";
+    const cart = JSON.parse(window.localStorage.getItem('cart')) 
+    if (!cart) return <EmptyCartPage />;
+    const bankId = cart.bankId;
     const bankData = JSON.parse(window.localStorage.getItem(bankId));
-
     if (bankData) return <CheckoutWithoutApi bank={bankData} />
     return <CheckoutWithApi bankId = {bankId}/>
 }
 const CheckoutWithApi = ({bankId}) => {
+    console.log("checkout with api")
     const url = `https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/foodbankinfonew/${bankId}`
     const { data, isLoading, hasError } = useOurApi(url, {});
     const bankData = data.result;

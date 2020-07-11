@@ -1,4 +1,4 @@
-import React, { useState, useRef, forwardRef, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 // import icons
 import Icons from "components/Icons/Icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,15 +12,10 @@ import CustomerDetails from "pages/Checkout/CustomerDetails";
 import DeliveryDetails from "pages/Checkout/DeliveryDetails";
 import PickupDetails from "./PickupDetails";
 import DateTimeField from 'components/Form/DateTimeField';
-import {
-  useRouteMatch,
-  useHistory,
-  useParams,
-  Link,
-  useLocation,
-  withRouter,
-} from "react-router-dom";
 // import hooks
+import {
+  useHistory
+} from "react-router-dom";
 import { useDateTime } from 'components/Hooks/useDateTime';
 import { OrderContext } from "components/Context/OrderContext";
 
@@ -79,6 +74,7 @@ function CheckoutForm({ bank, items }) {;
       email.setValue('');
     }
   },[switchUserInfo.value]);
+
   useEffect(() => {
     if (switchUserAddress.value && userInfo){
       street.setValue(userInfo.address1);

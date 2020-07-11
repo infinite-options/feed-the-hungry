@@ -9,7 +9,7 @@ function ErrorPage() {
         <div className="not-found-page">
             <div className="not-found-page-body"> 
                 <figure class="image is-128x128">
-                <img src={NotFound} alt="Not-found image"/>
+                <img src={NotFound} alt="Not Found"/>
                 </figure>   
                 <div className="not-found-page-content">
                 <p className="title is-6 has-text-grey">Oh no! the page you are looking for doesn't exist.</p>

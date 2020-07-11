@@ -1,11 +1,8 @@
-import React, { useState, useEffect, useContext, useRef, useLayoutEffect } from "react";
+import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import useStayScrolled from "react-stay-scrolled";
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
   Link,
-  useRouteMatch,
   useParams,
 } from "react-router-dom";
 import "pages/styles.css";

@@ -63,7 +63,7 @@ function Banks({ marker, banks }) {
                   <p className="subtitle has-font-13 no-overflow">Hours</p>
                   <p className="subtitle has-font-13 is-bold no-overflow">
                     {/* <span className="days">{day}</span> */}
-                    <p className="hours">{bank[`fb_${day}_time`]} </p>
+                    {bank[`fb_${day}_time`]} 
                   </p>
                 </div>
                 <div className="column is-3">

@@ -1,5 +1,5 @@
-import React, {useState, useContext, useEffect} from 'react';
-import { Link, withRouter } from "react-router-dom";
+import React, {useContext} from 'react';
+import { Link } from "react-router-dom";
 import './header.css';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import Icons from 'components/Icons/Icons';

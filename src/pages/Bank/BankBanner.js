@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import Icons from "components/Icons/Icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LeafletMap from "components/Map/LeafletMap";
