@@ -3,14 +3,12 @@ import React, { useState, useEffect } from "react";
 const useField = (name, type, isRequired=true) => {
   const [value, setValue] = useState(type === "checkbox" || type ==="switch" ? false : '');
   const [isValid, setIsValid] = useState((isRequired ? false : true));
-  const [isOnChange, setIsOnChange] = useState(false);
   const [error, setError] = useState((isRequired ? "This field is required" : ""));
   // for file inputs
   const [file, setFile] = useState({});
 
   // handle input if user changes the content of the input 
   const onChange = (event) => {
-    setIsOnChange(true);
     setValue(
       event.target.type === "checkbox" || event.target.type === "switch"
         ? event.target.checked
@@ -68,26 +66,6 @@ const useField = (name, type, isRequired=true) => {
     return true;
   }
 
-   // WE WONT NEED VALIDATE() ANYMORE
-  // validate inputs if user clicks submit button. Returns true if no errors, false if error detected.
-  // const validate = () => {
-  //   // if input is required and is not filled
-  //   if (isRequired && value.length === 0) {
-  //     setError("");
-  //     return false;
-  //   }
-  //   // if input is filled. Checks required & not required inputs since even if 
-  //   // it's not required we want to validate input if it's filled.
-  //   else if (value.length > 0) {
-  //     return checkInputs(value);
-  //   }
-  //   // if input is not required and not filled
-  //   else {
-  //     setError("");
-  //     return true;
-  //   }
-  // }
-
   const resetinput = () => {
     setValue("");
     setError("");
@@ -128,7 +106,3 @@ function validateCurrency(currency) {
 }
 export default useField;
 
-// this custom hook handles any type of input
-// just do const myInput = useField("text") (it could be text/number/checkbox/... depends on the type of input you want to set)
-// then do <input {... myInput} /> and your input will have all of the attributes needed (value, onChange, etc)
-// Afther that, you can simply do myInput.value to get its value 
