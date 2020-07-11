@@ -19,17 +19,11 @@ const useField = (name, type, isRequired=true) => {
     if (event.target.type === "file") {
       setFile(event.target.files[0]);
     }
-    if (!checkInputs(event.target.value)) setIsValid(false);
-    else setIsValid(true);
   };
   // autofill (switch) doesnt trigger onChange so we need these extra code
   useEffect(() => {
-    // check if value is changed by autofill
-    setIsOnChange(false);
-    if (!isOnChange && value.length > 0) {
       if ( !checkInputs(value)) setIsValid(false)
       else setIsValid(true)
-    }
   }, [value])
 
   const maxDate = () => {
@@ -44,7 +38,7 @@ const useField = (name, type, isRequired=true) => {
 
   const checkInputs = (value) => {
     // if required and not filled
-    if (isRequired && value.length === 0) {setError("This field is required"); return false; }
+    if (isRequired && !value ) {setError("This field is required"); return false; }
     // if filled (checks both optional & required)
     else if (value.length > 0){
     // case 1: if input is a zip code
