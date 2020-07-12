@@ -4,7 +4,7 @@ import "pages/styles.css";
 import FarmersMarket from 'assets/image/farmers-market.jpg';
 import LoginForm from "components/Form/LoginForm";
 
-function LoginPage(props) {
+function LoginPage() {
     return (
         <div className="login-signup-page">
             {/* Login image */}
@@ -12,7 +12,7 @@ function LoginPage(props) {
                 <img alt="placeholder" src={FarmersMarket}></img>
             </figure>
             {/* NOTE: add prop values, like: isCustomer={true} */}
-            <LoginForm /> 
+            <LoginForm loginStatus={"customer"} /> 
         </div>
     );
 }

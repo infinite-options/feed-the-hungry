@@ -19,47 +19,51 @@ function SignupSocial() {
     const dietRef = useRef();
     const familyRef = useRef();
 
-    const [email, setEmail] = useState("");
-    const [firstname, setFirstName] = useState("");
-    const [lastname, setLastName] = useState("");
-    const [accessToken, setAccessToken] = useState("");
-    const [refreshToken, setRefreshToken] = useState("");
-    const [socialMedia, setSocialMedia] = useState("");
+    // const [email, setEmail] = useState("");
+    // const [firstname, setFirstName] = useState("");
+    // const [lastname, setLastName] = useState("");
+    // const [accessToken, setAccessToken] = useState("");
+    // const [refreshToken, setRefreshToken] = useState("");
+    // const [socialMedia, setSocialMedia] = useState("");
+    // const [signupStatus, setSignupStatus] = useState("");
+
+    const [email] = useState(location.state.email);
+    const [firstname] = useState(location.state.firstname);
+    const [lastname] = useState(location.state.lastname);
+    const [accessToken] = useState(location.state.accessToken);
+    const [refreshToken] = useState(location.state.refreshToken);
+    const [socialMedia] = useState(location.state.social);
+    const [signupStatus] = useState(location.state.signupStatus);
 
     const phoneNumber = useField("Phone Number", "tel");
     const dob = useField("Date of Birth", "date");
-    const address_1 = useField("Address 1", "text");
+    const address_1 = useField("Address 1", "text", (signupStatus === "customer" ? false : true));
     const address_2 = useField("Address 2", "text", false);
-    const city = useField("City", "text");
-    const state = useField("State", "text");
-    const zip = useField("Zip", "text");
-    // const vegan = useField("Vegan", "checkbox");
-    // const vegetarian = useField("Vegetarian", "checkbox");
-    // const glutenFree = useField("Gluten Free", "checkbox");
-    // const kosher = useField("Kosher", "checkbox");
-    // const halal = useField("Halal", "checkbox");
-    // const none = useField("None", "checkbox");
+    const city = useField("City", "text", (signupStatus === "customer" ? false : true));
+    const state = useField("State", "text", (signupStatus === "customer" ? false : true));
+    const zip = useField("Zip", "text", (signupStatus === "customer" ? false : true));
 
     const license= useField("Drivers License", "text", false);
     const licenseImg= useField("License Image", "file", false);
     const monthlyIncome = useField("Monthly Income", "number", false);
 
-    useEffect(() => {
-        (async function setSignupParams(state) {
-            if (state) {
-                await setParams(state);
-            }
-        })(location.state);
-    }, []);
+    // useEffect(() => {
+    //     (async function setSignupParams(state) {
+    //         if (state) {
+    //             await setParams(state);
+    //         }
+    //     })(location.state);
+    // }, []);
     
-    function setParams(state) {
-        setEmail(state.email);
-        setLastName(state.lastname);
-        setFirstName(state.firstname);
-        setAccessToken(state.accessToken);
-        setRefreshToken(state.refreshToken);
-        setSocialMedia(state.social);
-    }
+    // function setParams(state) {
+    //     setEmail(state.email);
+    //     setLastName(state.lastname);
+    //     setFirstName(state.firstname);
+    //     setAccessToken(state.accessToken);
+    //     setRefreshToken(state.refreshToken);
+    //     setSocialMedia(state.social);
+    //     setSignupStatus(state.signupStatus);
+    // }
 
     const validateInputs = () => {
         let isAllValid = true;
@@ -73,6 +77,10 @@ function SignupSocial() {
             isAllValid = false;
         }
         return isAllValid;
+    }
+
+    const checkSignupStatus = (status) => {
+        return (status === signupStatus ? 1 : 0);
     }
 
     const handleClick = () => {
@@ -101,12 +109,6 @@ function SignupSocial() {
             data["city"] = city.value;
             data["state"] = state.value;
             data["zipcode"] = zip.value;
-            // data["vegan"] = vegan.value;
-            // data["vegetarian"] = vegetarian.value;
-            // data["glutenFree"] = glutenFree.value;
-            // data["kosher"] = kosher.value;
-            // data["halal"] = halal.value;
-            // data["none"] = none.value;
             data["persons"] = familyRef.current.persons;
             data["diet_restrictions"] = dietRef.current.restrictions;
             console.log("Data:", data);
@@ -124,10 +126,10 @@ function SignupSocial() {
                 "social_media" : socialMedia,
                 "access_token": accessToken,
                 "refresh_token": refreshToken,
-                "user_is_customer": 1,
-                "user_is_donor": 0,
-                "user_is_admin": 0,
-                "user_is_foodbank": 0,
+                "user_is_customer": checkSignupStatus("customer"),
+                "user_is_donor": checkSignupStatus("donor"),
+                "user_is_admin": checkSignupStatus("admin"),
+                "user_is_foodbank": checkSignupStatus("foodbank"),
             }
             console.log("Test:", test);
             axios.post(

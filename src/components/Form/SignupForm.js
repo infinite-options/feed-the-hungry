@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
 
 import axios from 'axios';
@@ -10,11 +10,12 @@ import Select from 'components/Form/Select';
 import DietaryRestrictions from "pages/Signup/DietaryRestrictions";
 import FamilyMembers from "pages/Signup/FamilyMembers";
 
-function SignupForm() {
+function SignupForm(props) {
     const states = StateAPI();
     const history = useHistory();
     const dietRef = useRef();
     const familyRef = useRef();
+    // const signupStatus = useState(props.signupStatus.toLowerCase());
 
     const inputs = {
         firstName : useField("First Name", "text"),
@@ -25,11 +26,11 @@ function SignupForm() {
         emailConfirm : useField("Confirm Email", "email"),
         password : useField("Password","password"),
         passwordConfirm : useField("Confirm Password", "password"),
-        address_1 : useField("Address 1", "text"),
+        address_1 : useField("Address 1", "text", (props.signupStatus === "customer" ? false : true)),
         address_2 : useField("Address 2", "text", false),
-        city : useField("City", "text"),
-        state : useField("State", "text"),
-        zip : useField("Zip", "text"),
+        city : useField("City", "text", (props.signupStatus === "customer" ? false : true)),
+        state : useField("State", "text", (props.signupStatus === "customer" ? false : true)),
+        zip : useField("Zip", "text", (props.signupStatus === "customer" ? false : true)),
 
         license: useField("Drivers License", "text", false),
         licenseImg: useField("License Image", "file", false),
@@ -44,6 +45,10 @@ function SignupForm() {
             }
         }
         return true;
+    }
+
+    const checkSignupStatus = (status) => {
+        return (status === props.signupStatus ? 1 : 0);
     }
 
     const handleClick = () => {
@@ -91,10 +96,10 @@ function SignupForm() {
                 "phone" : inputs.phoneNumber.value.replace(/\D/g, ""),
                 "email" : inputs.email.value,
                 "password": inputs.password.value,
-                "user_is_customer": 1,
-                "user_is_donor": 0,
-                "user_is_admin": 0,
-                "user_is_foodbank": 0,
+                "user_is_customer": checkSignupStatus("customer"),
+                "user_is_donor": checkSignupStatus("donor"),
+                "user_is_admin": checkSignupStatus("admin"),
+                "user_is_foodbank": checkSignupStatus("foodbank"),
             }
             console.log("Test:", test);
             axios.post(

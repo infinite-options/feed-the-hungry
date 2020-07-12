@@ -16,7 +16,7 @@ import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login"
 import { OrderContext }  from 'components/Context/OrderContext';
 
-function LoginForm() {
+function LoginForm(props) {
     const context = useContext(OrderContext);
     const history = useHistory();
 
@@ -61,6 +61,8 @@ function LoginForm() {
                             let user_is_admin = result2[0].user_is_admin;
                             let user_is_foodbank = result2[0].user_is_foodbank;
                             
+                            let login_type = props.loginStatus;
+
                             let userInfo = {
                                 firstName: first_name,
                                 lastName: last_name,
@@ -81,6 +83,8 @@ function LoginForm() {
                                 isDonor: user_is_donor,
                                 isAdmin: user_is_admin,
                                 isFoodbank: user_is_foodbank,
+
+                                loginType: login_type,
                             }
                             window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
                             
@@ -104,6 +108,7 @@ function LoginForm() {
                             social: data.social,
                             accessToken: data.access,
                             refreshToken: data.refresh,
+                            signupStatus: props.loginStatus,
                         }
                     });
                 }
@@ -161,22 +166,6 @@ function LoginForm() {
         }
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-    };
-
-    const handleClick = () => {
-        console.log("User has tried to login..")
-        if (email.checkInputs() & password.checkInputs()) {
-            console.log("we did it!");
-            checkLogin();
-        }
-        else {
-            setError("Please fill out your login information");
-            console.log("User has failed to login..");
-        }
-    }
-
     function checkLogin() {
         axios.get(`https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/social/${email.value}`).then(response => {
             // if user has a social account
@@ -220,6 +209,8 @@ function LoginForm() {
                             let user_is_admin = result2[0].user_is_admin;
                             let user_is_foodbank = result2[0].user_is_foodbank;
 
+                            let login_type = props.loginStatus;
+
                             let userInfo = {
                                 firstName: first_name,
                                 lastName: last_name,
@@ -240,6 +231,8 @@ function LoginForm() {
                                 isDonor: user_is_donor,
                                 isAdmin: user_is_admin,
                                 isFoodbank: user_is_foodbank,
+
+                                loginType: login_type,
                             }
                             window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
                             
@@ -268,6 +261,22 @@ function LoginForm() {
             console.log(err.response);
         })
     }
+
+    const handleClick = () => {
+        console.log("User has tried to login..")
+        if (email.checkInputs() & password.checkInputs()) {
+            console.log("we did it!");
+            checkLogin();
+        }
+        else {
+            setError("Please fill out your login information");
+            console.log("User has failed to login..");
+        }
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    };
 
     return (
         <form onSubmit={handleSubmit} style={{width: "400px", maxWidth: "100%"}}>
