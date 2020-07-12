@@ -108,6 +108,7 @@ function SignupSocial() {
             // data["halal"] = halal.value;
             // data["none"] = none.value;
             data["persons"] = familyRef.current.persons;
+            data["diet_restrictions"] = dietRef.current.restrictions;
             console.log("Data:", data);
             console.log("we did it!");
             let test = {

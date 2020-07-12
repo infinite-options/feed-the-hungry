@@ -14,6 +14,9 @@ const DietaryRestrictions = forwardRef((props, ref) => {
     }
 
     const [hidden, setHidden] = useState("hidden");
+    let restrictions = [inputs.vegan.value, inputs.vegetarian.value, 
+                        inputs.glutenFree.value, inputs.kosher.value, 
+                        inputs.halal.value];
     let hasRestrictions = inputs.vegan.value || inputs.vegetarian.value
                        || inputs.glutenFree.value || inputs.kosher.value 
                        || inputs.halal.value;
@@ -25,7 +28,8 @@ const DietaryRestrictions = forwardRef((props, ref) => {
         },
         valid() {
             return inputs.none.value || hasRestrictions;
-        }
+        },
+        restrictions,
     }));
 
     return (

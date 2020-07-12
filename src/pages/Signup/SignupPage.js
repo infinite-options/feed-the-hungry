@@ -77,6 +77,7 @@ function SignupPage() {
             }
             // console.log("persons" + ":", persons);
             data["persons"] = familyRef.current.persons;
+            data["diet_restrictions"] = dietRef.current.restrictions;
             console.log("Data:", data);
             console.log("we did it!");
             let test = {
