@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 
 import axios from 'axios';
 import StateAPI from 'API/StateAPI';
-import "pages/styles.css";
 import useField from "components/Hooks/useField";
 import InputField from "components/Form/InputField";
 import Select from 'components/Form/Select';
@@ -194,10 +193,10 @@ function SignupForm(props) {
                         </div>
                     </div>
                 </div>
-                {/* testing adding additional people inputs */}
                 <hr className="is-light-gray"/>
+                {/* Asking for additional information */}
                 <div>
-                    <p className="subtitle is-3 has-margin-top-1 has-text-centered has-text-black">Optional Personal Information</p>
+                    <p className="subtitle is-3 has-margin-top-1 has-text-centered has-text-black">Additional Personal Information</p>
                     <div className="columns has-margin-top-1">
                         <FamilyMembers ref={familyRef} />
                         <div className="column">
@@ -209,10 +208,7 @@ function SignupForm(props) {
                     </div>
                     <InputField props={inputs.monthlyIncome} />
                 </div>
-                <hr className="is-light-gray"/>
-                {/* Asking for dietary restrictions */}
-                <p className="right-most" title="Substitutions allow users to choose different items that align with their dietary restrictions to add to their total cart.">* Opt for substitutions.</p>
-                <p className="subtitle is-3 has-text-centered has-text-black">Dietary Restrictions*</p>
+                {/* Asking for dietary restrictions, if any */}
                 <DietaryRestrictions ref={dietRef}/>
                 <div className="has-text-centered">
                     <button className="button is-success has-margins-0-5" type="button" onClick={handleClick}>Sign Up</button>

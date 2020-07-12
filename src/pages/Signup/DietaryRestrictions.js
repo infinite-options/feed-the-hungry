@@ -34,6 +34,9 @@ const DietaryRestrictions = forwardRef((props, ref) => {
 
     return (
         <React.Fragment>
+            <hr className="is-light-gray"/>
+            <p className="right-most" title="Substitutions allow users to choose different items that align with their dietary restrictions to add to their total cart.">* Opt for substitutions.</p>
+            <p className="subtitle is-3 has-text-centered has-text-black">Dietary Restrictions*</p>
             <InputField props={inputs.vegan} icon={Icons.Vegan} isDisabled={noneSelected}/>
             <InputField props={inputs.vegetarian} icon={Icons.Vegetarian} isDisabled={noneSelected} />
             <InputField props={inputs.glutenFree} icon={Icons.GlutenFree} isDisabled={noneSelected} />

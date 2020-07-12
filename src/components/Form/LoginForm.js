@@ -7,7 +7,6 @@
 import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 
-import "pages/styles.css";
 import axios from 'axios';
 import useLogin from "components/Hooks/useLogin";
 import LoginField from "components/Form/LoginField";
