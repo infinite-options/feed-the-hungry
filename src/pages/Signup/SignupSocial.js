@@ -27,13 +27,13 @@ function SignupSocial() {
     // const [socialMedia, setSocialMedia] = useState("");
     // const [signupStatus, setSignupStatus] = useState("");
 
-    const [email] = useState(location.state.email);
-    const [firstname] = useState(location.state.firstname);
-    const [lastname] = useState(location.state.lastname);
-    const [accessToken] = useState(location.state.accessToken);
-    const [refreshToken] = useState(location.state.refreshToken);
-    const [socialMedia] = useState(location.state.social);
-    const [signupStatus] = useState(location.state.signupStatus);
+    const email = location.state.email;
+    const firstname = location.state.firstname;
+    const lastname = location.state.lastname;
+    const accessToken = location.state.accessToken;
+    const refreshToken = location.state.refreshToken;
+    const socialMedia = location.state.social;
+    const signupStatus = location.state.signupStatus;
 
     const phoneNumber = useField("Phone Number", "tel");
     const dob = useField("Date of Birth", "date");
