@@ -80,8 +80,6 @@ function SignupPage() {
             console.log("Data:", data);
             console.log("we did it!");
             let test = {
-                "user_is_customer" : 1,
-                "user_is_donor" : 0,
                 "first_name" : inputs.firstName.value,
                 "last_name" : inputs.lastName.value,
                 "address1" : inputs.address_1.value,
@@ -91,7 +89,11 @@ function SignupPage() {
                 "zipcode" : inputs.zip.value,
                 "phone" : inputs.phoneNumber.value.replace(/\D/g, ""),
                 "email" : inputs.email.value,
-                "password": inputs.password.value
+                "password": inputs.password.value,
+                "user_is_customer": 1,
+                "user_is_donor": 0,
+                "user_is_admin": 0,
+                "user_is_foodbank": 0,
             }
             console.log("Test:", test);
             axios.post(

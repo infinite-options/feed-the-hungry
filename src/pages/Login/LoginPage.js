@@ -30,30 +30,37 @@ function LoginPage() {
         axios.get(`https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/social/${data.email}`).then(response => {
             console.log(response);
             if (response.data) {
+                const result1 = response.data.result.result;
                 // User exists in database
-                if (response.data.result.result.length) {
+                if (result1.length) {
                     console.log("Exists");
                     // checking if user exists as the correct account type
-                    if (data.social === response.data.result.result[0].ctm_social_media) {
-                        let uid = response.data.result.result[0].ctm_id;
+                    if (data.social === result1[0].social_media) {
+                        let uid = result1[0].user_id;
                         console.log(uid);
                         axios.post(`https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/socialacc/${uid}`).then(response => {
                             console.log(response);
-                            let first_name = response.data.result.result[0].ctm_first_name;
-                            let last_name = response.data.result.result[0].ctm_last_name;
-                            let phone = response.data.result.result[0].ctm_phone;
+                            const result2 = response.data.result.result;
+                            let first_name = result2[0].user_first_name;
+                            let last_name = result2[0].user_last_name;
+                            let phone = result2[0].user_phone;
                             
-                            let address1 = response.data.result.result[0].ctm_address1;
-                            let address2 = response.data.result.result[0].ctm_address2;
-                            let city = response.data.result.result[0].ctm_city;
-                            let state = response.data.result.result[0].ctm_state;
-                            let zipcode = response.data.result.result[0].ctm_zipcode;
-                            let email = response.data.result.result[0].ctm_email;
+                            let address1 = result2[0].user_address1;
+                            let address2 = result2[0].user_address2;
+                            let city = result2[0].user_city;
+                            let state = result2[0].user_state;
+                            let zipcode = result2[0].user_zipcode;
+                            let email = result2[0].user_email;
                             
-                            let join_date = response.data.result.result[0].ctm_join_date;
-                            let uid = response.data.result.result[0].ctm_id;
+                            let join_date = result2[0].user_join_date;
+                            let uid = result2[0].user_id;
                             let login_id = response.data.login_attempt_log.login_id;
                             let session_id = response.data.login_attempt_log.session_id;
+
+                            let user_is_customer = result2[0].user_is_customer;
+                            let user_is_donor = result2[0].user_is_donor;
+                            let user_is_admin = result2[0].user_is_admin;
+                            let user_is_foodbank = result2[0].user_is_foodbank;
                             
                             let userInfo = {
                                 firstName: first_name,
@@ -70,6 +77,11 @@ function LoginPage() {
                                 userID: uid,
                                 loginID: login_id,
                                 sessionID: session_id,
+                                
+                                isCustomer: user_is_customer,
+                                isDonor: user_is_donor,
+                                isAdmin: user_is_admin,
+                                isFoodbank: user_is_foodbank,
                             }
                             window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
                             
@@ -78,7 +90,7 @@ function LoginPage() {
                         })
                     }
                     else {
-                        setError(`Your account is registered as a ${response.data.result.result[0].ctm_social_media} user`);
+                        setError(`Your account is registered as a ${result1[0].social_media} user`);
                     }
                 }
                 // New user, redirect to signup page
@@ -169,8 +181,9 @@ function LoginPage() {
     function checkLogin() {
         axios.get(`https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/social/${email.value}`).then(response => {
             // if user has a social account
-            if (response.data && response.data.result.result.length) {
-                setError(`Your account is registered as a ${response.data.result.result[0].ctm_social_media} user`);
+            const result1 = response.data.result.result;
+            if (response.data && result1.length) {
+                setError(`Your account is registered as a ${result1[0].social_media} user`);
             }
             // otherwise try direct login
             else {
@@ -184,23 +197,29 @@ function LoginPage() {
                     data
                 ).then(response => {
                     console.log(response);
+                    const result2 = response.data.result.result;
                     if (response.status === 200 && response.data.auth_success) {
-                        if (response.data.result.result[0].user_email_verified) {
-                            let first_name = response.data.result.result[0].user_first_name;
-                            let last_name = response.data.result.result[0].user_last_name;
-                            let phone = response.data.result.result[0].user_phone;
+                        if (result2[0].user_email_verified) {
+                            let first_name = result2[0].user_first_name;
+                            let last_name = result2[0].user_last_name;
+                            let phone = result2[0].user_phone;
                             
-                            let address1 = response.data.result.result[0].user_address1;
-                            let address2 = response.data.result.result[0].user_address2;
-                            let city = response.data.result.result[0].user_city;
-                            let state = response.data.result.result[0].user_state;
-                            let zipcode = response.data.result.result[0].user_zipcode;
-                            let email = response.data.result.result[0].user_email;
+                            let address1 = result2[0].user_address1;
+                            let address2 = result2[0].user_address2;
+                            let city = result2[0].user_city;
+                            let state = result2[0].user_state;
+                            let zipcode = result2[0].user_zipcode;
+                            let email = result2[0].user_email;
                             
-                            let join_date = response.data.result.result[0].user_join_date;
-                            let uid = response.data.result.result[0].user_id;
+                            let join_date = result2[0].user_join_date;
+                            let uid = result2[0].user_id;
                             let login_id = response.data.login_attempt_log.login_id;
                             let session_id = response.data.login_attempt_log.session_id;
+
+                            let user_is_customer = result2[0].user_is_customer;
+                            let user_is_donor = result2[0].user_is_donor;
+                            let user_is_admin = result2[0].user_is_admin;
+                            let user_is_foodbank = result2[0].user_is_foodbank;
 
                             let userInfo = {
                                 firstName: first_name,
@@ -217,6 +236,11 @@ function LoginPage() {
                                 userID: uid,
                                 loginID: login_id,
                                 sessionID: session_id,
+
+                                isCustomer: user_is_customer,
+                                isDonor: user_is_donor,
+                                isAdmin: user_is_admin,
+                                isFoodbank: user_is_foodbank,
                             }
                             window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
                             

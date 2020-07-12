@@ -33,12 +33,12 @@ function SignupSocial() {
     const city = useField("City", "text");
     const state = useField("State", "text");
     const zip = useField("Zip", "text");
-    const vegan = useField("Vegan", "checkbox");
-    const vegetarian = useField("Vegetarian", "checkbox");
-    const glutenFree = useField("Gluten Free", "checkbox");
-    const kosher = useField("Kosher", "checkbox");
-    const halal = useField("Halal", "checkbox");
-    const none = useField("None", "checkbox");
+    // const vegan = useField("Vegan", "checkbox");
+    // const vegetarian = useField("Vegetarian", "checkbox");
+    // const glutenFree = useField("Gluten Free", "checkbox");
+    // const kosher = useField("Kosher", "checkbox");
+    // const halal = useField("Halal", "checkbox");
+    // const none = useField("None", "checkbox");
 
     const license= useField("Drivers License", "text", false);
     const licenseImg= useField("License Image", "file", false);
@@ -69,13 +69,7 @@ function SignupSocial() {
             !address_2.isValid ||
             !city.isValid ||
             !state.isValid ||
-            !zip.isValid ||
-            !vegan.isValid ||
-            !vegetarian.isValid ||
-            !glutenFree.isValid ||
-            !kosher.isValid ||
-            !halal.isValid ||
-            !none.isValid) {
+            !zip.isValid) {
             isAllValid = false;
         }
         return isAllValid;
@@ -88,6 +82,7 @@ function SignupSocial() {
         
         // Checking if user filled all required inputs
         let signupPassed = dietRef.current.valid() && isAllValid;
+        console.log(dietRef.current.valid(), isAllValid, signupPassed);
 
         if(signupPassed) {
             // Testing to see if all values went through
@@ -106,12 +101,12 @@ function SignupSocial() {
             data["city"] = city.value;
             data["state"] = state.value;
             data["zipcode"] = zip.value;
-            data["vegan"] = vegan.value;
-            data["vegetarian"] = vegetarian.value;
-            data["glutenFree"] = glutenFree.value;
-            data["kosher"] = kosher.value;
-            data["halal"] = halal.value;
-            data["none"] = none.value;
+            // data["vegan"] = vegan.value;
+            // data["vegetarian"] = vegetarian.value;
+            // data["glutenFree"] = glutenFree.value;
+            // data["kosher"] = kosher.value;
+            // data["halal"] = halal.value;
+            // data["none"] = none.value;
             data["persons"] = familyRef.current.persons;
             console.log("Data:", data);
             console.log("we did it!");
@@ -128,6 +123,10 @@ function SignupSocial() {
                 "social_media" : socialMedia,
                 "access_token": accessToken,
                 "refresh_token": refreshToken,
+                "user_is_customer": 1,
+                "user_is_donor": 0,
+                "user_is_admin": 0,
+                "user_is_foodbank": 0,
             }
             console.log("Test:", test);
             axios.post(
