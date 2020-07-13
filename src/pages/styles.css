@@ -876,3 +876,11 @@ hr.is-light-gray {
 .has-opacity-0-6 {
     opacity: .6;
 }
+
+/* donation classes */
+.donate-card {
+    display: inline-block; 
+    padding: 10px; background-color: white; 
+    border-radius: 12px; 
+    margin: auto;
+}
