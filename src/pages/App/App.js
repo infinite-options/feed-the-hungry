@@ -24,6 +24,7 @@ import SignupSocial from 'pages/Signup/SignupSocial';
 import SignupVerify from 'pages/Signup/SignupVerify';
 import ConfirmationPage from 'pages/Checkout/ConfirmationPage';
 import ErrorPage from 'pages/Error/ErrorPage';
+import HomePage from 'pages/Home/HomePage';
 // import hooks
 import { OrderContext } from 'components/Context/OrderContext';
 import { usePosition } from 'use-position';
@@ -76,6 +77,7 @@ function App() {
           <NonAuthRoute exact path="/signup" component={SignupPage} />
           {/* <AuthRoute exact path="/" bankAPI={bankAPI} component={BanksPage} /> */}
           <Route exact path="/"><BanksPage /></Route>
+          <Route exact path="/home"><HomePage /></Route>
           <NonAuthRoute exact path="/signup/social" component={SignupSocial} />
           <NonAuthRoute exact path="/signup/verify" component={SignupVerify} />
           <AuthRoute exact path={"/banks/:bankId/products"} component={BankPage} />
