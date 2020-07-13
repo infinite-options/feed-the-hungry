@@ -251,7 +251,7 @@ function SignupForm(props) {
                     <DietaryRestrictions ref={dietRef}/>
                 )}
                 <div className="has-text-centered">
-                    <button className="button is-success has-margin-top-1" type="button" onClick={handleClick}>Sign Up</button>
+                    <button className="button is-success has-margin-top-1 has-margin-bottom-0-5" type="button" onClick={handleClick}>Sign Up</button>
                 </div>
             </div>
         </form>

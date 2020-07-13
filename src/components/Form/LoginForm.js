@@ -85,10 +85,12 @@ function LoginForm(props) {
 
                                 loginType: login_type,
                             }
-                            window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+                            checkAccountType(userInfo);
+                            // window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
                             
-                            context.setIsAuth(true);
-                            history.push('/');
+                            // context.setIsAuth(true);
+                            // history.push('/');
                         })
                     }
                     else {
@@ -233,10 +235,29 @@ function LoginForm(props) {
 
                                 loginType: login_type,
                             }
-                            window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+                            checkAccountType(userInfo);
+                            // if ((login_type === "customer" && user_is_customer) || 
+                            //     (login_type === "donor" && user_is_donor) || 
+                            //     (login_type === "admin" && user_is_admin) || 
+                            //     (login_type === "foodbank" && user_is_foodbank)) {
+                            //     window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
                             
-                            context.setIsAuth(true);
-                            history.push('/');
+                            //     context.setIsAuth(true);
+                            //     const route = login_type === "customer" ? "/banks" : 
+                            //                   login_type === "donor" ? "/donor" : 
+                            //                   login_type === "admin" ? "/admin" :
+                            //                 /*login_type === "foodbank ?*/ "/foodbank";
+                            //     history.push(route);
+                            // }
+                            // else {
+                            //     history.push({
+                            //         pathname: "/form",
+                            //         state: {
+                            //             loginType: login_type,
+                            //         }
+                            //     });
+                            // }
                         }
                         else {
                             setError("Please verify your email address before logging in");
@@ -261,6 +282,32 @@ function LoginForm(props) {
         })
     }
 
+    const checkAccountType = (userInfo) => {
+        const loginType = userInfo.loginType;
+        if ((loginType === "customer" && userInfo.isCustomer) || 
+            (loginType === "donor" && userInfo.isDonor) || 
+            (loginType === "admin" && userInfo.isAdmin) || 
+            (loginType === "foodbank" && userInfo.isFoodbank)) {
+            window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
+        
+            context.setIsAuth(true);
+            const route = loginType === "customer" ? "/banks" : 
+                          loginType === "donor" ? "/donor" : 
+                          loginType === "admin" ? "/admin" :
+                        /*loginType === "foodbank ?*/ "/foodbank";
+            history.push(route);
+        }
+        else {
+            history.push({
+                pathname: "/form",
+                state: {
+                    loginType: loginType,
+                    userInfo: userInfo,
+                }
+            });
+        }
+    }
+
     const handleClick = () => {
         console.log("User has tried to login..")
         if (email.checkInputs() & password.checkInputs()) {
@@ -269,7 +316,7 @@ function LoginForm(props) {
         }
         else {
             setError("Please fill out your login information");
-            console.log("User has failed to login..");
+            console.log("User has failed to login..", email.error);
         }
     }
 
@@ -315,8 +362,8 @@ function LoginForm(props) {
                     <p className="has-text-centered has-text-danger">{error}</p>
                 )}
                 {/* Buttons */}
-                <div className="has-text-centered has-margin-bottom-0-5">
-                    <button className="button is-success has-margins-0-5" onClick={handleClick}>Login</button>
+                <div className="has-text-centered">
+                    <button className="button is-success has-margins-0-5" type="button" onClick={handleClick}>Login</button>
                     {props.loginStatus === "customer" && (
                         <Link to="/signup" >
                             <button className="button is-success has-margins-0-5">Sign Up</button>

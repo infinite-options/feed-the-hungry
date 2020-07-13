@@ -82,7 +82,7 @@ const InputField = ({props, icon, isDisabled}) => {
               
             </div>
             <p className="help is-danger">{props.error}</p>
-            <p className="help">Do not enter the first zero</p>
+            {props.type === "tel" && (<p className="help">Do not enter the first zero</p>)}
           </div>
         </div>
       </div>

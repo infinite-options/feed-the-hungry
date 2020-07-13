@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import useLogin from "components/Hooks/useLogin";
+import LoginField from "components/Form/LoginField";
 import useField from "components/Hooks/useField";
 import InputField from "components/Form/InputField";
 
@@ -7,13 +9,20 @@ function QuickDonation() {
     // isRequired values are set to false, not because they're optional, but rather because this allows
     // me to control the error display.
     // so in this case, you can think of the isRequired value as being isCheckingRequirementOnChange!
-    const firstName = useField("First Name", "text", false);
-    const lastName = useField("Last Name", "text", false);
-    const email = useField("Email Address", "email", false);
-    const phone = useField("Phone Number", "tel", false);
+    const firstName = useField("First Name", "text");
+    const lastName = useField("Last Name", "text");
+    const email = useField("Email Address", "email");
+    const phone = useField("Phone Number", "tel");
 
     const handleClick = () => {
-        // check if inputs are filled
+        console.log("User has tried to submit donation..")
+        if (firstName.isValid && lastName.isValid && 
+            email.isValid && phone.isValid) {
+            console.log("we did it!");
+        }
+        else {
+            console.log("User has failed to submit..");
+        }
     }
 
     const handleSubmit = (e) => {
@@ -22,24 +31,20 @@ function QuickDonation() {
 
     return (
         <form className="has-text-left" onSubmit={handleSubmit} style={{width: "480px", maxWidth: "100%", margin: "auto"}}>
-            <div className="columns">
-                <div className="column">
-                    <InputField props={firstName} />
+            <div className="column">
+                <div className="columns">
+                    <div className="column">
+                        <InputField props={firstName} errorOnSubmit={true} />
+                    </div>
+                    <div className="column">
+                    <InputField props={lastName} />
+                    </div>
                 </div>
-                <div className="column">
-                <InputField props={lastName} />
-                </div>
-            </div>
-            {/* <div className="columns">
-                <div className="column"> */}
                 <InputField props={email} />
-                {/* </div>
-                <div className="column"> */}
                 <InputField props={phone} />
-                {/* </div>
-            </div> */}
-            <div className="has-text-centered">
-                <button className="button is-success" onClick={handleClick}>Submit</button>
+                <div className="has-text-centered">
+                    <button className="button is-success has-margins-0-5" onClick={handleClick}>Submit</button>
+                </div>
             </div>
         </form>
     );

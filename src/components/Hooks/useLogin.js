@@ -8,15 +8,16 @@ const useLogin = (name, type) => {
   const onChange = (event) => {
     setValue(event.target.value);
     if (event.target.value) setError("");
+    else if(error && !event.target.value) setError("");
   };
 
   const checkInputs = () => {
     // if not filled
-    if (value.length === 0) setError("This field is required");
+    if (value.length === 0) setError(" ");
     // if filled (checks both optional & required)
     else if (value.length > 0) {
       // if input is an email
-      if (type === "email" && !validateEmail(value)) setError("Invalid email address");
+      if (type === "email" && !validateEmail(value)) setError("Please use a valid email address");
       else {
         setError("");
         return true;
