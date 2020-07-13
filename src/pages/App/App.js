@@ -22,6 +22,7 @@ import LoginPage from 'pages/Login/LoginPage';
 import SignupPage from 'pages/Signup/SignupPage';
 import SignupSocial from 'pages/Signup/SignupSocial';
 import SignupVerify from 'pages/Signup/SignupVerify';
+import DonorPage from 'pages/Donor/DonorPage';
 import ConfirmationPage from 'pages/Checkout/ConfirmationPage';
 import ErrorPage from 'pages/Error/ErrorPage';
 // import hooks
@@ -75,6 +76,7 @@ function App() {
           <NonAuthRoute exact path="/login" component={LoginPage} />
           <NonAuthRoute exact path="/signup" component={SignupPage} />
           {/* <AuthRoute exact path="/" bankAPI={bankAPI} component={BanksPage} /> */}
+          <NonAuthRoute exact path="/donate" component={DonorPage} />
           <Route exact path="/"><BanksPage /></Route>
           <NonAuthRoute exact path="/signup/social" component={SignupSocial} />
           <NonAuthRoute exact path="/signup/verify" component={SignupVerify} />

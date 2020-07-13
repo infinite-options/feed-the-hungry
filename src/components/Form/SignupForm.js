@@ -130,7 +130,7 @@ function SignupForm(props) {
     }
 
     return (
-        <form onSubmit={handleSubmit} onKeyPress={handleKeyPress} style={{width: "720px", maxWidth: "100%"}}>
+        <form onSubmit={handleSubmit} onKeyPress={handleKeyPress} style={{width: "720px", maxWidth: "100%", margin: "auto"}}>
             <div className="column has-text-black">
                 {/* Asking for user data */}
                 <div>
@@ -167,11 +167,15 @@ function SignupForm(props) {
                         </div>
                     </div>
                 </div>
-                <hr className="is-light-gray"/>
                 {/* Asking for user address */}
+                <hr className="is-light-gray"/>
                 <div>
-                    <p className="subtitle is-3 has-margin-top-1 has-text-centered has-text-black">Would you like to add a permanent address?</p>
-                    <p className="subtitle is-4 has-text-centered has-text-black">Or <u>use my current location</u> instead.</p>
+                    {props.signupStatus === "customer" && (
+                        <React.Fragment>
+                            <p className="subtitle is-3 has-margin-top-1 has-text-centered has-text-black">Would you like to add a permanent address?</p>
+                            <p className="subtitle is-4 has-text-centered has-text-black">Or <u>use my current location</u> instead.</p>
+                        </React.Fragment>
+                    )}
                     <p className="subtitle is-4 has-margin-top-1 has-text-centered has-text-black">Add An Address</p>
                     <div className="columns has-margin-top-1">
                         <div className="column">
@@ -193,25 +197,31 @@ function SignupForm(props) {
                         </div>
                     </div>
                 </div>
-                <hr className="is-light-gray"/>
                 {/* Asking for additional information */}
-                <div>
-                    <p className="subtitle is-3 has-margin-top-1 has-text-centered has-text-black">Additional Personal Information</p>
-                    <div className="columns has-margin-top-1">
-                        <FamilyMembers ref={familyRef} />
-                        <div className="column">
-                            <InputField props={inputs.license} />
-                            <div className="box">
-                                <InputField props={inputs.licenseImg} />
+                {props.signupStatus === "customer" && (
+                    <React.Fragment>
+                        <hr className="is-light-gray"/>
+                        <div>
+                            <p className="subtitle is-3 has-margin-top-1 has-text-centered has-text-black">Additional Personal Information</p>
+                            <div className="columns has-margin-top-1">
+                                <FamilyMembers ref={familyRef} />
+                                <div className="column">
+                                    <InputField props={inputs.license} />
+                                    <div className="box">
+                                        <InputField props={inputs.licenseImg} />
+                                    </div>
+                                </div>
                             </div>
+                            <InputField props={inputs.monthlyIncome} />
                         </div>
-                    </div>
-                    <InputField props={inputs.monthlyIncome} />
-                </div>
+                    </React.Fragment>
+                )}
                 {/* Asking for dietary restrictions, if any */}
-                <DietaryRestrictions ref={dietRef}/>
+                {props.signupStatus === "customer" && (
+                    <DietaryRestrictions ref={dietRef}/>
+                )}
                 <div className="has-text-centered">
-                    <button className="button is-success has-margins-0-5" type="button" onClick={handleClick}>Sign Up</button>
+                    <button className="button is-success has-margin-top-1" type="button" onClick={handleClick}>Sign Up</button>
                 </div>
             </div>
         </form>

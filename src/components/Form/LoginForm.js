@@ -278,7 +278,7 @@ function LoginForm(props) {
     };
 
     return (
-        <form onSubmit={handleSubmit} style={{width: "400px", maxWidth: "100%"}}>
+        <form onSubmit={handleSubmit} style={{width: "400px", maxWidth: "100%", margin: "auto"}}>
             <div className="column">
                 {/* Facebook and Google login go here */}
                 <div className="has-text-centered has-margin-bottom-0-5">
@@ -317,9 +317,11 @@ function LoginForm(props) {
                 {/* Buttons */}
                 <div className="has-text-centered has-margin-bottom-0-5">
                     <button className="button is-success has-margins-0-5" onClick={handleClick}>Login</button>
-                    <Link to="/signup" >
-                        <button className="button is-success has-margins-0-5">Sign Up</button>
-                    </Link>
+                    {props.loginStatus === "customer" && (
+                        <Link to="/signup" >
+                            <button className="button is-success has-margins-0-5">Sign Up</button>
+                        </Link>
+                    )}
                 </div>
             </div>
         </form>
