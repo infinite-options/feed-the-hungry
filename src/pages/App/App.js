@@ -76,8 +76,8 @@ function App() {
           <NonAuthRoute exact path="/login" component={LoginPage} />
           <NonAuthRoute exact path="/signup" component={SignupPage} />
           {/* <AuthRoute exact path="/" bankAPI={bankAPI} component={BanksPage} /> */}
-          <Route exact path="/"><BanksPage /></Route>
-          <Route exact path="/home"><HomePage /></Route>
+          <Route exact path="/banks"><BanksPage /></Route>
+          <Route exact path="/"><HomePage /></Route>
           <NonAuthRoute exact path="/signup/social" component={SignupSocial} />
           <NonAuthRoute exact path="/signup/verify" component={SignupVerify} />
           <AuthRoute exact path={"/banks/:bankId/products"} component={BankPage} />

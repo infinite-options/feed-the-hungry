@@ -40,7 +40,7 @@ function Header() {
             {/* <div className="navbar-item">
                         <SearchBar />
                     </div> */}
-            <Link to="/home" className="navbar-item navbar-item-text">
+            <Link to="/" className="navbar-item navbar-item-text">
               Home
             </Link>
             <Link to="/about" className="navbar-item navbar-item-text">
@@ -52,7 +52,7 @@ function Header() {
             <Link to="/donate" className="navbar-item navbar-item-text">
               Donate
             </Link>
-            <Link to="/" className="navbar-item">
+            <Link to="/banks" className="navbar-item">
               <button className="button navbar-item-text is-success is-outlined">Get Food</button>
             </Link>
             {context.isAuth && (
