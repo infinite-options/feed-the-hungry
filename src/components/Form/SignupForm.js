@@ -10,6 +10,36 @@ import DietaryRestrictions from "pages/Signup/DietaryRestrictions";
 import FamilyMembers from "pages/Signup/FamilyMembers";
 
 function SignupForm(props) {
+    // customer form: [Name, Phone, DOB, Email, Password]
+    //                [Address (optional)]
+    //                [Additional Personal Information (optional)]
+    //                [Dietary Restrictions]
+
+    // donor form: [Name, Phone, DOB, Email, Password]
+    //             [Address]
+
+    // admin form: [Name, Phone, DOB, Email, Password]
+    //             [Address]
+    //             [Who you work for]
+    //             [etc]
+
+    // foodbank form: [Name, Phone, DOB, Email, Password]
+    //                [Address]
+    //                [Which foodbank are you]
+    //                [etc]
+
+    /* 
+     * props.signupStatus will be used to check whether the form should
+     * contain certain inputFields or whether the form should do a validation
+     * check on certain inputFields.
+     * 
+     * Ex: Donor signup does not have Dietary Restrictions inputFields, so those
+     *     fields do not exist on the form and handleClick() function will not check for
+     *     whether the user selected a value. 
+     *     If the function did check, it would crash the page, since it would be trying to
+     *     get the value property of an undefined variable.
+     */
+
     const states = StateAPI();
     const history = useHistory();
     const dietRef = useRef();
@@ -53,10 +83,10 @@ function SignupForm(props) {
     const handleClick = () => {
         console.log("User has tried to sign up..")
         const isAllValid = validateInputs();
-        dietRef.current.checkValues();
+        if (props.signupStatus === "customer") dietRef.current.checkValues();
         
         // Checking if user filled all required inputs
-        let signupPassed = dietRef.current.valid() && isAllValid;
+        let signupPassed = (props.signupStatus === "customer" && dietRef.current.valid()) && isAllValid;
         if (signupPassed) {
             // Checking if email/password matches its confirmed
             if(inputs.email.value !== inputs.emailConfirm.value) {
@@ -80,8 +110,8 @@ function SignupForm(props) {
                 else data[input] = inputs[input].file;
             }
             // console.log("persons" + ":", persons);
-            data["persons"] = familyRef.current.persons;
-            data["diet_restrictions"] = dietRef.current.restrictions;
+            data["persons"] = familyRef.current ? familyRef.current.persons : [];
+            data["diet_restrictions"] = dietRef.current ? dietRef.current.restrictions : [];
             console.log("Data:", data);
             console.log("we did it!");
             let test = {
