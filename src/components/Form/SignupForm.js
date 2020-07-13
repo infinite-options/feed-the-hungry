@@ -36,7 +36,7 @@ function SignupForm(props) {
      * Ex: Donor signup does not have Dietary Restrictions inputFields, so those
      *     fields do not exist on the form and handleClick() function will not check for
      *     whether the user selected a value. 
-     *     If the function did check, it would crash the page, since it would be trying to
+     *     If the function did check, the page would fail to render, since it would be trying to
      *     get the value property of an undefined variable.
      */
 
