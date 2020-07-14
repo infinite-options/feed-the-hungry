@@ -1,6 +1,9 @@
 
 .banks-page-bd {
-   margin-top: auto;
+   margin-top: 121px;
+   position: relative;
+   width: 100%;
+   height: auto;
    background-color: #f8f7fa;
     /* background-color: #f6f9fc; */
 }
@@ -26,7 +29,7 @@
     /* position: absolute; */
     /* margin-left: 12vw; */
     /* margin-right: 12vw; */
-    margin-top: 10vh;
+    margin-top: 121px;
     width: 100%;
     height: auto;
     background-color: #f8f7fa;
