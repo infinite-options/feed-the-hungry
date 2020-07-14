@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Icons from "components/Icons/Icons";
 import { OrderContext } from "components/Context/OrderContext";
 import ServingNowLogo from "assets/image/ServingNow_Logo_Green.png";
+import { faBaby } from "@fortawesome/free-solid-svg-icons";
 function Header() {
   const context = useContext(OrderContext);
   context.setCartTotal(() => {
@@ -13,6 +14,8 @@ function Header() {
   });
 
   const handleLogout = () => {
+    console.log(window);
+    if (JSON.parse(window.localStorage.getItem("userInfo")).social === "Facebook") window.FB.logout();
     window.localStorage.removeItem("userInfo");
     context.setIsAuth(false);
   };

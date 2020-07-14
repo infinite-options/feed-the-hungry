@@ -83,6 +83,7 @@ function LoginForm(props) {
                                 isAdmin: user_is_admin,
                                 isFoodbank: user_is_foodbank,
 
+                                social: data.social,
                                 loginType: login_type,
                             }
 
@@ -283,29 +284,34 @@ function LoginForm(props) {
     }
 
     const checkAccountType = (userInfo) => {
-        const loginType = userInfo.loginType;
-        if ((loginType === "customer" && userInfo.isCustomer) || 
-            (loginType === "donor" && userInfo.isDonor) || 
-            (loginType === "admin" && userInfo.isAdmin) || 
-            (loginType === "foodbank" && userInfo.isFoodbank)) {
-            window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
+        // const loginType = userInfo.loginType;
+        // if ((loginType === "customer" && userInfo.isCustomer) || 
+        //     (loginType === "donor" && userInfo.isDonor) || 
+        //     (loginType === "admin" && userInfo.isAdmin) || 
+        //     (loginType === "foodbank" && userInfo.isFoodbank)) {
+        //     window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
         
-            context.setIsAuth(true);
-            const route = loginType === "customer" ? "/banks" : 
-                          loginType === "donor" ? "/donor" : 
-                          loginType === "admin" ? "/admin" :
-                        /*loginType === "foodbank ?*/ "/foodbank";
-            history.push(route);
-        }
-        else {
-            history.push({
-                pathname: "/form",
-                state: {
-                    loginType: loginType,
-                    userInfo: userInfo,
-                }
-            });
-        }
+        //     context.setIsAuth(true);
+        //     const route = loginType === "customer" ? "/banks" : 
+        //                   loginType === "donor" ? "/donor" : 
+        //                   loginType === "admin" ? "/admin" :
+        //                 /*loginType === "foodbank ?*/ "/foodbank";
+        //     history.push(route);
+        // }
+        // else {
+        //     history.push({
+        //         pathname: "/form",
+        //         state: {
+        //             loginType: loginType,
+        //             userInfo: userInfo,
+        //         }
+        //     });
+        // }
+
+        window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
+                            
+        context.setIsAuth(true);
+        history.push('/');
     }
 
     const handleClick = () => {
