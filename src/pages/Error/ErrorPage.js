@@ -8,7 +8,7 @@ function ErrorPage() {
     return(
         <div className="not-found-page">
             <div className="not-found-page-body"> 
-                <figure class="image is-128x128">
+                <figure className="image is-128x128">
                 <img src={NotFound} alt="Not Found"/>
                 </figure>   
                 <div className="not-found-page-content">

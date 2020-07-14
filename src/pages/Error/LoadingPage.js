@@ -8,7 +8,7 @@ function LoadingPage() {
     return(
         <div className="not-found-page">
             <div className="not-found-page-body"> 
-                {/* <figure class="image is-128x128">
+                {/* <figure className="image is-128x128">
                 <img src={Loading} alt="Not-found image"/>
                 </figure>    */}
                 <div className="not-found-page-content">

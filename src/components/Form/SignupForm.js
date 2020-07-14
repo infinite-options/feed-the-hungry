@@ -10,6 +10,36 @@ import DietaryRestrictions from "pages/Signup/DietaryRestrictions";
 import FamilyMembers from "pages/Signup/FamilyMembers";
 
 function SignupForm(props) {
+    // customer form: [Name, Phone, DOB, Email, Password]
+    //                [Address (optional)]
+    //                [Additional Personal Information (optional)]
+    //                [Dietary Restrictions]
+
+    // donor form: [Name, Phone, DOB, Email, Password]
+    //             [Address]
+
+    // admin form: [Name, Phone, DOB, Email, Password]
+    //             [Address]
+    //             [Who you work for]
+    //             [etc]
+
+    // foodbank form: [Name, Phone, DOB, Email, Password]
+    //                [Address]
+    //                [Which foodbank are you]
+    //                [etc]
+
+    /* 
+     * props.signupStatus will be used to check whether the form should
+     * contain certain inputFields or whether the form should do a validation
+     * check on certain inputFields.
+     * 
+     * Ex: Donor signup does not have Dietary Restrictions inputFields, so those
+     *     fields do not exist on the form and handleClick() function will not check for
+     *     whether the user selected a value. 
+     *     If the function did check, the page would fail to render, since it would be trying to
+     *     get the value property of an undefined variable.
+     */
+
     const states = StateAPI();
     const history = useHistory();
     const dietRef = useRef();
@@ -53,10 +83,10 @@ function SignupForm(props) {
     const handleClick = () => {
         console.log("User has tried to sign up..")
         const isAllValid = validateInputs();
-        dietRef.current.checkValues();
+        if (props.signupStatus === "customer") dietRef.current.checkValues();
         
         // Checking if user filled all required inputs
-        let signupPassed = dietRef.current.valid() && isAllValid;
+        let signupPassed = (props.signupStatus === "customer" && dietRef.current.valid()) && isAllValid;
         if (signupPassed) {
             // Checking if email/password matches its confirmed
             if(inputs.email.value !== inputs.emailConfirm.value) {
@@ -80,8 +110,8 @@ function SignupForm(props) {
                 else data[input] = inputs[input].file;
             }
             // console.log("persons" + ":", persons);
-            data["persons"] = familyRef.current.persons;
-            data["diet_restrictions"] = dietRef.current.restrictions;
+            data["persons"] = familyRef.current ? familyRef.current.persons : [];
+            data["diet_restrictions"] = dietRef.current ? dietRef.current.restrictions : [];
             console.log("Data:", data);
             console.log("we did it!");
             let test = {
@@ -130,7 +160,7 @@ function SignupForm(props) {
     }
 
     return (
-        <form onSubmit={handleSubmit} onKeyPress={handleKeyPress} style={{width: "720px", maxWidth: "100%"}}>
+        <form onSubmit={handleSubmit} onKeyPress={handleKeyPress} style={{width: "720px", maxWidth: "100%", margin: "auto"}}>
             <div className="column has-text-black">
                 {/* Asking for user data */}
                 <div>
@@ -167,11 +197,15 @@ function SignupForm(props) {
                         </div>
                     </div>
                 </div>
-                <hr className="is-light-gray"/>
                 {/* Asking for user address */}
+                <hr className="is-light-gray"/>
                 <div>
-                    <p className="subtitle is-3 has-margin-top-1 has-text-centered has-text-black">Would you like to add a permanent address?</p>
-                    <p className="subtitle is-4 has-text-centered has-text-black">Or <u>use my current location</u> instead.</p>
+                    {props.signupStatus === "customer" && (
+                        <React.Fragment>
+                            <p className="subtitle is-3 has-margin-top-1 has-text-centered has-text-black">Would you like to add a permanent address?</p>
+                            <p className="subtitle is-4 has-text-centered has-text-black">Or <u>use my current location</u> instead.</p>
+                        </React.Fragment>
+                    )}
                     <p className="subtitle is-4 has-margin-top-1 has-text-centered has-text-black">Add An Address</p>
                     <div className="columns has-margin-top-1">
                         <div className="column">
@@ -193,25 +227,31 @@ function SignupForm(props) {
                         </div>
                     </div>
                 </div>
-                <hr className="is-light-gray"/>
                 {/* Asking for additional information */}
-                <div>
-                    <p className="subtitle is-3 has-margin-top-1 has-text-centered has-text-black">Additional Personal Information</p>
-                    <div className="columns has-margin-top-1">
-                        <FamilyMembers ref={familyRef} />
-                        <div className="column">
-                            <InputField props={inputs.license} />
-                            <div className="box">
-                                <InputField props={inputs.licenseImg} />
+                {props.signupStatus === "customer" && (
+                    <React.Fragment>
+                        <hr className="is-light-gray"/>
+                        <div>
+                            <p className="subtitle is-3 has-margin-top-1 has-text-centered has-text-black">Additional Personal Information</p>
+                            <div className="columns has-margin-top-1">
+                                <FamilyMembers ref={familyRef} />
+                                <div className="column">
+                                    <InputField props={inputs.license} />
+                                    <div className="box">
+                                        <InputField props={inputs.licenseImg} />
+                                    </div>
+                                </div>
                             </div>
+                            <InputField props={inputs.monthlyIncome} />
                         </div>
-                    </div>
-                    <InputField props={inputs.monthlyIncome} />
-                </div>
+                    </React.Fragment>
+                )}
                 {/* Asking for dietary restrictions, if any */}
-                <DietaryRestrictions ref={dietRef}/>
+                {props.signupStatus === "customer" && (
+                    <DietaryRestrictions ref={dietRef}/>
+                )}
                 <div className="has-text-centered">
-                    <button className="button is-success has-margins-0-5" type="button" onClick={handleClick}>Sign Up</button>
+                    <button className="button is-success has-margin-top-1 has-margin-bottom-0-5" type="button" onClick={handleClick}>Sign Up</button>
                 </div>
             </div>
         </form>

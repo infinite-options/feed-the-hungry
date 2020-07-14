@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useHistory, Redirect } from "react-router-dom";
 
 import axios from 'axios';
 
@@ -27,13 +27,13 @@ function SignupSocial() {
     // const [socialMedia, setSocialMedia] = useState("");
     // const [signupStatus, setSignupStatus] = useState("");
 
-    const email = location.state.email;
-    const firstname = location.state.firstname;
-    const lastname = location.state.lastname;
-    const accessToken = location.state.accessToken;
-    const refreshToken = location.state.refreshToken;
-    const socialMedia = location.state.social;
-    const signupStatus = location.state.signupStatus;
+    const email = location.state && location.state.email;
+    const firstname = location.state && location.state.firstname;
+    const lastname = location.state && location.state.lastname;
+    const accessToken = location.state && location.state.accessToken;
+    const refreshToken = location.state && location.state.refreshToken;
+    const socialMedia = location.state && location.state.social;
+    const signupStatus = location.state && location.state.signupStatus;
 
     const phoneNumber = useField("Phone Number", "tel");
     const dob = useField("Date of Birth", "date");
@@ -159,9 +159,10 @@ function SignupSocial() {
         }
     }
 
-    return (
+    if (!location.state) return <Redirect to="/login" />
+    else return (
         <div className="login-signup-page signup-background-image">
-            <form onSubmit={handleSubmit} onKeyPress={handleKeyPress} style={{width: "720px", maxWidth: "100%"}}>
+            <form onSubmit={handleSubmit} onKeyPress={handleKeyPress} style={{width: "720px", maxWidth: "100%", margin: "auto"}}>
                 <div className="column has-text-black">
                     {/* Asking for user data */}
                     <div>
@@ -225,10 +226,7 @@ function SignupSocial() {
                         </div>
                         <InputField props={monthlyIncome} />
                     </div>
-                    <hr className="is-light-gray"/>
                     {/* Asking for dietary restrictions */}
-                    <p className="right-most" title="Substitutions allow users to choose different items that align with their dietary restrictions to add to their total cart.">* Opt for substitutions.</p>
-                    <p className="subtitle is-3 has-text-centered has-text-black">Dietary Restrictions*</p>
                     <DietaryRestrictions ref={dietRef}/>
                     <div className="has-text-centered">
                         <button className="button is-success has-margins-0-5" type="button" onClick={handleClick}>Sign Up</button>
