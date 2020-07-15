@@ -34,7 +34,7 @@ function DonorPage() {
 
     return !loading && (
         <div className="login-signup-page has-text-centered">
-            <div className="box"></div>
+            {/* <div className="box"></div> */}
             {userInfo.isDonor ? (
                 <React.Fragment>
                     <nav className="level is-mobile">
@@ -48,6 +48,7 @@ function DonorPage() {
                             <button name="history" className={"button is-fullwidth is-primary" + (onTab === 2 ? " is-active" : "")} onClick={handleClick}>History</button>
                         </p>
                     </nav>
+                    
                     {/* More stuff here */}
                 </React.Fragment> 
             ) : (
