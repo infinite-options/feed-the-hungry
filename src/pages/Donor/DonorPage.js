@@ -5,14 +5,16 @@ import "pages/styles.css";
 import NeedMoreInfoForm from "components/Form/NeedMoreInfoForm";
 
 function DonorPage() {
+    const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
     const [onTab, setOnTab] = useState(0);
     const [loading, setLoading] = useState(true);
-    const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
+    const [isDonor, setIsDonor] = useState(userInfo.isDonor);
 
     useEffect(() => {
         if (!userInfo.isDonor) {
             if(userInfo.address1 && userInfo.city && userInfo.state && userInfo.zip) {
                 console.log("hi");
+                setIsDonor(1);
                 userInfo.isDonor = 1;
                 window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
                 // CALL EDIT_ACCOUNT API
@@ -35,7 +37,7 @@ function DonorPage() {
     return !loading && (
         <div className="login-signup-page has-text-centered">
             {/* <div className="box"></div> */}
-            {userInfo.isDonor ? (
+            {isDonor ? (
                 <React.Fragment>
                     <nav className="level is-mobile">
                         <p className="level-item has-text-centered" style={{margin: "0"}}>
@@ -52,7 +54,7 @@ function DonorPage() {
                     {/* More stuff here */}
                 </React.Fragment> 
             ) : (
-                <NeedMoreInfoForm type="donor"/>
+                <NeedMoreInfoForm type="donor" userInfo={userInfo} setValue={setIsDonor} />
             )}
         </div>
     );

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import useField from "components/Hooks/useField";
@@ -7,6 +7,8 @@ import StateAPI from 'API/StateAPI';
 import Select from 'components/Form/Select';
 
 function NeedMoreInfoForm(props) {
+    const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
+
     const states = StateAPI();
 
     const address1 = useField("Address 1", "text");
@@ -14,6 +16,39 @@ function NeedMoreInfoForm(props) {
     const city = useField("City", "text");
     const state = useField("State", "text");
     const zip = useField("Zip", "text");
+    const [addressValid, setAddressValid] = useState(false);
+
+    // In case the user has partially filled information
+    // Ex: Address filled out but not another required input
+    useEffect(() => {
+        const userInfo = props.userInfo;
+        if (userInfo.address1 && userInfo.city && userInfo.state && userInfo.zip) {
+            setAddressValid(true);
+        }
+    }, [])
+
+    const handleClick = e => {
+        if (addressValid || (address1.isValid && address2.isValid && 
+                             city.isValid && state.isValid && zip.isValid)) {
+            console.log("Inputs are valid");
+            const data = {
+                address_1: address1.value,
+                address_2: address2.value,
+                city: city.value,
+                state: state.value,
+                zipcode: zip.value,
+            }
+            // CALL EDIT_USER_DATA_API
+                userInfo.isDonor = 1;
+                userInfo.address1 = address1.value;
+                userInfo.address2 = address2.value;
+                userInfo.city = city.value;
+                userInfo.state = state.value;
+                userInfo.zip = zip.value;
+                window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
+                props.setValue(1);
+        }
+    }
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -23,7 +58,7 @@ function NeedMoreInfoForm(props) {
         <form onSubmit={handleSubmit} style={{width: "720px", margin: "auto"}}>
             <p>WORK IN PROGRESS (BASED ON LOGIN TYPE, ASK FOR CERTAIN EXTRA INFO)</p>
             <div className="column has-text-left">
-                {props.type === "donor" && (
+                {!addressValid && (
                     <React.Fragment>
                         <div className="columns">
                             <div className="column">
@@ -47,6 +82,7 @@ function NeedMoreInfoForm(props) {
                     </React.Fragment>
                 )}
             </div>
+            <button className="button is-success" type="button" onClick={handleClick}>Submit</button>
         </form>
     );
 }
