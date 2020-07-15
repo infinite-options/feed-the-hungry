@@ -77,6 +77,7 @@ function SignupForm(props) {
     }
 
     const checkSignupStatus = (status) => {
+        console.log(status, props.signupStatus);
         return (status === props.signupStatus ? 1 : 0);
     }
 
@@ -86,7 +87,7 @@ function SignupForm(props) {
         if (props.signupStatus === "customer") dietRef.current.checkValues();
         
         // Checking if user filled all required inputs
-        let signupPassed = (props.signupStatus === "customer" && dietRef.current.valid()) && isAllValid;
+        let signupPassed = props.signupStatus === "customer" ? dietRef.current.valid() && isAllValid : isAllValid;
         if (signupPassed) {
             // Checking if email/password matches its confirmed
             if(inputs.email.value !== inputs.emailConfirm.value) {

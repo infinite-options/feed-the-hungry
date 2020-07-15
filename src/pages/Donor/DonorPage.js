@@ -1,48 +1,58 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { Redirect, useHistory } from "react-router-dom";
 
 import "pages/styles.css";
-import LoginForm from "components/Form/LoginForm";
-import SignupForm from "components/Form/SignupForm";
-import QuickDonation from "./QuickDonation";
-import { OrderContext } from "components/Context/OrderContext";
+import NeedMoreInfoForm from "components/Form/NeedMoreInfoForm";
 
 function DonorPage() {
-    const [showLoginForm, setShowLoginForm] = useState(true);
-    const context = useContext(OrderContext);
+    const [onTab, setOnTab] = useState(0);
+    const [loading, setLoading] = useState(true);
+    const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
 
-    return (
+    useEffect(() => {
+        if (!userInfo.isDonor) {
+            if(userInfo.address1 && userInfo.city && userInfo.state && userInfo.zip) {
+                console.log("hi");
+                userInfo.isDonor = 1;
+                window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
+                // CALL EDIT_ACCOUNT API
+            }
+        }
+        setLoading(false);
+    }, [])
+
+    const handleClick = (e) => {
+        console.log(e.target.name);
+        const type = e.target.name;
+        // is there a better way to do this?
+        // for whatever reason, this was the only
+        // way I could get this to properly work
+        setOnTab(type === "donate" ? 0 : 
+                 type === "volunteer" ? 1 : 
+               /*type === "history" ?*/ 2);
+    }
+
+    return !loading && (
         <div className="login-signup-page has-text-centered">
-            <p className="subtitle is-2 has-text-black">Donate Now!</p>
-            <div className="columns" style={{width: "100%", margin: "auto"}}>
-                <div className="column is-half">
-                <div className="card donate-card">
-                    <p className="subtitle is-3 has-text-black">Quick Donation</p>
-                    <p>Make donations without signing in!</p>
-                    <QuickDonation />
-                </div>
-                </div>
-                <div className="column is-half">
-                    {showLoginForm ? (
-                        <React.Fragment>
-                            <div className="card donate-card">
-                                <p className="subtitle is-3 has-text-black">Login now!</p>
-                                <p>New to Feed the Hungry? <a href="#" onClick={() => setShowLoginForm(!showLoginForm)}><u>Create an account</u></a>.</p>
-                                <LoginForm loginStatus={"donor"} />
-                            </div>
-                        </React.Fragment>
-                    ) : (
-                        <React.Fragment>
-                            <div className="card donate-card">
-                                <p className="subtitle is-3 has-text-black">Sign up now!</p>
-                                <p>Already have an account? <a href="#" onClick={() => setShowLoginForm(!showLoginForm)}><u>Sign in</u></a>.</p>
-                                <div className="has-text-left">
-                                    <SignupForm loginStatus={"donor"} />
-                                </div>
-                            </div>
-                        </React.Fragment>
-                    )}
-                </div>
-            </div>
+            <div className="box"></div>
+            {userInfo.isDonor ? (
+                <React.Fragment>
+                    <nav className="level is-mobile">
+                        <p className="level-item has-text-centered" style={{margin: "0"}}>
+                            <button name="donate" className={"button is-fullwidth is-primary" + (onTab === 0 ? " is-active" : "")} onClick={handleClick}>Make Donation</button>
+                        </p>
+                        <p className="level-item has-text-centered" style={{margin: "0"}}>
+                            <button name="volunteer" className={"button is-fullwidth is-primary" + (onTab === 1 ? " is-active" : "")} onClick={handleClick}>Volunteer</button>
+                        </p>
+                        <p className="level-item has-text-centered" style={{margin: "0"}}>
+                            <button name="history" className={"button is-fullwidth is-primary" + (onTab === 2 ? " is-active" : "")} onClick={handleClick}>History</button>
+                        </p>
+                    </nav>
+                    {/* More stuff here */}
+                </React.Fragment> 
+            ) : (
+                <NeedMoreInfoForm type="donor"/>
+            )}
         </div>
     );
 }
