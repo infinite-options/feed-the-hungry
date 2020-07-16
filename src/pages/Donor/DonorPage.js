@@ -3,6 +3,7 @@ import { Redirect, useHistory } from "react-router-dom";
 
 import "pages/styles.css";
 import NeedMoreInfoForm from "components/Form/NeedMoreInfoForm";
+import DonationHistory from "./DonationHistory";
 
 function DonorPage() {
     const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
@@ -64,9 +65,7 @@ function DonorPage() {
                         </div>
                     )}
                     {onTab === 2 && (
-                        <div className="column">
-                            List of past donations and volunteering
-                        </div>
+                        <DonationHistory />
                     )}
                 </React.Fragment> 
             ) : (
