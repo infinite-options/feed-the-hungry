@@ -15,7 +15,7 @@ function Header() {
 
   const handleLogout = () => {
     console.log(window);
-    if (JSON.parse(window.localStorage.getItem("userInfo")).social === "Facebook") window.FB.logout();
+    if (window.FB && JSON.parse(window.localStorage.getItem("userInfo")).social === "Facebook") window.FB.logout();
     window.localStorage.removeItem("userInfo");
     context.setIsAuth(false);
   };
@@ -49,10 +49,10 @@ function Header() {
             <Link to="/about" className="navbar-item navbar-item-text">
               About Us
             </Link>
-            <Link to="/admin" className="navbar-item navbar-item-text">
+            <Link to={context.isAuth ? "/admin" : "/admin/login"} className="navbar-item navbar-item-text">
               Admin
             </Link>
-            <Link to="/donate" className="navbar-item navbar-item-text">
+            <Link to={context.isAuth ? "/donate" : "/donate/intro"} className="navbar-item navbar-item-text">
               Donate
             </Link>
             <Link to="/banks" className="navbar-item">

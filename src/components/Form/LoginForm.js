@@ -237,6 +237,7 @@ function LoginForm(props) {
                                 loginType: login_type,
                             }
 
+                            console.log("what");
                             checkAccountType(userInfo);
                             // if ((login_type === "customer" && user_is_customer) || 
                             //     (login_type === "donor" && user_is_donor) || 
@@ -284,19 +285,19 @@ function LoginForm(props) {
     }
 
     const checkAccountType = (userInfo) => {
-        // const loginType = userInfo.loginType;
+        const loginType = userInfo.loginType;
         // if ((loginType === "customer" && userInfo.isCustomer) || 
         //     (loginType === "donor" && userInfo.isDonor) || 
         //     (loginType === "admin" && userInfo.isAdmin) || 
         //     (loginType === "foodbank" && userInfo.isFoodbank)) {
-        //     window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
+            window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
         
-        //     context.setIsAuth(true);
-        //     const route = loginType === "customer" ? "/banks" : 
-        //                   loginType === "donor" ? "/donor" : 
-        //                   loginType === "admin" ? "/admin" :
-        //                 /*loginType === "foodbank ?*/ "/foodbank";
-        //     history.push(route);
+            context.setIsAuth(true);
+            const route = loginType === "customer" ? "/banks" : 
+                          loginType === "donor" ? "/donate" : 
+                          loginType === "admin" ? "/admin" :
+                        /*loginType === "foodbank ?*/ "/foodbank";
+            history.push(route);
         // }
         // else {
         //     history.push({
@@ -308,10 +309,10 @@ function LoginForm(props) {
         //     });
         // }
 
-        window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
+        // window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
                             
-        context.setIsAuth(true);
-        history.push('/');
+        // context.setIsAuth(true);
+        // history.push('/');
     }
 
     const handleClick = () => {
@@ -372,7 +373,7 @@ function LoginForm(props) {
                     <button className="button is-success has-margins-0-5" type="button" onClick={handleClick}>Login</button>
                     {props.loginStatus === "customer" && (
                         <Link to="/signup" >
-                            <button className="button is-success has-margins-0-5">Sign Up</button>
+                            <button className="button is-success has-margins-0-5" type="button">Sign Up</button>
                         </Link>
                     )}
                 </div>
