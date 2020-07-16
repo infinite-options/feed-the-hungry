@@ -13,7 +13,6 @@ function DonorPage() {
     useEffect(() => {
         if (!userInfo.isDonor) {
             if(userInfo.address1 && userInfo.city && userInfo.state && userInfo.zip) {
-                console.log("hi");
                 setIsDonor(1);
                 userInfo.isDonor = 1;
                 window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
@@ -52,6 +51,23 @@ function DonorPage() {
                     </nav>
                     
                     {/* More stuff here */}
+                    {onTab === 0 && (
+                        <div className="column">
+                            Form to fill out donation
+                        </div>
+                    )}
+                    {onTab === 1 && (
+                        <div className="column">
+                            List of food banks requiring volunteers<br />
+                            OR<br />
+                            Fill form (location, contact info, etc) and based on form inputs, a nearby food bank in need will choose from a queue of volunteers
+                        </div>
+                    )}
+                    {onTab === 2 && (
+                        <div className="column">
+                            List of past donations and volunteering
+                        </div>
+                    )}
                 </React.Fragment> 
             ) : (
                 <NeedMoreInfoForm type="donor" userInfo={userInfo} setValue={setIsDonor} />
