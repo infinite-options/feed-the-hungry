@@ -8,7 +8,7 @@ function DonorNonAuth() {
 
 
     return (
-        <div className="login-signup-page has-text-centered">
+        <div className="donate-page has-text-centered">
             <p className="subtitle is-2 has-text-black">Donate Now!</p>
             <div className="columns" style={{width: "100%", margin: "auto"}}>
                 <div className="column is-half">

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 const useField = (name, type, isRequired=true) => {
   const [value, setValue] = useState(type === "checkbox" || type ==="switch" ? false : '');
   const [isValid, setIsValid] = useState((isRequired ? false : true));
-  const [error, setError] = useState((isRequired ? "This field is required" : ""));
+  const [error, setError] = useState("");
   const [isOnChange, setIsOnChange] = useState(false);
   // for file inputs
   const [file, setFile] = useState({});
@@ -51,8 +51,10 @@ const useField = (name, type, isRequired=true) => {
       else if (type === "tel" && !validatePhoneNumber(value)) setError("Invalid phone number");
       // case 4: if input is an email
       else if (type === "email" && !validateEmail(value)) setError("Invalid email address");
-      // case 5: if input is currency. NOTE: if we use the 'number' input type for non-currency values in the future, this will need to be changed
-      else if (type === "number" && !validateCurrency(value)) setError("Invalid currency amount");
+      // case 5.1: if input is currency. NOTE: only checks if input name has "income", so if this may need to be changed for other currency types that isn't income
+      else if (type === "number" && name.toLowerCase().includes("income") && !validateCurrency(value)) setError("Invalid currency amount");
+      // case 5.2: if input is an amount
+      else if (type === "number" && !validateAmount(value)) setError("Invalid amount");
       // case 6: if input is birthdate and date chosen is in the future
       else if (name.toLowerCase() === "date of birth" && maxDate() < value) setError("Invalid birthdate");
       // else if (type === "checkbox" && value === false) setError("");
@@ -107,6 +109,10 @@ function validatePhoneNumber(phone){
 function validateCurrency(currency) {
   const re = /^([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/;
   return re.test(currency);
+}
+function validateAmount(amount) {
+  const re = /^[1-9]\d*$/;
+  return re.test(amount);
 }
 export default useField;
 

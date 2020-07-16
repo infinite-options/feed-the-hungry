@@ -848,10 +848,9 @@ a.item-tag:hover{
 /* Sign up & Login page classes */
 .login-signup-page {
     position: relative;
-    margin-top: 10vh;
+    margin-top: 121px;
     width: 100%;
-    height: 90%;
-    min-height: 90vh;
+    min-height: calc(100vh - 121px);
     background-color: #f8f7fa;
 }
 .signup-background-image {
@@ -882,12 +881,20 @@ hr.is-light-gray {
 }
 
 /* donation classes */
+.donate-page {
+    position: relative;
+    margin-top: 121px;
+    width: 100%;
+    min-height: calc(100vh - 121px);
+    background-color: #f8f7fa;
+}
 .donate-card {
     display: inline-block; 
     padding: 10px; background-color: white; 
     border-radius: 12px; 
     margin: auto;
 }
+
 .input {
     border-radius: 0;
     /* background-color: transparent; */

@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // use this component for all input fields (well, not really all input fields because it still needs modifications)
 const InputField = ({ props, icon, isDisabled, color = "" }) => {
   const setMaxDate = () => {
+    if (props.name.toLowerCase() !== "date of birth") return null;
     const today = new Date();
     // console.log(today);
     let day = today.getDate();
@@ -85,9 +86,11 @@ const InputField = ({ props, icon, isDisabled, color = "" }) => {
           <div className="field is-expanded">
             <div className="field has-addons">
               <div className="control">
-                <a className="button is-static">
-                  {props.type === "tel" ? "+1" : "$"}
-                </a>
+                {props.name.toLowerCase() !== "amount" && (
+                  <a className="button is-static">
+                    {props.type === "tel" ? "+1" : "$"}
+                  </a>
+                )}
               </div>
               <div className="control is-expanded">
                 <input

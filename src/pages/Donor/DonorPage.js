@@ -4,9 +4,11 @@ import { Redirect, useHistory } from "react-router-dom";
 import "pages/styles.css";
 import NeedMoreInfoForm from "components/Form/NeedMoreInfoForm";
 import DonationHistory from "./DonationHistory";
+import DonationForm from "./DonationForm";
 
 function DonorPage() {
     const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
+    // 0 -> donation tab, 1 -> volunteer tab, 2 -> history tab
     const [onTab, setOnTab] = useState(0);
     const [loading, setLoading] = useState(true);
     const [isDonor, setIsDonor] = useState(userInfo.isDonor);
@@ -35,27 +37,25 @@ function DonorPage() {
     }
 
     return !loading && (
-        <div className="login-signup-page has-text-centered">
+        <div className="donate-page has-text-centered">
             {/* <div className="box"></div> */}
             {isDonor ? (
                 <React.Fragment>
                     <nav className="level is-mobile">
                         <p className="level-item has-text-centered" style={{margin: "0"}}>
-                            <button name="donate" className={"button is-fullwidth is-primary" + (onTab === 0 ? " is-active" : "")} onClick={handleClick}>Make Donation</button>
+                            <button name="donate" className={"button is-fullwidth is-success" + (onTab === 0 ? " is-active" : "")} onClick={handleClick}>Make Donation</button>
                         </p>
                         <p className="level-item has-text-centered" style={{margin: "0"}}>
-                            <button name="volunteer" className={"button is-fullwidth is-primary" + (onTab === 1 ? " is-active" : "")} onClick={handleClick}>Volunteer</button>
+                            <button name="volunteer" className={"button is-fullwidth is-success" + (onTab === 1 ? " is-active" : "")} onClick={handleClick}>Volunteer</button>
                         </p>
                         <p className="level-item has-text-centered" style={{margin: "0"}}>
-                            <button name="history" className={"button is-fullwidth is-primary" + (onTab === 2 ? " is-active" : "")} onClick={handleClick}>History</button>
+                            <button name="history" className={"button is-fullwidth is-success" + (onTab === 2 ? " is-active" : "")} onClick={handleClick}>History</button>
                         </p>
                     </nav>
                     
                     {/* More stuff here */}
                     {onTab === 0 && (
-                        <div className="column">
-                            Form to fill out donation
-                        </div>
+                        <DonationForm />
                     )}
                     {onTab === 1 && (
                         <div className="column">
