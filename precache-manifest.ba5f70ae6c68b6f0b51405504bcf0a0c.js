@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b758af62c832570f1f71a79815949a9c",
+    "revision": "7bca2dba0b287f8d045076793ac862fa",
     "url": "/feed-the-hungry/index.html"
   },
   {
-    "revision": "3af08b7c8e5b6859453d",
+    "revision": "f6279279be76705be7e5",
     "url": "/feed-the-hungry/static/css/2.65e3e712.chunk.css"
   },
   {
-    "revision": "8243c70db4b453010e19",
-    "url": "/feed-the-hungry/static/css/main.c8d90fbf.chunk.css"
+    "revision": "0a42daaf0ae625cba270",
+    "url": "/feed-the-hungry/static/css/main.55736a10.chunk.css"
   },
   {
-    "revision": "3af08b7c8e5b6859453d",
-    "url": "/feed-the-hungry/static/js/2.b93de672.chunk.js"
+    "revision": "f6279279be76705be7e5",
+    "url": "/feed-the-hungry/static/js/2.ecf50003.chunk.js"
   },
   {
     "revision": "01ee0d1593b6736a866f17118a5b90e6",
-    "url": "/feed-the-hungry/static/js/2.b93de672.chunk.js.LICENSE.txt"
+    "url": "/feed-the-hungry/static/js/2.ecf50003.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "8243c70db4b453010e19",
-    "url": "/feed-the-hungry/static/js/main.0000872d.chunk.js"
+    "revision": "0a42daaf0ae625cba270",
+    "url": "/feed-the-hungry/static/js/main.02f7d3c3.chunk.js"
   },
   {
     "revision": "e81819ce5540c8fb4e02",
@@ -38,10 +38,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "011b01ba4f6d9b72f2a3ccbb08cbe9dc",
     "url": "/feed-the-hungry/static/media/Pickup.011b01ba.png"
-  },
-  {
-    "revision": "3c02e81309c434aae887ce7db56f226f",
-    "url": "/feed-the-hungry/static/media/confirmation.3c02e813.svg"
   },
   {
     "revision": "545cd479d1cf109c8877655150b936a0",
@@ -64,12 +60,36 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/feed-the-hungry/static/media/halal.6694f867.png"
   },
   {
+    "revision": "6dea331368b80b345f66693578799e5c",
+    "url": "/feed-the-hungry/static/media/home-image-1.6dea3313.webp"
+  },
+  {
+    "revision": "f9ee49cc65f05906912bac2588734222",
+    "url": "/feed-the-hungry/static/media/home-image-2.f9ee49cc.webp"
+  },
+  {
+    "revision": "ac541f1e76484bdcaab6ab3d99387d6f",
+    "url": "/feed-the-hungry/static/media/home-image-3.ac541f1e.jpg"
+  },
+  {
+    "revision": "5943da98772d1de2fdec39c1391d9b93",
+    "url": "/feed-the-hungry/static/media/home-image-4.5943da98.webp"
+  },
+  {
+    "revision": "108ad1757217a3865ec1e477138854ae",
+    "url": "/feed-the-hungry/static/media/home-image-5.108ad175.webp"
+  },
+  {
     "revision": "a05262d351d851812ae86fde789506c2",
     "url": "/feed-the-hungry/static/media/kosher.a05262d3.png"
   },
   {
     "revision": "d317a4d93a6b5d81b496bb94a8c7f72d",
     "url": "/feed-the-hungry/static/media/loading.d317a4d9.png"
+  },
+  {
+    "revision": "b706150b1c2bc3e741702606ace9ef11",
+    "url": "/feed-the-hungry/static/media/splash-banner.b706150b.jpg"
   },
   {
     "revision": "b5cece1e46385c9dc2e98824b7688d74",
