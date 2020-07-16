@@ -103,7 +103,7 @@ const MapMarker = ({ userLocation, bankLocation, marker }) => {
           <div className="media-content">
             <div className="content">
               <p>
-                <Link to={`/${path}/${bankLocation.foodbank_id}/products`}>
+                <Link to={`${path}/${bankLocation.foodbank_id}/products`}>
                   <strong>{bankLocation.fb_name}</strong>
                 </Link>
                 <br></br>
