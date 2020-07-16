@@ -4,22 +4,26 @@ const useField = (name, type, isRequired=true) => {
   const [value, setValue] = useState(type === "checkbox" || type ==="switch" ? false : '');
   const [isValid, setIsValid] = useState((isRequired ? false : true));
   const [error, setError] = useState((isRequired ? "This field is required" : ""));
+  const [isOnChange, setIsOnChange] = useState(false);
   // for file inputs
   const [file, setFile] = useState({});
 
   // handle input if user changes the content of the input 
   const onChange = (event) => {
+    setIsOnChange(true);
     setValue(
       event.target.type === "checkbox" || event.target.type === "switch"
         ? event.target.checked
         : event.target.value
     );
+
     if (event.target.type === "file") {
       setFile(event.target.files[0]);
     }
   };
   // autofill (switch) doesnt trigger onChange so we need these extra code
   useEffect(() => {
+    console.log(value);
       if ( !checkInputs(value)) setIsValid(false)
       else setIsValid(true)
   }, [value])
@@ -36,13 +40,12 @@ const useField = (name, type, isRequired=true) => {
 
   const checkInputs = (value) => {
     // if required and not filled
-    if (isRequired && !value ) {setError("This field is required"); return false; }
+    if (isRequired && value.length === 0 ) {setError(""); return false; }
     // if filled (checks both optional & required)
     else if (value.length > 0){
     // case 1: if input is a zip code
       if (name.toLowerCase() === "zip" && !validateZip(value)) setError("Invalid zip code");
       // case 2: if input is entered but we need to verify it given a data
-      // make sure that the data must have method 'contain' (see StateAPI.js, for instance
       else if (name.toLowerCase() === "state" && value ==="") setError("Invalid state");
       // case 3: if input is a phone number
       else if (type === "tel" && !validatePhoneNumber(value)) setError("Invalid phone number");
@@ -83,7 +86,8 @@ const useField = (name, type, isRequired=true) => {
     // validate,
     resetinput,
     file,
-    isValid
+    isValid,
+    isOnChange
   };
 };
 

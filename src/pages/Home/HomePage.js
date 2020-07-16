@@ -1,9 +1,13 @@
 import React from "react";
 import "./style.css";
+import HomeImage5 from "assets/image/home-image-5.webp";
 import HomeImage4 from "assets/image/home-image-4.webp";
-import HomeImage3 from "assets/image/home-image-3.webp";
+import HomeImage3 from "assets/image/home-image-3.jpg";
 import HomeImage2 from "assets/image/home-image-2.webp";
 import HomeImage1 from "assets/image/home-image-1.webp";
+import useField from 'components/Hooks/useField';
+import InputField from 'components/Form/InputField';
+
 function HomePage() {
   return (
     <div className="body-container">
@@ -105,7 +109,57 @@ function HomePage() {
           </div>
         </div>
       </section>
+      <section className="splash-banner-2">
+        <div className="overlay">
+        <img src={HomeImage5} alt="Splash Banner 2" />
+        </div>
+      </section>
+      <section className="contact">
+        <div className="contact-container">
+          <div className="contact-left">
+            <div className="contact-left-content">
+            <p className="is-Raleway has-text-green" style={{fontSize: 40, marginBottom: '33px'}}>How can we help you today?</p>
+            <p className="is-Nunito has-text-white" style={{fontSize: 15}}>Please send us a message or email us at partnership@infiniteoptions.com</p>
+            </div>
+          </div>
+          <div className="contact-right">
+            <div className="contact-right-content">
+              {/* <div className="contact-form"> */}
+                <ContactForm />
+              {/* </div> */}
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
+}
+
+function ContactForm(){
+  const name = useField('Name','text');
+  const email = useField('Email', 'email');
+  const phone = useField('Phone','text', false);
+  const address = useField('Address','text', false);
+  const subject = useField('Subject', 'text');
+  const message = useField('Type your message here...','textarea');
+  return (
+    <form className="contact-form">
+      <div className="field is-horizontal">
+        <div className="field-body">
+          <InputField props={name} color="is-white"/>
+          <InputField props={email} color="is-white" />
+        </div>
+      </div>
+      <div className="field is-horizontal">
+        <div className="field-body">
+          <InputField props={phone} color="is-white"/>
+          <InputField props={address} color="is-white"/>
+        </div>
+      </div>
+      <InputField props={subject} color="is-white"/>
+      <InputField props={message} color="is-white"/>
+      <button className="button is-fullWidth submit-btn">Submit</button>
+    </form>
+  )
 }
 export default HomePage;
