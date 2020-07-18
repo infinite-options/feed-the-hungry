@@ -975,17 +975,7 @@ hr.is-light-gray {
     border-right: transparent;
     border-bottom: 1px solid red;
 }
-/* .button-group {
-    width: 160px;
-}
-.button-group .buttons{
-    display: flex;
-    flex-wrap: wrap;
-}
-.buttons>button {
-    display: inline-block;
-    flex-grow: 1;
-} */
+
 .delivery-btn, .pickup-btn, .start-order-btn {
     width: 80px;
 }
