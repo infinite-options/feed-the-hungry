@@ -9,14 +9,18 @@
     padding-bottom: 30px;
     border: none;
     background-color: white;
+
     /* border-bottom: 1px solid #d8dbdd; */
     /* box-shadow: 0 2px 2px -2px rgba(0,0,0,.2); */
 }
-.navbar-content {
+.navbar-body {
     /* min-width: 980px; */
-    /* width: calc(100% - 160px); */
-    margin-left: 80px;
-    margin-right: 80px;
+    width: calc(100vw - 160px);
+    min-width: 980px;
+    
+    margin-left: auto;
+    margin-right: auto;
+    height: 100%;
     /* margin-left: 78px; */
     /* margin-right: 78px; */
     display: flex;

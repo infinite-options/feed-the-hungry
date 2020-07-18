@@ -41,8 +41,8 @@ function Banks({ marker, banks }) {
           <div className="card-content">
             <div className="media">
               <div className="media-left">
-                <figure className="image is-48x48">
-                  <img src={bank.fb_logo} alt="Placeholder image"></img>
+                <figure className="image bank-logo">
+                  <img src={bank.fb_logo} alt="Bank's Logo"></img>
                 </figure>
               </div>
               <div className="media-content">
@@ -51,18 +51,23 @@ function Banks({ marker, banks }) {
                     {bank.fb_name}
                  
                 </p>
-                <p className="subtitle has-font-13 has-text-grey">
+                {/* <p className="subtitle has-font-13 has-text-grey">
                   {" "}
                   {bank.foodbank_address}
-                </p>
+                </p> */}
+
+                <div className="buttons are-small" style={{marginBottom:0}}>
+                {bank.delivery_pickup.includes("delivery") && <button className="button delivery-btn">Delivery</button>}
+                {bank.delivery_pickup.includes("pickup") && <button className="button pickup-btn">Pick Up</button>}
+                </div>
+                <Link to={`banks/${bank.foodbank_id}/products`}><button className="button is-small is-success start-order-btn">Start Order</button></Link>
               </div>
             </div>
-            <div className="content">
+            {/* <div className="content">
               <div className="columns is-mobile">
                 <div className="column is-6">
                   <p className="subtitle has-font-13 no-overflow">Hours</p>
                   <p className="subtitle has-font-13 is-bold no-overflow">
-                    {/* <span className="days">{day}</span> */}
                     {bank[`fb_${day}_time`]} 
                   </p>
                 </div>
@@ -85,7 +90,7 @@ function Banks({ marker, banks }) {
                   </span>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       ))}

@@ -26,7 +26,7 @@ function Header() {
       role="navigation"
       aria-label="main navigation"
     >
-      <div className="navbar-content">
+      <div className="navbar-body">
         <div className="navbar-brand ">
           {/* <Link className="navbar-item has-no-padding-left" to={context.isAuth ? "/" : "/login"}> */}
           <Link className="navbar-item" to="/">
@@ -43,7 +43,7 @@ function Header() {
             {/* <div className="navbar-item">
                         <SearchBar />
                     </div> */}
-            <Link to="/" className="navbar-item navbar-item-text">
+            <Link to="/" href="#home" className="navbar-item navbar-item-text">
               Home
             </Link>
             <Link to="/about" className="navbar-item navbar-item-text">

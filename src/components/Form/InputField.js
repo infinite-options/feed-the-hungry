@@ -1,6 +1,7 @@
 import React from "react";
 import "./style.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Icons from "components/Icons/Icons";
 
 // use this component for all input fields (well, not really all input fields because it still needs modifications)
 const InputField = ({ props, icon, isDisabled, color = "" }) => {
@@ -126,7 +127,7 @@ const InputField = ({ props, icon, isDisabled, color = "" }) => {
           {props.type === "file" && <img id="inputImg" />}
           <input
             className={
-              !props.isValid ? `input is-danger ${color}` : `input ${color}`
+             !props.isValid ? `input is-danger ${color}` : `input ${color}`
             }
             type={props.type !== "date" ? props.type : "text"}
             onChange={props.onChange}
@@ -144,8 +145,8 @@ const InputField = ({ props, icon, isDisabled, color = "" }) => {
               : {})}
           />
           {icon ? (
-            <span className="icon is-right">
-              <FontAwesomeIcon icon={icon} />
+            <span className="icon is-right has-text-danger">
+              <FontAwesomeIcon icon={icon}  />
             </span>
           ) : (
             ""
