@@ -1,4 +1,3 @@
-
 .navbar {
     z-index: 9999;
     color: hsl(0, 0%, 48%);
@@ -9,38 +8,37 @@
     padding-bottom: 30px;
     border: none;
     background-color: white;
-
     /* border-bottom: 1px solid #d8dbdd; */
     /* box-shadow: 0 2px 2px -2px rgba(0,0,0,.2); */
 }
+
 .navbar-body {
-    /* min-width: 980px; */
     width: calc(100vw - 160px);
     min-width: 980px;
     margin-left: auto;
     margin-right: auto;
     height: 100%;
-    /* margin-left: 78px; */
-    /* margin-right: 78px; */
     display: flex;
 }
 
-.brand-text-container {
+.brand-text-container {}
 
-}
 .is-60x60 {
     width: 60px;
     height: 60px;
 }
-.navbar-brand a{
-   width: 60px;
-   height: 60px;
-   padding: 0;
-   /* padding-bottom: 0; */
+
+.navbar-brand a {
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    /* padding-bottom: 0; */
 }
+
 .navbar-item img {
     max-height: 100%;
 }
+
 .logo {
     /* object-position: 50% 50%; */
     width: 60px;
@@ -51,16 +49,23 @@
 .navbar-end .navbar-item:last-child {
     margin-right: 0;
 }
+
+
 /* .navbar-item a {
     color: #6F7287;
 } */
-.navbar-item a:hover, .navbar-item a:focus, .navbar-item a:active{
+
+.navbar-item a:hover,
+.navbar-item a:focus,
+.navbar-item a:active {
     color: black;
     background-color: white;
 }
+
 .navbar-item {
     margin-right: 15px;
 }
+
 .navbar-item:focus {
     background-color: white;
 }
@@ -68,23 +73,26 @@
 .navbar-brand .navbar-item .navbar-link {
     padding-left: 0;
 }
+
 .has-no-padding-left {
     padding-left: 0;
 }
+
 .has-no-padding-right {
     padding-right: 0;
 }
 
 input[type=search] {
-	border: solid 1px #ccc;
-	width: 55px;
-	-webkit-border-radius: 10em;
-	-moz-border-radius: 10em;
-	border-radius: 10em;
-	-webkit-transition: all .5s;
-	-moz-transition: all .5s;
-	transition: all .5s;
+    border: solid 1px #ccc;
+    width: 55px;
+    -webkit-border-radius: 10em;
+    -moz-border-radius: 10em;
+    border-radius: 10em;
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    transition: all .5s;
 }
+
 #search input[type=search] {
     border: none;
     border-bottom: 2px solid white;
@@ -96,6 +104,7 @@ input[type=search] {
     /* background-color: #f6f9fc; */
     color: white;
 }
+
 #search input[type=search]:hover {
     border: none;
     border-bottom: 2px solid white;
@@ -103,6 +112,7 @@ input[type=search] {
     cursor: pointer;
     color: black;
 }
+
 #search input[type=search]:focus {
     /* box-shadow: 0 0 0 0.125em black; */
     padding-left: 20px;
@@ -110,20 +120,24 @@ input[type=search] {
     /* box-shadow: inset 0 0.0625em 0.125em rgba(10, 10, 10, 0.05); */
     border-bottom: 2px solid black;
     transition: .3s ease-in;
-	width: 250px;
-	color: #000;
-	background-color: #f6f9fc;
-	cursor: auto;
+    width: 250px;
+    color: #000;
+    background-color: #f6f9fc;
+    cursor: auto;
 }
+
 #search input:-moz-placeholder {
-	color: transparent;
+    color: transparent;
 }
+
 #search input::-webkit-input-placeholder {
-	color: transparent;
+    color: transparent;
 }
+
 .has-margin-left-12 {
     margin-left: 12px;
 }
+
 .brand-text {
     display: block;
     color: #181c19;
@@ -132,6 +146,7 @@ input[type=search] {
     text-transform: uppercase;
     /* font-family: 'Pacifico'; */
 }
+
 .brand-sub-text {
     font-family: 'Nunito', sans-serif;
     display: block;
@@ -140,25 +155,29 @@ input[type=search] {
     font-size: 15px;
     text-transform: capitalize;
 }
+
 .navbar-dropdown {
     color: black;
 }
+
 .shopping-cart {
     margin-right: .2rem;
     margin-left: 1rem;
 }
+
 .add-cart {
     border: none;
-    height:48px;
+    height: 48px;
     border-radius: 0;
-    color:hsl(141, 71%, 42%);
+    color: hsl(141, 71%, 42%);
     /* background-color: hsl(141, 71%, 48%); */
 }
+
 .add-cart:hover {
     transition: .2s ease-in;
-
     color: hsl(141, 70%, 30%);
 }
+
 @media only screen and (max-width: 1050px) {
     /* .navbar-burger{
         height: 14vh;
@@ -168,28 +187,35 @@ input[type=search] {
         padding-right: 1.75rem;
     }
 }
+
 @media only screen and (max-width: 600px) {
     .navbar {
         padding-left: 1.75rem;
         padding-right: 1.75rem;
     }
 }
+
 .navbar .navbar-item:hover {
     background-color: transparent;
 }
+
 .navbar-item-text {
     font-family: 'Nunito', sans-serif;
     font-size: 14px;
 }
+
 .button {
     border-radius: 0;
 }
+
 .navbar-end .navbar-item:not(:last-child) {
     margin-right: 0;
 }
+
 .has-padding-left-0-8 {
     padding-left: .8rem;
 }
+
 .has-padding-left-0-5 {
     padding-left: .5rem;
 }
