@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import "./style.css";
 import HomeImage5 from "assets/image/home-image-5.webp";
 import HomeImage4 from "assets/image/home-image-4.webp";
@@ -7,11 +8,15 @@ import HomeImage2 from "assets/image/home-image-2.webp";
 import HomeImage1 from "assets/image/home-image-1.webp";
 import useField from 'components/Hooks/useField';
 import InputField from 'components/Form/InputField';
+import Icons from "components/Icons/Icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ScrollToTop from 'utils/Scroll/SrollToTop';
 
 function HomePage() {
   return (
     <div className="body-container">
-      <section className="splash-banner">
+      <ScrollToTop />
+      <section id="home" className="splash-banner">
         <div className="splash-banner-left">
           {/* <div className="parallax-container"> */}
           <div className="parallax"></div>
@@ -23,7 +28,7 @@ function HomePage() {
             <p className="splash-banner-subtitle">
               Order now for pick up or free delivery!
             </p>
-            <button className="button get-food-btn">Get Food</button>
+            <Link to="/banks"><button className="button get-food-btn">Get Food</button></Link>
           </div>
         </div>
       </section>
@@ -77,7 +82,7 @@ function HomePage() {
             </div>
             <div
               className="step-item-content"
-              style={{ backgroundColor: "#D2B48C" }}
+              style={{ backgroundColor: "#C2B39B" }}
             >
               <p
                 className="is-Raleway has-text-white"
@@ -131,6 +136,29 @@ function HomePage() {
           </div>
         </div>
       </section>
+      <footer className="app-footer">
+        <div className="footer-content">
+      <div className="footer-left">
+      <div className="footer-left-content">
+            <p className="is-Nunito" style={{fontSize:14}}>©2020 by Serving Now</p>
+        </div>
+        </div>
+        
+        <div className="footer-right">
+          <div className="footer-right-content">
+          <span className="icon">
+            <FontAwesomeIcon icon={Icons.faFacebookF} />
+          </span>
+          <span className="icon">
+            <FontAwesomeIcon icon={Icons.faTwitter} />
+          </span>
+          <span className="icon">
+            <FontAwesomeIcon icon={Icons.faLinkedinIn} />
+          </span>
+          </div> 
+        </div> 
+        </div>
+      </footer>
     </div>
   );
 }
@@ -158,7 +186,7 @@ function ContactForm(){
       </div>
       <InputField props={subject} color="is-white"/>
       <InputField props={message} color="is-white"/>
-      <button className="button is-fullWidth submit-btn">Submit</button>
+      <button className="button is-fullWidth submit-btn" disabled={!name.isValid || !email.isValid || !message.isValid ? true : false}>Submit</button>
     </form>
   )
 }

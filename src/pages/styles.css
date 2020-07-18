@@ -45,24 +45,39 @@
     /* color: #00bd81; */
 }
 .bank-list {
-    width: 100%;
+    width: calc(100% - 146px);
     height: auto;
-    padding-top: 3rem;
+    margin-left: auto;
+    margin-right: auto;
+    /* padding-top: 3rem;
     padding-left: 3rem;
     padding-right: 2.25rem;
-    padding-bottom: 3rem;
+    padding-bottom: 3rem; */
 }
+
 .bank-card {
-    border-radius: 12px;
+    border-radius: 0;
     box-shadow: none;
     padding-top: 1rem;
     overflow: hidden;
-    height: 210px;
-    /* max-height: 210px; */
+    height: 191.6px;
+    max-height: 191.6px;
+    max-height: 210px;
     padding-bottom: 1rem;
     /* box-shadow: 0 0.1em 0.5em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 0.5px rgba(10, 10, 10, 0.02); */
     background-color: white;
-    border: 1px solid #eeeeef;
+    border: 1px solid #dadada;
+    /* border: 1px solid #eeeeef; */
+}
+
+.bank-logo img{
+    width: 109.6px;
+    overflow: hidden;
+    object-fit: contain;
+    object-position: center;
+    height: 109.6px;
+    border-radius: 50%;
+    border: 1px solid #dadada;
 }
 .media-content{
     overflow: hidden;
@@ -237,11 +252,11 @@
     position: relative;
     z-index: 1;
 }
-.overlay:hover {
+/* .overlay:hover {
     transition: 0.3s ease-in-out;
     background-color:rgba(78, 78, 78, 0.83);
  
-}
+} */
 .banner-title{
     color: white;
 }
@@ -431,6 +446,10 @@ img{
     margin: 0;
     padding: 0;
 }
+.card-content {
+    width: 100%;
+    height: calc(100% - 32px);
+}
 .has-size-20 {
     margin-top: 2px;
     width: 20px;
@@ -594,10 +613,10 @@ opacity: 1;
         padding-left: 1.75rem;
         padding-right: 1.75rem;
     }
-    .bank-list{
+    /* .bank-list{
         padding-left: 1rem;
         padding-right: 1rem;
-    }
+    } */
     .inventory-col-1 {
         margin-bottom: .5rem;
     }
@@ -610,10 +629,10 @@ opacity: 1;
         padding-left: 1.75rem;
         padding-right: 1.75rem;
     }
-    .bank-list {
+    /* .bank-list {
         padding-left: 1.75rem;
         padding-right: 1rem;
-    }
+    } */
     .bank-title {
         white-space: nowrap;
         overflow: hidden;
@@ -644,10 +663,10 @@ opacity: 1;
     .banner-image {
         height: auto;
     }
-    .bank-list {
+    /* .bank-list {
         padding-left: 1.75rem;
         padding-right: 1rem;
-    }
+    } */
     .item-column {
         padding-left: 2rem;
         padding-right: 2rem;
@@ -669,11 +688,11 @@ opacity: 1;
     text-overflow: ellipsis;
 }
 
-.card-content .content {
+/* .card-content .content {
     max-height: 80px;
     overflow: hidden;
 
-}
+} */
 .is-bold {
     font-weight: 600;
 }
@@ -917,10 +936,14 @@ hr.is-light-gray {
     /* background-color: rgba(255, 0, 0, 0.158); */
     /* opacity: 0.2; */
 }
-.input.is-danger.is-white {
+.input.is-danger.is-white, input.is-danger.is-white:focus, input.is-danger.is-white:hover  {
     color: white;
     background-color: rgba(255, 0, 0, 0.103);
-    border: 1px solid red;
+    border-top: transparent;
+    border-left: transparent;
+    border-right: transparent;
+    border-bottom: 1px solid red;
+    box-shadow: none;
     /* opacity: 1; */
 }
 .input.is-white::placeholder {
@@ -940,11 +963,19 @@ hr.is-light-gray {
 .textarea.is-white:hover, .textarea.is-white:focus {
     border: 1px solid white;
 }
+
 .textarea {
     border-radius: 0;
 }
 .textarea.is-danger.is-white {
     color: white;
     background-color: rgba(255, 0, 0, 0.103);
-    border: 1px solid red;
+    border-top: transparent;
+    border-left: transparent;
+    border-right: transparent;
+    border-bottom: 1px solid red;
+}
+
+.delivery-btn, .pickup-btn, .start-order-btn {
+    width: 80px;
 }

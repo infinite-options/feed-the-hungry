@@ -43,7 +43,7 @@ function Header() {
             {/* <div className="navbar-item">
                         <SearchBar />
                     </div> */}
-            <Link to="/" className="navbar-item navbar-item-text">
+            <Link to="/" href="#home" className="navbar-item navbar-item-text">
               Home
             </Link>
             <Link to="/about" className="navbar-item navbar-item-text">

@@ -38,17 +38,17 @@ const Bank = ({ bank }) => {
     setKey(key + 1);
   });
     // keep scroll position on rerender
-  const divRef = useRef(null);
-  const { stayScrolled } = useStayScrolled(divRef);
-  useLayoutEffect(
-    () => {
-      stayScrolled();
-    },
-    [bank]
-  );
+  // const divRef = useRef(null);
+  // const { stayScrolled } = useStayScrolled(divRef);
+  // useLayoutEffect(
+  //   () => {
+  //     stayScrolled();
+  //   },
+  //   [bank]
+  // );
 
   return (
-    <div ref={divRef} className="bank-page-bd">
+    <div className="bank-page-bd">
       {/* <ScrollToTopOnMount /> */}
       <div className="bank-container">
         <BankBanner obj={bank} />
