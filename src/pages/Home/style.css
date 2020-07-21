@@ -213,10 +213,11 @@
     margin-right: auto;
     overflow: hidden;
     min-width: 980px;
-    height: 100%;
+    min-height: 550.6px;
 }
 .contact-left {
     float: left;
+    height: 100%;
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -230,11 +231,13 @@
 }
 .contact-right {
     float: right;
+    height: 100%;
     width: 50%;
 }
 .contact-right-content {
     width: 560px;
     overflow: hidden;
+    height: 100%;
     margin: 60px calc((100% - 490px) * 0.5) 69px calc((100% - 490px) * 0.5);
     left: 15px;
 }
@@ -302,4 +305,15 @@
 }
 .bank-card .media-content {
     
+}
+.message-sent {
+    height: 100%;
+    width: 460px;
+    max-width: 460px;
+    text-align: center;
+    /* /* display: flex; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
 }

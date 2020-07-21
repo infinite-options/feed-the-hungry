@@ -9,7 +9,6 @@ import { OrderContext } from "components/Context/OrderContext";
 import { useOurApi } from "API/useOurApi";
 
 function ConfirmationPage() {
-  console.log("confirm page");
   const unconfirmed_order = JSON.parse(window.localStorage.getItem("unconfirmed_order")) || {};
   const cartItems = unconfirmed_order.ordered_items
     ? unconfirmed_order.ordered_items

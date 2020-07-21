@@ -27,6 +27,7 @@ import DonorPage from 'pages/Donor/DonorPage';
 import ConfirmationPage from 'pages/Checkout/ConfirmationPage';
 import ErrorPage from 'pages/Error/ErrorPage';
 import HomePage from 'pages/Home/HomePage';
+import ScrollToTop from 'utils/Scroll/SrollToTop';
 // import hooks
 import { OrderContext } from 'components/Context/OrderContext';
 import { usePosition } from 'use-position';
@@ -71,7 +72,8 @@ function App() {
   }
 
   return !loading && (
-    <Router basename={"feed-the-hungry"}>
+    <Router basename={"feed-the-hungry"} onUpdate={() => window.scrollTo(0, 0)}>
+        {/* <ScrollToTop /> */}
       <OrderContext.Provider value={{cartTotal, setCartTotal, position, isAuth, setIsAuth}}>
         <Header />
         <Switch>
@@ -91,6 +93,7 @@ function App() {
           <Redirect to="/404" />
         </Switch>
       </OrderContext.Provider>
+
     </Router>
   );
 }

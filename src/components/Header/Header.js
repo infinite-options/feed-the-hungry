@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 import "./header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Icons from "components/Icons/Icons";
@@ -7,6 +7,7 @@ import { OrderContext } from "components/Context/OrderContext";
 import ServingNowLogo from "assets/image/ServingNow_Logo_Green.png";
 import { faBaby } from "@fortawesome/free-solid-svg-icons";
 function Header() {
+  const { path, url } = useRouteMatch();
   const context = useContext(OrderContext);
   context.setCartTotal(() => {
     const cart = JSON.parse(window.localStorage.getItem("cart"));
@@ -19,7 +20,9 @@ function Header() {
     window.localStorage.removeItem("userInfo");
     context.setIsAuth(false);
   };
-
+  const resetScroll = () => {
+    window.scrollTo(0,0);
+  }
   return (
     <nav
       className="navbar is-fixed-top"
@@ -43,20 +46,20 @@ function Header() {
             {/* <div className="navbar-item">
                         <SearchBar />
                     </div> */}
-            <Link to="/" href="#home" className="navbar-item navbar-item-text">
+            <Link to="/" href="#home" className="navbar-item navbar-item-text" onClick={resetScroll}>
               Home
             </Link>
-            <Link to="/about" className="navbar-item navbar-item-text">
+            <Link to="/about" className="navbar-item navbar-item-text" onClick={resetScroll}>
               About Us
             </Link>
-            <Link to={context.isAuth ? "/admin" : "/admin/login"} className="navbar-item navbar-item-text">
+            <Link to={context.isAuth ? "/admin" : "/admin/login"} className="navbar-item navbar-item-text" onClick={resetScroll}>
               Admin
             </Link>
-            <Link to={context.isAuth ? "/donate" : "/donate/intro"} className="navbar-item navbar-item-text">
+            <Link to={context.isAuth ? "/donate" : "/donate/intro"} className="navbar-item navbar-item-text" onClick={resetScroll}>
               Donate
             </Link>
             <Link to="/banks" className="navbar-item">
-              <button className="button navbar-item-text is-success is-outlined">Get Food</button>
+              <button className="button navbar-item-text is-success is-outlined" onClick={resetScroll}>Get Food</button>
             </Link>
             {context.isAuth && (
               <div className="navbar-item navbar-item-text">
