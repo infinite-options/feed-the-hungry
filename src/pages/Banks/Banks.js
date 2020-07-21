@@ -6,8 +6,8 @@ import {
   Link,
   useRouteMatch,
   useParams,
-  useHistory ,
-  withRouter
+  useHistory,
+  withRouter,
 } from "react-router-dom";
 import Icons from "components/Icons/Icons";
 
@@ -46,21 +46,30 @@ function Banks({ marker, banks }) {
                 </figure>
               </div>
               <div className="media-content">
-                <p className="title is-6 has-text-grey-dark">
-              
-                    {bank.fb_name}
-                 
+                <p
+                  className="title is-6 has-text-grey-dark"
+                  style={{
+                    paddingBottom: "1rem",
+                    marginBottom: "1rem",
+                    borderBottom: "1px solid hsl(0, 0%, 48%)",
+                  }}
+                >
+                  {bank.fb_name}
                 </p>
                 {/* <p className="subtitle has-font-13 has-text-grey">
                   {" "}
                   {bank.foodbank_address}
                 </p> */}
 
-                <div className="buttons are-small" style={{marginBottom:0}}>
-                {bank.delivery_pickup.includes("delivery") && <button className="button delivery-btn">Delivery</button>}
-                {bank.delivery_pickup.includes("pickup") && <button className="button pickup-btn">Pick Up</button>}
+                <div className="buttons are-small" style={{ marginBottom: 0 }}>
+                  {bank.delivery_pickup.includes("delivery") && (
+                    <button className="button delivery-btn">Delivery</button>
+                  )}
+                  {bank.delivery_pickup.includes("pickup") && (
+                    <button className="button pickup-btn">Pick Up</button>
+                  )}
                 </div>
-                <Link to={`banks/${bank.foodbank_id}/products`}><button className="button is-small is-success start-order-btn">Start Order</button></Link>
+                {/* <Link to={`banks/${bank.foodbank_id}/products`}><button className="button is-small is-success start-order-btn">Start Order</button></Link> */}
               </div>
             </div>
             {/* <div className="content">

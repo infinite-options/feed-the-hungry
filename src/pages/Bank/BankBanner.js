@@ -15,7 +15,7 @@ function BankBanner({ obj }) {
         <div className="bank-banner-left">
           <div className="bank-banner-info">
             {/* Logo */}
-            <figure className="image bank-logo is-96x96">
+            <figure className="image is-96x96">
               <img src={obj.fb_logo} alt=""></img>
             </figure>
             <div className="bank-info-wrapper has-no-margin">

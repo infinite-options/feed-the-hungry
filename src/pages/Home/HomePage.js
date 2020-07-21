@@ -16,7 +16,7 @@ function HomePage() {
   console.log("home page");
   return (
     <div className="body-container">
-      <ScrollToTop />
+      {/* <ScrollToTop /> */}
       <section id="home" className="splash-banner">
         <div className="splash-banner-left">
           {/* <div className="parallax-container"> */}

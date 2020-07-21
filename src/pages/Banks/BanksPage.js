@@ -21,19 +21,19 @@ function BanksPage() {
     : [];
   return (
     <div className="banks-page-bd">
-      <ScrollToTop />
-      {/* <div className="columns" style={{marginTop:0}}> */}
-      <div className="half-left">
+      {/* <ScrollToTop /> */}
+      <div className="columns" style={{marginTop:0}}>
+      <div className="column has-no-padding">
         <div className="bank-list">
           <Banks marker={marker} banks={banks} />
         </div>
       </div>
-      <div className="half-right">
+      <div className="column has-no-padding">
         <div className="sticky">
           <LeafletMap marker={marker} banks={banks} />
         </div>
       </div>
-      {/* </div> */}
+      </div>
     </div>
   );
 }
