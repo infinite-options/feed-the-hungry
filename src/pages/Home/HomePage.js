@@ -250,8 +250,8 @@ function ContactForm() {
             }
             onClick={handleSubmit}
           >
-            <span>Submit</span>
-            <span className="icon"><FontAwesomeIcon icon={Icons.faCircleNotch} spin /></span>
+            Submit
+            {/* <span className="icon"><FontAwesomeIcon icon={Icons.faCircleNotch} spin /></span> */}
           </button>
         </form>
       ) : (
