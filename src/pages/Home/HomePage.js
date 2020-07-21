@@ -250,7 +250,8 @@ function ContactForm() {
             }
             onClick={handleSubmit}
           >
-            Submit
+            <span>Submit</span>
+            <span className="icon"><FontAwesomeIcon icon={Icons.faCircleNotch} spin /></span>
           </button>
         </form>
       ) : (
