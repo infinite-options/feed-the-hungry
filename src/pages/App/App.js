@@ -80,7 +80,7 @@ function App() {
           <NonAuthRoute exact path="/login" component={LoginPage} />
           <NonAuthRoute exact path="/signup" component={SignupPage} />
           {/* <AuthRoute exact path="/" bankAPI={bankAPI} component={BanksPage} /> */}
-          <NonAuthRoute exact path="/donate/intro" component={DonorNonAuth} />
+          <NonAuthRoute exact path="/donateform" component={DonorNonAuth} />
           <AuthRoute exact path="/donate" component={DonorPage} />
           <Route exact path="/banks"><BanksPage /></Route>
           <Route exact path="/"><HomePage /></Route>

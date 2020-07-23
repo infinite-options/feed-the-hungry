@@ -35,6 +35,9 @@ function DonorPage() {
                 })
             }
         }
+        else {
+            setLoading(false);
+        }
     }, [])
 
     const handleClick = (e) => {

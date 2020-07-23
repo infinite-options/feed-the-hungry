@@ -57,10 +57,10 @@ function Header() {
             <Link to="/about" className="navbar-item navbar-item-text" onClick={resetScroll}>
               About Us
             </Link>
-            <Link to={context.isAuth ? "/admin" : "/admin/login"} className="navbar-item navbar-item-text" onClick={resetScroll}>
+            <Link to={context.isAuth ? "/admin" : "/adminlogin"} className="navbar-item navbar-item-text" onClick={resetScroll}>
               Admin
             </Link>
-            <Link to={context.isAuth ? "/donate" : "/donate/intro"} className="navbar-item navbar-item-text" onClick={resetScroll}>
+            <Link to={context.isAuth ? "/donate" : "/donateform"} className="navbar-item navbar-item-text" onClick={resetScroll}>
               Donate
             </Link>
             <Link to="/banks" className="navbar-item" onClick={(e) => resetScroll(e,"/feed-the-hungry/banks") }>
