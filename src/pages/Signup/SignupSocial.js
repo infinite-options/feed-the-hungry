@@ -11,6 +11,7 @@ import InputField from "components/Form/InputField";
 import Select from 'components/Form/Select';
 import DietaryRestrictions from "pages/Signup/DietaryRestrictions";
 import FamilyMembers from "pages/Signup/FamilyMembers";
+import ErrorPage from 'pages/Error/ErrorPage';
 
 function SignupSocial() {
     const states = StateAPI();
@@ -159,7 +160,8 @@ function SignupSocial() {
         }
     }
 
-    if (!location.state) return <Redirect to="/login" />
+    // redirecting causes mem leaks, show error page as funky solution. is there a better way?
+    if (!location.state) return <ErrorPage />
     else return (
         <div className="login-signup-page signup-background-image">
             <form onSubmit={handleSubmit} onKeyPress={handleKeyPress} style={{width: "720px", maxWidth: "100%", margin: "auto"}}>
