@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Icons from "components/Icons/Icons";
 
 // use this component for all input fields (well, not really all input fields because it still needs modifications)
-const InputField = ({ props, icon, isDisabled, color = "" }) => {
+const InputField = ({ props, icon, isDisabled, color = "", readOnly = false }) => {
   const setMaxDate = () => {
     if (props.name.toLowerCase() !== "date of birth") return null;
     const today = new Date();
@@ -100,6 +100,7 @@ const InputField = ({ props, icon, isDisabled, color = "" }) => {
                   onChange={props.onChange}
                   value={props.value}
                   placeholder={props.name}
+                  readOnly={readOnly}
                 />
               </div>
             </div>
@@ -115,7 +116,7 @@ const InputField = ({ props, icon, isDisabled, color = "" }) => {
     return (
       <div className="field">
         <div className="control">
-          <textarea className={!props.isValid ? `textarea is-danger ${color}` : `textarea ${color}`} placeholder={props.name} onChange={props.onChange} value={props.value}></textarea>
+          <textarea className={!props.isValid ? `textarea is-danger ${color}` : `textarea ${color}`} placeholder={props.name} onChange={props.onChange} value={props.value} readOnly={readOnly}></textarea>
         </div>
         <p className="help is-danger">{props.error}</p>
       </div>
@@ -143,6 +144,7 @@ const InputField = ({ props, icon, isDisabled, color = "" }) => {
             {...(props.type === "file"
               ? { accept: "image/*", onChange: handleImg }
               : {})}
+            readOnly={readOnly}
           />
           {icon ? (
             <span className="icon is-right has-text-danger">
