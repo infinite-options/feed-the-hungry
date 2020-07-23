@@ -1,5 +1,5 @@
-import React, { useState, useRef } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 
 import axios from 'axios';
 import StateAPI from 'API/StateAPI';
@@ -8,12 +8,12 @@ import InputField from "components/Form/InputField";
 import Select from 'components/Form/Select';
 import DietaryRestrictions from "pages/Signup/DietaryRestrictions";
 import FamilyMembers from "pages/Signup/FamilyMembers";
+import ErrorPage from 'pages/Error/ErrorPage';
 
 function SignupForm(props) {
     // customer form: [Name, Phone, DOB, Email, Password]
     //                [Address (optional)]
     //                [Additional Personal Information (optional)]
-    //                [Dietary Restrictions]
 
     // donor form: [Name, Phone, DOB, Email, Password]
     //             [Address]
@@ -42,9 +42,10 @@ function SignupForm(props) {
 
     const states = StateAPI();
     const history = useHistory();
-    const dietRef = useRef();
+    // const dietRef = useRef();
     const familyRef = useRef();
     // const signupStatus = useState(props.signupStatus.toLowerCase());
+    const location = useLocation();
 
     const inputs = {
         firstName : useField("First Name", "text"),
@@ -52,9 +53,9 @@ function SignupForm(props) {
         dob : useField("Date of Birth", "date"),
         phoneNumber : useField("Phone Number", "tel"),
         email : useField("Email Address", "email"),
-        emailConfirm : useField("Confirm Email", "email"),
-        password : useField("Password","password"),
-        passwordConfirm : useField("Confirm Password", "password"),
+        emailConfirm : useField("Confirm Email", "email", props.isSocial ? false : true),
+        password : useField("Password","password", props.isSocial ? false : true),
+        passwordConfirm : useField("Confirm Password", "password", props.isSocial ? false : true),
         address_1 : useField("Address 1", "text", (props.signupStatus === "customer" ? false : true)),
         address_2 : useField("Address 2", "text", false),
         city : useField("City", "text", (props.signupStatus === "customer" ? false : true)),
@@ -66,9 +67,32 @@ function SignupForm(props) {
         monthlyIncome : useField("Monthly Income", "number", false),
     }
 
+    const [accessToken, setAccessToken] = useState();
+    const [refreshToken, setRefreshToken] = useState();
+    const [socialMedia, setSocialMedia] = useState();
+
+    useEffect(() => {
+        (async function setSignupParams(state) {
+            if (props.isSocial && state) {
+                await setParams(state);
+            }
+        })(location.state);
+    }, []);
+    
+    function setParams(state) {
+        inputs.email.setValue(state.email);
+        inputs.firstName.setValue(state.firstname ? state.firstname : "");
+        inputs.lastName.setValue(state.lastname ? state.lastname : "");
+
+        setAccessToken(state.accessToken);
+        setRefreshToken(state.refreshToken);
+        setSocialMedia(state.social);
+    }
+
     const validateInputs = () => {
         // let isAllValid = true;
         for (let input in inputs) {
+            console.log(input, inputs[input].isValid);
             if (!inputs[input].isValid) {
                 return false;
             }
@@ -84,11 +108,12 @@ function SignupForm(props) {
     const handleClick = () => {
         console.log("User has tried to sign up..")
         const isAllValid = validateInputs();
-        if (props.signupStatus === "customer") dietRef.current.checkValues();
+        // if (props.signupStatus === "customer") dietRef.current.checkValues();
         
         // Checking if user filled all required inputs
-        let signupPassed = props.signupStatus === "customer" ? dietRef.current.valid() && isAllValid : isAllValid;
-        if (signupPassed) {
+        // let signupPassed = props.signupStatus === "customer" ? dietRef.current.valid() && isAllValid : isAllValid;
+        let signupPassed = isAllValid;
+        if (!props.isSocial && signupPassed) {
             // Checking if email/password matches its confirmed
             if(inputs.email.value !== inputs.emailConfirm.value) {
                 // Email mismatch error message goes here
@@ -112,7 +137,7 @@ function SignupForm(props) {
             }
             // console.log("persons" + ":", persons);
             data["persons"] = familyRef.current ? familyRef.current.persons : [];
-            data["diet_restrictions"] = dietRef.current ? dietRef.current.restrictions : [];
+            // data["diet_restrictions"] = dietRef.current ? dietRef.current.restrictions : [];
             console.log("Data:", data);
             console.log("we did it!");
             let test = {
@@ -131,15 +156,25 @@ function SignupForm(props) {
                 "user_is_admin": checkSignupStatus("admin"),
                 "user_is_foodbank": checkSignupStatus("foodbank"),
             }
+
+            if (props.isSocial) {
+                delete test["password"];
+                test["access_token"] = accessToken;
+                test["refresh_token"] = refreshToken;
+                test["social_media"] = socialMedia;
+            }
+            const API_URL = props.isSocial ? "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/socialsignup" : "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/signup";
+
             console.log("Test:", test);
             axios.post(
-                "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/signup", 
+                API_URL, 
                 test
             ).then(response => {
                 console.log(response);
                 if (response.status === 200) {
                     // Send to verify email page
-                    history.push('/signup/verify');
+                    const route = props.isSocial ? "/login" : "/signup/verify";
+                    history.push(route);
                 }
             }).catch(err => {
                 console.log(err.response);
@@ -160,7 +195,8 @@ function SignupForm(props) {
         }
     }
 
-    return (
+    if (props.isSocial && !location.state) return <ErrorPage />
+    else return (
         <form onSubmit={handleSubmit} onKeyPress={handleKeyPress} style={{width: "720px", maxWidth: "100%", margin: "auto"}}>
             <div className="column has-text-black">
                 {/* Asking for user data */}
@@ -183,20 +219,24 @@ function SignupForm(props) {
                     </div>
                     <div className="columns">
                         <div className="column">
-                            <InputField props={inputs.email} />
+                            <InputField props={inputs.email} readOnly={props.isSocial ? true : false} />
                         </div>
-                        <div className="column">
-                            <InputField  props={inputs.emailConfirm} />
-                        </div>
+                        {!props.isSocial && (
+                            <div className="column">
+                                <InputField  props={inputs.emailConfirm} />
+                            </div>
+                        )}
                     </div>
-                    <div className="columns">
-                        <div className="column">
-                            <InputField  props={inputs.password} />
+                    {!props.isSocial && (
+                        <div className="columns">
+                            <div className="column">
+                                <InputField  props={inputs.password} />
+                            </div>
+                            <div className="column">
+                                <InputField props={inputs.passwordConfirm} />
+                            </div>
                         </div>
-                        <div className="column">
-                            <InputField props={inputs.passwordConfirm} />
-                        </div>
-                    </div>
+                    )}
                 </div>
                 {/* Asking for user address */}
                 <hr className="is-light-gray"/>
@@ -248,9 +288,9 @@ function SignupForm(props) {
                     </React.Fragment>
                 )}
                 {/* Asking for dietary restrictions, if any */}
-                {props.signupStatus === "customer" && (
+                {/* {props.signupStatus === "customer" && (
                     <DietaryRestrictions ref={dietRef}/>
-                )}
+                )} */}
                 <div className="has-text-centered">
                     <button className="button is-success has-margin-top-1 has-margin-bottom-0-5" type="button" onClick={handleClick}>Sign Up</button>
                 </div>

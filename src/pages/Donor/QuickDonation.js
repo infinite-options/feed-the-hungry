@@ -13,7 +13,7 @@ function QuickDonation() {
     const lastName = useField("Last Name", "text");
     const email = useField("Email Address", "email");
     const phone = useField("Phone Number", "tel");
-    const donation = useField("Donation Details", "text");
+    const donation = useField("Donation Details", "textarea");
 
     const handleClick = () => {
         console.log("User has tried to submit donation..")
@@ -43,8 +43,7 @@ function QuickDonation() {
                 </div>
                 <InputField props={email} />
                 <InputField props={phone} />
-                <textarea className={!donation.isValid ? "textarea is-danger" : "textarea"} placeholder="Donation details..." value={donation.value} onChange={donation.onChange}></textarea>
-                <p className="help is-danger">{donation.error}</p>
+                <InputField props={donation} />
                 <div className="has-text-centered">
                     <button className="button is-success has-margins-0-5" onClick={handleClick}>Submit</button>
                 </div>
