@@ -69,6 +69,24 @@ const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
         const responseData = await response.data;
         // once axios's POST method is called, we update sentOrder
         // so that we know it has already been written to the db.
+
+        // Hao: adding this for cases where user is not registered as a customer
+        const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
+        if (!userInfo.isCustomer) {
+          const user_data = {
+            user_id: userInfo.userID,
+            user_is_customer: ++userInfo.isCustomer, // set customer value to 1
+            user_is_donor: userInfo.isDonor,
+            user_is_admin: userInfo.isAdmin,
+            user_is_foodbank: userInfo.isFoodbank,
+          }
+          axios.post("https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/edit_user_status", user_data).then(() => {
+            window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
+          }).catch(err => {
+            console.log(err.response);
+          });
+        }
+
         window.localStorage.removeItem("cart"); // remove cart data from local storage
         context.setCartTotal(0);
         setSentOrder(prevState => ({...prevState, isSent: true, order_id: responseData.result.order_id}));

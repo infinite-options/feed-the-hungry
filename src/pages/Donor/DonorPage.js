@@ -5,6 +5,7 @@ import "pages/styles.css";
 import NeedMoreInfoForm from "components/Form/NeedMoreInfoForm";
 import DonationHistory from "./DonationHistory";
 import DonationForm from "./DonationForm";
+import axios from "axios";
 
 function DonorPage() {
     const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
@@ -16,13 +17,24 @@ function DonorPage() {
     useEffect(() => {
         if (!userInfo.isDonor) {
             if(userInfo.address1 && userInfo.city && userInfo.state && userInfo.zip) {
-                setIsDonor(1);
                 userInfo.isDonor = 1;
-                window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
-                // CALL EDIT_ACCOUNT API
+                const user_auth_data = {
+                    user_id: userInfo.userID,
+                    user_is_customer: userInfo.isCustomer,
+                    user_is_donor: userInfo.isDonor,
+                    user_is_admin: userInfo.isAdmin,
+                    user_is_foodbank: userInfo.isFoodbank,
+                }
+                axios.post("https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/edit_user_status", user_auth_data).then(response => {
+                    console.log(response);
+                    setIsDonor(1);
+                    setLoading(false);
+                    window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
+                }).catch(err => {
+                    console.log(err.response);
+                })
             }
         }
-        setLoading(false);
     }, [])
 
     const handleClick = (e) => {
