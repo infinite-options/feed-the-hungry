@@ -39,13 +39,17 @@ function SignupForm(props) {
      *     If the function did check, the page would fail to render, since it would be trying to
      *     get the value property of an undefined variable.
      */
+    const SOCIAL_SIGNUP_API = "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/socialsignup";
+    const SIGNUP_API = "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/signup";
 
     const states = StateAPI();
     const history = useHistory();
     // const dietRef = useRef();
     const familyRef = useRef();
-    // const signupStatus = useState(props.signupStatus.toLowerCase());
     const location = useLocation();
+
+    const signupStatus = props.signupStatus;
+    const isSocial = props.isSocial;
 
     const inputs = {
         firstName : useField("First Name", "text"),
@@ -53,14 +57,14 @@ function SignupForm(props) {
         dob : useField("Date of Birth", "date"),
         phoneNumber : useField("Phone Number", "tel"),
         email : useField("Email Address", "email"),
-        emailConfirm : useField("Confirm Email", "email", props.isSocial ? false : true),
-        password : useField("Password","password", props.isSocial ? false : true),
-        passwordConfirm : useField("Confirm Password", "password", props.isSocial ? false : true),
-        address_1 : useField("Address 1", "text", (props.signupStatus === "customer" ? false : true)),
+        emailConfirm : useField("Confirm Email", "email", isSocial ? false : true),
+        password : useField("Password","password", isSocial ? false : true),
+        passwordConfirm : useField("Confirm Password", "password", isSocial ? false : true),
+        address_1 : useField("Address 1", "text", (signupStatus === "customer" ? false : true)),
         address_2 : useField("Address 2", "text", false),
-        city : useField("City", "text", (props.signupStatus === "customer" ? false : true)),
-        state : useField("State", "text", (props.signupStatus === "customer" ? false : true)),
-        zip : useField("Zip", "text", (props.signupStatus === "customer" ? false : true)),
+        city : useField("City", "text", (signupStatus === "customer" ? false : true)),
+        state : useField("State", "text", (signupStatus === "customer" ? false : true)),
+        zip : useField("Zip", "text", (signupStatus === "customer" ? false : true)),
 
         license: useField("Drivers License", "text", false),
         licenseImg: useField("License Image", "file", false),
@@ -73,7 +77,7 @@ function SignupForm(props) {
 
     useEffect(() => {
         (async function setSignupParams(state) {
-            if (props.isSocial && state) {
+            if (isSocial && state) {
                 await setParams(state);
             }
         })(location.state);
@@ -101,19 +105,19 @@ function SignupForm(props) {
     }
 
     const checkSignupStatus = (status) => {
-        console.log(status, props.signupStatus);
-        return (status === props.signupStatus ? 1 : 0);
+        console.log(status, signupStatus);
+        return (status === signupStatus ? 1 : 0);
     }
 
     const handleClick = () => {
         console.log("User has tried to sign up..")
         const isAllValid = validateInputs();
-        // if (props.signupStatus === "customer") dietRef.current.checkValues();
+        // if (signupStatus === "customer") dietRef.current.checkValues();
         
         // Checking if user filled all required inputs
-        // let signupPassed = props.signupStatus === "customer" ? dietRef.current.valid() && isAllValid : isAllValid;
+        // let signupPassed = signupStatus === "customer" ? dietRef.current.valid() && isAllValid : isAllValid;
         let signupPassed = isAllValid;
-        if (!props.isSocial && signupPassed) {
+        if (!isSocial && signupPassed) {
             // Checking if email/password matches its confirmed
             if(inputs.email.value !== inputs.emailConfirm.value) {
                 // Email mismatch error message goes here
@@ -157,23 +161,22 @@ function SignupForm(props) {
                 "user_is_foodbank": checkSignupStatus("foodbank"),
             }
 
-            if (props.isSocial) {
+            if (isSocial) {
                 delete test["password"];
                 test["access_token"] = accessToken;
                 test["refresh_token"] = refreshToken;
                 test["social_media"] = socialMedia;
             }
-            const API_URL = props.isSocial ? "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/socialsignup" : "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/signup";
 
             console.log("Test:", test);
             axios.post(
-                API_URL, 
+                isSocial ? SOCIAL_SIGNUP_API : SIGNUP_API, 
                 test
             ).then(response => {
                 console.log(response);
                 if (response.status === 200) {
                     // Send to verify email page
-                    const route = props.isSocial ? "/login" : "/signup/verify";
+                    const route = isSocial ? "/login" : "/signup/verify";
                     history.push(route);
                 }
             }).catch(err => {
@@ -195,7 +198,7 @@ function SignupForm(props) {
         }
     }
 
-    if (props.isSocial && !location.state) return <ErrorPage />
+    if (isSocial && !location.state) return <ErrorPage />
     else return (
         <form onSubmit={handleSubmit} onKeyPress={handleKeyPress} style={{width: "720px", maxWidth: "100%", margin: "auto"}}>
             <div className="column has-text-black">
@@ -219,15 +222,15 @@ function SignupForm(props) {
                     </div>
                     <div className="columns">
                         <div className="column">
-                            <InputField props={inputs.email} readOnly={props.isSocial ? true : false} />
+                            <InputField props={inputs.email} readOnly={isSocial ? true : false} />
                         </div>
-                        {!props.isSocial && (
+                        {!isSocial && (
                             <div className="column">
                                 <InputField  props={inputs.emailConfirm} />
                             </div>
                         )}
                     </div>
-                    {!props.isSocial && (
+                    {!isSocial && (
                         <div className="columns">
                             <div className="column">
                                 <InputField  props={inputs.password} />
@@ -241,7 +244,7 @@ function SignupForm(props) {
                 {/* Asking for user address */}
                 <hr className="is-light-gray"/>
                 <div>
-                    {props.signupStatus === "customer" && (
+                    {signupStatus === "customer" && (
                         <React.Fragment>
                             <p className="subtitle is-3 has-margin-top-1 has-text-centered has-text-black">Would you like to add a permanent address?</p>
                             <p className="subtitle is-4 has-text-centered has-text-black">Or <u>use my current location</u> instead.</p>
@@ -269,7 +272,7 @@ function SignupForm(props) {
                     </div>
                 </div>
                 {/* Asking for additional information */}
-                {props.signupStatus === "customer" && (
+                {signupStatus === "customer" && (
                     <React.Fragment>
                         <hr className="is-light-gray"/>
                         <div>
@@ -288,7 +291,7 @@ function SignupForm(props) {
                     </React.Fragment>
                 )}
                 {/* Asking for dietary restrictions, if any */}
-                {/* {props.signupStatus === "customer" && (
+                {/* {signupStatus === "customer" && (
                     <DietaryRestrictions ref={dietRef}/>
                 )} */}
                 <div className="has-text-centered">

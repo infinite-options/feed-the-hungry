@@ -16,8 +16,14 @@ import GoogleLogin from "react-google-login"
 import { OrderContext }  from 'components/Context/OrderContext';
 
 function LoginForm(props) {
+    const SOCIAL_API = "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/social/";
+    const SOCIAL_ACC_API = "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/socialacc/";
+    const LOGIN_API = "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/login/";
+
     const context = useContext(OrderContext);
     const history = useHistory();
+
+    const loginStatus = props.loginStatus;
 
     const [error, setError] = useState(null);
     const email = useLogin("Email","email");
@@ -25,7 +31,7 @@ function LoginForm(props) {
 
     const checkSocialLogin = (data) => {
         console.log("Data:", data);
-        axios.get(`https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/social/${data.email}`).then(response => {
+        axios.get(SOCIAL_API + data.email).then(response => {
             console.log(response);
             if (response.data) {
                 const result1 = response.data.result.result;
@@ -36,7 +42,7 @@ function LoginForm(props) {
                     if (data.social === result1[0].social_media) {
                         let uid = result1[0].user_id;
                         console.log(uid);
-                        axios.post(`https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/socialacc/${uid}`).then(response => {
+                        axios.post(SOCIAL_ACC_API + uid).then(response => {
                             console.log(response);
                             const result2 = response.data.result.result;
                             let first_name = result2[0].user_first_name;
@@ -59,8 +65,6 @@ function LoginForm(props) {
                             let user_is_donor = result2[0].user_is_donor;
                             let user_is_admin = result2[0].user_is_admin;
                             let user_is_foodbank = result2[0].user_is_foodbank;
-                            
-                            let login_type = props.loginStatus;
 
                             let userInfo = {
                                 firstName: first_name,
@@ -84,14 +88,10 @@ function LoginForm(props) {
                                 isFoodbank: user_is_foodbank,
 
                                 social: data.social,
-                                loginType: login_type,
+                                loginType: loginStatus,
                             }
 
                             checkAccountType(userInfo);
-                            // window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
-                            
-                            // context.setIsAuth(true);
-                            // history.push('/');
                         })
                     }
                     else {
@@ -110,7 +110,7 @@ function LoginForm(props) {
                             social: data.social,
                             accessToken: data.access,
                             refreshToken: data.refresh,
-                            signupStatus: props.loginStatus,
+                            signupStatus: loginStatus,
                         }
                     });
                 }
@@ -168,8 +168,19 @@ function LoginForm(props) {
         }
     }
 
+    const checkAccountType = (userInfo) => {
+        const loginType = userInfo.loginType;
+        const route = loginType === "customer" ? "/banks" : 
+                        loginType === "donor" ? "/donate" : 
+                        loginType === "admin" ? "/admin" :
+                    /*loginType === "foodbank ?*/ "/foodbank";
+        context.setIsAuth(true);
+        window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
+        history.push(route);
+    }
+
     function checkLogin() {
-        axios.get(`https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/social/${email.value}`).then(response => {
+        axios.get(SOCIAL_API + email.value).then(response => {
             // if user has a social account
             const result1 = response.data.result.result;
             if (response.data && result1.length) {
@@ -183,7 +194,7 @@ function LoginForm(props) {
                 }
 
                 axios.post(
-                    "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/login", 
+                    LOGIN_API, 
                     data
                 ).then(response => {
                     console.log(response);
@@ -211,8 +222,6 @@ function LoginForm(props) {
                             let user_is_admin = result2[0].user_is_admin;
                             let user_is_foodbank = result2[0].user_is_foodbank;
 
-                            let login_type = props.loginStatus;
-
                             let userInfo = {
                                 firstName: first_name,
                                 lastName: last_name,
@@ -234,32 +243,11 @@ function LoginForm(props) {
                                 isAdmin: user_is_admin,
                                 isFoodbank: user_is_foodbank,
 
-                                loginType: login_type,
+                                loginType: loginStatus,
                             }
 
                             console.log("what");
                             checkAccountType(userInfo);
-                            // if ((login_type === "customer" && user_is_customer) || 
-                            //     (login_type === "donor" && user_is_donor) || 
-                            //     (login_type === "admin" && user_is_admin) || 
-                            //     (login_type === "foodbank" && user_is_foodbank)) {
-                            //     window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
-                            
-                            //     context.setIsAuth(true);
-                            //     const route = login_type === "customer" ? "/banks" : 
-                            //                   login_type === "donor" ? "/donor" : 
-                            //                   login_type === "admin" ? "/admin" :
-                            //                 /*login_type === "foodbank ?*/ "/foodbank";
-                            //     history.push(route);
-                            // }
-                            // else {
-                            //     history.push({
-                            //         pathname: "/form",
-                            //         state: {
-                            //             loginType: login_type,
-                            //         }
-                            //     });
-                            // }
                         }
                         else {
                             setError("Please verify your email address before logging in");
@@ -282,37 +270,6 @@ function LoginForm(props) {
         }).catch(err => {
             console.log(err.response);
         })
-    }
-
-    const checkAccountType = (userInfo) => {
-        const loginType = userInfo.loginType;
-        // if ((loginType === "customer" && userInfo.isCustomer) || 
-        //     (loginType === "donor" && userInfo.isDonor) || 
-        //     (loginType === "admin" && userInfo.isAdmin) || 
-        //     (loginType === "foodbank" && userInfo.isFoodbank)) {
-            window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
-        
-            context.setIsAuth(true);
-            const route = loginType === "customer" ? "/banks" : 
-                          loginType === "donor" ? "/donate" : 
-                          loginType === "admin" ? "/admin" :
-                        /*loginType === "foodbank ?*/ "/foodbank";
-            history.push(route);
-        // }
-        // else {
-        //     history.push({
-        //         pathname: "/form",
-        //         state: {
-        //             loginType: loginType,
-        //             userInfo: userInfo,
-        //         }
-        //     });
-        // }
-
-        // window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
-                            
-        // context.setIsAuth(true);
-        // history.push('/');
     }
 
     const handleClick = () => {
@@ -371,7 +328,7 @@ function LoginForm(props) {
                 {/* Buttons */}
                 <div className="has-text-centered">
                     <button className="button is-success has-margins-0-5" type="button" onClick={handleClick}>Login</button>
-                    {props.loginStatus === "customer" && (
+                    {loginStatus === "customer" && (
                         <Link to="/signup" >
                             <button className="button is-success has-margins-0-5" type="button">Sign Up</button>
                         </Link>
