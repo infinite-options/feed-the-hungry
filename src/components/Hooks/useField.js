@@ -51,10 +51,10 @@ const useField = (name, type, isRequired=true) => {
       else if (type === "tel" && !validatePhoneNumber(value)) setError("Invalid phone number");
       // case 4: if input is an email
       else if (type === "email" && !validateEmail(value)) setError("Invalid email address");
-      // case 5.1: if input is currency. NOTE: only checks if input name has "income", so if this may need to be changed for other currency types that isn't income
-      else if (type === "number" && name.toLowerCase().includes("income") && !validateCurrency(value)) setError("Invalid currency amount");
+      // case 5.1: if input is currency
+      else if (type === "number" && isCurrency(name) && !validateCurrency(value)) setError("Invalid currency amount");
       // case 5.2: if input is an amount
-      else if (type === "number" && !validateAmount(value)) setError("Invalid amount");
+      else if (type === "number" && !isCurrency(name) && !validateAmount(value)) setError("Invalid amount");
       // case 6: if input is birthdate and date chosen is in the future
       else if (name.toLowerCase() === "date of birth" && maxDate() < value) setError("Invalid birthdate");
       // else if (type === "checkbox" && value === false) setError("");
@@ -105,6 +105,10 @@ function validatePhoneNumber(phone){
   var phoneRe = /^[2-9]\d{2}[2-9]\d{2}\d{4}$/;
   var digits = phone.replace(/\D/g, "");
   return phoneRe.test(digits);
+}
+function isCurrency(inputName) {
+  const name = inputName.toLowerCase();
+  return name.includes("income") || name.includes("currency"); // other terms may need to be added. Is there a better way to check if number input is currency?
 }
 function validateCurrency(currency) {
   const re = /^([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/;

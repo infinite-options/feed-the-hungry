@@ -20,7 +20,7 @@ function DonationForm() {
     }
 
     return (
-        <React.Fragment>
+        <div style={{marginTop: "15vh"}}>
             {onForm === 0 && (
                 <React.Fragment>
                     <p className="is-size-4 is-italic">What would you like to donate?</p>
@@ -31,15 +31,17 @@ function DonationForm() {
             {onForm !== 0 && (
                 <DonationSubmission name={(onForm === 1 ? "produce" : "cash")} handleClick={handleClick} handleSubmit={handleSubmit} />
             )}
-        </React.Fragment>
+        </div>
     );
 }
 
 function DonationSubmission(props) {
     const itemName = useField("Produce Name", "text");
-    const amount = useField("Amount", "number");
+    const amount = useField("Quantity", "number");
     const expDate = useField("Expiration Date", "date");
     const receiver = useField("Donation Receiver", "text");
+    const currency = useField("Donation Currency", "number");
+    const additionalInfo = useField("Additional Information", "textarea", false);
 
     const handleDonation = () => {
         console.log(`Submitted ${props.name} donation..`);
@@ -51,26 +53,45 @@ function DonationSubmission(props) {
                 <div className="has-text-left">
                     <div className="columns">
                         <div className="column">
+                            <InputField props={receiver} />
+                        </div>
+                        <div className="column">
                             <InputField props={itemName} />
                         </div>
+                    </div>
+                    <div className="columns">
                         <div className="column">
                             <InputField props={amount} />
                         </div>
                         <div className="column">
                             <InputField props={expDate} />
                         </div>
+                        <div className="column">
+                            Checkbox [N/A]
+                        </div>
                     </div>
                     <div className="columns">
                         <div className="column">
-                            <InputField props={receiver} />
+                            <InputField props={additionalInfo} />
                         </div>
                     </div>
                 </div>
             ) : (
-                <React.Fragment>
-                    <p>Value</p>
-                    <p>Donation Receiver</p>
-                </React.Fragment>
+                <div className="has-text-left">
+                    <div className="columns">
+                        <div className="column">
+                            <InputField props={receiver} />
+                        </div>
+                        <div className="column">
+                            <InputField props={currency} />
+                        </div>
+                    </div>
+                    <div className="columns">
+                        <div className="column">
+                            <InputField props={additionalInfo} />
+                        </div>
+                    </div>
+                </div>
             )}
             <button className="button is-success has-margins-0-5" name="cancel" type="button" onClick={props.handleClick}>Cancel</button>
             <button className="button is-success has-margins-0-5" type="button" onClick={handleDonation}>Submit</button>

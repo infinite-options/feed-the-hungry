@@ -19,9 +19,9 @@ const InputField = ({ props, icon, isDisabled, color = "", readOnly = false }) =
 
   // Handling date inputs with placeholder text (is there a better way?)
   const handleDateName = (e) => {
-    if (e.currentTarget.type === "text") e.currentTarget.type = "date";
+    if (e.target.type === "text") e.target.type = "date";
     else {
-      e.currentTarget.type = "text";
+      e.target.type = "text";
     }
   };
 
@@ -87,7 +87,8 @@ const InputField = ({ props, icon, isDisabled, color = "", readOnly = false }) =
           <div className="field is-expanded">
             <div className="field has-addons">
               <div className="control">
-                {props.name.toLowerCase() !== "amount" && (
+                {/* may need to change this condition to {isCurrency(props.name) && (...)} */}
+                {props.name.toLowerCase() !== "quantity" && (
                   <a className="button is-static">
                     {props.type === "tel" ? "+1" : "$"}
                   </a>
