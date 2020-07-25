@@ -2,30 +2,60 @@
     z-index: 9999;
     color: hsl(0, 0%, 48%);
     font-family: 'Raleway', sans-serif;
-    height: 121px;
-    width: 100%;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    /* height: 121px; */
+    /* width: 100%; */
+    /* padding-top: 30px; */
+    /* padding-bottom: 30px; */
+    /* padding-left: 80px; */
+    /* padding-right: 80px; */
     border: none;
     background-color: white;
+    /* overflow: hidden; */
+    /* display: flex; */
+    /* justify-content: center; */
     /* border-bottom: 1px solid #d8dbdd; */
     /* box-shadow: 0 2px 2px -2px rgba(0,0,0,.2); */
 }
+.navbar.is-spaced {
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.navbar .container {
 
-.navbar-body {
+    max-width: calc(100vw-160px);
+
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.navbar>.container {
+    /* align-items: stretch;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    overflow: hidden;
     width: calc(100vw - 160px);
     min-width: 980px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
     height: 100%;
-    display: flex;
+    min-height: 92px;
+    display: flex; */
+    
 }
 
-.brand-text-container {}
+.brand-text-container {
+    margin-right: 15px;
+    overflow-x: auto;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 
 .is-60x60 {
     width: 60px;
     height: 60px;
+}
+.navbar-brand {
+    /* margin-left: 80px; */
 }
 
 .navbar-brand a {
@@ -177,11 +207,22 @@ input[type=search] {
     transition: .2s ease-in;
     color: hsl(141, 70%, 30%);
 }
-
-@media only screen and (max-width: 1050px) {
-    /* .navbar-burger{
-        height: 14vh;
+@media only screen and (max-width:  1020px) {
+    /* .navbar-brand {
+        width: 100vw;
     } */
+    .navbar .container {
+        padding-left: 17px;
+        padding-right: 17px;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+    /* .navbar-brand a{
+        padding-left: 17px;
+    } */
+}
+/* 
+@media only screen and (max-width: 1050px) {
     .navbar {
         padding-left: 1.75rem;
         padding-right: 1.75rem;
@@ -193,7 +234,7 @@ input[type=search] {
         padding-left: 1.75rem;
         padding-right: 1.75rem;
     }
-}
+} */
 
 .navbar .navbar-item:hover {
     background-color: transparent;

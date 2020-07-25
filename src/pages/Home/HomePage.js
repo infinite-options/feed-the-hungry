@@ -13,17 +13,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ScrollToTop from "utils/Scroll/SrollToTop";
 
 function HomePage() {
-  console.log("home page");
   return (
-    <div className="body-container">
+    <div className="bd-main is-fullheight-with-navbar">
       {/* <ScrollToTop /> */}
-      <section id="home" className="splash-banner">
-        <div className="splash-banner-left">
-          {/* <div className="parallax-container"> */}
+      <section className="splash-banner">
+        <div className="columns">
+        <div className="column is-6 has-no-padding splash-banner-left">
+
           <div className="parallax"></div>
-          {/* </div> */}
+
         </div>
-        <div className="splash-banner-right">
+        <div className="column is-6 has-no-padding splash-banner-right">
           <div className="splash-banner-right-content">
             <p className="splash-banner-title">GET FREE GROCERIES</p>
             <p className="splash-banner-subtitle">
@@ -34,6 +34,7 @@ function HomePage() {
             </Link>
           </div>
         </div>
+        </div>
       </section>
       <section className="steps">
         <div className="steps-title">
@@ -41,9 +42,10 @@ function HomePage() {
             3 SIMPLE STEPS
           </p>
         </div>
-        <div className="large-space"></div>
-        <div className="steps-content">
-          <div className="step-item">
+        {/* <div className="large-space"></div> */}
+        <div className="level">
+          <div className="level-item has-text-centered">
+            <div className="step-item">
             <div className="step-item-image">
               <img src={HomeImage1} alt="Sign Up Image" />
             </div>
@@ -61,7 +63,9 @@ function HomePage() {
                 Register in under 3 minutes
               </p>
             </div>
+            </div>
           </div>
+          <div className="level-item has-text-centered">
           <div className="step-item">
             <div className="step-item-image">
               <img src={HomeImage2} alt="Products Image" />
@@ -78,7 +82,28 @@ function HomePage() {
               </p>
               <p className="is-Nunito has-text-white">Get groceries you love</p>
             </div>
+            </div>
           </div>
+          <div className="level-item has-text-centered">
+          <div className="step-item">
+            <div className="step-item-image">
+              <img src={HomeImage3} alt="Products Image" />
+            </div>
+            <div
+              className="step-item-content"
+              style={{ backgroundColor: "#C2B39B"  }}
+            >
+              <p
+                className="is-Raleway has-text-white"
+                style={{ fontSize: 22, marginBottom: "33px" }}
+              >
+                SELECT PRODUCTS
+              </p>
+              <p className="is-Nunito has-text-white">Free doorstep delivery</p>
+            </div>
+            </div>
+          </div>
+          {/* <div className="level-item has-text-centered">
           <div className="step-item">
             <div className="step-item-image">
               <img src={HomeImage3} alt="Delivery Image" />
@@ -96,6 +121,8 @@ function HomePage() {
               <p className="is-Nunito has-text-white">Free doorstep delivery</p>
             </div>
           </div>
+          </div>
+           */}
         </div>
       </section>
       <section className="quotes">
@@ -144,15 +171,13 @@ function HomePage() {
             </div>
           </div>
           <div className="contact-right">
-            {/* <div className="contact-right-content"> */}
-            {/* <div className="contact-form"> */}
+
             <ContactForm />
-            {/* </div> */}
-            {/* </div> */}
+
           </div>
         </div>
       </section>
-      <footer className="app-footer">
+      {/* <footer className="app-footer">
         <div className="footer-content">
           <div className="footer-left">
             <div className="footer-left-content">
@@ -176,7 +201,7 @@ function HomePage() {
             </div>
           </div>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 }
