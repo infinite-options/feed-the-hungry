@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/feed-the-hungry/static/css/main.55736a10.chunk.css",
-    "main.js": "/feed-the-hungry/static/js/main.02f7d3c3.chunk.js",
-    "main.js.map": "/feed-the-hungry/static/js/main.02f7d3c3.chunk.js.map",
+    "main.css": "/feed-the-hungry/static/css/main.310ecc12.chunk.css",
+    "main.js": "/feed-the-hungry/static/js/main.e886f0cc.chunk.js",
+    "main.js.map": "/feed-the-hungry/static/js/main.e886f0cc.chunk.js.map",
     "runtime-main.js": "/feed-the-hungry/static/js/runtime-main.3b3efc48.js",
     "runtime-main.js.map": "/feed-the-hungry/static/js/runtime-main.3b3efc48.js.map",
-    "static/css/2.65e3e712.chunk.css": "/feed-the-hungry/static/css/2.65e3e712.chunk.css",
-    "static/js/2.ecf50003.chunk.js": "/feed-the-hungry/static/js/2.ecf50003.chunk.js",
-    "static/js/2.ecf50003.chunk.js.map": "/feed-the-hungry/static/js/2.ecf50003.chunk.js.map",
+    "static/css/2.95984ef6.chunk.css": "/feed-the-hungry/static/css/2.95984ef6.chunk.css",
+    "static/js/2.791af91d.chunk.js": "/feed-the-hungry/static/js/2.791af91d.chunk.js",
+    "static/js/2.791af91d.chunk.js.map": "/feed-the-hungry/static/js/2.791af91d.chunk.js.map",
     "index.html": "/feed-the-hungry/index.html",
-    "precache-manifest.ba5f70ae6c68b6f0b51405504bcf0a0c.js": "/feed-the-hungry/precache-manifest.ba5f70ae6c68b6f0b51405504bcf0a0c.js",
+    "precache-manifest.a2842d4965c19692b4effaab7ada6e65.js": "/feed-the-hungry/precache-manifest.a2842d4965c19692b4effaab7ada6e65.js",
     "service-worker.js": "/feed-the-hungry/service-worker.js",
-    "static/css/2.65e3e712.chunk.css.map": "/feed-the-hungry/static/css/2.65e3e712.chunk.css.map",
-    "static/css/main.55736a10.chunk.css.map": "/feed-the-hungry/static/css/main.55736a10.chunk.css.map",
-    "static/js/2.ecf50003.chunk.js.LICENSE.txt": "/feed-the-hungry/static/js/2.ecf50003.chunk.js.LICENSE.txt",
+    "static/css/2.95984ef6.chunk.css.map": "/feed-the-hungry/static/css/2.95984ef6.chunk.css.map",
+    "static/css/main.310ecc12.chunk.css.map": "/feed-the-hungry/static/css/main.310ecc12.chunk.css.map",
+    "static/js/2.791af91d.chunk.js.LICENSE.txt": "/feed-the-hungry/static/js/2.791af91d.chunk.js.LICENSE.txt",
     "static/media/404.svg": "/feed-the-hungry/static/media/404.1a53adde.svg",
     "static/media/Delivery.png": "/feed-the-hungry/static/media/Delivery.af41986f.png",
     "static/media/Pickup.png": "/feed-the-hungry/static/media/Pickup.011b01ba.png",
@@ -35,9 +35,9 @@
   },
   "entrypoints": [
     "static/js/runtime-main.3b3efc48.js",
-    "static/css/2.65e3e712.chunk.css",
-    "static/js/2.ecf50003.chunk.js",
-    "static/css/main.55736a10.chunk.css",
-    "static/js/main.02f7d3c3.chunk.js"
+    "static/css/2.95984ef6.chunk.css",
+    "static/js/2.791af91d.chunk.js",
+    "static/css/main.310ecc12.chunk.css",
+    "static/js/main.e886f0cc.chunk.js"
   ]
 }
