@@ -54,8 +54,7 @@ function HomePage() {
               style={{ backgroundColor: "black" }}
             >
               <p
-                className="is-Raleway has-text-white"
-                style={{ fontSize: 22, marginBottom: "33px" }}
+                className="step-title"
               >
                 LOGIN / SIGN UP
               </p>
@@ -75,8 +74,7 @@ function HomePage() {
               style={{ backgroundColor: "hsl(141, 72%, 43%)" }}
             >
               <p
-                className="is-Raleway has-text-white"
-                style={{ fontSize: 22, marginBottom: "33px" }}
+                className="step-title"
               >
                 SELECT PRODUCTS
               </p>
@@ -94,12 +92,11 @@ function HomePage() {
               style={{ backgroundColor: "#C2B39B"  }}
             >
               <p
-                className="is-Raleway has-text-white"
-                style={{ fontSize: 22, marginBottom: "33px" }}
+                className="step-title"
               >
-                SELECT PRODUCTS
+                FREE PICKUP/DELIVERY
               </p>
-              <p className="is-Nunito has-text-white">Free doorstep delivery</p>
+              <p className="is-Nunito has-text-white">Contactless doorstep delivery</p>
             </div>
             </div>
           </div>
@@ -127,26 +124,31 @@ function HomePage() {
       </section>
       <section className="quotes">
         <div className="quotes-content">
-          <div className="quotes-left">
+        <div className="columns" style={{margin:0, width: '100%'}}>
+          <div className="column has-no-padding">
+            {/* <div className="quotes-left"> */}
             <div className="quotes-image">
               <img src={HomeImage4} alt="Quote Image" />
             </div>
+            {/* </div> */}
           </div>
-          <div className="quotes-right">
+          <div className="column has-no-padding">
+            <div className="quotes-text-container">
             <div className="quotes-text">
               <p
-                className="is-Raleway has-text-white"
-                style={{ fontSize: 22, marginBottom: "33px" }}
+                className="quote-title"
               >
                 “One of the greatest feelings in the world is knowing that we as
                 individuals can make a difference. Ending hunger in America is a
                 goal that is literally within our grasp.”
               </p>
-              <p className="is-Nunito has-text-white" style={{ fontSize: 18 }}>
+              <p className="quote-subtitle">
                 Jeff Bridges
               </p>
             </div>
+            </div>
           </div>
+        </div>
         </div>
       </section>
       <section className="splash-banner-2">
@@ -155,8 +157,10 @@ function HomePage() {
         </div>
       </section>
       <section className="contact">
+        
         <div className="contact-container">
-          <div className="contact-left">
+        <div className="columns" style={{margin: 0}}>
+          <div className="column has-no-padding">
             <div className="contact-left-content">
               <p
                 className="is-Raleway has-text-green"
@@ -170,11 +174,12 @@ function HomePage() {
               </p>
             </div>
           </div>
-          <div className="contact-right">
+          <div className="column has-no-padding">
 
             <ContactForm />
 
           </div>
+        </div>
         </div>
       </section>
       {/* <footer className="app-footer">
