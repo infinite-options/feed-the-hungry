@@ -133,14 +133,10 @@
     height: 4rem;
 }
 .steps .level-item {
-    flex: 0 1 426.4px;
-    min-width: 319px;
+    /* flex: 0 1 426.4px; */
+    width: 426.4px;
     height: 520px;
 
-}
-
-.steps .step-item-image {
-    max-width: 426.4px;;
 }
 
 .step-item-image {

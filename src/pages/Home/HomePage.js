@@ -37,12 +37,18 @@ function HomePage() {
         </div>
       </section>
       <section className="steps">
+        <div className="container">
         <div className="steps-title">
           <p className="is-Raleway has-text-green" style={{ fontSize: 40 }}>
             3 SIMPLE STEPS
           </p>
         </div>
-        {/* <div className="large-space"></div> */}
+        </div>
+        {/* <div className="steps-title">
+          <p className="is-Raleway has-text-green" style={{ fontSize: 40 }}>
+            3 SIMPLE STEPS
+          </p>
+        </div>
         <div className="level">
           <div className="level-item has-text-centered">
             <div className="step-item">
@@ -100,27 +106,7 @@ function HomePage() {
             </div>
             </div>
           </div>
-          {/* <div className="level-item has-text-centered">
-          <div className="step-item">
-            <div className="step-item-image">
-              <img src={HomeImage3} alt="Delivery Image" />
-            </div>
-            <div
-              className="step-item-content"
-              style={{ backgroundColor: "#C2B39B" }}
-            >
-              <p
-                className="is-Raleway has-text-white"
-                style={{ fontSize: 22, marginBottom: "33px" }}
-              >
-                PICK UP / FREE DELIVERY
-              </p>
-              <p className="is-Nunito has-text-white">Free doorstep delivery</p>
-            </div>
-          </div>
-          </div>
-           */}
-        </div>
+        </div> */}
       </section>
       <section className="quotes">
         <div className="quotes-content">
