@@ -72,15 +72,10 @@ const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
 
         // Hao: adding this for cases where user is not registered as a customer
         const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
+        const EDIT_USER_STATUS_API = `https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/edit_user_status/${userInfo.userID}?`;
         if (!userInfo.isCustomer) {
-          const user_data = {
-            user_id: userInfo.userID,
-            user_is_customer: ++userInfo.isCustomer, // set customer value to 1
-            user_is_donor: userInfo.isDonor,
-            user_is_admin: userInfo.isAdmin,
-            user_is_foodbank: userInfo.isFoodbank,
-          }
-          axios.post("https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/edit_user_status", user_data).then(() => {
+          userInfo.isCustomer = 1;
+          axios.get(EDIT_USER_STATUS_API + "user_is_customer=1").then(() => {
             window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
           }).catch(err => {
             console.log(err.response);

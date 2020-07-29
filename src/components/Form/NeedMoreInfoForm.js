@@ -5,9 +5,10 @@ import useField from "components/Hooks/useField";
 import InputField from "components/Form/InputField";
 import StateAPI from 'API/StateAPI';
 import Select from 'components/Form/Select';
+import axios from "axios";
 
 function NeedMoreInfoForm(props) {
-    const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
+    const userInfo = props.userInfo;
 
     const states = StateAPI();
 
@@ -21,7 +22,6 @@ function NeedMoreInfoForm(props) {
     // In case the user has partially filled information
     // Ex: Address filled out but not another required input
     useEffect(() => {
-        const userInfo = props.userInfo;
         if (userInfo.address1 && userInfo.city && userInfo.state && userInfo.zip) {
             setAddressValid(true);
         }
@@ -31,14 +31,13 @@ function NeedMoreInfoForm(props) {
         if (addressValid || (address1.isValid && address2.isValid && 
                              city.isValid && state.isValid && zip.isValid)) {
             console.log("Inputs are valid");
-            const data = {
-                address_1: address1.value,
-                address_2: address2.value,
-                city: city.value,
-                state: state.value,
-                zipcode: zip.value,
-            }
-            // CALL EDIT_USER_DATA_API
+            const EDIT_USER_DATA_API = `https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/edit_user_status/${userInfo.userID}?`;
+            axios.get(EDIT_USER_DATA_API + "user_is_donor=1&"
+                                          + `user_address1="${address1.value}"&`
+                                          + `user_address2="${address2.value}"&`
+                                          + `user_city="${city.value}"&`
+                                          + `user_state="${state.value}"&`
+                                          + `user_zipcode="${zip.value}"`).then(() => {
                 userInfo.isDonor = 1;
                 userInfo.address1 = address1.value;
                 userInfo.address2 = address2.value;
@@ -47,6 +46,7 @@ function NeedMoreInfoForm(props) {
                 userInfo.zip = zip.value;
                 window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
                 props.setValue(1);
+            });
         }
     }
 
