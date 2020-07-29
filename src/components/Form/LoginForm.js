@@ -18,7 +18,7 @@ import { OrderContext }  from 'components/Context/OrderContext';
 function LoginForm(props) {
     const SOCIAL_API = "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/social/";
     const SOCIAL_ACC_API = "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/socialacc/";
-    const LOGIN_API = "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/login/";
+    const LOGIN_API = "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/login";
 
     const context = useContext(OrderContext);
     const history = useHistory();
@@ -197,7 +197,7 @@ function LoginForm(props) {
                     LOGIN_API, 
                     data
                 ).then(response => {
-                    console.log(response);
+                    console.log("response:", response);
                     const result2 = response.data.result.result;
                     if (response.status === 200 && response.data.auth_success) {
                         if (result2[0].user_email_verified) {
@@ -254,7 +254,7 @@ function LoginForm(props) {
                         }
                     }
                 }).catch(err => {
-                    console.log(err.response);
+                    console.log(err.response ? err.response : err);
                     // setError("Invalid email or password");
                     if (err.response.status === 500) setError("Failed to connect to the server, please try again later");
                     else if (err.response.status === 401 && !err.response.data.auth_success) setError("Invalid email or password");

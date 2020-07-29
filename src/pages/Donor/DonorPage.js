@@ -8,8 +8,6 @@ import DonationForm from "./DonationForm";
 import axios from "axios";
 
 function DonorPage() {
-    const EDIT_USER_STATUS_API = "https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/edit_user_status";
-
     const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
     // 0 -> donation tab, 1 -> volunteer tab, 2 -> history tab
     const [onTab, setOnTab] = useState(0);
@@ -17,17 +15,12 @@ function DonorPage() {
     const [isDonor, setIsDonor] = useState(userInfo.isDonor);
 
     useEffect(() => {
+        const EDIT_USER_STATUS_API = `https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/edit_user_status/${userInfo.userID}?`;
+
         if (!userInfo.isDonor) {
             if(userInfo.address1 && userInfo.city && userInfo.state && userInfo.zip) {
                 userInfo.isDonor = 1;
-                const user_auth_data = {
-                    user_id: userInfo.userID,
-                    user_is_customer: userInfo.isCustomer,
-                    user_is_donor: userInfo.isDonor,
-                    user_is_admin: userInfo.isAdmin,
-                    user_is_foodbank: userInfo.isFoodbank,
-                }
-                axios.post(EDIT_USER_STATUS_API, user_auth_data).then(response => {
+                axios.get(EDIT_USER_STATUS_API + "user_is_donor=1").then(response => {
                     console.log(response);
                     setIsDonor(1);
                     setLoading(false);
@@ -36,10 +29,9 @@ function DonorPage() {
                     console.log(err.response);
                 })
             }
+            else setLoading(false);
         }
-        else {
-            setLoading(false);
-        }
+        else setLoading(false);
     }, [])
 
     const handleClick = (e) => {
