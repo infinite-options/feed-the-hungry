@@ -71,7 +71,7 @@ function HomePage() {
             </div>
             <div
               className="step-item-content"
-              style={{ backgroundColor: "hsl(141, 72%, 43%)" }}
+              style={{ backgroundColor: "#348C55" }}
             >
               <p
                 className="step-title"

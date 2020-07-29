@@ -183,6 +183,14 @@ input[type="search"] {
     padding-bottom: 1rem;
   }
 }
+@media only screen and (max-width: 770px) {
+    .navbar .container {
+      margin: 0;
+    }
+  }
+  
+
+
 
 .navbar .navbar-item:hover {
   background-color: transparent;
