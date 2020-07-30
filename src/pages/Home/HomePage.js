@@ -18,33 +18,25 @@ function HomePage() {
       {/* <ScrollToTop /> */}
       <section className="splash-banner">
         <div className="columns">
-        <div className="column is-6 has-no-padding splash-banner-left">
-
-          <div className="parallax"></div>
-
-        </div>
-        <div className="column is-6 has-no-padding splash-banner-right">
-          <div className="splash-banner-right-content">
-            <p className="splash-banner-title">GET FREE GROCERIES</p>
-            <p className="splash-banner-subtitle">
-              Order now for pick up or free delivery!
-            </p>
-            <Link to="/banks">
-              <button className="button get-food-btn">Get Food</button>
-            </Link>
+          <div className="column is-6 has-no-padding splash-banner-left">
+            <div className="parallax"></div>
           </div>
-        </div>
+          <div className="column is-6 has-no-padding splash-banner-right">
+            <div className="splash-banner-right-content">
+              <p className="splash-banner-title">GET FREE GROCERIES</p>
+              <p className="splash-banner-subtitle">
+                Order now for pick up or free delivery!
+              </p>
+              <Link to="/banks">
+                <button className="button get-food-btn">Get Food</button>
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
       <section className="steps">
-        <div className="container">
+        {/* <div className="container"> */}
         <div className="steps-title">
-          <p className="is-Raleway has-text-green" style={{ fontSize: 40 }}>
-            3 SIMPLE STEPS
-          </p>
-        </div>
-        </div>
-        {/* <div className="steps-title">
           <p className="is-Raleway has-text-green" style={{ fontSize: 40 }}>
             3 SIMPLE STEPS
           </p>
@@ -52,123 +44,113 @@ function HomePage() {
         <div className="level">
           <div className="level-item has-text-centered">
             <div className="step-item">
-            <div className="step-item-image">
-              <img src={HomeImage1} alt="Sign Up Image" />
-            </div>
-            <div
-              className="step-item-content"
-              style={{ backgroundColor: "black" }}
-            >
-              <p
-                className="step-title"
+              <div className="step-item-image">
+                <img src={HomeImage1} alt="Sign Up Image" />
+              </div>
+              <div
+                className="step-item-content"
+                style={{ backgroundColor: "black" }}
               >
-                LOGIN / SIGN UP
-              </p>
-              <p className="is-Nunito has-text-white">
-                Register in under 3 minutes
-              </p>
-            </div>
+                <p className="step-title">LOGIN / SIGN UP</p>
+                <p className="is-Nunito has-text-white">
+                  Register in under 3 minutes
+                </p>
+              </div>
             </div>
           </div>
           <div className="level-item has-text-centered">
-          <div className="step-item">
-            <div className="step-item-image">
-              <img src={HomeImage2} alt="Products Image" />
-            </div>
-            <div
-              className="step-item-content"
-              style={{ backgroundColor: "#348C55" }}
-            >
-              <p
-                className="step-title"
+            <div className="step-item">
+              <div className="step-item-image">
+                <img src={HomeImage2} alt="Products Image" />
+              </div>
+              <div
+                className="step-item-content"
+                style={{ backgroundColor: "#009E00" }}
               >
-                SELECT PRODUCTS
-              </p>
-              <p className="is-Nunito has-text-white">Get groceries you love</p>
-            </div>
+                <p className="step-title">SELECT PRODUCTS</p>
+                <p className="is-Nunito has-text-white">
+                  Get groceries you love
+                </p>
+              </div>
             </div>
           </div>
           <div className="level-item has-text-centered">
-          <div className="step-item">
-            <div className="step-item-image">
-              <img src={HomeImage3} alt="Products Image" />
-            </div>
-            <div
-              className="step-item-content"
-              style={{ backgroundColor: "#C2B39B"  }}
-            >
-              <p
-                className="step-title"
+            <div className="step-item">
+              <div className="step-item-image">
+                <img src={HomeImage3} alt="Products Image" />
+              </div>
+              <div
+                className="step-item-content"
+                style={{ backgroundColor: "#C2B39B" }}
               >
-                FREE PICKUP/DELIVERY
-              </p>
-              <p className="is-Nunito has-text-white">Contactless doorstep delivery</p>
-            </div>
+                <p className="step-title">FREE PICKUP/DELIVERY</p>
+                <p className="is-Nunito has-text-white">
+                  Contactless doorstep delivery
+                </p>
+              </div>
             </div>
           </div>
-        </div> */}
+        </div>
       </section>
       <section className="quotes">
         <div className="quotes-content">
-        <div className="columns" style={{margin:0, width: '100%'}}>
-          <div className="column has-no-padding">
-            {/* <div className="quotes-left"> */}
-            <div className="quotes-image">
-              <img src={HomeImage4} alt="Quote Image" />
+          <div className="columns" style={{ margin: 0, width: "100%" }}>
+            <div className="column has-no-padding">
+              {/* <div className="quotes-left"> */}
+              <figure className="image is-480">
+                <img src={HomeImage4} alt="Quote Image" />
+              </figure>
+              {/* </div> */}
             </div>
-            {/* </div> */}
-          </div>
-          <div className="column has-no-padding">
-            <div className="quotes-text-container">
-            <div className="quotes-text">
-              <p
-                className="quote-title"
-              >
-                “One of the greatest feelings in the world is knowing that we as
-                individuals can make a difference. Ending hunger in America is a
-                goal that is literally within our grasp.”
-              </p>
-              <p className="quote-subtitle">
-                Jeff Bridges
-              </p>
-            </div>
+            <div className="column has-no-padding">
+              <div className="quotes-text-container">
+                <div className="quotes-text">
+                  <p className="quote-title">
+                    “One of the greatest feelings in the world is knowing that
+                    we as individuals can make a difference. Ending hunger in
+                    America is a goal that is literally within our grasp.”
+                  </p>
+                  <p className="quote-subtitle">Jeff Bridges</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        </div>
       </section>
-      <section className="splash-banner-2">
-        <div className="overlay">
-          <img src={HomeImage5} alt="Splash Banner 2" />
-        </div>
-      </section>
+        <section className="overlay">
+          <figure className="image is-560">
+            
+            <img src={HomeImage5} />
+            
+          </figure>
+        </section>
       <section className="contact">
-        
         <div className="contact-container">
-        <div className="columns" style={{margin: 0}}>
-          <div className="column has-no-padding">
-            <div className="contact-left-content">
-              <p
-                className="is-Raleway has-text-green"
-                style={{ fontSize: 40, marginBottom: "33px" }}
-              >
-                How can we help you today?
-              </p>
-              <p className="is-Nunito has-text-white" style={{ fontSize: 15 }}>
-                Please send us a message or email us at
-                partnership@infiniteoptions.com
-              </p>
+          <div className="columns" style={{ margin: 0 }}>
+            <div className="column has-no-padding">
+              <div className="contact-left-content">
+                <p
+                  className="is-Raleway has-text-green"
+                  style={{ fontSize: 40, marginBottom: "33px" }}
+                >
+                  How can we help you today?
+                </p>
+                <p
+                  className="is-Nunito has-text-white"
+                  style={{ fontSize: 15 }}
+                >
+                  Please send us a message or email us at
+                  partnership@infiniteoptions.com
+                </p>
+              </div>
+            </div>
+            <div className="column has-no-padding">
+              <ContactForm />
             </div>
           </div>
-          <div className="column has-no-padding">
-
-            <ContactForm />
-
-          </div>
-        </div>
         </div>
       </section>
-      {/* <footer className="app-footer">
+      <footer className="app-footer">
         <div className="footer-content">
           <div className="footer-left">
             <div className="footer-left-content">
@@ -192,7 +174,7 @@ function HomePage() {
             </div>
           </div>
         </div>
-      </footer> */}
+      </footer>
     </div>
   );
 }
@@ -280,7 +262,7 @@ function ContactForm() {
           </p>
           <span
             className="icon has-text-green is-large"
-            style={{ marginBottom: "36px"}}
+            style={{ marginBottom: "36px" }}
           >
             <FontAwesomeIcon
               icon={Icons.faCheckCircle}

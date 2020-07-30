@@ -226,3 +226,21 @@ input[type="search"] {
     margin-left: 0;
   }
 }
+.navbar-body {
+  width: calc(100vw - 160px);
+  min-width: 980px;
+  margin: 30px auto;
+  display: flex;
+}
+@media screen and (max-width:1020px) {
+  .navbar-body {
+    /* width: 100vw; */
+    min-width: calc(100% - 34px);
+    margin-top: 16px;
+    margin-bottom: 16px;
+
+  }
+  .navbar-brand {
+    width: 100%;
+  }
+}
