@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "dbe89976cfb473f778dc6de44b013a27",
+    "revision": "6c3551a0c3c0a33944e48eca592bda6e",
     "url": "/feed-the-hungry/index.html"
   },
   {
-    "revision": "a56c82b9472653ec3e08",
-    "url": "/feed-the-hungry/static/css/2.95984ef6.chunk.css"
+    "revision": "39c90bee72682673571a",
+    "url": "/feed-the-hungry/static/css/2.65e3e712.chunk.css"
   },
   {
-    "revision": "1cff24d42ed5072bc9ed",
-    "url": "/feed-the-hungry/static/css/main.310ecc12.chunk.css"
+    "revision": "b52622da09b5f5817eaf",
+    "url": "/feed-the-hungry/static/css/main.4bb89274.chunk.css"
   },
   {
-    "revision": "a56c82b9472653ec3e08",
-    "url": "/feed-the-hungry/static/js/2.791af91d.chunk.js"
+    "revision": "39c90bee72682673571a",
+    "url": "/feed-the-hungry/static/js/2.4df18660.chunk.js"
   },
   {
     "revision": "01ee0d1593b6736a866f17118a5b90e6",
-    "url": "/feed-the-hungry/static/js/2.791af91d.chunk.js.LICENSE.txt"
+    "url": "/feed-the-hungry/static/js/2.4df18660.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "1cff24d42ed5072bc9ed",
-    "url": "/feed-the-hungry/static/js/main.e886f0cc.chunk.js"
+    "revision": "b52622da09b5f5817eaf",
+    "url": "/feed-the-hungry/static/js/main.bcb064fe.chunk.js"
   },
   {
     "revision": "e81819ce5540c8fb4e02",
@@ -38,6 +38,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "011b01ba4f6d9b72f2a3ccbb08cbe9dc",
     "url": "/feed-the-hungry/static/media/Pickup.011b01ba.png"
+  },
+  {
+    "revision": "6649427fa0d09cd7ecc6798dca301ebb",
+    "url": "/feed-the-hungry/static/media/ServingNow_Logo_Green.6649427f.png"
   },
   {
     "revision": "545cd479d1cf109c8877655150b936a0",
