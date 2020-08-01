@@ -34,8 +34,8 @@ function Header() {
       role="navigation"
       aria-label="main navigation"
     >
-      {/* <div className="container"> */}
-      <div className="navbar-body">
+      <div className="container">
+      {/* <div className="navbar-body"> */}
         <div className="navbar-brand ">
           {/* <Link className="navbar-item has-no-padding-left" to={context.isAuth ? "/" : "/login"}> */}
           <Link className="navbar-item" to="/">

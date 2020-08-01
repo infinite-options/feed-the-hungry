@@ -48,10 +48,11 @@ const Bank = ({ bank }) => {
   // );
 
   return (
-    <div className="bank-page-bd">
+    <div className="bd-main is-fullheight-with-navbar">
       {/* <ScrollToTopOnMount /> */}
-      <div className="bank-container">
+    
         <BankBanner obj={bank} />
+        <div className="container">
         <BankFilters />
         <div className="bank-body">
           {delivery_pickup_items.length > 0 && (

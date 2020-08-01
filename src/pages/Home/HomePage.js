@@ -35,7 +35,7 @@ function HomePage() {
         </div>
       </section>
       <section className="steps">
-        {/* <div className="container"> */}
+        <div className="container">
         <div className="steps-title">
           <p className="is-Raleway has-text-green" style={{ fontSize: 40 }}>
             3 SIMPLE STEPS
@@ -91,9 +91,11 @@ function HomePage() {
             </div>
           </div>
         </div>
+        </div>
       </section>
       <section className="quotes">
-        <div className="quotes-content">
+      <div className="container">
+        {/* <div className="quotes-content"> */}
           <div className="columns" style={{ margin: 0, width: "100%" }}>
             <div className="column has-no-padding">
               {/* <div className="quotes-left"> */}
@@ -114,6 +116,7 @@ function HomePage() {
                 </div>
               </div>
             </div>
+          {/* </div> */}
           </div>
         </div>
       </section>
@@ -125,10 +128,11 @@ function HomePage() {
           </figure>
         </section>
       <section className="contact">
-        <div className="contact-container">
+        <div className="container">
           <div className="columns" style={{ margin: 0 }}>
             <div className="column has-no-padding">
               <div className="contact-left-content">
+              <div className="contact-left-text">
                 <p
                   className="is-Raleway has-text-green"
                   style={{ fontSize: 40, marginBottom: "33px" }}
@@ -142,6 +146,7 @@ function HomePage() {
                   Please send us a message or email us at
                   partnership@infiniteoptions.com
                 </p>
+              </div>
               </div>
             </div>
             <div className="column has-no-padding">

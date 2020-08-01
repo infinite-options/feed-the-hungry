@@ -21,7 +21,7 @@ function BanksPage() {
     ? removeDuplicatesByKey("foodbank_id", data.result.result)
     : [];
   return (
-    <div className="banks-page-bd">
+    <div className="bd-main is-fullheight-with-navbar">
       {/* <ScrollToTop /> */}
       <div className="columns" style={{marginTop:0}}>
       <div className="column has-no-padding">

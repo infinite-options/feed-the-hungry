@@ -12,7 +12,10 @@ function BankBanner({ obj }) {
     <section className="hero">
       {/* Food Bank's Banner */}
       <div className="bank-banner">
-        <div className="bank-banner-left">
+       
+          <div className="columns" style={{margin:0}}>
+          <div className="column has-no-padding">
+        {/* <div className="bank-banner-left"> */}
           <div className="bank-banner-info">
             {/* Logo */}
             <figure className="image is-96x96">
@@ -52,8 +55,12 @@ function BankBanner({ obj }) {
             </div>
           </div>
         </div>
-        <div className="bank-banner-right">
+        <div className="column has-no-padding">
+          
+        <div className="small-map">
           <LeafletMap banks={obj} marker={marker}/>
+        </div>
+        </div>
         </div>
       </div>
     </section>

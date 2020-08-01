@@ -4,10 +4,10 @@ import { Map, TileLayer, Marker, Popup, MapLayer } from "react-leaflet";
 import Icons from "components/Icons/Icons";
 import "./style.css";
 import Distance from 'utils/Distance';
-import { useLocation } from 'components/Hooks/useLocation.js';
+import { useUserLocation } from 'components/Hooks/useUserLocation.js';
 
 function LeafletMap({marker, banks}) {
-    const { position } = useLocation();
+    const { position } = useUserLocation();
     useEffect(() => {
       window.localStorage.setItem('position', JSON.stringify(position));
     },[position])
