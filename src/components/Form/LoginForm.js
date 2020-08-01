@@ -89,6 +89,8 @@ function LoginForm(props) {
 
                                 social: data.social,
                                 loginType: loginStatus,
+
+                                position: "",
                             }
 
                             checkAccountType(userInfo);
@@ -244,6 +246,8 @@ function LoginForm(props) {
                                 isFoodbank: user_is_foodbank,
 
                                 loginType: loginStatus,
+
+                                position: "",
                             }
 
                             console.log("what");
