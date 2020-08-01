@@ -9,6 +9,7 @@ import Banks from "pages/Banks/Banks";
 import ScrollToTop from "utils/Scroll/SrollToTop";
 import useMarker from "components/Hooks/useMarker";
 
+
 function BanksPage() {
   const url = `https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/foodbankinfo`;
   const { data, isLoading, hasError } = useOurApi(url, {});
@@ -45,4 +46,5 @@ const removeDuplicatesByKey = (key, data) => {
   });
   return Object.values(obj);
 };
+
 export default BanksPage;

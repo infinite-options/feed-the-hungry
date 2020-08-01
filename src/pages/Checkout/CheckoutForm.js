@@ -95,6 +95,7 @@ function CheckoutForm({ bank, items }) {;
     if (form) {
       const date = dateTime.startDate ? formatDate(dateTime.startDate) : "ASAP";
       const userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
+      const position = JSON.parse(window.localStorage.getItem('position'));
       const total = totalAmount(items);
    
       let unconfirmed_order = {
@@ -112,8 +113,8 @@ function CheckoutForm({ bank, items }) {;
         kitchen_id: bank.foodbank_id,
         kitchen_name: bank.fb_name,
         kitchen_address: bank.foodbank_address,
-        longitude: context.position[1],
-        latitude: context.position[0],
+        longitude: position[1],
+        latitude: position[0],
         delivery_date: date,
         order_type: activeTab,
         ordered_items: items,

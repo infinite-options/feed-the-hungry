@@ -1,31 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useRouteMatch, Redirect } from "react-router-dom";
 import { Map, TileLayer, Marker, Popup, MapLayer } from "react-leaflet";
-import { geolocated } from "react-geolocated";
 import Icons from "components/Icons/Icons";
 import "./style.css";
-import L, { Point } from 'leaflet';
 import Distance from 'utils/Distance';
-import { OrderContext } from "components/Context/OrderContext";
-import LoadingPage from "pages/Error/LoadingPage";
-// use San Jose, CA as the default center
-const DEFAULT_LATITUDE = 37.338208;
-const DEFAULT_LONGITUDE = -121.886329;
-
+import { useLocation } from 'components/Hooks/useLocation.js';
 
 function LeafletMap({marker, banks}) {
-  // render() {
-    // const latitude = this.props.coords
-    //   ? this.props.coords.latitude
-    //   : DEFAULT_LATITUDE;
-    // const longitude = this.props.coords
-    //   ? this.props.coords.longitude
-    //   : DEFAULT_LONGITUDE;
-    const context = useContext(OrderContext);
-    const position = context.position;
-    console.log(position);
-    // const banks = this.props.banks;
-    // const marker = this.props.marker;
+    const { position } = useLocation();
+    useEffect(() => {
+      window.localStorage.setItem('position', JSON.stringify(position));
+    },[position])
+
     return (
       <Map center={position} zoom={11}>
         <TileLayer
@@ -118,6 +104,7 @@ const MapMarker = ({ userLocation, bankLocation, marker }) => {
     </Marker>
   );
 };
+
 
 // export default geolocated({
 //   positionOptions: {

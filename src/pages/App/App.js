@@ -30,17 +30,14 @@ import HomePage from 'pages/Home/HomePage';
 import ScrollToTop from 'utils/Scroll/SrollToTop';
 // import hooks
 import { OrderContext } from 'components/Context/OrderContext';
-import { usePosition } from 'use-position';
 import AuthRoute from 'components/Route/AuthRoute';
 import NonAuthRoute from 'components/Route/NonAuthRoute';
 // use San Jose, CA as the default center
-const DEFAULT_LATITUDE = 37.338208;
-const DEFAULT_LONGITUDE = -121.886329;
 
 function App() {
   const watch = false;
-  const { latitude, longitude, error } = usePosition(watch, {enableHighAccuracy: true});
-  const position = latitude && longitude ? [latitude, longitude]: [DEFAULT_LATITUDE, DEFAULT_LONGITUDE];
+  // const { latitude, longitude, error } = usePosition(watch, {enableHighAccuracy: true});
+  // const position = latitude && longitude ? [latitude, longitude]: [DEFAULT_LATITUDE, DEFAULT_LONGITUDE];
   const [isAuth, setIsAuth] = useState(false);
   const [loading, setLoading] = useState(true);
   const [cartTotal, setCartTotal] = useState(0);
@@ -74,7 +71,7 @@ function App() {
   return !loading && (
     <Router basename={"feed-the-hungry"} onUpdate={() => window.scrollTo(0, 0)}>
         {/* <ScrollToTop /> */}
-      <OrderContext.Provider value={{cartTotal, setCartTotal, position, isAuth, setIsAuth}}>
+      <OrderContext.Provider value={{cartTotal, setCartTotal, isAuth, setIsAuth}}>
         <Header />
         <Switch>
           <NonAuthRoute exact path="/login" component={LoginPage} />
