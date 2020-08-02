@@ -13,7 +13,7 @@ import GlutenFree from 'assets/image/gluten_free.png';
 import Vegan from 'assets/image/vegan.png';
 import Vegetarian from 'assets/image/vegetarian.png';
 import Halal from 'assets/image/halal.png'
-
+import { RoomOutlinedIcon } from '@material-ui/icons/RoomOutlined';
 
 var MarkerIcon = (color, width=25, height=41) => {
     return new Icon({
@@ -33,7 +33,7 @@ export default {
     faCircleNotch, Kosher, GlutenFree, Vegan, Vegetarian, Halal,
     faShoppingBasket, faLongArrowAltRight, faChevronLeft, faChevronRight,
     faWalking, faTruck, faEnvelope, faLock, faBoxOpen, MarkerIcon,
-    faUserCircle, faStarOfLife, faFacebookF, faTwitter, faLinkedinIn
+    faUserCircle, faStarOfLife, faFacebookF, faTwitter, faLinkedinIn, RoomOutlinedIcon
 }
 
 // How to use this component?

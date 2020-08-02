@@ -47,7 +47,9 @@
 }
 
 .bank-title {
-    color: hsl(141, 71%, 42%);
+    color: black;
+    font-family: 'Avenir', sans-serif;
+    font-size: 44px;
     /* color: #00bd81; */
 }
 
@@ -215,10 +217,13 @@
     width: 100%;
     /* min-height: 344px; */
     height: auto;
-    background-color: #f1f1f1;
+    background-color: #f8f7fa;
+    /* background-color: #f1f1f1; */
 }
 .bank-banner .container {
-    height: auto;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+    /* max-width: calc(100% - 160px); */
 }
 .bank-banner-left {
     box-sizing: border-box;
@@ -238,10 +243,12 @@
 }
 
 .bank-banner-info {
-    max-width: calc(100% - 160px);
+    /* max-width: calc(100% - 160px); */
+    /* max-width: calc(100% - 160px); */
     /* width: calc(100% - 160px); */
-    /* padding-left: calc(100%-610px)*0.5; */
-    margin: 2.5rem auto;
+    min-width: 490px;
+    /* margin0-left: calc(100%-490px)*0.5; */
+    margin: 2.5rem calc(100%-490px)*0.5;
 }
 
 .banner-image {
@@ -578,7 +585,12 @@ img {
     /* align-items: center; */
     margin-top: 0;
 }
-
+.divider-25 {
+    width: 71px;
+    height: 25px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid black;
+}
 .bank-info-icon {
     margin-right: 6px;
 }
@@ -586,9 +598,16 @@ img {
 .bank-info-content {
     width: 100%;
     display: inline-block;
+    font-family: 'Avenir', sans-serif;
+    font-size: 16px;
     /* height: 100%; */
     display: flex;
     align-items: center;
+}
+.bank-info-content .title, .bank-info-content .subtitle {
+    font-weight: 500;
+    font-family: 'Avenir', sans-serif;
+    font-size: 16px;
 }
 
 .flex-top {
@@ -766,6 +785,12 @@ img {
     .container {
         min-width: calc(100% - 34px);
     }
+    .bank-banner-info{
+        min-width: calc(100% - 34px);
+    }
+    .bank-banner .container {
+        /* min-width: calc(100% - 34px); */
+    }
 }
 
 @media only screen and (min-width: 1020px) {
@@ -773,6 +798,7 @@ img {
         padding-left: 12vw;
         padding-right: 12vw;
     }
+    
 }
 
 @media only screen and (max-width: 770px) {
@@ -1028,7 +1054,11 @@ input .order-quantity {
 .tabs ul {
     border-bottom-color: #EEEDF2;
 }
-
+.bank-address {
+    font-family: 'Avenir', sans-serif;
+    color: black;
+    font-size: 16px;
+}
 
 /* CHECK OUT BUTTON */
 
