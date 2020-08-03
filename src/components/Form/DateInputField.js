@@ -6,6 +6,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const DateInputField = ({props}) => {
+ 
     return (
         <div className="field">
             <div className="control">
@@ -15,6 +16,7 @@ const DateInputField = ({props}) => {
                 }
                 value={props.startDate}
                 onChange={(date) => props.onChange(date)}
+                onFocus= {props.onFocus}
                 onBlur={props.onBlur}
                 minDate={props.minDate}
                 maxDate={props.maxDate}
@@ -33,6 +35,7 @@ const DateInputField = ({props}) => {
     )
 }
 const CustomDateField = forwardRef((props, ref) => {
+    
     return (
       <div className="field">
         <div className="control has-icons-right">
@@ -45,6 +48,7 @@ const CustomDateField = forwardRef((props, ref) => {
             onChange={props.onChange}
             onBlur={props.onBlur}
             onClick={props.onClick}
+            onFocus={props.onFocus}
             disabled={props.disabled}
             readOnly
           />

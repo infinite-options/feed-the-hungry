@@ -107,6 +107,7 @@ const InputField = ({
                   onChange={props.onChange}
                   onBlur={props.onBlur}
                   value={props.value}
+                  onClick={props.onClick}
                   placeholder={props.name}
                   readOnly={readOnly}
                 />
@@ -133,6 +134,7 @@ const InputField = ({
             placeholder={props.name}
             onChange={props.onChange}
             onBlur={props.onBlur}
+            onClick={props.onClick}
             value={props.value}
             readOnly={readOnly}
           ></textarea>
@@ -156,6 +158,7 @@ const InputField = ({
             // type={props.type !== "date" ? props.type : "text"}
             onChange={props.onChange}
             onBlur={props.onBlur}
+            onClick={props.onClick}
             value={props.value}
             placeholder={props.name}
             // {...(props.type === "date"

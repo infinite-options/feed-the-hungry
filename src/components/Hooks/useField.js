@@ -6,20 +6,21 @@ const useField = (name, type, isRequired=true) => {
   const [error, setError] = useState("");
   const [isOnChange, setIsOnChange] = useState(false);
   const [isOnBlur, setIsOnBlur] = useState(false);
+
   // for file inputs
   const [file, setFile] = useState({});
+  // validate input on blur
   const onBlur = () => {
     setIsOnBlur(true);
     setIsOnChange(false);
-
     if (!checkInputs()) setIsValid(false);
     else setIsValid(true);
   }
-  // validate input on blur
+  // no validation text on change
   const onChange = (event) => {
     setIsOnChange(true);
     setIsOnBlur(false);
-    
+
     setValue(
       event.target.type === "checkbox" || event.target.type === "switch"
         ? event.target.checked
@@ -29,26 +30,21 @@ const useField = (name, type, isRequired=true) => {
     if (event.target.type === "file") {
       setFile(event.target.files[0]);
     }
+    setError("");
   };
+  // no validation text on click
+  const onClick = () => {
+    setError("");
+  }
 
   // autofill  doesnt trigger onChange so we need these extra code
   useEffect(() => {
-      if (!isOnBlur && !isOnChange && value.length > 0 && !checkInputs(value)) setIsValid(false)
+      if (!isOnChange && value && !checkInputs()) setIsValid(false)
       else setIsValid(true)
   }, [value])
 
-  const maxDate = () => {
-    const today = new Date();
-    let day = today.getDate();
-    let month = today.getMonth() + 1;
-    let year = today.getFullYear();
-    if (day < 10) day = "0" + day;
-    if (month < 10) month = "0" + month;
-    return year + "-" + month + "-" + day;
-  }
 
   const checkInputs = () => {
-    console.log(value)
     // if required and not filled
     if (isRequired && value.length === 0 ) {setError("Please fill in this field."); return false; }
     // if filled (checks both optional & required)
@@ -83,7 +79,6 @@ const useField = (name, type, isRequired=true) => {
     setValue("");
     setError("");
   }
-
   return {
     error,
     setError,
@@ -93,6 +88,7 @@ const useField = (name, type, isRequired=true) => {
     setValue,
     onChange,
     onBlur,
+    onClick,
     isRequired,
     resetinput,
     file,
@@ -127,5 +123,15 @@ function validateAmount(amount) {
   const re = /^[1-9]\d*$/;
   return re.test(amount);
 }
+
+  // const maxDate = () => {
+  //   const today = new Date();
+  //   let day = today.getDate();
+  //   let month = today.getMonth() + 1;
+  //   let year = today.getFullYear();
+  //   if (day < 10) day = "0" + day;
+  //   if (month < 10) month = "0" + month;
+  //   return year + "-" + month + "-" + day;
+  // }
 export default useField;
 

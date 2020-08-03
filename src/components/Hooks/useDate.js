@@ -11,6 +11,7 @@ const useDate = (
   const [isValid, setIsValid] = useState(false);
   const [error, setError] = useState("");
 
+
   const onChange = (date) => {
     setStartDate(date);
   };
@@ -18,10 +19,16 @@ const useDate = (
   const onBlur = () => {
     checkInputs();
   };
+  const onClick= () => {
+      setError("");
+  };
+  const onFocus = () => {
+      setError("");
+  }
   useEffect(() => {
     if (startDate) checkInputs();
   },[startDate])
-
+  
   // date input should always be valid if selected, and invalid if not selected
   const checkInputs = () => {
     if (!startDate) {
@@ -39,6 +46,8 @@ const useDate = (
     maxDate,
     onChange,
     onBlur,
+    onClick,
+    onFocus,
     placeholder,
     showTimeSelect,
     isValid,
