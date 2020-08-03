@@ -11,25 +11,24 @@ const InputField = ({
   color = "",
   readOnly = false,
 }) => {
-  const setMaxDate = () => {
-    if (props.name.toLowerCase() !== "date of birth") return null;
-    const today = new Date();
-    // console.log(today);
-    let day = today.getDate();
-    let month = today.getMonth() + 1;
-    let year = today.getFullYear();
-    if (day < 10) day = "0" + day;
-    if (month < 10) month = "0" + month;
-    return year + "-" + month + "-" + day;
-  };
+  // const setMaxDate = () => {
+  //   if (props.name.toLowerCase() !== "date of birth") return null;
+  //   const today = new Date();
+  //   let day = today.getDate();
+  //   let month = today.getMonth() + 1;
+  //   let year = today.getFullYear();
+  //   if (day < 10) day = "0" + day;
+  //   if (month < 10) month = "0" + month;
+  //   return year + "-" + month + "-" + day;
+  // };
 
-  // Handling date inputs with placeholder text (is there a better way?)
-  const handleDateName = (e) => {
-    if (e.target.type === "text") e.target.type = "date";
-    else {
-      e.target.type = "text";
-    }
-  };
+  // // Handling date inputs with placeholder text (is there a better way?)
+  // const handleDateName = (e) => {
+  //   if (e.target.type === "text") e.target.type = "date";
+  //   else {
+  //     e.target.type = "text";
+  //   }
+  // };
 
   const handleImg = (e) => {
     // Since we call onChange handleImg for file inputs, it overwrites the initial onChange function

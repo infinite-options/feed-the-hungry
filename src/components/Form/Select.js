@@ -9,12 +9,12 @@ function Select({ props, data }) {
       <div className="control is-expanded">
         <div
           className={
-            !props.isValid
+            props.error.length > 0
               ? "select is-danger is-fullwidth"
               : "select is-fullwidth"
           }
         >
-          <select value={props.value} onChange={props.onChange}>
+          <select value={props.value} onChange={props.onChange} onBlur={props.onBlur} onClick={props.onClick}>
             <option key={i++} value="">
               {props.name}
             </option>

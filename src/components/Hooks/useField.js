@@ -48,13 +48,16 @@ const useField = (name, type, isRequired=true) => {
 
   const checkInputs = () => {
     // if required and not filled
-    if (isRequired && value.length === 0 ) {setError("Please fill in this field."); return false; }
+    if (isRequired && value.length === 0 ) {
+      if (name.toLowerCase().includes("state")) setError("Please select your state.");
+      else setError("Please fill in this field.");
+      return false; 
+    }
     // if filled (checks both optional & required)
     else if (value.length > 0){
     // case 1: if input is a zip code
       if (name.toLowerCase() === "zip" && !validateZip(value)) setError("Only number that is 5 digits in length.");
       // case 2: if input is entered but we need to verify it given a data
-      else if (name.toLowerCase() === "state" && value ==="") setError("Please select a state.");
       // case 3: if input is a phone number
       else if (type === "tel" && !validatePhoneNumber(value)) setError("Only number that is 10 digits in length.");
       // case 4: if input is an email

@@ -17,12 +17,9 @@ import {
   useHistory
 } from "react-router-dom";
 import { useDateTime } from 'components/Hooks/useDateTime';
-import { OrderContext } from "components/Context/OrderContext";
-
 
 function CheckoutForm({ bank, items }) {;
   let history = useHistory();
-  const context = useContext(OrderContext);
 
   const fname = useField("First Name", "text");
   const lname = useField("Last Name", "text");
@@ -40,12 +37,8 @@ function CheckoutForm({ bank, items }) {;
     "checkbox", 
     false
   );
-  const delivery_items = items.filter((x) =>
-    x.info.delivery_pickup === "delivery"
-  );
-  const pickup_items = items.filter((x) =>
-  x.info.delivery_pickup === "pickup"
- );
+  const delivery_items = items.filter((x) => x.info.delivery_pickup === "delivery");
+  const pickup_items = items.filter((x) => x.info.delivery_pickup === "pickup");
   const [activeTab, setActiveTab] = useState(pickup_items.length === 0 ? 'delivery' : 'pickup');
   
   const isFormValid = () => {
@@ -57,7 +50,6 @@ function CheckoutForm({ bank, items }) {;
       if (!checkbox.value && !dateTime.isValid) isValid = false;
       
     } else if (activeTab === "pickup" && delivery_items.length > 0) isValid = false;
-  
     return isValid;
   }
   const form  = isFormValid(); 
