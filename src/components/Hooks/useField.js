@@ -39,8 +39,10 @@ const useField = (name, type, isRequired=true) => {
 
   // autofill  doesnt trigger onChange so we need these extra code
   useEffect(() => {
-      if (!isOnChange && value && !checkInputs()) setIsValid(false)
-      else setIsValid(true)
+      if (!isOnChange && value){  
+        if(checkInputs()) setIsValid(true)
+        else setIsValid(false)
+      }
   }, [value])
 
 
