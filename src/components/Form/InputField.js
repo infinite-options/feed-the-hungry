@@ -4,7 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Icons from "components/Icons/Icons";
 
 // use this component for all input fields (well, not really all input fields because it still needs modifications)
-const InputField = ({ props, icon, isDisabled, color = "", readOnly = false }) => {
+const InputField = ({
+  props,
+  icon,
+  isDisabled,
+  color = "",
+  readOnly = false,
+}) => {
   const setMaxDate = () => {
     if (props.name.toLowerCase() !== "date of birth") return null;
     const today = new Date();
@@ -97,8 +103,9 @@ const InputField = ({ props, icon, isDisabled, color = "", readOnly = false }) =
               <div className="control is-expanded">
                 <input
                   type="tel"
-                  className={!props.isValid ? "input is-danger" : "input"}
+                  className={props.error.length > 0 ? "input is-danger" : "input"}
                   onChange={props.onChange}
+                  onBlur={props.onBlur}
                   value={props.value}
                   placeholder={props.name}
                   readOnly={readOnly}
@@ -117,31 +124,47 @@ const InputField = ({ props, icon, isDisabled, color = "", readOnly = false }) =
     return (
       <div className="field">
         <div className="control">
-          <textarea className={!props.isValid ? `textarea is-danger ${color}` : `textarea ${color}`} placeholder={props.name} onChange={props.onChange} value={props.value} readOnly={readOnly}></textarea>
+          <textarea
+            className={
+              props.error.length > 0
+                ? `textarea is-danger ${color}`
+                : `textarea ${color}`
+            }
+            placeholder={props.name}
+            onChange={props.onChange}
+            onBlur={props.onBlur}
+            value={props.value}
+            readOnly={readOnly}
+          ></textarea>
         </div>
         <p className="help is-danger">{props.error}</p>
       </div>
     );
-  } else {
+  } 
+  else {
     return (
       <div className="field">
         <div className={icon ? "control has-icons-right" : "control"}>
           {props.type === "file" && <img id="inputImg" />}
           <input
             className={
-             !props.isValid ? `input is-danger ${color}` : `input ${color}`
+              props.error.length > 0
+                ? `input is-danger ${color}`
+                : `input ${color}`
             }
-            type={props.type !== "date" ? props.type : "text"}
+            type="text"
+            // type={props.type !== "date" ? props.type : "text"}
             onChange={props.onChange}
+            onBlur={props.onBlur}
             value={props.value}
             placeholder={props.name}
-            {...(props.type === "date"
-              ? {
-                  onFocus: handleDateName,
-                  onBlur: handleDateName,
-                  max: setMaxDate(),
-                }
-              : {})}
+            // {...(props.type === "date"
+            //   ? {
+            //       onFocus: handleDateName,
+            //       onBlur: handleDateName,
+            //       max: setMaxDate(),
+            //     }
+            //   : {})}
             {...(props.type === "file"
               ? { accept: "image/*", onChange: handleImg }
               : {})}
@@ -149,7 +172,7 @@ const InputField = ({ props, icon, isDisabled, color = "", readOnly = false }) =
           />
           {icon ? (
             <span className="icon is-right has-text-danger">
-              <FontAwesomeIcon icon={icon}  />
+              <FontAwesomeIcon icon={icon} />
             </span>
           ) : (
             ""

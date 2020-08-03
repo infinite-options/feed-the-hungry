@@ -5,12 +5,21 @@ const useField = (name, type, isRequired=true) => {
   const [isValid, setIsValid] = useState((isRequired ? false : true));
   const [error, setError] = useState("");
   const [isOnChange, setIsOnChange] = useState(false);
+  const [isOnBlur, setIsOnBlur] = useState(false);
   // for file inputs
   const [file, setFile] = useState({});
+  const onBlur = () => {
+    setIsOnBlur(true);
+    setIsOnChange(false);
 
-  // handle input if user changes the content of the input 
+    if (!checkInputs()) setIsValid(false);
+    else setIsValid(true);
+  }
+  // validate input on blur
   const onChange = (event) => {
     setIsOnChange(true);
+    setIsOnBlur(false);
+    
     setValue(
       event.target.type === "checkbox" || event.target.type === "switch"
         ? event.target.checked
@@ -21,10 +30,10 @@ const useField = (name, type, isRequired=true) => {
       setFile(event.target.files[0]);
     }
   };
-  // autofill (switch) doesnt trigger onChange so we need these extra code
+
+  // autofill  doesnt trigger onChange so we need these extra code
   useEffect(() => {
-    console.log(value);
-      if ( !checkInputs(value)) setIsValid(false)
+      if (!isOnBlur && !isOnChange && value.length > 0 && !checkInputs(value)) setIsValid(false)
       else setIsValid(true)
   }, [value])
 
@@ -38,27 +47,26 @@ const useField = (name, type, isRequired=true) => {
     return year + "-" + month + "-" + day;
   }
 
-  const checkInputs = (value) => {
+  const checkInputs = () => {
+    console.log(value)
     // if required and not filled
-    if (isRequired && value.length === 0 ) {setError(""); return false; }
+    if (isRequired && value.length === 0 ) {setError("Please fill in this field."); return false; }
     // if filled (checks both optional & required)
     else if (value.length > 0){
     // case 1: if input is a zip code
-      if (name.toLowerCase() === "zip" && !validateZip(value)) setError("Invalid zip code");
+      if (name.toLowerCase() === "zip" && !validateZip(value)) setError("Only number that is 5 digits in length.");
       // case 2: if input is entered but we need to verify it given a data
-      else if (name.toLowerCase() === "state" && value ==="") setError("Invalid state");
+      else if (name.toLowerCase() === "state" && value ==="") setError("Please select a state.");
       // case 3: if input is a phone number
-      else if (type === "tel" && !validatePhoneNumber(value)) setError("Invalid phone number");
+      else if (type === "tel" && !validatePhoneNumber(value)) setError("Only number that is 10 digits in length.");
       // case 4: if input is an email
-      else if (type === "email" && !validateEmail(value)) setError("Invalid email address");
+      else if (type === "email" && !validateEmail(value)) setError("Please check that your email address is correct.");
       // case 5.1: if input is currency
       else if (type === "number" && isCurrency(name) && !validateCurrency(value)) setError("Invalid currency amount");
       // case 5.2: if input is an amount
       else if (type === "number" && !isCurrency(name) && !validateAmount(value)) setError("Invalid amount");
       // case 6: if input is birthdate and date chosen is in the future
-      else if (name.toLowerCase() === "date of birth" && maxDate() < value) setError("Invalid birthdate");
-      // else if (type === "checkbox" && value === false) setError("");
-      // case 8: everything looks good!
+      // else if (type ==="date" && maxDate() < value) setError("Please select your date of birth.");
       else {
         setError("");
         return true;
@@ -84,12 +92,13 @@ const useField = (name, type, isRequired=true) => {
     value,
     setValue,
     onChange,
+    onBlur,
     isRequired,
-    // validate,
     resetinput,
     file,
     isValid,
-    isOnChange
+    isOnChange,
+    checkInputs
   };
 };
 

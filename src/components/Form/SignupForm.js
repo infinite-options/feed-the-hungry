@@ -9,6 +9,8 @@ import Select from 'components/Form/Select';
 import DietaryRestrictions from "pages/Signup/DietaryRestrictions";
 import FamilyMembers from "pages/Signup/FamilyMembers";
 import ErrorPage from 'pages/Error/ErrorPage';
+import DateInputField from 'components/Form/DateInputField';
+import useDate from 'components/Hooks/useDate';
 
 function SignupForm(props) {
     // customer form: [Name, Phone, DOB, Email, Password]
@@ -50,11 +52,10 @@ function SignupForm(props) {
 
     const signupStatus = props.signupStatus;
     const isSocial = props.isSocial;
-
     const inputs = {
         firstName : useField("First Name", "text"),
         lastName : useField("Last Name","text"),
-        dob : useField("Date of Birth", "date"),
+        dob : useDate("Date of Birth", false, null, new Date()),
         phoneNumber : useField("Phone Number", "tel"),
         email : useField("Email Address", "email"),
         emailConfirm : useField("Confirm Email", "email", isSocial ? false : true),
@@ -94,14 +95,14 @@ function SignupForm(props) {
     }
 
     const validateInputs = () => {
-        // let isAllValid = true;
+        let isAllValid = true;
         for (let input in inputs) {
             console.log(input, inputs[input].isValid);
-            if (!inputs[input].isValid) {
-                return false;
+            if (!inputs[input].checkInputs()) {
+                isAllValid = false;
             }
         }
-        return true;
+        return isAllValid;
     }
 
     const checkSignupStatus = (status) => {
@@ -217,7 +218,8 @@ function SignupForm(props) {
                             <InputField props={inputs.phoneNumber} />
                         </div>
                         <div className="column">
-                            <InputField  props={inputs.dob} />
+                            <DateInputField props={inputs.dob} />
+                            {/* <InputField  props={inputs.dob} /> */}
                         </div>
                     </div>
                     <div className="columns">

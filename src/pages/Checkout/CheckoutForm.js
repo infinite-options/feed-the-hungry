@@ -37,7 +37,8 @@ function CheckoutForm({ bank, items }) {;
   const switchUserAddress = useField("Use my current address", "switch", false);
   const checkbox = useField(
     "I want my delivery as soon as possible",
-    "checkbox", false
+    "checkbox", 
+    false
   );
   const delivery_items = items.filter((x) =>
     x.info.delivery_pickup === "delivery"
