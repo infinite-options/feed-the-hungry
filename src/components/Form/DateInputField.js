@@ -14,7 +14,7 @@ const DateInputField = ({props, disabled}) => {
                 selected={
                 props.startDate
                 }
-                value={props.startDate}
+                value={props.disabled ? "" : props.startDate}
                 onChange={(date) => props.onChange(date)}
                 onFocus= {props.onFocus}
                 onBlur={props.onBlur}
