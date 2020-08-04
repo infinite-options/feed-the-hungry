@@ -12,11 +12,13 @@ import CustomerDetails from "pages/Checkout/CustomerDetails";
 import DeliveryDetails from "pages/Checkout/DeliveryDetails";
 import PickupDetails from "./PickupDetails";
 import DateTimeField from 'components/Form/DateTimeField';
+import DateInputField from 'components/Form/DateInputField';
 // import hooks
 import {
   useHistory
 } from "react-router-dom";
 import { useDateTime } from 'components/Hooks/useDateTime';
+import useDate from 'components/Hooks/useDate';
 
 function CheckoutForm({ bank, items }) {;
   let history = useHistory();
@@ -25,7 +27,6 @@ function CheckoutForm({ bank, items }) {;
   const lname = useField("Last Name", "text");
   const phone = useField("Phone Number", "tel");
   const email = useField("Email", "email");
-  const dateTime = useDateTime();
   const street = useField("Street", "text");
   const city = useField("City", "text");
   const state = useField("Select a state", "text");
@@ -37,6 +38,7 @@ function CheckoutForm({ bank, items }) {;
     "checkbox", 
     false
   );
+  const dateTime = useDate("Select a date and time", true, new Date(), null, checkbox.checked ? true : false );
   const delivery_items = items.filter((x) => x.info.delivery_pickup === "delivery");
   const pickup_items = items.filter((x) => x.info.delivery_pickup === "pickup");
   const [activeTab, setActiveTab] = useState(pickup_items.length === 0 ? 'delivery' : 'pickup');
@@ -175,7 +177,8 @@ function CheckoutForm({ bank, items }) {;
               <div className="field-body">
                 <div className="field">
                   <div className="control">
-                    <DatePicker
+                    <DateInputField props={dateTime} />
+                    {/* <DatePicker
                       selected={
                         checkbox.value === true ? null : dateTime.startDate
                       }
@@ -191,7 +194,7 @@ function CheckoutForm({ bank, items }) {;
                           : "Select a date and time"
                       }
                       disabled={checkbox.value === true ? true : false}
-                    />
+                    /> */}
                   </div>
                 </div>
                 <div className="right-most">
