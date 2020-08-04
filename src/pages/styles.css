@@ -22,6 +22,7 @@
     font-family: 'Muli', sans-serif;
 }
 
+
 .bank-container {
     max-width: 1170px;
     margin: 0 auto;
@@ -49,37 +50,31 @@
 .bank-title {
     color: black;
     font-family: 'Avenir', sans-serif;
-    font-size: 44px;
+    font-size: 34px;
     /* color: #00bd81; */
 }
 
 .bank-list {
-    width: calc(100% - 170px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 40px;
-    margin-bottom: 40px;
-    /* left: 15px; */
-    /* margin: 60px 0px 23px calc((100% - 490px) * 0.5); */
-    min-width: 460px;
-    height: auto;
+    width: 100%;
+    /* min-width: 590px; */
+    /* max-width: calc(100% - 160px); */
+    margin-top: 53px;
     margin-left: auto;
     margin-right: auto;
-    /* padding-top: 3rem;
-    padding-left: 3rem;
-    padding-right: 2.25rem;
-    padding-bottom: 3rem; */
+    margin-bottom: 0;
+    /* width: 100%; */
+
 }
+
 
 .bank-card {
     border-radius: 0;
     box-shadow: none;
     /* padding-top: 1rem; */
     overflow: hidden;
+    min-height: 177px;
     height: 177px;
-    max-height: 177px;
+    /* min-height: 177px; */
     /* max-height: 210px; */
     /* padding-bottom: 1rem; */
     /* box-shadow: 0 0.1em 0.5em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 0.5px rgba(10, 10, 10, 0.02); */
@@ -91,14 +86,16 @@
     eeeeef; */
 }
 .image.bank-logo {
-    width: 316px;
+    width: 60%;
     height: 100%;
 }
 .bank-card .media {
     height: 100%;
 }
 .bank-card .media-left {
-    height: 100%;
+    width: 60%;
+    min-height: 177px;
+    height: 177px;
     border-right: 1px solid hsl(0, 0%, 48%);
 }
 .bank-logo img {
@@ -109,8 +106,8 @@
     /* border: 1px solid #dadada; */
 }
 
-.media-content {
-    width: 100%;
+.bank-card .media-content {
+    width: 40%;
     height:100%;
     padding: 2rem 2rem 2rem 1rem;
 }
@@ -198,15 +195,16 @@
 }
 .small-map .leaflet-container{
     width: 100%;
+    min-height: 504.4px;
     height: 100%;
 }
 
 .sticky {
     position: -webkit-sticky;
     position: sticky;
-    height: calc(100vh - 121px);
+    height: calc(100vh - 120px);
     width: 100%;
-    top: 121px;
+    top: 120px;
 }
 
 .grey {
@@ -221,8 +219,8 @@
     /* background-color: #f1f1f1; */
 }
 .bank-banner .container {
-    padding-top: 2.5rem;
-    padding-bottom: 2.5rem;
+    padding-top: 53px;
+    padding-bottom: 53px;
     /* max-width: calc(100% - 160px); */
 }
 .bank-banner-left {
@@ -246,9 +244,10 @@
     /* max-width: calc(100% - 160px); */
     /* max-width: calc(100% - 160px); */
     /* width: calc(100% - 160px); */
+    width: 100%;
     min-width: 490px;
     /* margin0-left: calc(100%-490px)*0.5; */
-    margin: 2.5rem calc(100%-490px)*0.5;
+    /* margin: 2.5rem calc(100%-490px)*0.5; */
 }
 
 .banner-image {
@@ -768,6 +767,11 @@ img {
       max-width: calc(100% - 160px);
     }
   }
+  @media screen and (max-width: 1408px) {
+    .container {
+      max-width: calc(100% - 34px);
+    }
+  }
 @media only screen and (max-width: 1020px) {
     .banner-image {
         height: auto;
@@ -776,11 +780,11 @@ img {
         padding-left: 1.75rem;
         padding-right: 1.75rem;
     }
-    .bank-title {
+    /* .bank-title {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-    }
+    } */
     
     .container {
         min-width: calc(100% - 34px);
@@ -790,6 +794,10 @@ img {
     }
     .bank-banner .container {
         /* min-width: calc(100% - 34px); */
+    }
+    .sticky {
+        top: 92px;
+        height: calc(100vh - 92px);
     }
 }
 
@@ -822,6 +830,9 @@ img {
     .item-column {
         padding-left: 2rem;
         padding-right: 2rem;
+    }
+    .sticky {
+        height: 490px;
     }
 }
 
@@ -1208,6 +1219,9 @@ input.is-danger.is-white:hover {
 .start-order-btn {
     flex: 1 0 50%;
     border: 1px solid hsl(0, 0%, 48%);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .half-left {
@@ -1222,6 +1236,7 @@ input.is-danger.is-white:hover {
     height: 100%;
 }
 .bd-main {
+    min-width: 100vw;
     position: relative;
 }
 .bd-main.is-fullheight-with-navbar{
@@ -1233,4 +1248,31 @@ input.is-danger.is-white:hover {
     .bd-main.is-fullheight-with-navbar {
         margin-top: 92px;
     }
+}
+
+.title.bank-card-title {
+    font-family: 'Avenir', sans-serif;
+    font-size: 16px;
+    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
+    /* border-bottom: 1px solid hsl(0, 0%, 48%); */
+
+}
+.bank-card p {
+    
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+}
+.divider-24 {
+    /* height: 1px; */
+    border-bottom: 1px solid black;
+    margin-bottom: 1rem;
+}
+.bank-card-logo img{
+    width: 100%;
+    height: 177px;
+    object-fit: cover;
+    object-position: center;
 }

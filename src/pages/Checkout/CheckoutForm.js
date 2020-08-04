@@ -2,22 +2,17 @@ import React, { useState, useEffect, useContext } from "react";
 // import icons
 import Icons from "components/Icons/Icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import calendar
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 // import other components
 import useField from "components/Hooks/useField";
 import InputField from "components/Form/InputField";
 import CustomerDetails from "pages/Checkout/CustomerDetails";
 import DeliveryDetails from "pages/Checkout/DeliveryDetails";
 import PickupDetails from "./PickupDetails";
-import DateTimeField from 'components/Form/DateTimeField';
 import DateInputField from 'components/Form/DateInputField';
 // import hooks
 import {
   useHistory
 } from "react-router-dom";
-import { useDateTime } from 'components/Hooks/useDateTime';
 import useDate from 'components/Hooks/useDate';
 
 function CheckoutForm({ bank, items }) {;
@@ -178,23 +173,6 @@ function CheckoutForm({ bank, items }) {;
                 <div className="field">
                   <div className="control">
                     <DateInputField props={dateTime}/>
-                    {/* <DatePicker
-                      selected={
-                        checkbox.value === true ? null : dateTime.startDate
-                      }
-                      value={dateTime.startDate}
-                      onChange={(date) => dateTime.onChange(date)}
-                      minDate={dateTime.minDate}
-                      showTimeSelect
-                      customInput={<DateTimeField />}
-                      dateFormat="MMMM d, yyyy h:mm aa"
-                      placeholderText={
-                        checkbox.value === true
-                          ? "No date selected"
-                          : "Select a date and time"
-                      }
-                      disabled={checkbox.value === true ? true : false}
-                    /> */}
                   </div>
                 </div>
                 <div className="right-most">

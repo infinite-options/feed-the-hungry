@@ -15,29 +15,31 @@ function BankBanner({ obj }) {
       {/* Food Bank's Banner */}
       
         <div className="bank-banner">
-          {/* <div className="container"> */}
           <div className="columns" style={{margin:0}}>
           <div className="column has-no-padding">
-        {/* <div className="container"> */}
-        {/* <div className="bank-banner-left"> */}
+
           <div className="bank-banner-info">
+          <div className="container">
             {/* Logo */}
-            <figure className="image is-96x96">
+            <div className="media">
+            <div className="media-left">
+            <figure className="image is-64x64">
               <img src={obj.fb_logo} alt=""></img>
             </figure>
-            <div className="bank-info-wrapper has-no-margin" >
-              <p className="title bank-title">{obj.fb_name} </p>
             </div>
+            <div className="media-content">
+            <p className="title bank-title">{obj.fb_name} </p>
+            </div>
+            </div>
+            {/* <div className="bank-info-wrapper has-no-margin" >
+              <p className="title bank-title">{obj.fb_name} </p>
+            </div> */}
             <div className="divider-25"></div>
             {/* Address */}
             <div className="bank-info-wrapper" >
               <div className="bank-info-icon">
                 <span className="icon">
                   <RoomOutlinedIcon />
-                  {/* <img
-                    src={Icons.RoomOutlinedIcon}
-                    
-                  /> */}
                 </span>
               </div>
               <div className="bank-info-content no-overflow">
@@ -51,15 +53,12 @@ function BankBanner({ obj }) {
               <div className="bank-info-icon">
                 <span className="icon">
                   <ScheduleOutlinedIcon />
-                  {/* <FontAwesomeIcon
-                    icon={Icons.faClock}
-                    style={{ fontSize: 16 }}
-                  /> */}
+
                 </span>
               </div>
               <BankSchedule obj={obj} />
             </div>
-          {/* </div> */}
+          </div>
           </div>
         </div>
         <div className="column has-no-padding">
