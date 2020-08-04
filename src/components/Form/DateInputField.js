@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const DateInputField = ({props}) => {
+const DateInputField = ({props, disabled}) => {
  
     return (
         <div className="field">
@@ -26,11 +26,11 @@ const DateInputField = ({props}) => {
                 placeholderText={
                 props.placeholder
                 }
-                className={props.error.length === 0 ? "input" : "input is-danger"}
+                className={props.disabled || props.error.length === 0 ? "input" : "input is-danger"}
                 disabled = {props.disabled}
             />
             </div>
-            <p className="help is-danger">{props.error}</p>
+            <p className="help is-danger">{props.disabled ? "" : props.error}</p>
         </div>
     )
 }

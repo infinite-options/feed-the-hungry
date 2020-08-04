@@ -38,7 +38,7 @@ function CheckoutForm({ bank, items }) {;
     "checkbox", 
     false
   );
-  const dateTime = useDate("Select a date and time", true, new Date(), null, checkbox.checked ? true : false );
+  const dateTime = useDate("Select a date and time", true, new Date(), null, checkbox.value ? true : false);
   const delivery_items = items.filter((x) => x.info.delivery_pickup === "delivery");
   const pickup_items = items.filter((x) => x.info.delivery_pickup === "pickup");
   const [activeTab, setActiveTab] = useState(pickup_items.length === 0 ? 'delivery' : 'pickup');
@@ -177,7 +177,7 @@ function CheckoutForm({ bank, items }) {;
               <div className="field-body">
                 <div className="field">
                   <div className="control">
-                    <DateInputField props={dateTime} />
+                    <DateInputField props={dateTime}/>
                     {/* <DatePicker
                       selected={
                         checkbox.value === true ? null : dateTime.startDate
