@@ -1,7 +1,5 @@
 import React, { useState, useContext } from "react";
 
-import useLogin from "components/Hooks/useLogin";
-import LoginField from "components/Form/LoginField";
 import useField from "components/Hooks/useField";
 import InputField from "components/Form/InputField";
 
@@ -17,8 +15,8 @@ function QuickDonation() {
 
     const handleClick = () => {
         console.log("User has tried to submit donation..")
-        if (firstName.isValid && lastName.isValid && 
-            email.isValid && phone.isValid) {
+        if (firstName.checkInputs() & lastName.checkInputs() & 
+            email.checkInputs() & phone.checkInputs() & donation.checkInputs()) {
             console.log("we did it!");
         }
         else {

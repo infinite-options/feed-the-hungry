@@ -8,7 +8,7 @@ import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 
 import axios from 'axios';
-import useLogin from "components/Hooks/useLogin";
+import useField from "components/Hooks/useField";
 import LoginField from "components/Form/LoginField";
 import Icons from "components/Icons/Icons";
 import FacebookLogin from "react-facebook-login";
@@ -26,8 +26,8 @@ function LoginForm(props) {
     const loginStatus = props.loginStatus;
 
     const [error, setError] = useState(null);
-    const email = useLogin("Email","email");
-    const password = useLogin("Password","password");
+    const email = useField("Email","email");
+    const password = useField("Password","password");
 
     const checkSocialLogin = (data) => {
         console.log("Data:", data);
@@ -91,6 +91,7 @@ function LoginForm(props) {
                                 loginType: loginStatus,
 
                                 position: "",
+                                cart: "",
                             }
 
                             checkAccountType(userInfo);
@@ -248,6 +249,7 @@ function LoginForm(props) {
                                 loginType: loginStatus,
 
                                 position: "",
+                                cart: "",
                             }
 
                             console.log("what");

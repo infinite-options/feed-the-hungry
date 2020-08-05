@@ -98,7 +98,7 @@ function SignupForm(props) {
         let isAllValid = true;
         for (let input in inputs) {
             console.log(input, inputs[input].isValid);
-            if (!inputs[input].checkInputs()) {
+            if (!inputs[input].checkInputs() && isAllValid) {
                 isAllValid = false;
             }
         }

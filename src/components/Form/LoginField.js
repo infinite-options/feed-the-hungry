@@ -12,7 +12,7 @@ const LoginField = ({props, icon}) => {
               </span>
             )}
           </div>
-          <p className="help is-danger">{props.error}</p>
+          <p className="help is-danger">{props.error === "Please fill in this field." ? "" : props.error}</p>
          
       </div>
     );
