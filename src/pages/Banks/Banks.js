@@ -55,10 +55,10 @@ function Banks({ marker, banks }) {
 
                 <div className="buttons are-small" style={{ marginBottom: 0 }}>
 
-                    <button className="button delivery-btn" style={bank.delivery_pickup.includes("delivery") ? {visibility: 'visible'} : {visibility: 'hidden'}}>Delivery</button>
+                    <button className="button delivery-btn" style={bank.fb_delivery === 1 ? {visibility: 'visible'} : {visibility: 'hidden'}}>Delivery</button>
 
 
-                    <button className="button pickup-btn" style={bank.delivery_pickup.includes("pickup") ? {visibility: 'visible'} : {visibility: 'hidden'}}>Pick Up</button>
+                    <button className="button pickup-btn" style={bank.fb_pickup === 1 ? {visibility: 'visible'} : {visibility: 'hidden'}}>Pick Up</button>
 
                 </div>
                 {/* <Link to={`banks/${bank.foodbank_id}/products`}><button className="button is-small is-success start-order-btn">Start Order</button></Link> */}

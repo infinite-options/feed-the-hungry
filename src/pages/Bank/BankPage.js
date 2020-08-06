@@ -17,26 +17,32 @@ import Icons from "components/Icons/Icons";
 
 const BankPage = () => {
   let { bankId } = useParams();
-  const url = `https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/foodbankinfonew/${bankId}`;
-  const { data, isLoading, hasError } = useOurApi(url, {});
+  const fetchedData = useOurApi('https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/foodbanks', {});
 
-  if (isLoading) return <LoadingPage />;
-  if (hasError || !data.result) return <ErrorPage />;
-  window.localStorage.setItem(bankId, JSON.stringify(data.result));
-  return <Bank bank = {data.result} />
+  if (fetchedData.isLoading) return <LoadingPage />;
+  if (fetchedData.hasError || !fetchedData.data.result.result) return <ErrorPage />;
+  const bank = fetchedData.getBankBy("foodbank_id", bankId);
+  return <Bank bank = {bank}/>
 }
 
-const Bank = ({ bank }) => {
-  const inventory = bank.inventory? bank.inventory : [];
-  const delivery_pickup_items = filterInventoryByKey(inventory, 'delivery_pickup', 'delivery;pickup');
-  const delivery_items = filterInventoryByKey(inventory, 'delivery_pickup', 'delivery');
-  const pickup_items = filterInventoryByKey(inventory, 'delivery_pickup', 'pickup');
+const Bank = ({ bank}) => {
+  // const inventory = bank.inventory? bank.inventory : [];
+  // const delivery_pickup_items = filterInventoryByKey(inventory, 'delivery', 0);
+  // const delivery_items = filterInventoryByKey(inventory, 'delivery', 1);
+  // const pickup_items = filterInventoryByKey(inventory, 'pickup', 1);
+  // const delivery_pickup_items = useOurApi(`https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/inventory_filter/${bank.foodbank_id}?delivery=1&pickup=1`,{});
+  // const delivery_items = useOurApi(`https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/inventory_filter/${bank.foodbank_id}?delivery=1&pickup=0`,{});
+  // const pickup_items = useOurApi(`https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/inventory_filter/${bank.foodbank_id}?delivery=0&pickup=1`,{})
   const orderType = useOrderType(bank); 
 
   const [key, setKey] = useState(1);
   window.addEventListener("storage", () => {
     setKey(key + 1);
   });
+  // if (delivery_pickup_items.isLoading || delivery_items.isLoading || pickup_items.isLoading) return <LoadingPage />;
+  // if (delivery_pickup_items.hasError || delivery_items.hasError || pickup_items.hasError) return <ErrorPage />;
+  
+
     // keep scroll position on rerender
   // const divRef = useRef(null);
   // const { stayScrolled } = useStayScrolled(divRef);
@@ -54,31 +60,34 @@ const Bank = ({ bank }) => {
         <BankBanner obj={bank} />
         <div className="container">
         <BankFilters />
-        <div className="bank-body">
-          {delivery_pickup_items.length > 0 && (
+        <div key={key} className="bank-body">
+          <BankInventory  bank={bank} delivery={1} pickup={1} orderType={orderType}/>
+          {/* {delivery_pickup_items.data.result.result.length > 0 && (
             <div className="inventory-container">
               <div className="inventory-title-container">
                 <p className="subtitle inventory-title">Delivery or Pickup</p>
               </div>
-              <BankInventory key={key} inventory={delivery_pickup_items} orderType={orderType}/>
+              <BankInventory key={key} bank={bank} inventory={delivery_pickup_items.data.result.result} filter="delivery=1&pickup=1" orderType={orderType}/>
             </div>
-          )}
-          {delivery_items.length > 0 && (
+          )} */}
+          <BankInventory  bank={bank} delivery={1} pickup={0}  orderType={orderType}/>
+          {/* {delivery_items.data.result.result.length > 0 && (
             <div className="inventory-container">
               <div className="inventory-title-container">
                 <p className="subtitle inventory-title">Delivery Only</p>
               </div>
-              <BankInventory key={key} inventory={delivery_items} orderType={orderType} />
+              <BankInventory key={key} inventory={delivery_items.data.result.result} orderType={orderType} />
             </div>
-          )}
-          {pickup_items.length > 0 && (
+          )} */}
+          <BankInventory  bank={bank} delivery={0} pickup={1}  orderType={orderType}/>
+          {/* {pickup_items.data.result.result.length > 0 && (
             <div className="inventory-container">
               <div className="inventory-title-container">
                 <p className="subtitle inventory-title">Pick Up Only</p>
               </div>
-              <BankInventory key={key} inventory={pickup_items} orderType={orderType}/>
+              <BankInventory key={key} inventory={pickup_items.data.result.result} orderType={orderType}/>
             </div>
-          )}
+          )} */}
         </div>
         <div className="bank-actions">
           <button className="button is-info">
@@ -113,6 +122,11 @@ const useOrderType = (bank) => {
 }
 const filterInventoryByKey = (arr, key, value) => {
   return arr.filter(x => x[key] === value);
+}
+const getBankById = (data, id) => {
+    return (data.find(obj => {
+        return obj.id === id;
+    }));
 }
 
 

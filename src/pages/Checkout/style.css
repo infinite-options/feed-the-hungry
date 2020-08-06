@@ -62,14 +62,14 @@
     /* display: flex; */
     /* align-items: center; */
 } 
-.item-brand {
+/* .item-brand {
     font-weight: 550;
     text-transform: uppercase;
     letter-spacing: 1px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: illipsis;
-}
+} */
 .is-bold {
     font-weight: 600;
 }

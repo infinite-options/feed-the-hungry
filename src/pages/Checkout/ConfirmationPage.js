@@ -72,6 +72,7 @@ const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
 
         // Hao: adding this for cases where user is not registered as a customer
         const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
+        if (userInfo && userInfo.cart) userInfo.cart = "";
         const EDIT_USER_STATUS_API = `https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/edit_user_status/${userInfo.userID}?`;
         if (!userInfo.isCustomer) {
           userInfo.isCustomer = 1;
@@ -81,8 +82,8 @@ const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
             console.log(err.response);
           });
         }
-
-        window.localStorage.removeItem("cart"); // remove cart data from local storage
+       
+        window.localStorage.setItem('userInfo', JSON.stringify(userInfo)); // remove cart data from local storage
         context.setCartTotal(0);
         setSentOrder(prevState => ({...prevState, isSent: true, order_id: responseData.result.order_id}));
       } catch (err) {

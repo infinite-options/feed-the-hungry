@@ -43,8 +43,8 @@ function BankBanner({ obj }) {
                 </span>
               </div>
               <div className="bank-info-content no-overflow">
-                <p className="subtitle bank-address">
-                  {obj.foodbank_address}
+                <p className="title is-6 capitalized is-Nunito">
+                  {obj.fb_address1}, {obj.fb_city}, {obj.fb_state} {obj.fb_zipcode} 
                 </p>
               </div>
             </div>

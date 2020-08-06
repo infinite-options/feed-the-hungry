@@ -10,15 +10,16 @@ import ErrorPage from 'pages/Error/ErrorPage';
 
 function CheckoutPage(){
     // retrieve cart items from local storage
-    const cart = JSON.parse(window.localStorage.getItem('cart')) 
-    if (!cart) return <EmptyCartPage />;
-    const bankId = cart.bankId;
-    const bankData = JSON.parse(window.localStorage.getItem(bankId));
-    if (bankData) return <CheckoutWithoutApi bank={bankData} />
-    return <CheckoutWithApi bankId = {bankId}/>
+    const user = JSON.parse(window.localStorage.getItem('userInfo'));
+    // const cart = user && user.cart ? user.cart : {};
+    // if (!cart) return <EmptyCartPage />;
+    // const bankId = cart.bankId;
+    const bankData = JSON.parse(window.localStorage.getItem('current_pantry'));
+    return <Checkout bank={bankData} user={user}/>
+    // if (bankData) return <CheckoutWithoutApi bank={bankData} />
+    // return <CheckoutWithApi bankId = {bankId}/>
 }
 const CheckoutWithApi = ({bankId}) => {
-    console.log("checkout with api")
     const url = `https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/foodbankinfonew/${bankId}`
     const { data, isLoading, hasError } = useOurApi(url, {});
     const bankData = data.result;
@@ -31,9 +32,10 @@ const CheckoutWithApi = ({bankId}) => {
 const CheckoutWithoutApi = ({bank}) => {
     return <Checkout bank={bank} />
 }
-const Checkout = ({bank}) => {
-    const cart = JSON.parse(window.localStorage.getItem('cart')) || {};
-    const cartItems = cart.items ? cart.items : []
+const Checkout = ({bank, user}) => {
+    // const  = JSON.parse(window.localStorage.getItem('userInfo')) || {};
+    const cart = user.cart ? user.cart : {};
+    const cartItems = cart.items ? cart.items : [];
     const [key, setKey] = useState(1);
     window.addEventListener("storage", () => {
         setKey(key + 1);
@@ -41,7 +43,7 @@ const Checkout = ({bank}) => {
 
     if (cartItems.length === 0) return <EmptyCartPage />;
     return (
-        <div className="checkout-page">
+        <div className="bd-main is-fullheight-with-navbar">
             <div className="checkout-page-layer">
                 <ScrollToTopOnMount />
                 <div className="checkout-page-content">

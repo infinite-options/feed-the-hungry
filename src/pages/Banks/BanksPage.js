@@ -11,15 +11,17 @@ import useMarker from "components/Hooks/useMarker";
 import Footer from "components/Footer/Footer";
 
 function BanksPage() {
-  const url = `https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/foodbankinfo`;
+  const url = `https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/foodbanks`;
   const { data, isLoading, hasError } = useOurApi(url, {});
   const marker = useMarker();
 
   if (isLoading) return <LoadingPage />;
   if (hasError) return <ErrorPage />;
-  const banks = Object.keys(data).length
-    ? removeDuplicatesByKey("foodbank_id", data.result.result)
-    : [];
+  const banks = data.result.result;
+  // const banks = Object.keys(data).length
+  //   ? removeDuplicatesByKey("foodbank_id", data.result.result)
+  //   : [];
+  
   return (
     <div className="bd-main is-fullheight-with-navbar">
       {/* <ScrollToTop /> */}

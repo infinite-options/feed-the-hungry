@@ -37,5 +37,10 @@ export const useOurApi = (initialUrl) => {
     };
   }, [url]);
 
-  return { isLoading, hasError, setUrl, data: fetchedData };
+  const getBankBy = (key, value) => {
+    return (fetchedData.result.result.find(obj => {
+        return obj[key] === value;
+    }));
+}
+  return { isLoading, hasError, setUrl, data: fetchedData, getBankBy };
 };

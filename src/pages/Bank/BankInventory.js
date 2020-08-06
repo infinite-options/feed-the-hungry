@@ -8,26 +8,57 @@ import {
 } from "react-router-dom";
 import useQuery from "components/Hooks/useQuery";
 import { OrderContext } from "components/Context/OrderContext";
-
+import NotFoundImage from 'assets/image/Not_Found_Image.png';
+import LoadingPage from "pages/Error/LoadingPage";
+import { useOurApi } from "API/useOurApi";
+import ErrorPage from "pages/Error/ErrorPage";
 // render food bank's inventory
-function BankInventory({ inventory, orderType }) {
-  let query = useQuery();
-  console.log(inventory);
-  if (query.get("type"))
-    inventory = filterInventoryByKey(inventory, "fl_food_type", query.get("type"));
+function BankInventory({ bank, delivery, pickup, orderType }) {
+  // let query = useQuery();
+  // if (query.get("type"))
+    // inventory = filterInventoryByKey(inventory, "fl_food_type", query.get("type"));
+  const inventory = useOurApi(`https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/inventory_filter/${bank.foodbank_id}?delivery=${delivery}&pickup=${pickup}`,{});
+  if (inventory.isLoading) return <p className="title is-6">Loading inventory...</p>
+  if (inventory.hasError) return <p className="title is-6">Unable to load inventory</p>
+  if (inventory.data.result.result.length === 0) return "";
+
 
   return (
+    <div className="inventory-container">
+    <div className="inventory-title-container">
+      {delivery === 1 && pickup === 1 && <p className="subtitle inventory-title">Delivery or Pickup</p>}
+      {delivery === 1 && pickup === 0 && <p className="subtitle inventory-title">Delivery Only</p>}
+      {delivery === 0 && pickup === 1 && <p className="subtitle inventory-title">Pickup Only</p>}
+    </div>
     <div className="inventory">
-      {inventory.map((x) => (
+      {inventory.data.result.result.map((x) => (
         <div
           key={x.food_id}
-          className={
-            x.delivery_pickup.includes(orderType.orderType)
-              ? "card item"
-              : " card item has-opacity-0-6"
-          }
+          className="card item-card"
+          // className={
+          //   x.delivery_pickup.includes(orderType.orderType)
+          //     ? "card item"
+          //     : " card item has-opacity-0-6"
+          // }
         >
-          <div className="card-content has-no-padding item-content">
+          <div className="card-image">
+            <figure className="image is-155x155">
+              <img src={x.fl_image}  />
+            </figure>
+          </div>
+          <div className="card-content">
+            <div className="content">
+              <p className="item-brand" style={{marginBottom:0}}>
+                {x.fl_brand}
+              </p>
+              <p className="item-name is-bold" style={{marginBottom:0}}>{x.fl_name}</p>
+              <p className="item-unit">
+                {x.fl_package_type} ({x.fl_amount} {x.fl_unit})
+              </p>
+              <QuantityInput bank={bank} item={x} orderType={orderType} />
+            </div>
+          </div>
+          {/* <div className="card-content has-no-padding item-content">
             <div className="item-image-container">
               <img
                 src={x.fl_image}
@@ -39,9 +70,9 @@ function BankInventory({ inventory, orderType }) {
               <p className="title has-text-grey-light is-7 item-brand">
                 {x.fl_brand}
               </p>
-              <p className="subtitle is-6 is-bold no-overflow">{x.food_name}</p>
+              <p className="subtitle is-6 is-bold no-overflow">{x.fl_name}</p>
               <p className="subtitle is-7 has-text-grey no-overflow">
-                {x.fl_package_type} ({x.food_unit})
+                {x.fl_package_type} ({x.fl_amount} {x.fl_unit})
               </p>
               <QuantityInput item={x} orderType={orderType} />
             </div>
@@ -55,9 +86,10 @@ function BankInventory({ inventory, orderType }) {
             <div className="item-tags">
               <ItemTags str={x.fl_food_type} />
             </div>
-          </div>
+          </div> */}
         </div>
       ))}
+    </div>
     </div>
   );
 }
@@ -82,8 +114,8 @@ function ItemTags({ str }) {
     </div>
   );
 }
-function QuantityInput({ item, orderType }) {
-  const count = useCounter(item, orderType);
+function QuantityInput({bank, item, orderType }) {
+  const count = useCounter(bank, item, orderType);
   return (
     <div>
       <div className="field">
@@ -105,9 +137,9 @@ function QuantityInput({ item, orderType }) {
             className="button is-small"
             onClick={count.increase}
             disabled={
-              !item.delivery_pickup.includes(orderType.orderType) ||
-              item.quantity === 0 ||
-              count.value >= item.food_id_limit
+              // !item.delivery_pickup.includes(orderType.orderType) ||
+              item.quantity === 0 
+              // count.value >= item.food_id_limit
                 ? true
                 : false
             }
@@ -119,22 +151,21 @@ function QuantityInput({ item, orderType }) {
 
       <div className="space-1-5"></div>
       {item.quantity === 0 && <p className="p is-danger">Out of stock</p>}
-      {count.value >= item.food_id_limit && (
+      {/* {count.value >= item.food_id_limit && (
         <p className="help is-danger">Limit is {item.food_id_limit}</p>
-      )}
+      )} */}
     </div>
   );
 }
 
-const useCounter = (x, orderType) => {
+const useCounter = (bank, x, orderType) => {
   let { bankId } = useParams();
   const context = useContext(OrderContext);
 
   const [value, setValue] = useState(() => {
-    const cart = JSON.parse(window.localStorage.getItem("cart"));
-    const initValue =
-      cart && cart.bankId === bankId
-        ? cart.items.find((item) => {
+    const user = JSON.parse(window.localStorage.getItem("userInfo"));
+    const cart = user.cart != "" ? user.cart : {}; 
+    const initValue = cart.bankId === bankId ? cart.items.find((item) => {
             return item.info.food_id === x.food_id;
           })
         : {};
@@ -158,64 +189,45 @@ const useCounter = (x, orderType) => {
     return total;
   };
   useEffect(() => {
-    let cart = JSON.parse(window.localStorage.getItem("cart")) || {
-      bankId: "",
-      items: [],
-    };
-    let cartItems = cart.items ? cart.items : [];
-
-    if (cart.bankId && cart.bankId === bankId) {
-      let item = cartItems.find((item) => {
+    let user = JSON.parse(window.localStorage.getItem("userInfo"));
+    let cart = user.cart != "" ? user.cart : { bankId: "", items: []};
+    let bank_id = cart.bankId;
+    let cart_items = cart.items;
+    // CASE 1: if user is choosing products from the same food pantry again
+    if (cart.bankId === bankId) {
+      // check if the product user is currently selecting is in cart
+      let item = cart_items.find((item) => {
         return item.info.food_id === x.food_id;
       });
-      if (item && value > 0) item.amount = value;
-      else if (item && value === 0)
-        cartItems.splice(cartItems.indexOf(item), 1);
-      else if (!item && value > 0) cartItems.push({ info: x, amount: value });
+      if (item && value > 0) item.amount = value; // update selected amount if that product is already in cart
+      else if (item && value === 0) cart_items.splice(cart_items.indexOf(item), 1); // if product is deleted from cart
+      else if (!item && value > 0) cart_items.push({ info: x, amount: value }); // if product is not in cart but gets selected
+    } 
+    // CASE 2: if user is choosing products from a diffrent food pantry
+    else if (cart.bankId != bankId && value > 0) { 
+      cart_items = [];
+      cart_items.push({ info: x, amount: value });
+      bank_id = bankId;
+      window.localStorage.setItem('current_pantry',JSON.stringify(bank));
+    } 
 
-      window.localStorage.setItem(
-        "cart",
-        JSON.stringify({
-          bankId: bankId,
-          total: totalAmount(cartItems),
-          items: cartItems,
-        })
-      );
-    } else if (cart.bankId && cart.bankId != bankId && value > 0) {
-      cartItems = [];
-      cartItems.push({ info: x, amount: value });
-      window.localStorage.setItem(
-        "cart",
-        JSON.stringify({
-          bankId: bankId,
-          total: totalAmount(cartItems),
-          items: cartItems,
-        })
-      );
-    } else if (cart.bankId && cart.bankId != bankId) {
-      window.localStorage.setItem("cart", JSON.stringify(cart));
-    } else if (!cart.bankId) {
-      window.localStorage.setItem(
-        "cart",
-        JSON.stringify({
-          bankId: bankId,
-          total: totalAmount(cartItems),
-          items: cartItems,
-        })
-      );
-    }
-    const delivery_items = getItemsByKey(
-      cartItems,
-      "delivery_pickup",
-      "delivery"
+    cart.bankId = bank_id;
+    cart.items = cart_items;
+    cart.total = totalAmount(cart_items);
+    user.cart = cart;
+    window.localStorage.setItem(
+      "userInfo",
+      JSON.stringify(user)
     );
-    const pickup_items = getItemsByKey(cartItems, "delivery_pickup", "pickup");
+
+    const delivery_items = getItemsByKey(cart_items,"delivery",1);
+    const pickup_items = getItemsByKey(cart_items, "pickup", 1);
 
     if (delivery_items.length > 0) orderType.setOrderType("delivery");
     else if (pickup_items.length > 0) orderType.setOrderType("pickup");
     else orderType.setOrderType("");
 
-    context.setCartTotal(totalAmount(cartItems));
+    context.setCartTotal(totalAmount(cart_items));
   }, [value]);
 
   return {

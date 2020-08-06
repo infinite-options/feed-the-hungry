@@ -7,13 +7,11 @@ import { OrderContext } from "components/Context/OrderContext";
 import ServingNowLogo from "assets/image/ServingNow_Logo_Green.png";
 import { faBaby } from "@fortawesome/free-solid-svg-icons";
 function Header() {
-  const location = useLocation();
-  // const { path, url } = useRouteMatch();
   const history = useHistory();
   const context = useContext(OrderContext);
   context.setCartTotal(() => {
-    const cart = JSON.parse(window.localStorage.getItem("cart"));
-    return cart && cart.total ? cart.total : 0;
+    const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
+    return userInfo && userInfo.cart ? userInfo.cart.total : 0;
   });
 
   const handleLogout = () => {
@@ -35,7 +33,6 @@ function Header() {
       aria-label="main navigation"
     >
       <div className="container">
-      {/* <div className="navbar-body"> */}
         <div className="navbar-brand ">
           {/* <Link className="navbar-item has-no-padding-left" to={context.isAuth ? "/" : "/login"}> */}
           <Link className="navbar-item" to="/">
@@ -49,9 +46,6 @@ function Header() {
         </div>
         <div id="mainNavbar" className="navbar-menu">
           <div className="navbar-end">
-            {/* <div className="navbar-item">
-                        <SearchBar />
-                    </div> */}
             <Link to="/" className="navbar-item navbar-item-text" onClick={resetScroll}>
               Home
             </Link>
@@ -88,7 +82,6 @@ function Header() {
             
           </div>
         </div>
-        {/* </div> */}
       </div>
     </nav>
   );
@@ -115,12 +108,10 @@ function SearchBar() {
 function CartTotal({ num }) {
   return (
     <Link to="/order/cart" alt="cart button">
-      {/* <div className="button add-cart"> */}
         <span className="icon has-text-success">
           <FontAwesomeIcon icon={Icons.faShoppingBasket} />
         </span>
         <span className="has-padding-left-0-5 has-text-success">{num}</span>
-      {/* </div> */}
     </Link>
   );
 }

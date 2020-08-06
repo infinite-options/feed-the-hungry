@@ -40,8 +40,8 @@ const useField = (name, type, isRequired=true) => {
   // autofill  doesnt trigger onChange so we need these extra code
   useEffect(() => {
       if (!isOnChange && value){  
-        if(checkInputs()) setIsValid(true)
-        else setIsValid(false)
+        if(checkInputs()) setIsValid(true);
+        else setIsValid(false);
       }
   }, [value])
 
@@ -51,6 +51,7 @@ const useField = (name, type, isRequired=true) => {
     if (isRequired && value.length === 0 ) {
       if (name.toLowerCase().includes("state")) setError("Please select your state.");
       else setError("Please fill in this field.");
+      console.log(false);
       return false; 
     }
     // if filled (checks both optional & required)
@@ -73,6 +74,7 @@ const useField = (name, type, isRequired=true) => {
         return true;
       }
       // failed a case
+      console.log(false);
       return false;
     }
     // if optional & not filled

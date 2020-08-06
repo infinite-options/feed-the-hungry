@@ -34,22 +34,44 @@ function CheckoutForm({ bank, items }) {;
     false
   );
   const dateTime = useDate("Select a date and time", true, new Date(), null, checkbox.value ? true : false);
-  const delivery_items = items.filter((x) => x.info.delivery_pickup === "delivery");
-  const pickup_items = items.filter((x) => x.info.delivery_pickup === "pickup");
-  const [activeTab, setActiveTab] = useState(pickup_items.length === 0 ? 'delivery' : 'pickup');
+  const delivery_pickup_items = items.filter((x) => x.info.delivery === 1 && x.info.pickup === 1 );
+  const delivery_items = items.filter((x) => x.info.delivery === 1 );
+  const delivery_only_items = items.filter((x) => x.info.delivery === 1 && x.info.pickup === 0 );
+  const pickup_items = items.filter((x) => x.info.pickup === 1);
+  const pickup_only_items = items.filter((x) => x.info.delivery === 0 && x.info.pickup === 1);
+  const [activeTab, setActiveTab] = useState(() => {
+    if (delivery_pickup_items.length > 0 && delivery_only_items.length === 0 && pickup_only_items.length === 0) return "delivery";
+    if (delivery_only_items.length === 0) return "pickup";
+    // if (delivery_pickup_items.length > 0) return "delivery";
+    return "delivery";
+
+  });
   
   const isFormValid = () => {
-    let isValid  = true;
-    if (!fname.isValid || !lname.isValid || !phone.isValid || !email.isValid){ console.log("customer details are invalid"); isValid = false;}
+    // let isValid  = true;
+    console.log(fname.isValid);
+    console.log(lname.isValid);
+    console.log(phone.isValid);
+    console.log(email.isValid);
+    console.log(street.isValid);
+    console.log(city.isValid);
+    console.log(state.isValid);
+    console.log(zip.isValid);
+    console.log(dateTime.isValid);
+    console.log('------------');
+    if (!fname.isValid || !lname.isValid || !phone.isValid || !email.isValid){ console.log("customer details are invalid"); return false;}
     if (activeTab === "delivery"){
-      if (pickup_items.length > 0 ) isValid = false;
-      if (!street.isValid  || ! city.isValid  || !state.isValid  ||  !zip.isValid) isValid = false;
-      if (!checkbox.value && !dateTime.isValid) isValid = false;
+      // if (pickup_items.length > 0 ) return false;
+      if (!street.isValid  || !city.isValid  || !state.isValid  ||  !zip.isValid) return false;
+      if (checkbox.value === false && !dateTime.isValid) return false;
       
-    } else if (activeTab === "pickup" && delivery_items.length > 0) isValid = false;
-    return isValid;
+    } 
+    // if (activeTab === "pickup" && delivery_items.length > 0) return false;
+    
+    return true;
   }
-  const form  = isFormValid(); 
+  let form  = isFormValid(); 
+  console.log("form is valid?" + form);
   const userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
   useEffect(() => {
     if (switchUserInfo.value && userInfo){
@@ -79,6 +101,10 @@ function CheckoutForm({ bank, items }) {;
     }
 
   },[switchUserAddress.value]);
+  // window.addEventListener("storage", () => {
+  //   setActiveTab(delivery_only_items.length === 0 ? "pickup" : "delivery" );
+  // });
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -102,7 +128,7 @@ function CheckoutForm({ bank, items }) {;
         delivery_note: "",
         kitchen_id: bank.foodbank_id,
         kitchen_name: bank.fb_name,
-        kitchen_address: bank.foodbank_address,
+        kitchen_address: bank.fb_address1,
         longitude: position[1],
         latitude: position[0],
         delivery_date: date,
@@ -140,17 +166,17 @@ function CheckoutForm({ bank, items }) {;
           <ul>
             <li
               className={activeTab === "delivery" ? "is-active" : ""}
-              onClick={() => setActiveTab("delivery")}
+              onClick={delivery_only_items.length === 0 ? () => setActiveTab("pickup") : () => setActiveTab("delivery")}
             >
-              <a>
+              <a className={ delivery_only_items.length === 0 ? "disabled" : ""}>
                 <span className="uppercase">Delivery</span>
               </a>
             </li>
             <li
               className={activeTab === "pickup" ? "is-active" : ""}
-              onClick={() => setActiveTab("pickup")}
+              onClick={pickup_only_items.length === 0 ? () => setActiveTab("delivery") : () => setActiveTab("pickup")}
             >
-              <a>
+              <a className={pickup_only_items.length === 0 ? "disabled" : ""}>
                 <span className="uppercase">Pick Up</span>
               </a>
             </li>

@@ -17,7 +17,6 @@
 .navbar .container {
   padding-top: 30px;
   padding-bottom: 30px;
-  min-width: calc(100% - 160px);
   
 }
 /* .navbar .container {
@@ -180,6 +179,11 @@ input[type="search"] {
 .add-cart:hover {
   transition: 0.2s ease-in;
   color: hsl(141, 70%, 30%);
+}
+@media only screen and (min-width: 1020px) {
+  .navbar .container {
+    min-width: calc(100% - 160px);
+  }
 }
 @media only screen and (max-width: 1020px) {
   .navbar .container {

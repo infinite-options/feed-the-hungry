@@ -3,9 +3,9 @@ import Icons from "components/Icons/Icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function PickupDetails({bank, items}) {
-    const delivery_pickup_items = items.length > 0 ? items.filter(x => x.info.delivery_pickup.includes('both')) : [];
-    const delivery_items = items.length > 0 ? items.filter(x => x.info.delivery_pickup ==='delivery') : [];
-    const pickup_items = items.filter(x => x.info.delivery_pickup ==='pickup');
+    // const delivery_pickup_items = items.length > 0 ? items.filter(x => x.info.delivery_pickup.includes('both')) : [];
+    const delivery_items = items.length > 0 ? items.filter(x => x.info.deliver === 1) : [];
+    // const pickup_items = items.filter(x => x.info.pickup === 1);
     return (
         <div className="pickup-confirm">
             <p className="title is-5">Pickup Address</p>
