@@ -32,16 +32,16 @@ import ScrollToTop from 'utils/Scroll/SrollToTop';
 import { OrderContext } from 'components/Context/OrderContext';
 import AuthRoute from 'components/Route/AuthRoute';
 import NonAuthRoute from 'components/Route/NonAuthRoute';
+import { useOurApi } from 'API/useOurApi';
 // use San Jose, CA as the default center
 
 function App() {
   const watch = false;
-  // const { latitude, longitude, error } = usePosition(watch, {enableHighAccuracy: true});
-  // const position = latitude && longitude ? [latitude, longitude]: [DEFAULT_LATITUDE, DEFAULT_LONGITUDE];
   const [isAuth, setIsAuth] = useState(false);
   const [loading, setLoading] = useState(true);
   const [cartTotal, setCartTotal] = useState(0);
-
+  const url = `https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/foodbanks`;
+  const bankApi = useOurApi(url, {});
   useEffect(() => {
     onLoad();
     window.addEventListener('storage', onLoad);
@@ -79,12 +79,12 @@ function App() {
           {/* <AuthRoute exact path="/" bankAPI={bankAPI} component={BanksPage} /> */}
           <NonAuthRoute exact path="/donateform" component={DonorNonAuth} />
           <AuthRoute exact path="/donate" component={DonorPage} />
-          <Route exact path="/banks"><BanksPage /></Route>
+          <Route exact path="/banks"><BanksPage api={bankApi} /></Route>
           <Route exact path="/"><HomePage /></Route>
           <NonAuthRoute exact path="/signup/social" component={SignupSocial} />
           <NonAuthRoute exact path="/signup/verify" component={SignupVerify} />
-          <AuthRoute exact path={"/banks/:bankId/products"} component={BankPage} />
-          <AuthRoute exact path="/order/cart" component={CheckoutPage} />
+          <AuthRoute exact path={"/banks/:bankId/products"}><BankPage api={bankApi} /></AuthRoute>
+          <AuthRoute exact path="/order/cart"><CheckoutPage api={bankApi} /></AuthRoute>
           <AuthRoute exact path="/order/cart/confirm" component={ConfirmationPage} />
           <Route component={ErrorPage} /> 
           <Redirect to="/404" />

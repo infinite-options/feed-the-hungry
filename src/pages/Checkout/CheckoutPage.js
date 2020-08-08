@@ -4,44 +4,28 @@ import Carousel from "pages/Checkout/Carousel";
 import ScrollToTopOnMount from "utils/Scroll/ScrollToTopOnMount";
 import CheckoutForm from "pages/Checkout/CheckoutForm";
 import './style.css';
-import { useOurApi } from 'API/useOurApi';
 import LoadingPage from 'pages/Error/LoadingPage';
 import ErrorPage from 'pages/Error/ErrorPage';
 
-function CheckoutPage(){
-    // retrieve cart items from local storage
+function CheckoutPage({api}){
     const user = JSON.parse(window.localStorage.getItem('userInfo'));
-    // const cart = user && user.cart ? user.cart : {};
-    // if (!cart) return <EmptyCartPage />;
-    // const bankId = cart.bankId;
-    const bankData = JSON.parse(window.localStorage.getItem('current_pantry'));
-    return <Checkout bank={bankData} user={user}/>
-    // if (bankData) return <CheckoutWithoutApi bank={bankData} />
-    // return <CheckoutWithApi bankId = {bankId}/>
-}
-const CheckoutWithApi = ({bankId}) => {
-    const url = `https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/foodbankinfonew/${bankId}`
-    const { data, isLoading, hasError } = useOurApi(url, {});
-    const bankData = data.result;
-    
-    if (isLoading) return <LoadingPage />
-    if (hasError) return <ErrorPage />
-    return <Checkout bank={bankData}/>
 
+    if (api.isLoading) return <LoadingPage />;
+    if (api.hasError || !api.data.result.result || !user) return <ErrorPage />;
+
+    const bank_id = user.cart.bankId;
+    const bank = api.getBankBy("foodbank_id", bank_id);
+    if (user.cart.total === 0)  return <EmptyCartPage />;
+    return <Checkout bank={bank} user={user}/>
 }
-const CheckoutWithoutApi = ({bank}) => {
-    return <Checkout bank={bank} />
-}
+
 const Checkout = ({bank, user}) => {
-    // const  = JSON.parse(window.localStorage.getItem('userInfo')) || {};
-    const cart = user.cart ? user.cart : {};
-    const cartItems = cart.items ? cart.items : [];
+    const cart = user.cart;
     const [key, setKey] = useState(1);
     window.addEventListener("storage", () => {
         setKey(key + 1);
     });
 
-    if (cartItems.length === 0) return <EmptyCartPage />;
     return (
         <div className="bd-main is-fullheight-with-navbar">
             <div className="checkout-page-layer">
@@ -52,10 +36,10 @@ const Checkout = ({bank, user}) => {
                     </div>
                     <div key={key} className="checkout-page-body">
                         <div className="order-items">
-                        <Carousel itemList={cartItems} />
+                        <Carousel itemList={cart.items} />
                         </div>
                         <div className="order-confirm fade-in-quick">
-                            <CheckoutForm bank={bank} items={cartItems} />
+                            <CheckoutForm bank={bank} items={cart.items} />
                         </div>
                     </div>
                 </div>

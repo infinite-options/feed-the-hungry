@@ -31,9 +31,6 @@ function BankBanner({ obj }) {
             <p className="title bank-title">{obj.fb_name} </p>
             </div>
             </div>
-            {/* <div className="bank-info-wrapper has-no-margin" >
-              <p className="title bank-title">{obj.fb_name} </p>
-            </div> */}
             <div className="divider-25"></div>
             {/* Address */}
             <p>{obj.foodbank_id}</p>
@@ -51,12 +48,6 @@ function BankBanner({ obj }) {
             </div>
             {/* Opening timings */}
             <div className="bank-info-wrapper">
-              <div className="bank-info-icon">
-                <span className="icon">
-                  <ScheduleOutlinedIcon />
-
-                </span>
-              </div>
               <BankSchedule obj={obj} />
             </div>
           </div>

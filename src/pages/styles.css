@@ -707,7 +707,12 @@ img {
     width: 100%;
     display: inline-block;
 }
-
+.schedule-title {
+    float: left;
+    padding-right: 1rem;
+    width: auto;
+    height: 100%;
+}
 .schedule-days {
     float: left;
     padding-right: 1rem;
@@ -1010,6 +1015,10 @@ input .order-quantity {
 
 .bank-filters {
     padding-top: 2rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     /* padding-bottom: 2rem; */
 }
 

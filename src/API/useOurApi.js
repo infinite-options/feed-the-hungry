@@ -11,6 +11,7 @@ export const useOurApi = (initialUrl) => {
   const [fetchedData, setFetchedData] = useState({});
 
   useEffect(() => {
+    
     let unmounted = false;
     const abortController = new AbortController();
 
@@ -29,7 +30,7 @@ export const useOurApi = (initialUrl) => {
 
         }
       };
-      fetchData();
+    fetchData();
 
     return () => {
         // abortController.abort();

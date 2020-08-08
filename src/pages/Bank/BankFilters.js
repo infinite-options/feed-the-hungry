@@ -1,21 +1,78 @@
-import React, { useState } from 'react';
-import { Link, useRouteMatch, useLocation, withRouter, useParams } from 'react-router-dom';
-import useQuery from 'components/Hooks/useQuery';
-import Icons from 'components/Icons/Icons';
+import React, { useState, useEffect } from "react";
+import {
+  Link,
+  useRouteMatch,
+  useLocation,
+  withRouter,
+  useParams,
+  useHistory,
+} from "react-router-dom";
+import useQuery from "components/Hooks/useQuery";
+import Icons from "components/Icons/Icons";
 
 // render filtering tabs
-function BankFilters(){
-    let { bankId } = useParams();
-    let query = useQuery(); 
-    let type = query.get('type'); // get filter params
-    const [activeTab, setActiveTab] = useState( type? type : 'all' );
-    const HandleClickTab = (event, tabName) => {
-        event.preventDefault();
-        setActiveTab(tabName);
+function BankFilters() {
+  let { bankId } = useParams();
+  let history = useHistory();
+  let query = useQuery();
+
+  const [activeFilters, setActiveFilters] = useState(query && query.get('search') ? query.get('search').split(" ") : []);
+  const [isClicked, setIsClicked] = useState(false);
+  const HandleFilter = (e, name) => {
+
+    if (e.target.checked) setActiveFilters(prevState => [...prevState, name]);
+    else setActiveFilters(activeFilters.filter(x => x !== name));
+
+    setIsClicked(true);
+  };
+  useEffect(() => {
+
+    let url = 'search=';
+    if (activeFilters.length > 0){
+        for (var i = 0; i < activeFilters.length; i++){
+            url += activeFilters[i];
+            if (i !== activeFilters.length - 1) url += '+';
+        }
+        history.push(`products?${url}`);
     }
-    return (
-        <div className='bank-filters'>        
-            <div className="tabs is-right">
+    else if (activeFilters.length === 0 && isClicked) history.push('products');
+    
+
+  },[activeFilters])
+  
+  const isChecked = (name) => {
+    if (activeFilters.find(x => x === name)) {console.log("found " + name);return true};
+    return false;
+  }
+  return (
+    <div className="bank-filters">
+      <div className="field is-grouped">
+        <div className="control">
+          <label className="checkbox" onClick={(e) => HandleFilter(e, "vegetarian")}>
+            <input type="checkbox"  defaultChecked={isChecked("vegetarian") }/>
+            Vegetarian
+          </label>
+        </div>
+        <div className="control">
+          <label className="checkbox" onClick={(e) => HandleFilter(e, "vegan")}>
+            <input type="checkbox"  defaultChecked={isChecked("vegan")}  />
+            Vegan
+          </label>
+        </div>
+        <div className="control">
+          <label className="checkbox" onClick={(e) => HandleFilter(e, "gluten-free")}>
+            <input type="checkbox"  defaultChecked={isChecked("gluten-free")} />
+            Gluten Free
+          </label>
+        </div>
+        <div className="control">
+          <label className="checkbox" onClick={(e) => HandleFilter(e, "kosher")}>
+            <input type="checkbox"  defaultChecked={isChecked("kosher")} />
+            Kosher
+          </label>
+        </div>
+      </div>
+      {/* <div className="tabs is-right">
                 <ul>
                     <li className={activeTab === 'all' ? 'is-active': ''} onClick={(e) => HandleClickTab(e, "all")}>
                         <Link to={`/banks/${bankId}/products`} >
@@ -48,9 +105,9 @@ function BankFilters(){
                         </Link>
                     </li>
                 </ul>   
-            </div>
-        </div>
-    );
+            </div> */}
+    </div>
+  );
 }
 
 export default withRouter(BankFilters);

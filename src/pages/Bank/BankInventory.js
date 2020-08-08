@@ -13,16 +13,18 @@ import LoadingPage from "pages/Error/LoadingPage";
 import { useOurApi } from "API/useOurApi";
 import ErrorPage from "pages/Error/ErrorPage";
 // render food bank's inventory
-function BankInventory({ bank, delivery, pickup, orderType }) {
-  // let query = useQuery();
-  // if (query.get("type"))
-    // inventory = filterInventoryByKey(inventory, "fl_food_type", query.get("type"));
-  const inventory = useOurApi(`https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/inventory_filter/${bank.foodbank_id}?delivery=${delivery}&pickup=${pickup}`,{});
-  if (inventory.isLoading) return <p className="title is-6">Loading inventory...</p>
-  if (inventory.hasError) return <p className="title is-6">Unable to load inventory</p>
-  if (inventory.data.result.result.length === 0) return "";
+function BankInventory({ bank, delivery, pickup, search, orderType }) {
+ 
+  const url = `https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/inventory_filter/${bank.foodbank_id}?delivery=${delivery}&pickup=${pickup}` + search;
+  const api = useOurApi(url,{});
+  useEffect(() => {
+    if (search!=="") api.setUrl(url);
+  },[search])
+  
+  if (api.isLoading) return <p className="title is-6">Loading inventory...</p>
+  if (api.hasError) return <p className="title is-6">Unable to load inventory</p>
 
-
+  if (api.data.result.result.length === 0) return "";
   return (
     <div className="inventory-container">
     <div className="inventory-title-container">
@@ -31,7 +33,7 @@ function BankInventory({ bank, delivery, pickup, orderType }) {
       {delivery === 0 && pickup === 1 && <p className="subtitle inventory-title">Pickup Only</p>}
     </div>
     <div className="inventory">
-      {inventory.data.result.result.map((x) => (
+      {api.data.result.result.map((x) => (
         <div
           key={x.food_id}
           className="card item-card"
