@@ -64,7 +64,7 @@ const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
   useEffect(() => {
     const writeData = async () => {
       try {
-        setIsLoading(true)
+        setIsLoading(true);
         const response = await axios.post(url, order);
         const responseData = await response.data;
         // once axios's POST method is called, we update sentOrder
@@ -166,7 +166,7 @@ const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
                           {x.info.fl_brand}
                         </p>
                         <p className="subtitle is-6 is-bold">
-                          {x.info.food_name}
+                          {x.info.fl_name}
                         </p>
                         <span className="tag">
                           <span className="subtitle is-7">

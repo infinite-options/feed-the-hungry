@@ -36,6 +36,7 @@ function BankBanner({ obj }) {
             </div> */}
             <div className="divider-25"></div>
             {/* Address */}
+            <p>{obj.foodbank_id}</p>
             <div className="bank-info-wrapper" >
               <div className="bank-info-icon">
                 <span className="icon">

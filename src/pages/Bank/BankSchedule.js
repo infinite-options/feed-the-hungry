@@ -15,7 +15,7 @@ function BankSchedule({ obj }) {
     <div className="bank-info-content no-overflow" style={{marginTop:'.4rem'}}>
       <div className="schedule-days">
         <div className="title capitalized is-6 is-Nunito">Days</div>
-      {week.map(x => <p key={x} className={week[today.getDay()-1] === x ?  "subtitle is-6 capitalized" : "subtitle has-font-13 capitalized"}>{x.substring(0, 3)}</p>)} 
+      {week.map(x => <p key={x} className={week[today.getDay()-1] === x ?  "subtitle is-6 is-Nunito capitalized" : "subtitle is-6 is-Nunito capitalized"}>{x.substring(0, 3)}</p>)} 
       </div>
       <div className="schedule-hours">
       <div className="title capitalized is-6 is-Nunito">Delivery Hours</div>

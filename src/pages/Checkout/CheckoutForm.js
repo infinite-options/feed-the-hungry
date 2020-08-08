@@ -42,36 +42,20 @@ function CheckoutForm({ bank, items }) {;
   const [activeTab, setActiveTab] = useState(() => {
     if (delivery_pickup_items.length > 0 && delivery_only_items.length === 0 && pickup_only_items.length === 0) return "delivery";
     if (delivery_only_items.length === 0) return "pickup";
-    // if (delivery_pickup_items.length > 0) return "delivery";
     return "delivery";
 
   });
   
   const isFormValid = () => {
-    // let isValid  = true;
-    console.log(fname.isValid);
-    console.log(lname.isValid);
-    console.log(phone.isValid);
-    console.log(email.isValid);
-    console.log(street.isValid);
-    console.log(city.isValid);
-    console.log(state.isValid);
-    console.log(zip.isValid);
-    console.log(dateTime.isValid);
-    console.log('------------');
-    if (!fname.isValid || !lname.isValid || !phone.isValid || !email.isValid){ console.log("customer details are invalid"); return false;}
+    if (!fname.isValid || !lname.isValid || !phone.isValid || !email.isValid) return false;
     if (activeTab === "delivery"){
-      // if (pickup_items.length > 0 ) return false;
       if (!street.isValid  || !city.isValid  || !state.isValid  ||  !zip.isValid) return false;
       if (checkbox.value === false && !dateTime.isValid) return false;
       
     } 
-    // if (activeTab === "pickup" && delivery_items.length > 0) return false;
-    
     return true;
   }
   let form  = isFormValid(); 
-  console.log("form is valid?" + form);
   const userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
   useEffect(() => {
     if (switchUserInfo.value && userInfo){
@@ -101,15 +85,12 @@ function CheckoutForm({ bank, items }) {;
     }
 
   },[switchUserAddress.value]);
-  // window.addEventListener("storage", () => {
-  //   setActiveTab(delivery_only_items.length === 0 ? "pickup" : "delivery" );
-  // });
 
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (form) {
-      const date = dateTime.startDate ? formatDate(dateTime.startDate) : "ASAP";
+      const date = dateTime.startDate ? formatDate(dateTime.startDate) : "Today";
       const userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
       const position = JSON.parse(window.localStorage.getItem('position'));
       const total = totalAmount(items);
@@ -133,7 +114,7 @@ function CheckoutForm({ bank, items }) {;
         latitude: position[0],
         delivery_date: date,
         order_type: activeTab,
-        ordered_items: items,
+        ordered_items: items
       };
 
       window.localStorage.setItem( // write new data to local storage
