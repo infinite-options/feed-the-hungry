@@ -18,8 +18,8 @@ function BankInventory({ bank, delivery, pickup, search, orderType }) {
   const url = `https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/inventory_filter/${bank.foodbank_id}?delivery=${delivery}&pickup=${pickup}` + search;
   const api = useOurApi(url,{});
   useEffect(() => {
-    if (search!=="") api.setUrl(url);
-  },[search])
+   api.setUrl(url);
+  },[url])
   
   if (api.isLoading) return <p className="title is-6">Loading inventory...</p>
   if (api.hasError) return <p className="title is-6">Unable to load inventory</p>
