@@ -2,7 +2,7 @@
   z-index: 9999;
   color: hsl(0, 0%, 48%);
   font-family: "Raleway", sans-serif;
-
+  min-height: 92px;
   border: none;
   background-color: white;
   /* border-bottom: 1px solid #d8dbdd; */

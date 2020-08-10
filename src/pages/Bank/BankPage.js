@@ -19,7 +19,6 @@ import BankFilters from "pages/Bank/BankFilters";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Icons from "components/Icons/Icons";
 import useQuery from "components/Hooks/useQuery";
-import Footer from 'components/Footer/Footer';
 
 const BankPage = ({api}) => {
   let { bankId } = useParams();
@@ -106,14 +105,6 @@ const useOrderType = (bank) => {
     orderType,
     setOrderType,
   }
-}
-const filterInventoryByKey = (arr, key, value) => {
-  return arr.filter(x => x[key] === value);
-}
-const getBankById = (data, id) => {
-    return (data.find(obj => {
-        return obj.id === id;
-    }));
 }
 
 

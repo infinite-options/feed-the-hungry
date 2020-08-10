@@ -1,14 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useRouteMatch, useLocation, useHistory } from "react-router-dom";
 import "./header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Icons from "components/Icons/Icons";
 import { OrderContext } from "components/Context/OrderContext";
 import ServingNowLogo from "assets/image/ServingNow_Logo_Green.png";
-import { faBaby } from "@fortawesome/free-solid-svg-icons";
+
 function Header() {
   const history = useHistory();
   const context = useContext(OrderContext);
+  
   context.setCartTotal(() => {
     const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
     return userInfo && userInfo.cart ? userInfo.cart.total : 0;
@@ -28,6 +29,10 @@ function Header() {
     if (window.location.pathname === pathname) window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
     else {history.push('/' + pathname.split("/").pop()); window.scrollTo(0,0);}
   }
+  const [isActive, setIsActive] = useState(false);
+  const handleClick = () => {
+    setIsActive(!isActive);
+  }
   return (
     <nav
       className="navbar is-fixed-top"
@@ -44,9 +49,20 @@ function Header() {
             <p className="brand-text">SERVING NOW</p>
             <p className="brand-sub-text">Fast, Fresh, and Free</p>
           </div>
-          <Hamburger />
+          <a
+      role="button"
+      className={isActive ? "navbar-burger burger is-active" : "navbar-burger burger"}
+      aria-label="menu"
+      aria-expanded="false"
+      data-target="mainNavbar"
+      onClick={handleClick}
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
         </div>
-        <div id="mainNavbar" className="navbar-menu">
+        <div id="mainNavbar" className={isActive ? "navbar-menu is-active" : "navbar-menu"}>
           <div className="navbar-end">
             <Link to="/" className="navbar-item navbar-item-text" onClick={resetScroll}>
               Home
@@ -117,21 +133,7 @@ function CartTotal({ num }) {
     </Link>
   );
 }
-function Hamburger() {
-  return (
-    <a
-      role="button"
-      className="navbar-burger burger"
-      aria-label="menu"
-      aria-expanded="false"
-      data-target="mainNavbar"
-    >
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  );
-}
+
 const totalAmount = (items) => {
   let total = 0;
   if (items.length > 0) {

@@ -11,11 +11,10 @@ function CheckoutPage({api}){
     const user = JSON.parse(window.localStorage.getItem('userInfo'));
 
     if (api.isLoading) return <LoadingPage />;
-    if (api.hasError || !api.data.result.result || !user) return <ErrorPage />;
+    if (api.hasError || !user) return <ErrorPage />;
 
-    const bank_id = user.cart.bankId;
-    const bank = api.getBankBy("foodbank_id", bank_id);
-    if (user.cart.total === 0)  return <EmptyCartPage />;
+    const bank = api.getBankBy("foodbank_id", user.cart.bankId);
+    if (!user.cart.total || user.cart.total === 0)  return <EmptyCartPage />;
     return <Checkout bank={bank} user={user}/>
 }
 

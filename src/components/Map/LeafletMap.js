@@ -9,7 +9,9 @@ import { useUserLocation } from 'components/Hooks/useUserLocation.js';
 function LeafletMap({marker, banks}) {
     const { position } = useUserLocation();
     useEffect(() => {
-      window.localStorage.setItem('position', JSON.stringify(position));
+      const user = JSON.parse(window.localStorage.getItem('userInfo'));
+      if (user) user.position = position;
+      window.localStorage.setItem('userInfo', JSON.stringify(user));
     },[position])
 
     return (

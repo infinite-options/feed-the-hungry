@@ -8,11 +8,10 @@ import {
 } from "react-router-dom";
 import useQuery from "components/Hooks/useQuery";
 import { OrderContext } from "components/Context/OrderContext";
-import NotFoundImage from 'assets/image/Not_Found_Image.png';
-import LoadingPage from "pages/Error/LoadingPage";
 import { useOurApi } from "API/useOurApi";
 import ErrorPage from "pages/Error/ErrorPage";
 import LoadingInventory from 'pages/Error/LoadingInventory';
+
 // render food bank's inventory
 function BankInventory({ bank, delivery, pickup, search, orderType }) {
  const [key, setKey] = useState(0);
@@ -31,7 +30,7 @@ function BankInventory({ bank, delivery, pickup, search, orderType }) {
   return (
     <div key={key} className="inventory-container animate-bottom">
     <div className="inventory-title-container">
-      {delivery === 1 && <p className="subtitle inventory-title">Delivery or Pickup</p>}
+      {delivery === 1 && pickup === 1 && <p className="subtitle inventory-title">Delivery or Pickup</p>}
       {delivery === 1 && pickup === 0 && <p className="subtitle inventory-title">Delivery Only</p>}
       {delivery === 0 && pickup === 1 && <p className="subtitle inventory-title">Pickup Only</p>}
     </div>

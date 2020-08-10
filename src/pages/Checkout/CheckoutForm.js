@@ -92,7 +92,7 @@ function CheckoutForm({ bank, items }) {;
     if (form) {
       const date = dateTime.startDate ? formatDate(dateTime.startDate) : "Today";
       const userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
-      const position = JSON.parse(window.localStorage.getItem('position'));
+      const position = userInfo ? userInfo.position : "";
       const total = totalAmount(items);
    
       let unconfirmed_order = {
