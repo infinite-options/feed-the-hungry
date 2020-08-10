@@ -56,21 +56,13 @@ const Bank = ({ bank }) => {
     <div className="bd-main is-fullheight-with-navbar">
       <ScrollToTopOnMount/>
         <BankBanner obj={bank} />
-        <div className="container">
         <BankFilters />
+        <div className="container">
         {inventory.data.result && inventory.data.result.result.length > 0 ? 
         <div key={key} className="bank-body">
           <BankInventory  bank={bank} delivery={1} pickup={1} orderType={orderType} search={search}/>
           <BankInventory  bank={bank} delivery={1} pickup={0}  orderType={orderType} search={search}/>
           <BankInventory  bank={bank} delivery={0} pickup={1}  orderType={orderType} search={search}/>  
-          {/* {pickup_items.data.result.result.length > 0 && (
-            <div className="inventory-container">
-              <div className="inventory-title-container">
-                <p className="subtitle inventory-title">Pick Up Only</p>
-              </div>
-              <BankInventory key={key} inventory={pickup_items.data.result.result} orderType={orderType}/>
-            </div>
-          )} */}
         </div>
         : <div className="no-product">
           <p className="is-Nunito is-6">This food pantry does not have any product at the moment.</p></div>}
@@ -96,11 +88,16 @@ const Bank = ({ bank }) => {
 };
 
 const useOrderType = (bank) => {
-  const [foodBank, setFoodBank] = useState(bank);
-  const [orderType, setOrderType] = useState("");
-  useEffect(() => {
-    setOrderType("");
-  },[foodBank])
+  const [orderType, setOrderType] = useState(() => {
+    const user = JSON.parse(window.localStorage.getItem('userInfo'));
+    if (user.cart !="" && user.cart.bankId === bank.foodbank_id) {
+      return user.cart.order_type;
+    }
+    return "";
+  });
+  // useEffect(() => {
+  //   setOrderType("");
+  // },[foodBank])
   return {
     orderType,
     setOrderType,

@@ -6,10 +6,8 @@ import {
   withRouter,
   useParams,
 } from "react-router-dom";
-import useQuery from "components/Hooks/useQuery";
 import { OrderContext } from "components/Context/OrderContext";
 import { useOurApi } from "API/useOurApi";
-import ErrorPage from "pages/Error/ErrorPage";
 import LoadingInventory from 'pages/Error/LoadingInventory';
 
 // render food bank's inventory
@@ -59,35 +57,6 @@ function BankInventory({ bank, delivery, pickup, search, orderType }) {
               <QuantityInput bank={bank} item={x} orderType={orderType} />
             </div>
           </div>
-          {/* <div className="card-content has-no-padding item-content">
-            <div className="item-image-container">
-              <img
-                src={x.fl_image}
-                className="item-image"
-                alt="Placeholder image"
-              ></img>
-            </div>
-            <div className="item-info">
-              <p className="title has-text-grey-light is-7 item-brand">
-                {x.fl_brand}
-              </p>
-              <p className="subtitle is-6 is-bold no-overflow">{x.fl_name}</p>
-              <p className="subtitle is-7 has-text-grey no-overflow">
-                {x.fl_package_type} ({x.fl_amount} {x.fl_unit})
-              </p>
-              <QuantityInput item={x} orderType={orderType} />
-            </div>
-          </div>
-          <div className="card-footer">
-            <div className="item-price">
-              <span className="subtitle has-font-13 has-text-grey">
-                ${x.fl_value_in_dollars}
-              </span>
-            </div>
-            <div className="item-tags">
-              <ItemTags str={x.fl_food_type} />
-            </div>
-          </div> */}
         </div>
       ))}
     </div>
@@ -159,7 +128,7 @@ function QuantityInput({bank, item, orderType }) {
 }
 
 const useCounter = (bank, x, orderType) => {
-  let { bankId } = useParams();
+  const bankId = bank.foodbank_id;
   const context = useContext(OrderContext);
 
   const [value, setValue] = useState(() => {
@@ -190,7 +159,7 @@ const useCounter = (bank, x, orderType) => {
   };
   useEffect(() => {
     let user = JSON.parse(window.localStorage.getItem("userInfo"));
-    let cart = user.cart != "" ? user.cart : { bankId: "", items: []};
+    let cart = user && user.cart != "" ? user.cart : { bankId: "", items: [], total: 0, order_type: ""};
     let bank_id = cart.bankId;
     let cart_items = cart.items;
     // CASE 1: if user is choosing products from the same food pantry again
@@ -202,6 +171,15 @@ const useCounter = (bank, x, orderType) => {
       if (item && value > 0) item.amount = value; // update selected amount if that product is already in cart
       else if (item && value === 0) cart_items.splice(cart_items.indexOf(item), 1); // if product is deleted from cart
       else if (!item && value > 0) cart_items.push({ info: x, amount: value }); // if product is not in cart but gets selected
+
+      const delivery_only_items = getItemsByKey(cart_items,"pickup",0);
+      const pickup_only_items = getItemsByKey(cart_items, "delivery", 0);
+  
+      if (delivery_only_items.length > 0) cart.order_type="delivery";
+      else if (pickup_only_items.length > 0) cart.order_type="pickup";
+      else cart.order_type="";
+
+      orderType.setOrderType(cart.order_type);
     } 
     // CASE 2: if user is choosing products from a diffrent food pantry
     else if (cart.bankId != bankId && value > 0) { 
@@ -219,14 +197,6 @@ const useCounter = (bank, x, orderType) => {
       "userInfo",
       JSON.stringify(user)
     );
-
-    const delivery_only_items = getItemsByKey(cart_items,"pickup",0);
-    const pickup_only_items = getItemsByKey(cart_items, "delivery", 0);
-
-    if (delivery_only_items.length > 0) orderType.setOrderType("delivery");
-    else if (pickup_only_items.length > 0) orderType.setOrderType("pickup");
-    else orderType.setOrderType("");
-
     context.setCartTotal(totalAmount(cart_items));
   }, [value]);
 

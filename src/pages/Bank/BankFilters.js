@@ -45,6 +45,7 @@ function BankFilters() {
   }
   return (
     <div className="bank-filters">
+      <div className="container">
       <div className="field is-grouped">
         <div className="control">
           <label className="checkbox" onClick={(e) => HandleFilter(e, "vegetarian")}>
@@ -69,6 +70,7 @@ function BankFilters() {
             <input type="checkbox"  defaultChecked={isChecked("kosher")} />
             Kosher
           </label>
+        </div>
         </div>
       </div>
       {/* <div className="tabs is-right">
