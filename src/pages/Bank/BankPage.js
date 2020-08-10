@@ -19,9 +19,10 @@ import BankFilters from "pages/Bank/BankFilters";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Icons from "components/Icons/Icons";
 import useQuery from "components/Hooks/useQuery";
+import Footer from 'components/Footer/Footer';
+
 const BankPage = ({api}) => {
   let { bankId } = useParams();
-  // const fetchedData = useOurApi('https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/foodbanks', {});
 
   if (api.isLoading) return <LoadingPage />;
   if (api.hasError || !api.data.result.result) return <ErrorPage />;
@@ -48,18 +49,21 @@ const Bank = ({ bank }) => {
 
   let query = useQuery();
   const search =  query.get('search') ? '&' +  query.get('search').replace(/ /g,'&') : '' ;
+  const inventory = useOurApi(`https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/inventory_filter/${bank.foodbank_id}`,{});
+
+  if (inventory.hasError) return <ErrorPage />
 
   return (
     <div className="bd-main is-fullheight-with-navbar">
       <ScrollToTopOnMount/>
-    
         <BankBanner obj={bank} />
         <div className="container">
         <BankFilters />
+        {inventory.data.result && inventory.data.result.result.length > 0 ? 
         <div key={key} className="bank-body">
           <BankInventory  bank={bank} delivery={1} pickup={1} orderType={orderType} search={search}/>
           <BankInventory  bank={bank} delivery={1} pickup={0}  orderType={orderType} search={search}/>
-          <BankInventory  bank={bank} delivery={0} pickup={1}  orderType={orderType} search={search}/>
+          <BankInventory  bank={bank} delivery={0} pickup={1}  orderType={orderType} search={search}/>  
           {/* {pickup_items.data.result.result.length > 0 && (
             <div className="inventory-container">
               <div className="inventory-title-container">
@@ -69,6 +73,8 @@ const Bank = ({ bank }) => {
             </div>
           )} */}
         </div>
+        : <div className="no-product">
+          <p className="is-Nunito is-6">This food pantry does not have any product at the moment.</p></div>}
         <div className="bank-actions">
           <button className="button is-info">
             <span className="icon">
@@ -89,6 +95,7 @@ const Bank = ({ bank }) => {
     </div>
   );
 };
+
 const useOrderType = (bank) => {
   const [foodBank, setFoodBank] = useState(bank);
   const [orderType, setOrderType] = useState("");

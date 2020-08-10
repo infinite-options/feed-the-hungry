@@ -38,3 +38,17 @@
     color: white;
     background-color: #46c58c;
 }
+.spinner {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 377.2px;
+}
+.loading-body {
+    width: 100%;
+    min-height: calc(100vh - 120px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -20,6 +20,8 @@ function Header() {
     window.localStorage.removeItem("userInfo");
     context.setIsAuth(false);
   };
+
+  // create a nice, smooth scrolling effect
   const resetScroll = (e, pathName="") => {
     e.preventDefault();
     const pathname = e.target.pathname ? e.target.pathname : pathName;

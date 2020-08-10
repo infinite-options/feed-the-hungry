@@ -26,7 +26,9 @@ import DonorNonAuth from 'pages/Donor/DonorNonAuth';
 import DonorPage from 'pages/Donor/DonorPage';
 import ConfirmationPage from 'pages/Checkout/ConfirmationPage';
 import ErrorPage from 'pages/Error/ErrorPage';
+import LoadingPage from 'pages/Error/LoadingPage';
 import HomePage from 'pages/Home/HomePage';
+import Footer from 'components/Footer/Footer';
 import ScrollToTop from 'utils/Scroll/SrollToTop';
 // import hooks
 import { OrderContext } from 'components/Context/OrderContext';
@@ -81,6 +83,7 @@ function App() {
           <AuthRoute exact path="/donate" component={DonorPage} />
           <Route exact path="/banks"><BanksPage api={bankApi} /></Route>
           <Route exact path="/"><HomePage /></Route>
+          <Route exact path="/loading" component={LoadingPage} /> 
           <NonAuthRoute exact path="/signup/social" component={SignupSocial} />
           <NonAuthRoute exact path="/signup/verify" component={SignupVerify} />
           <AuthRoute exact path={"/banks/:bankId/products"}><BankPage api={bankApi} /></AuthRoute>
@@ -89,6 +92,7 @@ function App() {
           <Route component={ErrorPage} /> 
           <Redirect to="/404" />
         </Switch>
+        <Footer />
       </OrderContext.Provider>
 
     </Router>

@@ -12,7 +12,6 @@ import Icons from "components/Icons/Icons";
 
 // render filtering tabs
 function BankFilters() {
-  let { bankId } = useParams();
   let history = useHistory();
   let query = useQuery();
 
@@ -41,7 +40,7 @@ function BankFilters() {
   },[activeFilters])
   
   const isChecked = (name) => {
-    if (activeFilters.find(x => x === name)) {console.log("found " + name);return true};
+    if (activeFilters.find(x => x === name)) return true;
     return false;
   }
   return (

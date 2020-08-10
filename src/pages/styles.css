@@ -1276,7 +1276,7 @@ input.is-danger.is-white:hover {
     /* margin: 10px; */
     /* margin-right: 20px; */
     border: none;
-    margin-bottom: 53px;
+    margin-bottom: 1rem;
     box-shadow: none;
     height: auto;
 }
@@ -1348,3 +1348,27 @@ input.is-danger.is-white:hover {
     pointer-events: none;
     cursor: default;
 }
+.no-product {
+    width: 100%;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    text-align: center;
+}
+/* Add animation to "page content" */
+.animate-bottom {
+    position: relative;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: 1s;
+    animation-name: animatebottom;
+    animation-duration: 1s
+  }
+  
+  @-webkit-keyframes animatebottom {
+    from { bottom:-100px; opacity:0 } 
+    to { bottom:0px; opacity:1 }
+  }
+  
+  @keyframes animatebottom { 
+    from{ bottom:-100px; opacity:0 } 
+    to{ bottom:0; opacity:1 }
+  }

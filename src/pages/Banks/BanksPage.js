@@ -40,7 +40,6 @@ function BanksPage({api}) {
         </div>
       </div>
       </div>
-      <Footer />
     </div>
   );
 }
