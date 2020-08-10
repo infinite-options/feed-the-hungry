@@ -25,12 +25,13 @@ function BankInventory({ bank, delivery, pickup, search, orderType }) {
   
   if (api.isLoading) return <LoadingInventory />
   if (api.hasError) return <p className="title is-6">Unable to load products</p>
-
   if (api.data.result.result.length === 0) return "";
+  if (orderType.orderType === "delivery" && delivery === 0) return "";
+  if (orderType.orderType === "pickup" && pickup === 0) return "";
   return (
     <div key={key} className="inventory-container animate-bottom">
     <div className="inventory-title-container">
-      {delivery === 1 && pickup === 1 && <p className="subtitle inventory-title">Delivery or Pickup</p>}
+      {delivery === 1 && <p className="subtitle inventory-title">Delivery or Pickup</p>}
       {delivery === 1 && pickup === 0 && <p className="subtitle inventory-title">Delivery Only</p>}
       {delivery === 0 && pickup === 1 && <p className="subtitle inventory-title">Pickup Only</p>}
     </div>
@@ -40,11 +41,6 @@ function BankInventory({ bank, delivery, pickup, search, orderType }) {
         <div
           key={x.food_id}
           className="card item-card"
-          // className={
-          //   x.delivery_pickup.includes(orderType.orderType)
-          //     ? "card item"
-          //     : " card item has-opacity-0-6"
-          // }
         >
           <div className="card-image">
             <figure className="image is-155x155">
@@ -143,7 +139,6 @@ function QuantityInput({bank, item, orderType }) {
             className="button is-small"
             onClick={count.increase}
             disabled={
-              // !item.delivery_pickup.includes(orderType.orderType) ||
               item.quantity === 0 
               // count.value >= item.food_id_limit
                 ? true
@@ -226,11 +221,11 @@ const useCounter = (bank, x, orderType) => {
       JSON.stringify(user)
     );
 
-    const delivery_items = getItemsByKey(cart_items,"delivery",1);
-    const pickup_items = getItemsByKey(cart_items, "pickup", 1);
+    const delivery_only_items = getItemsByKey(cart_items,"pickup",0);
+    const pickup_only_items = getItemsByKey(cart_items, "delivery", 0);
 
-    if (delivery_items.length > 0) orderType.setOrderType("delivery");
-    else if (pickup_items.length > 0) orderType.setOrderType("pickup");
+    if (delivery_only_items.length > 0) orderType.setOrderType("delivery");
+    else if (pickup_only_items.length > 0) orderType.setOrderType("pickup");
     else orderType.setOrderType("");
 
     context.setCartTotal(totalAmount(cart_items));
