@@ -1039,7 +1039,26 @@ input .order-quantity {
     justify-content: center;
     /* padding-bottom: 2rem; */
 }
-
+.bank-filters .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.bank-filters .icon {
+    width: 34px;
+    height: 34px;
+}
+.no-checkbox {
+    opacity: 0;
+}
+.filter {
+    border-radius: 50%;
+    overflow: hidden;
+    
+}
+.filter.is-active {
+    border: 2px solid black;
+}
 .filter-icon-wrapper {
     width: 42px;
     height: 42px;

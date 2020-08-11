@@ -9,6 +9,10 @@ import {
 } from "react-router-dom";
 import useQuery from "components/Hooks/useQuery";
 import Icons from "components/Icons/Icons";
+import Vegetarian from 'assets/image/vegetarian.png';
+import Vegan from 'assets/image/vegan.png';
+import GlutenFree from 'assets/image/gluten_free.png';
+import Kosher from 'assets/image/kosher.png';
 
 // render filtering tabs
 function BankFilters() {
@@ -49,26 +53,39 @@ function BankFilters() {
       <div className="field is-grouped">
         <div className="control">
           <label className="checkbox" onClick={(e) => HandleFilter(e, "vegetarian")}>
-            <input type="checkbox"  defaultChecked={isChecked("vegetarian") }/>
-            Vegetarian
+            <input className="no-checkbox" type="checkbox"  defaultChecked={isChecked("vegetarian") }/>
+            <span className={isChecked("vegetarian") ? "icon tooltip filter is-active" : "icon tooltip filter"}>
+              <img src={Vegetarian} alt="Vegetarian" />
+              <span className="tooltiptext">Vegetarian</span>
+            </span>
+            
           </label>
         </div>
         <div className="control">
           <label className="checkbox" onClick={(e) => HandleFilter(e, "vegan")}>
-            <input type="checkbox"  defaultChecked={isChecked("vegan")}  />
-            Vegan
+            <input className="no-checkbox" type="checkbox"  defaultChecked={isChecked("vegan")}  />
+            <span className={isChecked("vegan") ? "icon tooltip filter is-active" : "icon tooltip filter"}>
+              <img src={Vegan} alt="Vegan" />
+              <span className="tooltiptext">Vegan</span>
+            </span>
           </label>
         </div>
         <div className="control">
           <label className="checkbox" onClick={(e) => HandleFilter(e, "gluten-free")}>
-            <input type="checkbox"  defaultChecked={isChecked("gluten-free")} />
-            Gluten Free
+            <input className="no-checkbox" type="checkbox"  defaultChecked={isChecked("gluten-free")} />
+            <span className={isChecked("gluten-free") ? "icon tooltip filter is-active" : "icon tooltip filter"}>
+              <img src={GlutenFree} alt="Gluten Free" />
+              <span className="tooltiptext">Gluten-free</span>
+            </span>
           </label>
         </div>
         <div className="control">
           <label className="checkbox" onClick={(e) => HandleFilter(e, "kosher")}>
-            <input type="checkbox"  defaultChecked={isChecked("kosher")} />
-            Kosher
+            <input className="no-checkbox" type="checkbox"  defaultChecked={isChecked("kosher")} />
+            <span className={isChecked("kosher") ? "icon tooltip filter is-active" : "icon tooltip filter"}>
+              <img src={Kosher} alt="Kosher" />
+              <span className="tooltiptext">Kosher</span>
+            </span>
           </label>
         </div>
         </div>
