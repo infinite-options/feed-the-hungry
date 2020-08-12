@@ -19,6 +19,7 @@ import BankFilters from "pages/Bank/BankFilters";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Icons from "components/Icons/Icons";
 import useQuery from "components/Hooks/useQuery";
+import LoadingInventory from 'pages/Error/LoadingInventory';
 
 const BankPage = ({api}) => {
   let { bankId } = useParams();
@@ -49,7 +50,7 @@ const Bank = ({ bank }) => {
   let query = useQuery();
   const search =  query.get('search') ? '&' +  query.get('search').replace(/ /g,'&') : '' ;
   const inventory = useOurApi(`https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/inventory_filter/${bank.foodbank_id}`,{});
-
+  if(inventory.isLoading) return <LoadingPage />
   if (inventory.hasError) return <ErrorPage />
 
   return (

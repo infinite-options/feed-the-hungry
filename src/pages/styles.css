@@ -1045,15 +1045,18 @@ input .order-quantity {
     justify-content: center;
 }
 .bank-filters .icon {
-    width: 34px;
-    height: 34px;
+    width: 43px;
+    height: 43px;
 }
+.bank-filters .icon img {
+    border-radius: 50%;
+}
+
 .no-checkbox {
     opacity: 0;
 }
 .filter {
     border-radius: 50%;
-    overflow: hidden;
     
 }
 .filter.is-active {
