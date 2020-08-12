@@ -22,7 +22,7 @@ function BankInventory({ bank, delivery, pickup, search, orderType }) {
   
   if (api.isLoading) return <LoadingInventory />
   if (api.hasError) return <p className="title is-6">Unable to load products</p>
-  if (api.data.result.result.length === 0) return "";
+  if (!api.data.result.result || api.data.result.result.length === 0) return "";
   if (orderType.orderType === "delivery" && delivery === 0) return "";
   if (orderType.orderType === "pickup" && pickup === 0) return "";
   return (

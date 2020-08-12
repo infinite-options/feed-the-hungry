@@ -49,9 +49,6 @@ const Bank = ({ bank }) => {
 
   let query = useQuery();
   const search =  query.get('search') ? '&' +  query.get('search').replace(/ /g,'&') : '' ;
-  const inventory = useOurApi(`https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/inventory_filter/${bank.foodbank_id}`,{});
-  if(inventory.isLoading) return <LoadingPage />
-  if (inventory.hasError) return <ErrorPage />
 
   return (
     <div className="bd-main is-fullheight-with-navbar">
@@ -59,14 +56,11 @@ const Bank = ({ bank }) => {
         <BankBanner obj={bank} />
         <BankFilters />
         <div className="container">
-        {inventory.data.result && inventory.data.result.result.length > 0 ? 
         <div key={key} className="bank-body">
           <BankInventory  bank={bank} delivery={1} pickup={1} orderType={orderType} search={search}/>
           <BankInventory  bank={bank} delivery={1} pickup={0}  orderType={orderType} search={search}/>
           <BankInventory  bank={bank} delivery={0} pickup={1}  orderType={orderType} search={search}/>  
         </div>
-        : <div className="no-product">
-          <p className="is-Nunito is-6">This food pantry does not have any product at the moment.</p></div>}
         <div className="bank-actions">
           <button className="button is-info">
             <span className="icon">
