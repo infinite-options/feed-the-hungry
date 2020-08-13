@@ -64,26 +64,7 @@ function BankInventory({ bank, delivery, pickup, search, orderType }) {
   );
 }
 
-// render an item's tags
-function ItemTags({ str }) {
-  let { bankId } = useParams();
-  return (
-    <div className="tags-container no-overflow">
-      {str
-        ? str.split(";").map((tag) => (
-            <Link
-              key={tag}
-              to={`banks/${bankId}/products?type=${tag}`}
-              className="item-tag subtitle has-margin-left-12"
-              alt=""
-            >
-              #{tag}
-            </Link>
-          ))
-        : ""}
-    </div>
-  );
-}
+
 function QuantityInput({bank, item, orderType }) {
   const count = useCounter(bank, item, orderType);
   return (

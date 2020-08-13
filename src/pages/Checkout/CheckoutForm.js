@@ -35,9 +35,7 @@ function CheckoutForm({ bank, items }) {;
   );
   const dateTime = useDate("Select a date and time", true, new Date(), null, checkbox.value ? true : false);
   const delivery_pickup_items = items.filter((x) => x.info.delivery === 1 && x.info.pickup === 1 );
-  const delivery_items = items.filter((x) => x.info.delivery === 1 );
   const delivery_only_items = items.filter((x) => x.info.delivery === 1 && x.info.pickup === 0 );
-  const pickup_items = items.filter((x) => x.info.pickup === 1);
   const pickup_only_items = items.filter((x) => x.info.delivery === 0 && x.info.pickup === 1);
   const [activeTab, setActiveTab] = useState(() => {
     if (delivery_pickup_items.length > 0 && delivery_only_items.length === 0 && pickup_only_items.length === 0) return "delivery";
