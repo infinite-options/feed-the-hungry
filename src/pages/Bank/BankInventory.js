@@ -186,6 +186,7 @@ const useCounter = (bank, x, orderType) => {
       cart.bankId = bankId;
       if (x.delivery === 1 && x.pickup === 0) cart.order_type = "delivery";
       else if (x.delivery === 0 && x.pickup === 1)  cart.order_type = "pickup";
+      else cart.order_type = "";
       window.localStorage.setItem('current_pantry',JSON.stringify(bank));
     } 
 

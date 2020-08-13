@@ -6,7 +6,7 @@ import LoginForm from "components/Form/LoginForm";
 
 function LoginPage() {
     return (
-        <div className="login-signup-page">
+        <div className="bd-main is-fullheight-with-navbar">
             {/* Login image */}
             <figure className="image is-3by1 has-margin-bottom-0-5" style={{width: "100%"}}>
                 <img alt="placeholder" src={FarmersMarket}></img>

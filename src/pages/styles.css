@@ -1123,7 +1123,7 @@ input .order-quantity {
     margin-top: 121px;
     width: 100%;
     min-height: calc(100vh - 121px);
-    background-color: #f8f7fa;
+    background-color: white;
 }
 
 .signup-background-image {
@@ -1171,6 +1171,7 @@ hr.is-light-gray {
     margin: auto;
 }
 
+/* INPUT STYLES */
 .input {
     border-radius: 0;
     /* background-color: transparent; */
