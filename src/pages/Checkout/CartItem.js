@@ -7,10 +7,10 @@ function CartItem({ foodItem }) {
         <img src={foodItem.info.fl_image} alt="Placeholder image" />
       </div>
       <div className="card-content no-overflow">
-        <p className="title is-7 has-text-grey-light item-brand">
+        <p className="title is-7 has-text-grey-light is-Raleway">
           {foodItem.info.fl_brand}
         </p>
-        <p className="subtitle is-6 is-bold">{foodItem.info.food_name}</p>
+        <p className="subtitle is-7 is-bold is-Nunito">{foodItem.info.fl_name}</p>
         <span className="tag">
           <span className="subtitle is-7">
             {foodItem.info.fl_package_type} x{foodItem.amount}

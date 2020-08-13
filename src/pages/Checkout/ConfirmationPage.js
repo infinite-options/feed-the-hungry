@@ -8,13 +8,16 @@ import FailedOrderPage from "pages/Error/FailedOrderPage";
 import { OrderContext } from "components/Context/OrderContext";
 import { useOurApi } from "API/useOurApi";
 import EmptyCartPage from "pages/Error/EmptyCartPage";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 function ConfirmationPage() {
-  const unconfirmed_order = JSON.parse(window.localStorage.getItem("unconfirmed_order")) || {};
+  const unconfirmed_order =
+    JSON.parse(window.localStorage.getItem("unconfirmed_order")) || {};
   const cartItems = unconfirmed_order.ordered_items
     ? unconfirmed_order.ordered_items
     : [];
-  if (cartItems.length === 0) return <EmptyCartPage />
+  if (cartItems.length === 0) return <EmptyCartPage />;
   else {
     const order = {
       customer_id: unconfirmed_order.customer_id,
@@ -50,7 +53,7 @@ function ConfirmationPage() {
 //  WRITE DATA TO API
 // the reason why we have to make a separate Confirmation component for the state variables
 // is to prevent them from re-rendering the entire ConfirmationPage
-// ('url', 'sentOrder', etc will trigger re-render, so if you move all these hooks to ConfirmationPage, 
+// ('url', 'sentOrder', etc will trigger re-render, so if you move all these hooks to ConfirmationPage,
 // they will cause the page to render infinitely!!!! that is very bad since that will cause the axios to fire infinitely,
 // resulting in a ton of similar rows of data in the db !!!)
 
@@ -77,16 +80,23 @@ const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
         const EDIT_USER_STATUS_API = `https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/edit_user_status/${userInfo.userID}?`;
         if (!userInfo.isCustomer) {
           userInfo.isCustomer = 1;
-          axios.get(EDIT_USER_STATUS_API + "user_is_customer=1").then(() => {
-            window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
-          }).catch(err => {
-            console.log(err.response);
-          });
+          axios
+            .get(EDIT_USER_STATUS_API + "user_is_customer=1")
+            .then(() => {
+              window.localStorage.setItem("userInfo", JSON.stringify(userInfo));
+            })
+            .catch((err) => {
+              console.log(err.response);
+            });
         }
-       
-        window.localStorage.setItem('userInfo', JSON.stringify(userInfo)); // remove cart data from local storage
+
+        window.localStorage.setItem("userInfo", JSON.stringify(userInfo)); // remove cart data from local storage
         context.setOrderTotal(0);
-        setSentOrder(prevState => ({...prevState, isSent: true, order_id: responseData.result.order_id}));
+        setSentOrder((prevState) => ({
+          ...prevState,
+          isSent: true,
+          order_id: responseData.result.order_id,
+        }));
       } catch (err) {
         console.log(err);
         setHasErrror(true);
@@ -95,89 +105,100 @@ const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
         // ???
       }
     };
-    
+
     if (!sentOrder.isSent) writeData(); // if data is already written to the db, we don't call axios.
   }, [url]);
-  
+
   window.localStorage.setItem("unconfirmed_order", JSON.stringify(sentOrder));
-  if (isLoading) return <LoadingPage />
-  if (hasError) return <FailedOrderPage />
+  if (isLoading) return <LoadingPage />;
+  if (hasError) return <FailedOrderPage />;
 
   return (
     <div className="bd-main is-fullheight-with-navbar">
       <div className="container">
         {/* <div className="confirmation-page-content"> */}
-          <div className="confirmation-page-title">
-            <p className="title is-3">{sentOrder.kitchen_name}</p>
-          </div>
-          <div className="space-2-5"></div>
-          {/* <div className="confirmation-page-body"> */}
+        <div className="confirmation-page-title">
+          <p className="title is-3">{sentOrder.kitchen_name}</p>
+        </div>
+        <div className="space-2-5"></div>
+        {/* <div className="confirmation-page-body"> */}
+
+        <div className="confirm-order-container">
+          <p className="title is-4">Hey {sentOrder.name},</p>{" "}
+          <p className="title is-4 has-text-green">
+            <span className="icon" style={{ marginRight: ".5rem" }}>
+              <FontAwesomeIcon icon={faCheck} />
+            </span>
+            <span>We've received your order</span>
+          </p>
+          <p className="title is-5">Order no#: {sentOrder.order_id} </p>
+          <p className="subtitle is-6">
+            A confirmation email has been sent to {sentOrder.email}
+          </p>
+          <p className="subtitle is-6">
+            Click <a href="#">here</a> to resend confirmation email
+          </p>
+          <div className="divider"></div>
           <div className="total-order-container">
-                  {sentOrder.ordered_items.map((x) => (
-                    <div key={x.info.food_id} className="card cart-item">
-                      <div className="card-image cart-item-image">
-                        <img src={x.info.fl_image} alt="Placeholder image" />
-                      </div>
-                      <div className="card-content no-overflow">
-                        {/* <p className="title is-7 has-text-grey-light item-brand">
+            {sentOrder.ordered_items.map((x) => (
+              <div key={x.info.food_id} className="card cart-item">
+                <div className="card-image cart-item-image">
+                  <img src={x.info.fl_image} alt="Placeholder image" />
+                </div>
+                <div className="card-content no-overflow">
+                  {/* <p className="title is-7 has-text-grey-light item-brand">
                           {x.info.fl_brand}
                   </p> */}
-                        <p className="title is-6 is-Nunito" style={{marginBottom:'.5rem'}}>
-                          {x.info.fl_name}
-                        </p> 
-                        <span className="tag">
-                          <span className="subtitle is-6 is-Nunito">
-                            x{x.amount}
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                  ))}
+                  <p
+                    className="title is-7 is-Nunito"
+                    style={{ marginBottom: ".5rem" }}
+                  >
+                    {x.info.fl_name}
+                  </p>
+                  <span className="tag">
+                    <span className="subtitle is-7 is-Nunito">x{x.amount}</span>
+                  </span>
                 </div>
-
-                <div className="confirm-order-container">
-                  <p className="title is-6">Your order has been placed</p>
-                  <p className="title is-6">Confirmation number: {sentOrder.order_id} </p>
-                  <p className="subtitle is-6">
-                    A confirmation email has been sent to{" "}
-                    {sentOrder.email}
-                  </p>
-                  <p className="subtitle is-6">
-                    Click <a href="#">here</a> to resend confirmation email
-                  </p>
-                  <div className="divider"></div>
-                  <div className="columns">
-                    <div className="column is-2">
-                      <p className="subtitle is-6">
-                        Delivery date: {sentOrder.date}
-                      </p>
-
-                     <p className="subtitle is-6"> {order.order_type === "delivery" ? "Delivery address" : "Pickup address"}:</p>
-                    </div>
-                    
-                    <div className="column is-10">
-                    <p className="subtitle is-6">
-                        {sentOrder.delivery_date}
-                      </p>
-                    {sentOrder.order_type === "delivery" ?
-                      <div>
-
-                      <p className="subtitle is-6">
-                        {sentOrder.street}
-                      </p>
-
-                      <p className="subtitle is-6">
-                        {sentOrder.city}, {sentOrder.state}{" "}
-                        {sentOrder.zipcode}
-                      </p></div>
-                    :  <p className="subtitle is-6">{sentOrder.kitchen_address}</p>}
-                    </div>
-                    
-                  </div>
-
+              </div>
+            ))}
           </div>
-          <div className="divider"></div>
+          <div className="space-2-5"></div>
+          <div className="columns">
+            <div className="column is-2">
+              <p className="subtitle is-6">Delivery date: {sentOrder.date}</p>
 
+              <p className="subtitle is-6">
+                {" "}
+                {order.order_type === "delivery"
+                  ? "Delivery address"
+                  : "Pickup address"}
+                :
+              </p>
+            </div>
+
+            <div className="column is-10">
+              <p className="subtitle is-6 is-bold">{sentOrder.delivery_date}</p>
+              {sentOrder.order_type === "delivery" ? (
+                <div>
+                  <p className="subtitle is-6">{sentOrder.street}</p>
+
+                  <p className="subtitle is-6">
+                    {sentOrder.city}, {sentOrder.state} {sentOrder.zipcode}
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  {" "}
+                  <p className="subtitle is-6 is-bold">
+                    {sentOrder.kitchen_name}
+                  </p>
+                  <p className="subtitle is-6">{sentOrder.kitchen_address}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        {/* <div className="divider"></div> */}
       </div>
     </div>
   );

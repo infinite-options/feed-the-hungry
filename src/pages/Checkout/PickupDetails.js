@@ -8,8 +8,8 @@ function PickupDetails({bank, items}) {
     // const pickup_items = items.filter(x => x.info.pickup === 1);
     return (
         <div className="pickup-confirm">
-            <p className="title is-5">Pickup Address</p>
-            <p className="subtitle is-6">{bank.foodbank_address}</p>
+            <p className="title is-5">In-store Pickup</p>
+            <p className="subtitle is-6">{bank.fb_address1}</p>
             <div className="space-1"></div>
             {delivery_items.length > 0 ? 
             <NoPickUp items={delivery_items} /> : ""

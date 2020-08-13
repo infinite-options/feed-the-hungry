@@ -59,6 +59,7 @@
     width: 884px;
     margin: 0 auto;
     height: auto;
+    border-bottom: 1px solid #EEEDF2;
     /* max-height: 275.2px; */
     /* display: flex; */
     /* align-items: center; */
@@ -130,9 +131,14 @@
     background-color: white;
 
 }
+.card.cart-item {
+    border: none;
+    margin-bottom: 1rem;
+    box-shadow: none;
+}
 
 .cart-item .card-content {
-    height: 126.5px;
+    height: auto;
 }
 .cart-item-image{
     display: flex;
@@ -258,7 +264,9 @@
 .confirm-order-container {
     padding-top: 2.5rem;
     padding-bottom: 2.5rem;
-    width: 100%;
+
+    margin: 0 auto;
+    max-width: 980px;
     height: auto;
     background-color: white;
 }
@@ -287,7 +295,7 @@
 .total-order-container .cart-item {
     border: none;
     box-shadow: none;
-    flex: 1 0 12%;
+    flex: 1 0 15%;
     /* max-width: 133px; */
 }
 
