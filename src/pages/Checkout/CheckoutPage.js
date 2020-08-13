@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import EmptyCartPage from 'pages/Error/EmptyCartPage';
 import Carousel from "pages/Checkout/Carousel";
 import ScrollToTopOnMount from "utils/Scroll/ScrollToTopOnMount";
@@ -6,14 +6,16 @@ import CheckoutForm from "pages/Checkout/CheckoutForm";
 import './style.css';
 import LoadingPage from 'pages/Error/LoadingPage';
 import ErrorPage from 'pages/Error/ErrorPage';
+import { OrderContext } from "components/Context/OrderContext";
 
-function CheckoutPage({api}){
+function CheckoutPage(){
+    const context = useContext(OrderContext);
     const user = JSON.parse(window.localStorage.getItem('userInfo'));
 
-    if (api.isLoading) return <LoadingPage />;
-    if (api.hasError || !user) return <ErrorPage />;
+    if (context.api.isLoading) return <LoadingPage />;
+    if (context.api.hasError || !user) return <ErrorPage />;
 
-    const bank = api.getBankBy("foodbank_id", user.cart.bankId);
+    const bank = context.api.getBankBy("foodbank_id", user.cart.bankId);
     if (!user.cart.total || user.cart.total === 0)  return <EmptyCartPage />;
     return <Checkout bank={bank} user={user}/>
 }

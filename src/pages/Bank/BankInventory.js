@@ -159,45 +159,42 @@ const useCounter = (bank, x, orderType) => {
   };
   useEffect(() => {
     let user = JSON.parse(window.localStorage.getItem("userInfo"));
-    let cart = user && user.cart != "" ? user.cart : { bankId: "", items: [], total: 0, order_type: ""};
-    let bank_id = cart.bankId;
-    let cart_items = cart.items;
+    let cart = user.cart && user.cart !="" ? user.cart : { bankId: "", items: [], total: 0, order_type: ""};
+
     // CASE 1: if user is choosing products from the same food pantry again
     if (cart.bankId === bankId) {
+
       // check if the product user is currently selecting is in cart
-      let item = cart_items.find((item) => {
+      let item = cart.items.find((item) => {
         return item.info.food_id === x.food_id;
       });
       if (item && value > 0) item.amount = value; // update selected amount if that product is already in cart
-      else if (item && value === 0) cart_items.splice(cart_items.indexOf(item), 1); // if product is deleted from cart
-      else if (!item && value > 0) cart_items.push({ info: x, amount: value }); // if product is not in cart but gets selected
+      else if (item && value === 0) cart.items.splice(cart.items.indexOf(item), 1); // if product is deleted from cart
+      else if (!item && value > 0) cart.items.push({ info: x, amount: value }); // if product is not in cart but gets selected
 
-      const delivery_only_items = getItemsByKey(cart_items,"pickup",0);
-      const pickup_only_items = getItemsByKey(cart_items, "delivery", 0);
+      const delivery_only_items = getItemsByKey(cart.items,"pickup",0);
+      const pickup_only_items = getItemsByKey(cart.items, "delivery", 0);
   
       if (delivery_only_items.length > 0) cart.order_type="delivery";
       else if (pickup_only_items.length > 0) cart.order_type="pickup";
       else cart.order_type="";
-
-      orderType.setOrderType(cart.order_type);
-    } 
+    }
     // CASE 2: if user is choosing products from a diffrent food pantry
-    else if (cart.bankId != bankId && value > 0) { 
-      cart_items = [];
-      cart_items.push({ info: x, amount: value });
-      bank_id = bankId;
+    else if (cart.bankId !== bankId && value > 0) { 
+      cart.items = [];
+      cart.items.push({ info: x, amount: value });
+      cart.bankId = bankId;
+      if (x.delivery === 1 && x.pickup === 0) cart.order_type = "delivery";
+      else if (x.delivery === 0 && x.pickup === 1)  cart.order_type = "pickup";
       window.localStorage.setItem('current_pantry',JSON.stringify(bank));
     } 
 
-    cart.bankId = bank_id;
-    cart.items = cart_items;
-    cart.total = totalAmount(cart_items);
+    cart.total = totalAmount(cart.items);
     user.cart = cart;
-    window.localStorage.setItem(
-      "userInfo",
-      JSON.stringify(user)
-    );
-    context.setCartTotal(totalAmount(cart_items));
+
+    if (cart.bankId === bankId) orderType.setOrderType(cart.order_type);
+    context.setOrderTotal(cart.total);
+    window.localStorage.setItem("userInfo", JSON.stringify(user));
   }, [value]);
 
   return {
@@ -211,8 +208,5 @@ const useCounter = (bank, x, orderType) => {
 const getItemsByKey = (arr, key, value) => {
   return arr.filter((x) => x.info[key] === value);
 };
-const filterInventoryByKey = (arr, key, value) => {
-  return arr.filter((x) => x[key].includes(value));
-}
 
 export default withRouter(BankInventory);

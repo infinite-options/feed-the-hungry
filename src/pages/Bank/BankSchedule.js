@@ -33,4 +33,4 @@ function BankSchedule({ obj }) {
     </div>
   );
 }
-export default withRouter(BankSchedule);
+export default BankSchedule;

@@ -41,9 +41,14 @@ function App() {
   const watch = false;
   const [isAuth, setIsAuth] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [cartTotal, setCartTotal] = useState(0);
+  const [orderTotal, setOrderTotal] = useState(() => {
+    const user = JSON.parse(window.localStorage.getItem('userInfo'));
+    return user && user.cart !== "" ? user.cart.total : 0;
+  });
+ const [orderType, setOrderType] = useState("");
   const url = `https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/foodbanks`;
-  const bankApi = useOurApi(url, {});
+  const api = useOurApi(url, {});
+
   useEffect(() => {
     onLoad();
     window.addEventListener('storage', onLoad);
@@ -73,7 +78,7 @@ function App() {
   return !loading && (
     <Router basename={"feed-the-hungry"} onUpdate={() => window.scrollTo(0, 0)}>
         {/* <ScrollToTop /> */}
-      <OrderContext.Provider value={{cartTotal, setCartTotal, isAuth, setIsAuth}}>
+      <OrderContext.Provider value={{ isAuth, setIsAuth, api, orderTotal, setOrderTotal, orderType, setOrderType}}>
         <Header />
         <Switch>
           <NonAuthRoute exact path="/login" component={LoginPage} />
@@ -81,13 +86,14 @@ function App() {
           {/* <AuthRoute exact path="/" bankAPI={bankAPI} component={BanksPage} /> */}
           <NonAuthRoute exact path="/donateform" component={DonorNonAuth} />
           <AuthRoute exact path="/donate" component={DonorPage} />
-          <Route exact path="/banks"><BanksPage api={bankApi} /></Route>
-          <Route exact path="/"><HomePage /></Route>
+          {/* <Route exact path="/banks"><BanksPage api={bankApi} /></Route> */}
+          <Route exact path="/banks" component={BanksPage}></Route>
+          <Route exact path="/" component={HomePage}></Route>
           <Route exact path="/loading" component={LoadingPage} /> 
           <NonAuthRoute exact path="/signup/social" component={SignupSocial} />
           <NonAuthRoute exact path="/signup/verify" component={SignupVerify} />
-          <AuthRoute exact path={"/banks/:bankId/products"}><BankPage api={bankApi} /></AuthRoute>
-          <AuthRoute exact path="/order/cart"><CheckoutPage api={bankApi} /></AuthRoute>
+          <AuthRoute exact path={"/banks/:bankId/products"} component={BankPage}></AuthRoute>
+          <AuthRoute exact path="/order/cart" component={CheckoutPage}></AuthRoute>
           <AuthRoute exact path="/order/cart/confirm" component={ConfirmationPage} />
           <Route component={ErrorPage} /> 
           <Redirect to="/404" />

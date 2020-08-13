@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, useRouteMatch, useLocation, useHistory } from "react-router-dom";
 import "./header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,11 +9,6 @@ import ServingNowLogo from "assets/image/ServingNow_Logo_Green.png";
 function Header() {
   const history = useHistory();
   const context = useContext(OrderContext);
-  
-  context.setCartTotal(() => {
-    const userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
-    return userInfo && userInfo.cart ? userInfo.cart.total : 0;
-  });
 
   const handleLogout = () => {
     console.log(window);
@@ -81,7 +76,7 @@ function Header() {
             </Link>
             {context.isAuth && (
               <div className="navbar-item navbar-item-text">
-                <CartTotal num={context.cartTotal} />
+                <CartTotal num={context.orderTotal} />
               </div>
             )}
             {context.isAuth ? (

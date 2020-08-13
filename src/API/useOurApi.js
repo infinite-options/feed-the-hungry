@@ -11,10 +11,7 @@ export const useOurApi = (initialUrl) => {
   const [fetchedData, setFetchedData] = useState({});
 
   useEffect(() => {
-    
     let unmounted = false;
-    const abortController = new AbortController();
-
     const fetchData = async () => {
         try {
         //   setIsLoading(true);
@@ -27,7 +24,6 @@ export const useOurApi = (initialUrl) => {
         } finally {
             console.log("loading done");
           setIsLoading(false);
-
         }
       };
     fetchData();

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useLayoutEffect} from "react";
+import React, { useState, useEffect, useRef, useLayoutEffect, useContext} from "react";
 import useStayScrolled from "react-stay-scrolled";
 import {
   BrowserRouter as Router,
@@ -20,13 +20,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Icons from "components/Icons/Icons";
 import useQuery from "components/Hooks/useQuery";
 import LoadingInventory from 'pages/Error/LoadingInventory';
+import { OrderContext } from "components/Context/OrderContext";
 
-const BankPage = ({api}) => {
+const BankPage = () => {
   let { bankId } = useParams();
+  const context = useContext(OrderContext);
 
-  if (api.isLoading) return <LoadingPage />;
-  if (api.hasError || !api.data.result.result) return <ErrorPage />;
-  const bank = api.getBankBy("foodbank_id", bankId);
+  if (context.api.isLoading) return <LoadingPage />;
+  if (context.api.hasError) return <ErrorPage />;
+  const bank = context.api.getBankBy("foodbank_id", bankId);
+  if (!bank) return <ErrorPage />
   return <Bank bank = {bank}/>
 }
 
@@ -57,9 +60,9 @@ const Bank = ({ bank }) => {
         <BankFilters />
         <div className="container">
         <div key={key} className="bank-body">
-          <BankInventory  bank={bank} delivery={1} pickup={1} orderType={orderType} search={search}/>
-          <BankInventory  bank={bank} delivery={1} pickup={0}  orderType={orderType} search={search}/>
-          <BankInventory  bank={bank} delivery={0} pickup={1}  orderType={orderType} search={search}/>  
+          <BankInventory  bank={bank} delivery={1} pickup={1} search={search} orderType={orderType}/>
+          <BankInventory  bank={bank} delivery={1} pickup={0} search={search}  orderType={orderType}/>
+          <BankInventory  bank={bank} delivery={0} pickup={1} search={search}  orderType={orderType}/>  
         </div>
         <div className="bank-actions">
           <button className="button is-info">
@@ -85,14 +88,12 @@ const Bank = ({ bank }) => {
 const useOrderType = (bank) => {
   const [orderType, setOrderType] = useState(() => {
     const user = JSON.parse(window.localStorage.getItem('userInfo'));
-    if (user.cart !="" && user.cart.bankId === bank.foodbank_id) {
+    if (user.cart !== "" && user.cart.bankId === bank.foodbank_id) {
       return user.cart.order_type;
     }
     return "";
   });
-  // useEffect(() => {
-  //   setOrderType("");
-  // },[foodBank])
+
   return {
     orderType,
     setOrderType,
@@ -100,4 +101,4 @@ const useOrderType = (bank) => {
 }
 
 
-export default React.memo(BankPage);
+export default BankPage;

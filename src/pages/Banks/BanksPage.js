@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 
 import "pages/styles.css";
 import LoadingPage from "pages/Error/LoadingPage";
@@ -9,23 +9,26 @@ import Banks from "pages/Banks/Banks";
 import ScrollToTop from "utils/Scroll/SrollToTop";
 import useMarker from "components/Hooks/useMarker";
 import Footer from "components/Footer/Footer";
-
-function BanksPage({api}) {
+import { OrderContext } from "components/Context/OrderContext";
+function BanksPage() {
+  const context = useContext(OrderContext);
   // const url = `https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/foodbanks`;
   // const { data, isLoading, hasError } = useOurApi(url, {});
   const marker = useMarker();
+  // console.log(banks);
 
-  if (api.isLoading) return <LoadingPage />;
-  if (api.hasError) return <ErrorPage />;
-  const banks = api.data.result.result;
+  if (context.api.isLoading) return <LoadingPage />;
+  if (context.api.hasError) return <ErrorPage />;
+  const banks = context.api.data.result.result;
+
+  // const banks = data.result.result;
+  // context.setData(banks);
   // const banks = Object.keys(data).length
   //   ? removeDuplicatesByKey("foodbank_id", data.result.result)
   //   : [];
   
   return (
     <div className="bd-main is-fullheight-with-navbar">
-      {/* <ScrollToTop /> */}
-      {/* <div className="container">  */}
       <div className="columns" style={{margin:0}}>
       <div className="column has-no-padding">
       <div className="bank-list">
@@ -43,13 +46,5 @@ function BanksPage({api}) {
     </div>
   );
 }
-
-const removeDuplicatesByKey = (key, data) => {
-  const obj = {};
-  data.forEach((x) => {
-    obj[x[key]] = x;
-  });
-  return Object.values(obj);
-};
 
 export default BanksPage;
