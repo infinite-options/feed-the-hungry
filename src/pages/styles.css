@@ -650,6 +650,8 @@ img {
 .tooltip {
     position: relative;
     display: inline-block;
+    height: auto;
+    z-index: 2;
 }
 
 .tooltip .tooltiptext {
@@ -662,7 +664,7 @@ img {
     border-radius: 6px;
     padding: 5px;
     position: absolute;
-    z-index: 1;
+    z-index: 2;
     bottom: 125%;
     left: 50%;
     margin-left: -60px;
@@ -1029,7 +1031,7 @@ input .order-quantity {
 /* Bank Filters */
 
 .bank-filters {
-    padding-top: 2rem;
+    padding-top: 2.5rem;
     width: 100%;
     overflow: auto;
     white-space: nowrap;
