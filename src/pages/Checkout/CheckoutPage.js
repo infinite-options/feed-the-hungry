@@ -13,7 +13,7 @@ function CheckoutPage(){
     const user = JSON.parse(window.localStorage.getItem('userInfo'));
 
     if (context.api.isLoading) return <LoadingPage />;
-    if (context.api.hasError || !user) return <ErrorPage />;
+    if (context.api.hasError) return <ErrorPage />;
 
     const bank = context.api.getBankBy("foodbank_id", user.cart.bankId);
     if (!user.cart.total || user.cart.total === 0)  return <EmptyCartPage />;

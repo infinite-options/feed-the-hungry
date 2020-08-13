@@ -7,13 +7,14 @@ import axios from "axios";
 import FailedOrderPage from "pages/Error/FailedOrderPage";
 import { OrderContext } from "components/Context/OrderContext";
 import { useOurApi } from "API/useOurApi";
+import EmptyCartPage from "pages/Error/EmptyCartPage";
 
 function ConfirmationPage() {
   const unconfirmed_order = JSON.parse(window.localStorage.getItem("unconfirmed_order")) || {};
   const cartItems = unconfirmed_order.ordered_items
     ? unconfirmed_order.ordered_items
     : [];
-  if (cartItems.length === 0) return <ErrorPage />;
+  if (cartItems.length === 0) return <EmptyCartPage />
   else {
     const order = {
       customer_id: unconfirmed_order.customer_id,
@@ -84,7 +85,7 @@ const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
         }
        
         window.localStorage.setItem('userInfo', JSON.stringify(userInfo)); // remove cart data from local storage
-        context.setCartTotal(0);
+        context.setOrderTotal(0);
         setSentOrder(prevState => ({...prevState, isSent: true, order_id: responseData.result.order_id}));
       } catch (err) {
         console.log(err);
@@ -103,16 +104,37 @@ const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
   if (hasError) return <FailedOrderPage />
 
   return (
-    <div className="confirmation-page">
-      <div className="confirmation-page-layer">
-        <div className="confirmation-page-content">
+    <div className="bd-main is-fullheight-with-navbar">
+      <div className="container">
+        {/* <div className="confirmation-page-content"> */}
           <div className="confirmation-page-title">
             <p className="title is-3">{sentOrder.kitchen_name}</p>
           </div>
           <div className="space-2-5"></div>
-          <div className="confirmation-page-body">
-            <div className="columns">
-              <div className="column is-7">
+          {/* <div className="confirmation-page-body"> */}
+          <div className="total-order-container">
+                  {sentOrder.ordered_items.map((x) => (
+                    <div key={x.info.food_id} className="card cart-item">
+                      <div className="card-image cart-item-image">
+                        <img src={x.info.fl_image} alt="Placeholder image" />
+                      </div>
+                      <div className="card-content no-overflow">
+                        {/* <p className="title is-7 has-text-grey-light item-brand">
+                          {x.info.fl_brand}
+                  </p> */}
+                        <p className="title is-6 is-Nunito" style={{marginBottom:'.5rem'}}>
+                          {x.info.fl_name}
+                        </p> 
+                        <span className="tag">
+                          <span className="subtitle is-6 is-Nunito">
+                            x{x.amount}
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
                 <div className="confirm-order-container">
                   <p className="title is-6">Your order has been placed</p>
                   <p className="title is-6">Confirmation number: {sentOrder.order_id} </p>
@@ -125,25 +147,25 @@ const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
                   </p>
                   <div className="divider"></div>
                   <div className="columns">
-                    <div className="column is-4">
+                    <div className="column is-2">
                       <p className="subtitle is-6">
-                        Delivery confirmed for: {sentOrder.date}
+                        Delivery date: {sentOrder.date}
                       </p>
-                      {/* <br></br> */}
+
                      <p className="subtitle is-6"> {order.order_type === "delivery" ? "Delivery address" : "Pickup address"}:</p>
                     </div>
                     
-                    <div className="column is-8">
+                    <div className="column is-10">
                     <p className="subtitle is-6">
                         {sentOrder.delivery_date}
                       </p>
                     {sentOrder.order_type === "delivery" ?
                       <div>
-                      {/* <br></br> */}
+
                       <p className="subtitle is-6">
                         {sentOrder.street}
                       </p>
-                      {/* <br></br> */}
+
                       <p className="subtitle is-6">
                         {sentOrder.city}, {sentOrder.state}{" "}
                         {sentOrder.zipcode}
@@ -152,36 +174,10 @@ const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
                     </div>
                     
                   </div>
-                </div>
-              </div>
-              <div className="column is-5">
-                <div className="total-order-container">
-                  {sentOrder.ordered_items.map((x) => (
-                    <div key={x.info.food_id} className="card cart-item">
-                      <div className="card-image cart-item-image">
-                        <img src={x.info.fl_image} alt="Placeholder image" />
-                      </div>
-                      <div className="card-content no-overflow">
-                        <p className="title is-7 has-text-grey-light item-brand">
-                          {x.info.fl_brand}
-                        </p>
-                        <p className="subtitle is-6 is-bold">
-                          {x.info.fl_name}
-                        </p>
-                        <span className="tag">
-                          <span className="subtitle is-7">
-                            {x.info.fl_package_type} x{x.amount}
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+
           </div>
           <div className="divider"></div>
-        </div>
+
       </div>
     </div>
   );
