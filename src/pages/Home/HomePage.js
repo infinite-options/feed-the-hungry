@@ -185,7 +185,10 @@ function ContactForm() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    name.checkInputs();
+    email.checkInputs();
+    subject.checkInputs();
+    message.checkInputs();
     if (name.isValid && email.isValid && subject.isValid && message.isValid) {
       const templateId = "template_L4Ie7OMc";
       sendFeedBack(templateId, {
@@ -219,13 +222,6 @@ function ContactForm() {
           <InputField props={message} color="is-white" />
           <button
             className="button is-fullWidth submit-btn"
-            disabled={
-              !name.isValid ||
-              !email.isValid ||
-              !subject.isValid | !message.isValid
-                ? true
-                : false
-            }
             onClick={handleSubmit}
           >
             Submit

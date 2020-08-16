@@ -216,6 +216,7 @@
 
 .contact {
     width: 100%;
+    min-height: 541.6px;
     height: auto;
     /* min-width: 980px; */
     margin-top: 80px;
@@ -223,6 +224,7 @@
     background-color: white;
 }
 .contact .container {
+    min-height: 541.6px;
     background-color: rgba(0, 0, 0, 0.9);
 }
 /* .contact-container {
