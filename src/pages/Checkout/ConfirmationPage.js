@@ -11,13 +11,16 @@ import EmptyCartPage from "pages/Error/EmptyCartPage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
+
 function ConfirmationPage() {
   const unconfirmed_order =
     JSON.parse(window.localStorage.getItem("unconfirmed_order")) || {};
   const cartItems = unconfirmed_order.ordered_items
     ? unconfirmed_order.ordered_items
     : [];
+    // if cart is empty
   if (cartItems.length === 0) return <EmptyCartPage />;
+  // else, construct order and send it
   else {
     const order = {
       customer_id: unconfirmed_order.customer_id,
@@ -35,6 +38,7 @@ function ConfirmationPage() {
       order_type: unconfirmed_order.order_type,
       ordered_items: [],
     };
+    // we only need the food id and the amount, no the entire product object
     cartItems.forEach((x) =>
       order.ordered_items.push({ meal_id: x.info.food_id, qty: x.amount })
     );
@@ -90,7 +94,7 @@ const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
             });
         }
 
-        window.localStorage.setItem("userInfo", JSON.stringify(userInfo)); // remove cart data from local storage
+        window.localStorage.setItem("userInfo", JSON.stringify(userInfo)); // remove cart info from local storage
         context.setOrderTotal(0);
         setSentOrder((prevState) => ({
           ...prevState,
@@ -109,7 +113,7 @@ const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
     if (!sentOrder.isSent) writeData(); // if data is already written to the db, we don't call axios.
   }, [url]);
 
-  window.localStorage.setItem("unconfirmed_order", JSON.stringify(sentOrder));
+  window.localStorage.setItem("unconfirmed_order", JSON.stringify(sentOrder)); // update unconfirmed_order
   if (isLoading) return <LoadingPage />;
   if (hasError) return <FailedOrderPage />;
 
