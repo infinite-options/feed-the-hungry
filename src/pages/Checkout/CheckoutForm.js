@@ -150,9 +150,9 @@ function CheckoutForm({ bank, items }) {;
             {/* if all items are available for delivery, delivery method is default to 'delivery' */}
             <li
               className={activeTab === "delivery" ? "is-active" : ""}
-              onClick={delivery_only_items.length === 0 ? () => setActiveTab("pickup") : () => setActiveTab("delivery")}
+              onClick={pickup_only_items.length === 0 ? () => setActiveTab("delivery") : () => setActiveTab("pickup")}
             >
-              <a className={ delivery_only_items.length === 0 ? "disabled" : ""}>
+              <a className={ pickup_only_items.length === 0 ? "" : "disabled"}>
                 <span className="uppercase">Delivery</span>
               </a>
             </li>
@@ -160,9 +160,9 @@ function CheckoutForm({ bank, items }) {;
              
             <li
               className={activeTab === "pickup" ? "is-active" : ""}
-              onClick={pickup_only_items.length === 0 ? () => setActiveTab("delivery") : () => setActiveTab("pickup")}
+              onClick={delivery_only_items.length === 0 ?  () => setActiveTab("pickup") : () => setActiveTab("delivery") }
             >
-              <a className={pickup_only_items.length === 0 ? "disabled" : ""}>
+              <a className={delivery_only_items.length === 0 ? "" : "disabled"}>
                 <span className="uppercase">Pick Up</span>
               </a>
             </li>
