@@ -8,7 +8,15 @@ import ServingNowLogo from "assets/image/ServingNow_Logo_Green.png";
 
 function Header() {
   const history = useHistory();
+  const location = useLocation();
   const context = useContext(OrderContext);
+  const [activeNav, setActiveNav] = useState("");
+  const [isActive, setIsActive] = useState(false); // for toggling navbar-burger
+
+  // set active navbar-item
+  useEffect(() => {
+    setActiveNav(location.pathname);
+  },[location])
 
   const handleLogout = () => {
     console.log(window);
@@ -17,27 +25,27 @@ function Header() {
     context.setIsAuth(false);
   };
 
-  // create a nice, smooth scrolling effect
+  // scroll back to top when user clicks a menu item that is the same as the page he/she is on
   const resetScroll = (e, pathName="") => {
     e.preventDefault();
     const pathname = e.target.pathname ? e.target.pathname : pathName;
     if (window.location.pathname === pathname) window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
     else {history.push('/' + pathname.split("/").pop()); window.scrollTo(0,0);}
   }
-  const [isActive, setIsActive] = useState(false);
+  // toggle navbar-burger
   const handleClick = () => {
     setIsActive(!isActive);
   }
   return (
     <nav
-      className="navbar is-fixed-top"
+      className={activeNav === "/banks" ? "navbar is-light-green" : "navbar is-white" }
       role="navigation"
       aria-label="main navigation"
     >
       <div className="container">
         <div className="navbar-brand ">
           {/* <Link className="navbar-item has-no-padding-left" to={context.isAuth ? "/" : "/login"}> */}
-          <Link className="navbar-item" to="/">
+          <Link className="navbar-item" to="/" onClick={resetScroll}>
             <img className="logo" src={ServingNowLogo} alt="Logo" />
           </Link>
           <div className="brand-text-container">
@@ -71,9 +79,9 @@ function Header() {
             <Link to={context.isAuth ? "/donate" : "/donateform"} className="navbar-item navbar-item-text" onClick={resetScroll}>
               Donate
             </Link>
-            <Link to="/banks" className="navbar-item" onClick={(e) => resetScroll(e,"/feed-the-hungry/banks") }>
-              <button className="button navbar-item-text is-success is-outlined" >Get Food</button>
-            </Link>
+            <div  className="navbar-item">
+              <button className="button navbar-item-text get-food-nav-btn" onClick={(e) => resetScroll(e,"/feed-the-hungry/banks") }><Link to="/banks"> Get Food</Link> </button>
+            </div>
             {context.isAuth && (
               <div className="navbar-item navbar-item-text">
                 <CartTotal num={context.orderTotal} />
@@ -85,7 +93,7 @@ function Header() {
               </Link>
             ) : (
               <Link to="/login" className="navbar-item navbar-item-text">
-                  <span className="icon has-text-success">
+                  <span className="icon has-text-green">
                       <FontAwesomeIcon icon={Icons.faUserCircle} style={{fontSize: 22}}/>
                   </span>
                   <span className="has-padding-left-0-8">Login</span>
@@ -99,44 +107,16 @@ function Header() {
     </nav>
   );
 }
-function SearchBar() {
-  return (
-    <div className="field is-grouped">
-      <p
-        id="search"
-        className="control is-expanded no-bottom-margin has-icons-right"
-      >
-        <input
-          className="input"
-          type="search"
-          placeholder="Find a food bank"
-        ></input>
-        <span className="icon is-small has-text-black is-right">
-          <FontAwesomeIcon icon={Icons.faSearch} />
-        </span>
-      </p>
-    </div>
-  );
-}
+
 function CartTotal({ num }) {
   return (
     <Link to="/order/cart" alt="cart button">
-        <span className="icon has-text-success">
+        <span className="icon has-text-green">
           <FontAwesomeIcon icon={Icons.faShoppingBasket} />
         </span>
-        <span className="has-padding-left-0-5 has-text-success">{num}</span>
+        <span className="has-padding-left-0-5 has-text-green">{num}</span>
     </Link>
   );
 }
-
-const totalAmount = (items) => {
-  let total = 0;
-  if (items.length > 0) {
-    items.forEach((x) => {
-      total += x.amount;
-    });
-  }
-  return total;
-};
 
 export default Header;

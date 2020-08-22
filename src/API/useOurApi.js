@@ -4,6 +4,7 @@ import axios from 'axios';
     initialUrl: "/_api/jobs"
     initialData: [] //usually empty array or object
 */
+// use this for fetching any api
 export const useOurApi = (initialUrl) => {
   const [url, setUrl] = useState(initialUrl);
   const [isLoading, setIsLoading] = useState(true);
@@ -14,7 +15,6 @@ export const useOurApi = (initialUrl) => {
     let unmounted = false;
     const fetchData = async () => {
         try {
-        //   setIsLoading(true);
           const response = await fetch(url);
           const responseData = await response.json();
           console.log("fetch data");
@@ -29,7 +29,6 @@ export const useOurApi = (initialUrl) => {
     fetchData();
 
     return () => {
-        // abortController.abort();
       unmounted = true;
     };
   }, [url]);

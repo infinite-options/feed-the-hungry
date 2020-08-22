@@ -22,8 +22,9 @@ function CheckoutPage(){
 
 const Checkout = ({bank, user}) => {
     const cart = user.cart;
+
     const [key, setKey] = useState(1);
-    window.addEventListener("storage", () => {
+    window.addEventListener("storage", () => { // rerender the component if cart items in local storage change
         setKey(key + 1);
     });
 

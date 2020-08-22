@@ -38,7 +38,7 @@ function ConfirmationPage() {
       order_type: unconfirmed_order.order_type,
       ordered_items: [],
     };
-    // we only need the food id and the amount, no the entire product object
+    // we only need the food id and the amount, not the entire item
     cartItems.forEach((x) =>
       order.ordered_items.push({ meal_id: x.info.food_id, qty: x.amount })
     );
@@ -95,8 +95,8 @@ const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
         }
 
         window.localStorage.setItem("userInfo", JSON.stringify(userInfo)); // remove cart info from local storage
-        context.setOrderTotal(0);
-        setSentOrder((prevState) => ({
+        context.setOrderTotal(0); // set cart  total to 0
+        setSentOrder((prevState) => ({ // update sent order
           ...prevState,
           isSent: true,
           order_id: responseData.result.order_id,
@@ -113,7 +113,7 @@ const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
     if (!sentOrder.isSent) writeData(); // if data is already written to the db, we don't call axios.
   }, [url]);
 
-  window.localStorage.setItem("unconfirmed_order", JSON.stringify(sentOrder)); // update unconfirmed_order
+  window.localStorage.setItem("unconfirmed_order", JSON.stringify(sentOrder)); // update unconfirmed_order with sentOrder
   if (isLoading) return <LoadingPage />;
   if (hasError) return <FailedOrderPage />;
 

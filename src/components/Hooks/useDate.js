@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+// custom hook for an input that requires the selection of date/time or both (slightly better version of useDateTime)
 const useDate = (
   placeholder,
   showTimeSelect=false,

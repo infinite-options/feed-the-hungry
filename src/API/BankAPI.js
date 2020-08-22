@@ -1,4 +1,6 @@
 import React, { useState, useEffect }  from 'react';
+
+// this custom hook is not being used
 const BankAPI = () => {
     const [data, setData] = useState([]);
     // fetch data from json file

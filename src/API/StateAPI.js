@@ -1,5 +1,5 @@
 import React, { useState, useEffect }  from 'react';
-
+// retrieving US's state names
 const StateAPI = () => {
     // fetch list of states
     const [data, setData] = useState([]);

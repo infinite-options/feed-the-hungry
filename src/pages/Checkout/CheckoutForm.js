@@ -37,13 +37,12 @@ function CheckoutForm({ bank, items }) {;
   const delivery_pickup_items = items.filter((x) => x.info.delivery === 1 && x.info.pickup === 1 );
   const delivery_only_items = items.filter((x) => x.info.delivery === 1 && x.info.pickup === 0 );
   const pickup_only_items = items.filter((x) => x.info.delivery === 0 && x.info.pickup === 1);
-  const [activeTab, setActiveTab] = useState(() => {
+  const [activeTab, setActiveTab] = useState(() => { // active delivery method (delivery/pickup) at checkout
     if (delivery_pickup_items.length > 0 && delivery_only_items.length === 0 && pickup_only_items.length === 0) return "delivery";
     if (delivery_only_items.length === 0) return "pickup";
     return "delivery";
-
   });
-  
+  // return true if all inputs are valid, otherwise false
   const isFormValid = () => {
     if (!fname.isValid || !lname.isValid || !phone.isValid || !email.isValid) return false;
     if (activeTab === "delivery"){
@@ -53,8 +52,9 @@ function CheckoutForm({ bank, items }) {;
     } 
     return true;
   }
-  let form  = isFormValid(); 
+ 
   const userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
+  // if user chooses to use account's information at checkout, import it from local storage
   useEffect(() => {
     if (switchUserInfo.value && userInfo){
       fname.setValue(userInfo.firstName);
@@ -68,7 +68,7 @@ function CheckoutForm({ bank, items }) {;
       email.setValue('');
     }
   },[switchUserInfo.value]);
-
+   // if user chooses to use account's address at checkout, import it from local storage
   useEffect(() => {
     if (switchUserAddress.value && userInfo){
       street.setValue(userInfo.address1);
@@ -84,14 +84,17 @@ function CheckoutForm({ bank, items }) {;
 
   },[switchUserAddress.value]);
 
-
+  let form  = isFormValid(); 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (form) {
-      const date = dateTime.startDate ? formatDate(dateTime.startDate) : "Today";
-      const userInfo = JSON.parse(window.localStorage.getItem('userInfo'));
-      const position = userInfo ? userInfo.position : "";
-      const total = totalAmount(items);
+    if (form) { 
+      // if form is valid, generate an unconfirmed order that will be saved in local storage.
+      // after that, the unconfirmed order will be sent to confirmation page, where the actual order will be
+      // consturcted and sent to backend
+      const date = dateTime.startDate ? formatDate(dateTime.startDate) : "Today"; // delivery date is today if no date is selected
+      const userInfo = JSON.parse(window.localStorage.getItem('userInfo')); // retrieve user's account info from local storage
+      const position = userInfo ? userInfo.position : ""; // get user's current location
+      const total = totalAmount(items); // calculate the number of items in cart
    
       let unconfirmed_order = {
         isSent: false,
@@ -120,7 +123,7 @@ function CheckoutForm({ bank, items }) {;
         "unconfirmed_order",
         JSON.stringify(unconfirmed_order)
       );
-      history.push("/order/cart/confirm"); // redirect
+      history.push("/order/cart/confirm"); // redirect to confirmation page
     } else {
       console.log("Some inputs are invalid");
     }
@@ -144,6 +147,7 @@ function CheckoutForm({ bank, items }) {;
         <p className="title is-5">Delivery Method</p>
         <div className="tabs is-toggle is-fullwidth is-medium">
           <ul>
+            {/* if all items are available for delivery, delivery method is default to 'delivery' */}
             <li
               className={activeTab === "delivery" ? "is-active" : ""}
               onClick={delivery_only_items.length === 0 ? () => setActiveTab("pickup") : () => setActiveTab("delivery")}
@@ -152,6 +156,8 @@ function CheckoutForm({ bank, items }) {;
                 <span className="uppercase">Delivery</span>
               </a>
             </li>
+             {/* if all items are available for pickup, delivery method is default to 'pickup' */}
+             
             <li
               className={activeTab === "pickup" ? "is-active" : ""}
               onClick={pickup_only_items.length === 0 ? () => setActiveTab("delivery") : () => setActiveTab("pickup")}
@@ -218,7 +224,7 @@ const totalAmount = (items) => {
   });
   return total;
 };
-
+// delivery date needs to be mm/dd/yyyy 12:00 PM, for example
 function formatDate(date) {
   const dayNames = [
     "Monday",

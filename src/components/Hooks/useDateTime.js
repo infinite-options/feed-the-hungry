@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import addDays from "date-fns/addDays";
 
+// custom  hook for input that requires the selection of date and time
+// but it's not being used rn
 export const useDateTime = () => {
   const [startDate, setStartDate] = useState(null);
   const [isValid, setIsValid] = useState(false);

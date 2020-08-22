@@ -58,45 +58,128 @@
     width: 100%;
     /* min-width: 590px; */
     /* max-width: calc(100% - 160px); */
-    margin-top: 53px;
+    /* margin-top: 53px; */
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 0;
     /* width: 100%; */
 
 }
+.is-light-green {
+    background-color: #e2f3da;
+}
+.search-container {
+    width: 100%;
+    /* background-color: #f8f7fa; */
+    background-color: #B1D8B7;
+    /* background-color: #e2f3da; */
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+    /* height: 200px; */
 
+    z-index: 9999;
+    /* background-image: url('https://assets.materialup.com/uploads/a455d3f3-2b5d-48fc-ba86-25f89ea6ea85/preview.png'); */
+    /* background-image: url('https://blog.saleslayer.com/hubfs/groceries-ecommerce.png'); */
+    /* background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center; 
+    background-size: cover; */
 
+    /* background-color: #def7ee; */
+    box-shadow: 0 0.1em 0.5em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 0.5px rgba(10, 10, 10, 0.02);
+    border-bottom-left-radius:10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.search-container .field {
+    box-shadow: 0 0.5em 0.5em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 0.5px rgba(10, 10, 10, 0.02);
+    border-radius: 10px;
+    background-color: white;
+}
+.search-container .control {
+    padding: .8rem;
+}
+.search-container .input {
+    height: 50px;
+    font-size: 16px;
+    border: none;
+    box-shadow: none;
+}
+
+.search-container .control.has-icons-left .input {
+    padding-left: 3rem;
+}
+
+.search-container .control.has-icons-left .icon{
+    margin-left: .8rem;
+    margin-top: .8rem;
+    color: #009E00;
+}
+
+.search-container .button.is-medium{
+    height: 50px;
+    font-size: 16px;
+    /* font-size: 10px; */
+    width: 130px;
+    border-radius: 10px;
+    background-color: #009E00;
+    color: white;
+
+}
+.search-container .field.has-addons .control:last-child:not(:only-child) .button, 
+.field.has-addons .control:last-child:not(:only-child) .input, .field.has-addons
+.control:last-child:not(:only-child) .select select {
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+}
 .bank-card {
     border-radius: 0;
     box-shadow: none;
     /* padding-top: 1rem; */
-    overflow: hidden;
-    min-height: 177px;
-    height: 177px;
+    height: auto;
+    /* min-height: 177px;
+    height: 177px; */
     /* min-height: 177px; */
     /* max-height: 210px; */
     /* padding-bottom: 1rem; */
     /* box-shadow: 0 0.1em 0.5em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 0.5px rgba(10, 10, 10, 0.02); */
     background-color: white;
-    border: 1px solid hsl(0, 0%, 48%);
+    border-bottom: 1px solid #e6e6e6;
+    padding: 2rem 12px;
+    /* border: 1px solid hsl(0, 0%, 48%); */
     /* border: 1px solid #dadada; */
     /* border: 1px solid black; */
     /* border: 1px solid #
     eeeeef; */
 }
+.bank-card .column {
+    padding-top: 0;
+    padding-bottom: 0;
+}
 .image.bank-logo {
-    width: 60%;
+    /* width: 60%; */
     height: 100%;
 }
 .bank-card .media {
-    height: 100%;
+    min-height: 64px;
+    height: auto;
 }
 .bank-card .media-left {
-    width: 60%;
-    min-height: 177px;
-    height: 177px;
-    border-right: 1px solid hsl(0, 0%, 48%);
+    /* width: 20%; */
+    overflow: hidden;
+    border-radius: 20%;
+    /* min-height: 177px;
+    height: 177px; */
+    border: 1px solid #f3f3f3;
+    box-shadow:  0 0.1em 0.5em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 0.5px rgba(10, 10, 10, 0.02); 
+    /* border-right: 1px solid hsl(0, 0%, 48%); */
+}
+.bank-card img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translateY(-50%) translateX(-50%);
 }
 .bank-logo img {
     width: 100%;
@@ -107,9 +190,25 @@
 }
 
 .bank-card .media-content {
-    width: 40%;
-    height:100%;
-    padding: 2rem 2rem 2rem 1rem;
+    min-height: 64px;
+    /* height:64px; */
+    /* padding: 2rem 2rem 2rem 1rem; */
+}
+.bank-card .media-content-text {
+    max-height: 64px;
+    height: 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.bank-card .tag.is-warning.is-light .icon{
+    color: #ffae42;
+}
+.bank-card .tag.is-success.is-light .icon{
+    color: #009E00;
+}
+.bank-card .tag.is-warning.is-light,.bank-card .tag.is-success.is-light{
+    color: hsl(0, 0%, 21%);
 }
 
 .buttons .button {
@@ -120,15 +219,17 @@
 }
 
 .bank-card:hover {
-    border: 1px solid black;
+    border-radius: 10px;
+    /* border: 1px solid black; */
     /* border: 1px solid #d3d3d3; */
+    background-color: #fcfcfc;
     /* box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02); */
     cursor: pointer;
 }
 
-.bank-card:not(:first-child) {
+/* .bank-card:not(:first-child) {
     margin-top: 2rem;
-}
+} */
 
 .title:not(:last-child).location-and-hours {
     margin-bottom: 1rem;
@@ -201,9 +302,10 @@
 .sticky {
     position: -webkit-sticky;
     position: sticky;
-    height: calc(100vh - 120px);
+    height: 100vh;
+    /* height: calc(100vh - 120px); */
     width: 100%;
-    top: 120px;
+    top: 0;
 }
 
 .grey {
@@ -784,7 +886,8 @@ img {
 }
 @media only screen and (max-width: 1020px) {
     .empty-cart-msg {
-        min-height: calc(100vh - 92px);
+        min-height: 100vh;
+        /* min-height: calc(100vh - 92px); */
     
         display: flex;
         justify-content: center;
@@ -804,10 +907,14 @@ img {
     .bank-banner-info{
         min-width: calc(100% - 34px);
     }
-    .sticky {
+    /* .sticky {
         top: 92px;
         height: calc(100vh - 92px);
-    }
+    } */
+
+}
+@media only screen and (max-width: 980px){
+
 }
 
 @media only screen and (max-width: 770px) {
@@ -835,6 +942,11 @@ img {
     .sticky {
         height: 490px;
     }
+    .bank-card .media-content-text {
+        max-height: 64px;
+        height: auto;
+    }
+
 }
 
 .no-overflow p {
@@ -1273,20 +1385,23 @@ input.is-danger.is-white:hover {
     position: relative;
 }
 .bd-main.is-fullheight-with-navbar{
-    margin-top: 120px;
-    min-height: calc(100vh - 120px);
+    /* margin-top: 120px; */
+    min-height: 100vh;
+    /* min-height: calc(100vh - 120px); */
 }
 
 @media only screen and (max-width: 1020px) {
-    .bd-main.is-fullheight-with-navbar {
+    /* .bd-main.is-fullheight-with-navbar {
         margin-top: 92px;
-    }
+    } */
 }
 
 .title.bank-card-title {
-    font-family: 'Avenir', sans-serif;
+    /* max-width: 340px; */
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
     font-size: 16px;
-    margin-bottom: 1rem;
+
     /* margin-bottom: 1rem; */
     /* border-bottom: 1px solid hsl(0, 0%, 48%); */
 
@@ -1298,6 +1413,9 @@ input.is-danger.is-white:hover {
     -webkit-box-orient: vertical;  
     overflow: hidden;
 }
+
+
+
 .divider-24 {
     /* height: 1px; */
     border-bottom: 1px solid black;
@@ -1310,7 +1428,12 @@ input.is-danger.is-white:hover {
     object-position: center;
 }
 
-
+@media screen and (min-width: 769px){
+.column.is-tag, .column.is-3-tablet {
+    flex: none;
+    width: 64.4px;
+}
+}
 /* ITEM CARD */
 .item-card {
     flex: 1 0 16.6%;

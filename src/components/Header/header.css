@@ -4,9 +4,16 @@
   font-family: "Raleway", sans-serif;
   min-height: 92px;
   border: none;
-  background-color: white;
+  /* background-color: white; */
   /* border-bottom: 1px solid #d8dbdd; */
   /* box-shadow: 0 2px 2px -2px rgba(0,0,0,.2); */
+}
+.navbar.is-light-green {
+  background-color: #B1D8B7;
+  /* background-color: #e2f3da; */
+}
+.navbar.is-white {
+  background-color: white;
 }
 .navbar.is-spaced {
   padding-left: 80px;
@@ -37,7 +44,23 @@
   width: 60px;
   height: 60px;
 }
-
+.button.get-food-nav-btn {
+  border-radius: 8px;
+  border:1px solid #009E00;
+  box-shadow: none;
+  color: white;
+  background-color: #009E00;
+}
+.button.get-food-nav-btn a,.button.get-food-nav-btn a:hover,.button.get-food-nav-btn a:active, .button.get-food-nav-btn a:focus {
+  color: white;
+}
+.get-food-nav-btn:hover,.get-food-nav-btn:active, .get-food-nav-btn:focus {
+  background-color: #009E00;
+  color: white;
+}
+.navbar-link a:visited{
+  background-color: transparent;
+}
 .navbar-brand a {
   width: 60px;
   height: 60px;
@@ -58,21 +81,20 @@
 .navbar-end .navbar-item:last-child {
   margin-right: 0;
 }
-
+.navbar-item:active {
+  background-color: transparent;
+}
 .navbar-item a:hover,
 .navbar-item a:focus,
 .navbar-item a:active {
   color: black;
-  background-color: white;
+  background-color: transparent;
 }
 
 .navbar-item {
   margin-right: 15px;
 }
 
-.navbar-item:focus {
-  background-color: white;
-}
 
 .navbar-brand .navbar-item .navbar-link {
   padding-left: 0;

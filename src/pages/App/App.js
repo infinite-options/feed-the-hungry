@@ -35,24 +35,25 @@ import { OrderContext } from 'components/Context/OrderContext';
 import AuthRoute from 'components/Route/AuthRoute';
 import NonAuthRoute from 'components/Route/NonAuthRoute';
 import { useOurApi } from 'API/useOurApi';
-// use San Jose, CA as the default center
 
 function App() {
-  const watch = false;
-  const [isAuth, setIsAuth] = useState(false);
-  const [loading, setLoading] = useState(true);
+  // global variable for total number of orders
   const [orderTotal, setOrderTotal] = useState(() => {
     const user = JSON.parse(window.localStorage.getItem('userInfo'));
     return user && user.cart !== "" ? user.cart.total : 0;
   });
- const [orderType, setOrderType] = useState("");
+  // global variable for final order type (delivery/pickup or both)
+  const [orderType, setOrderType] = useState("");
+  // other global variables
+  const [isAuth, setIsAuth] = useState(false);
+  const [loading, setLoading] = useState(true);
+  // fetching food banks info
   const url = `https://dc3so1gav1.execute-api.us-west-1.amazonaws.com/dev/api/v2/foodbanks`;
   const api = useOurApi(url, {});
 
   useEffect(() => {
     onLoad();
     window.addEventListener('storage', onLoad);
-
     return () => {
       window.removeEventListener('storage', onLoad)
     }
@@ -83,10 +84,8 @@ function App() {
         <Switch>
           <NonAuthRoute exact path="/login" component={LoginPage} />
           <NonAuthRoute exact path="/signup" component={SignupPage} />
-          {/* <AuthRoute exact path="/" bankAPI={bankAPI} component={BanksPage} /> */}
           <NonAuthRoute exact path="/donateform" component={DonorNonAuth} />
           <AuthRoute exact path="/donate" component={DonorPage} />
-          {/* <Route exact path="/banks"><BanksPage api={bankApi} /></Route> */}
           <Route exact path="/banks" component={BanksPage}></Route>
           <Route exact path="/" component={HomePage}></Route>
           <Route exact path="/loading" component={LoadingPage} /> 

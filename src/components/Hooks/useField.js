@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 
+// custom hook for most inputs
 const useField = (name, type, isRequired=true) => {
   const [value, setValue] = useState(type === "checkbox" || type ==="switch" ? false : '');
   const [isValid, setIsValid] = useState((isRequired ? false : true));

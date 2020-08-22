@@ -3,8 +3,8 @@ import {faShippingFast, faCube, faMapPin, faClock, faMapMarkerAlt,
     faShoppingCart, faPlus, faMinus, faChevronUp, faChevronDown, faTimes,
     faLongArrowAltLeft, faTrashAlt, faCircleNotch, faShoppingBasket,
     faLongArrowAltRight, faChevronLeft, faChevronRight, faWalking, faTruck, 
-    faEnvelope, faLock, faUserCircle, faStarOfLife} from '@fortawesome/free-solid-svg-icons';
-import { faFacebookF, faTwitter, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
+    faEnvelope, faLock, faUserCircle, faStarOfLife,  faCircle } from '@fortawesome/free-solid-svg-icons';
+import { faFacebookF, faTwitter, faLinkedinIn} from '@fortawesome/free-brands-svg-icons';
 import Delivery from './Delivery.png';
 import Pickup from './Pickup.png';
 import { Icon } from 'leaflet';
@@ -33,7 +33,7 @@ export default {
     faCircleNotch, Kosher, GlutenFree, Vegan, Vegetarian, Halal,
     faShoppingBasket, faLongArrowAltRight, faChevronLeft, faChevronRight,
     faWalking, faTruck, faEnvelope, faLock, faBoxOpen, MarkerIcon,
-    faUserCircle, faStarOfLife, faFacebookF, faTwitter, faLinkedinIn, RoomOutlinedIcon
+    faUserCircle, faStarOfLife, faFacebookF, faTwitter, faLinkedinIn, RoomOutlinedIcon, faCircle
 }
 
 // How to use this component?
