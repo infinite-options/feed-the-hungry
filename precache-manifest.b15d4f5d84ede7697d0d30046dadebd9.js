@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "06125365720d1c6907df3bb5962ef547",
+    "revision": "50a2e7320614e2ed5e7350411a815be0",
     "url": "/feed-the-hungry/index.html"
   },
   {
-    "revision": "03e74b0e627ff335062d",
+    "revision": "a06fad8187ac9751da0d",
     "url": "/feed-the-hungry/static/css/2.95984ef6.chunk.css"
   },
   {
-    "revision": "55937a30f55559be9d37",
-    "url": "/feed-the-hungry/static/css/main.636f0f13.chunk.css"
+    "revision": "77b32f812cc6ba062b3e",
+    "url": "/feed-the-hungry/static/css/main.3246a55c.chunk.css"
   },
   {
-    "revision": "03e74b0e627ff335062d",
-    "url": "/feed-the-hungry/static/js/2.aa955ef6.chunk.js"
+    "revision": "a06fad8187ac9751da0d",
+    "url": "/feed-the-hungry/static/js/2.a4ca2a23.chunk.js"
   },
   {
     "revision": "96042ccd289a683101750e13df9c82ce",
-    "url": "/feed-the-hungry/static/js/2.aa955ef6.chunk.js.LICENSE.txt"
+    "url": "/feed-the-hungry/static/js/2.a4ca2a23.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "55937a30f55559be9d37",
-    "url": "/feed-the-hungry/static/js/main.5f139e08.chunk.js"
+    "revision": "77b32f812cc6ba062b3e",
+    "url": "/feed-the-hungry/static/js/main.37b70104.chunk.js"
   },
   {
     "revision": "e81819ce5540c8fb4e02",
@@ -58,6 +58,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "7128b6c528ef07d328ac3cb64aeedb1b",
     "url": "/feed-the-hungry/static/media/farmers-market.7128b6c5.jpg"
+  },
+  {
+    "revision": "c300535dafdc3722427668e9a13a78a5",
+    "url": "/feed-the-hungry/static/media/food.c300535d.jpg"
   },
   {
     "revision": "c5a3deab58f454ae53ab6e679192e991",
