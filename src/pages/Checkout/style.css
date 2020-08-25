@@ -111,6 +111,9 @@
     /* border: 1px solid #f1f1f1; */
     margin-top: .2rem;
 }
+.tabs.is-toggle li.is-active a {
+    background-color: #009E00;
+}
 .pickup-confirm{
     /* padding-top: 1.5rem; */
 

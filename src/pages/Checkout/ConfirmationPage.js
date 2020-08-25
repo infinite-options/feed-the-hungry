@@ -10,6 +10,7 @@ import { useOurApi } from "API/useOurApi";
 import EmptyCartPage from "pages/Error/EmptyCartPage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import ScrollToTop from "utils/Scroll/SrollToTop";
 
 
 function ConfirmationPage() {
@@ -119,14 +120,12 @@ const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
 
   return (
     <div className="bd-main is-fullheight-with-navbar">
+      <ScrollToTop />
       <div className="container">
-        {/* <div className="confirmation-page-content"> */}
         <div className="confirmation-page-title">
           <p className="title is-3">{sentOrder.kitchen_name}</p>
         </div>
         <div className="space-2-5"></div>
-        {/* <div className="confirmation-page-body"> */}
-
         <div className="confirm-order-container">
           <p className="title is-4">Hey {sentOrder.name},</p>{" "}
           <p className="title is-4 has-text-green">
@@ -202,7 +201,6 @@ const Confirmation = ({ initialUrl, unconfirmed_order, order }) => {
             </div>
           </div>
         </div>
-        {/* <div className="divider"></div> */}
       </div>
     </div>
   );

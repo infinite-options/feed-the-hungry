@@ -179,7 +179,7 @@ function CheckoutForm({ bank, items }) {;
               switchUserAddress={switchUserAddress}
             />
             <div className="divider"></div>
-            <p className="title is-5">Delivery Options</p>
+            <p className="title is-5">Delivery Date</p>
             <div className="field is-horizontal">
               <div className="field-body">
                 <div className="field">
