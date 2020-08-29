@@ -16,7 +16,7 @@ function BankBanner({ obj }) {
       
         <div className="bank-banner">
           <div className="columns" style={{margin:0}}>
-          <div className="column has-no-padding">
+          <div className="column is-5 has-no-padding">
 
           <div className="bank-banner-info">
           <div className="container">
@@ -53,7 +53,7 @@ function BankBanner({ obj }) {
           </div>
           </div>
         </div>
-        <div className="column has-no-padding">
+        <div className="column is-7 has-no-padding">
         <div className="small-map-container">
         <div className="small-map">
           <LeafletMap banks={obj} marker={marker}/>
