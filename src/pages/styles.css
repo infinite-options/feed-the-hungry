@@ -138,6 +138,7 @@
 }
 .bank-card {
     border-radius: 8px;
+    overflow: hidden;
     box-shadow: none;
     /* padding-top: 1rem; */
     height: auto;
@@ -205,12 +206,14 @@
     /* padding: 2rem 2rem 2rem 1rem; */
 }
 .bank-card .media-content-text {
+    
     max-height: 84px;
     height: 84px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
+
 .bank-card .tag.is-warning.is-light .icon{
     color: #ffae42;
 }

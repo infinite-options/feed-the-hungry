@@ -79,7 +79,7 @@ function Banks({ marker, banks }) {
                     </div>
                     </div>
                   </div>
-                  <div className="column" style={{paddingRight:'0'}}>
+                  <div className="column" >
                     <div className="media-content-text">
                     <div className="tags">
                       {bank.fb_delivery === 1 && (
