@@ -40,7 +40,7 @@ function BankBanner({ obj }) {
                   <RoomOutlinedIcon />
                 </span>
               </div>
-              <div className="bank-info-content no-overflow">
+              <div className="bank-info-content">
                 <p className="title is-6 capitalized is-Nunito">
                   {obj.fb_address1}, {obj.fb_city}, {obj.fb_state} {obj.fb_zipcode} 
                 </p>

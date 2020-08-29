@@ -12,7 +12,7 @@ function BankSchedule({ obj }) {
     )
   }
   return (
-    <div className="bank-info-content no-overflow" style={{marginTop:'.4rem'}}>
+    <div className="bank-info-content" style={{marginTop:'.4rem'}}>
       <div className="schedule-title" style={{padding: 0, marginRight: '6px'}}>
       <span className="icon">
         <ScheduleOutlinedIcon />
