@@ -31,9 +31,9 @@ function BankBanner({ obj }) {
             <p className="title bank-title">{obj.fb_name} </p>
             </div>
             </div>
-            <div className="divider-25"></div>
+            {/* <div className="divider-25"></div> */}
             {/* Address */}
-            <p>{obj.foodbank_id}</p>
+            {/* <p>{obj.foodbank_id}</p> */}
             <div className="bank-info-wrapper" >
               <div className="bank-info-icon">
                 <span className="icon">
@@ -54,13 +54,13 @@ function BankBanner({ obj }) {
           </div>
         </div>
         <div className="column has-no-padding">
-          
+        <div className="small-map-container">
         <div className="small-map">
           <LeafletMap banks={obj} marker={marker}/>
         </div>
         </div>
         </div>
-        {/* </div> */}
+        </div>
       </div>
     </section>
   );

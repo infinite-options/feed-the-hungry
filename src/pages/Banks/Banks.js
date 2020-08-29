@@ -47,7 +47,7 @@ function Banks({ marker, banks }) {
           <div className="card-content">
             <div className="media">
               <div className="media-left">
-                <figure className="image is-64x64">
+                <figure className="image" style={{width:'128px',height:'84px'}}>
                   {/* <div className="bank-card-logo"> */}
                   <img src={bank.fb_logo} alt="Bank's Logo"></img>
                   {/* </div> */}
@@ -64,25 +64,30 @@ function Banks({ marker, banks }) {
                     </div>
                   </div>
                   <div className="column">
-                    <span style={{fontWeight:'600'}}>{dist(bank.fb_latitude, bank.fb_longitude)} miles</span><br></br>
+                    <div className="media-content-text">
+                      <div>
+                    <span style={{fontWeight:'600', fontSize:'12px'}}>{dist(bank.fb_latitude, bank.fb_longitude)} miles</span><br></br>
                     <p
                       className="subtitle is-Nunito"
-                      style={{ fontSize: "14px" }}
+                      style={{ fontSize: "12px" }}
                     >
                       <span className="has-text-grey">in </span>
                       <span style={{fontWeight:'600'}}>
                          {bank.fb_city}, {bank.fb_state}
                       </span>
                     </p>
+                    </div>
+                    </div>
                   </div>
                   <div className="column" style={{paddingRight:'0'}}>
+                    <div className="media-content-text">
                     <div className="tags">
                       {bank.fb_delivery === 1 && (
                         <div className="tag is-success is-light">
                           <span className="icon">
                             <FontAwesomeIcon icon={Icons.faCircle} />
                           </span>
-                          <span style={{ fontWeight: "600" }}>Delivery</span>
+                          <span style={{ fontWeight: "600", fontSize:'12px' }}>Delivery</span>
                         </div>
                       )}
                       {bank.fb_pickup === 1 && (
@@ -90,9 +95,10 @@ function Banks({ marker, banks }) {
                           <span className="icon">
                             <FontAwesomeIcon icon={Icons.faCircle} />
                           </span>
-                          <span style={{ fontWeight: "600" }}>Pickup</span>
+                          <span style={{ fontWeight: "600", fontSize:'12px' }}>Pickup</span>
                         </div>
                       )}
+                    </div>
                     </div>
                   </div>
                 </div>

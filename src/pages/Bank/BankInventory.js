@@ -53,7 +53,7 @@ function BankInventory({ bank, delivery, pickup, search, orderType }) {
               <p className="item-unit">
                 {x.fl_package_type} ({x.fl_amount} {x.fl_unit})
               </p>
-              <p>{x.food_id}</p>
+              {/* <p>{x.food_id}</p> */}
               <QuantityInput bank={bank} item={x} orderType={orderType} />
             </div>
           </div>

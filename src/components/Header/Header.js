@@ -10,13 +10,13 @@ function Header() {
   const history = useHistory();
   const location = useLocation();
   const context = useContext(OrderContext);
-  const [activeNav, setActiveNav] = useState("");
+  // const [activeNav, setActiveNav] = useState("");
   const [isActive, setIsActive] = useState(false); // for toggling navbar-burger
 
   // set active navbar-item
-  useEffect(() => {
-    setActiveNav(location.pathname);
-  },[location])
+  // useEffect(() => {
+  //   setActiveNav(location.pathname);
+  // },[location])
 
   const handleLogout = () => {
     console.log(window);
@@ -38,7 +38,7 @@ function Header() {
   }
   return (
     <nav
-      className={activeNav === "/banks" ? "navbar is-light-green" : "navbar is-white" }
+      className="navbar is-white"
       role="navigation"
       aria-label="main navigation"
     >

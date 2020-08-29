@@ -57,7 +57,9 @@ const Bank = ({ bank }) => {
     <div className="bd-main is-fullheight-with-navbar">
       <ScrollToTopOnMount/>
         <BankBanner obj={bank} />
+        <div className="bank-inventory">
         <BankFilters />
+       
         <div className="container">
         <div key={key} className="bank-body">
           <BankInventory  bank={bank} delivery={1} pickup={1} search={search} orderType={orderType}/>
@@ -65,20 +67,21 @@ const Bank = ({ bank }) => {
           <BankInventory  bank={bank} delivery={0} pickup={1} search={search}  orderType={orderType}/>  
         </div>
         <div className="bank-actions">
-          <button className="button is-info">
+          {/* <button className="button is-info">
             <span className="icon">
               <FontAwesomeIcon icon={Icons.faLongArrowAltLeft} />
             </span>
             <span>Return to Search Results</span>
-          </button>
+          </button> */}
           <Link to="/order/cart">
-            <button className="button is-success">
+            <button className="button goto-checkout-btn">
               <span>Checkout Now</span>
               <span className="icon">
                 <FontAwesomeIcon icon={Icons.faLongArrowAltRight} />
               </span>
             </button>
           </Link>
+        </div>
         </div>
       </div>
     </div>

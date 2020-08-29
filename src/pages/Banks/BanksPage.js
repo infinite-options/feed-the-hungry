@@ -51,7 +51,7 @@ function BanksPage() {
   </p>
       </div>
       </div>
-      <div className="columns has-no-margin">
+      <div className="columns" style={{marginTop:0}}>
       <div className="column is-7 has-no-padding">
       <div className="bank-list">
           <div className="container">
