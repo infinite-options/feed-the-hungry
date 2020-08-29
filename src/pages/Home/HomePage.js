@@ -197,7 +197,7 @@ function ContactForm() {
         to_user_email: email.value,
         from_user_name: name.value,
         from_user_email: email.value,
-        to_email: "kumaqi97@gmail.com",
+        to_email: "partnerships@infiniteoptions.com",
       });
     }
   };

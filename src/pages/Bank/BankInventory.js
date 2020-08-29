@@ -26,7 +26,8 @@ function BankInventory({ bank, delivery, pickup, search, orderType }) {
   if (orderType.orderType === "delivery" && delivery === 0) return "";
   if (orderType.orderType === "pickup" && pickup === 0) return "";
   return (
-    <div key={key} className="inventory-container animate-bottom">
+    // add "animate-bottom" for sliding effect ?
+    <div key={key} className="inventory-container">
     <div className="inventory-title-container">
       {delivery === 1 && pickup === 1 && <p className="subtitle inventory-title">Delivery or Pickup</p>}
       {delivery === 1 && pickup === 0 && <p className="subtitle inventory-title">Delivery Only</p>}
