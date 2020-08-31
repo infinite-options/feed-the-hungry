@@ -32,7 +32,8 @@ function Banks({ marker, banks }) {
 
   const user = JSON.parse(window.localStorage.getItem('userInfo'));
   const dist = (lat,lon) =>{
-  return Math.round(Distance(user.position[0],user.position[1],lat,lon,"M") * 10) / 10;}
+    if (user && user.position !=="") return Math.round(Distance(user.position[0],user.position[1],lat,lon,"M") * 10) / 10;
+    return "?"}
   
   return (
     <div className="banks">
